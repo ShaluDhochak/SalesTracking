@@ -4,51 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="bottom"
+    android:layout_gravity="top"
+    android:background="@drawable/navigation_bg"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <LinearLayout
-        android:id="@+id/logoHeader_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
         <ImageView
             android:id="@+id/logoMenu_iv"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/logo_icon"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/horizontal_logo_white"
+            android:layout_alignParentTop="true"/>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/menu_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/logoHeader_ll"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="85dp">
+        android:layout_below="@+id/logoMenu_iv"
+        android:visibility="visible"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/menuLogo_iv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/calls"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/profile_icon"
             android:layout_marginLeft="10dp"
-
             />
 
         <TextView
-            android:id="@+id/meuHeading_tv"
+            android:id="@+id/usernameHeading_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Menu"
-            android:textSize="15sp"
+            android:text="Name"
+            android:textSize="17sp"
             android:paddingLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/menuLogo_iv"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/userEmailHeading_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user@gmail.com"
+            android:textSize="13sp"
+            android:paddingLeft="10dp"
+            android:layout_toRightOf="@+id/menuLogo_iv"
+            android:layout_below="@+id/usernameHeading_tv"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <ImageView
+            android:id="@+id/editUserProfile_iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/edit_icon"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="40dp"
+            />
+    </RelativeLayout>
+
 </RelativeLayout>
