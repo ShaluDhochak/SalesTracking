@@ -8,4 +8,12 @@
     tools:context=".Activity.NavigationDrawerActivity"
     tools:showIn="@layout/app_bar_navigation_drawer">
 
+    <FrameLayout
+        android:id="@+id/fragment_Container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

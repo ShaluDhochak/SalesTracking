@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password_et;
 
     @BindView(R.id.login_btn)
-    Button login_btn;
+    TextView login_btn;
 
     ProgressDialog progressDialog;
     SessionManagement session;
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             if(StringUtils.isEmailValid(userid_et.getText().toString())) {
                 if (NetworkUtilities.isInternet(this)) {
-                    getLoginFunction();
+                     getLoginFunction();
                 } else
                     StringUtils.internetError(this);
             }else{
@@ -75,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Email Id or Password cannot be empty.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
    /* private void getLoginFunction() {
         if (Connectivity.isConnected(LoginActivity.this)) {
