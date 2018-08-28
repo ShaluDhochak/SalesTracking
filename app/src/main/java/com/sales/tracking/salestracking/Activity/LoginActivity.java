@@ -4,13 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.sales.tracking.salestracking.Bean.LoginBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
@@ -21,6 +30,18 @@ import com.sales.tracking.salestracking.Utility.SessionManagement;
 import com.sales.tracking.salestracking.Utility.StringUtils;
 import com.sales.tracking.salestracking.Utility.Utilities;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManagement session;
     LoginBean loginBean;
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +73,10 @@ public class LoginActivity extends AppCompatActivity {
         initialiseUI();
     }
 
-    private void initialiseUI(){
+    private void initialiseUI() {
         session = new SessionManagement(getApplicationContext());
+
+        requestQueue = Volley.newRequestQueue(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading....");
@@ -60,132 +84,92 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.login_btn)
-    public void login()  {
-
-        startActivity(new Intent(LoginActivity.this, NavigationDrawerActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
-    /*    if(userid_et.getText().toString().trim().length() > 0 && password_et.getText().toString().trim().length() > 0)
-        {
-            if(StringUtils.isEmailValid(userid_et.getText().toString())) {
-                if (NetworkUtilities.isInternet(this)) {
-                     getLoginFunction();
-                } else
-                    StringUtils.internetError(this);
-            }else{
-                Toast.makeText(this,"Enter valid Email",Toast.LENGTH_SHORT).show();
-            }
-        }
-        else{
-            Toast.makeText(this, "Email Id or Password cannot be empty.", Toast.LENGTH_SHORT).show();
-        }
-        */
+    public void login() {
+        loginFunction();
     }
 
+    private void loginFunction() {
+        try {
 
-   /* private void getLoginFunction() {
-        if (Connectivity.isConnected(LoginActivity.this)) {
+            String URL = ApiLink.ROOT_URL + ApiLink.LOGIN;
 
-            try {
-                progressDialog.show();
-                String name = userid_et.getText().toString().trim();
-                String password = password_et.getText().toString().trim();
-              //  session.createLoginSession(name, password);
+            final String requestBody = "user_email=" + userid_et.getText().toString() + "&user_pass=" +
+                    password_et.getText().toString() + "&check_pwd=";
 
-                final JSONObject jsonObject = new JSONObject();
-                jsonObject.put("user_email", name);
-                jsonObject.put("user_pass", password);
-                jsonObject.put("check_pwd", "");
+            //  final String requestBody = "user_email=azmanager@gmail.com&user_pass=123&check_pwd=";
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject userJson = jsonObject.getJSONObject("0");
+                        Log.i("User Id", userJson.getString("user_id"));
+                        Log.i("User Name", userJson.getString("user_name"));
+                        Log.i("User Email", userJson.getString("user_email"));
 
 
-                String Url = ApiLink.ROOT_URL + ApiLink.LOGIN;
+/*
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Url, jsonObject, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (!(response.equals(""))) {try {
-                            Toast.makeText(LoginActivity.this, "LoginSuccessfully done", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(LoginActivity.this, response.getString("user_name"), Toast.LENGTH_SHORT).show();
-                            // saveUserInfo(emailId,password,response, response.getJSONObject("result"), SharedPreferenceManager.getInstance(context));
-                        } catch (Exception e) {
-                            Toast.makeText(LoginActivity.this, "njf", Toast.LENGTH_SHORT).show();
+                        JSONArray array = jsonObject.getJSONArray("0");
+
+                        for (int i=0;i<array.length();i++){
+                            JSONObject jsonObject1 = array.getJSONObject(i);
                         }
-                        }else{
-                            Toast.makeText(LoginActivity.this, "No Output", Toast.LENGTH_SHORT).show();
+*/
+
+                    } catch (Exception e) {
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    }
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    try {
+
+                        if (response != null) {
+                            byte[] responseData = response.data;
+                            responseString = new String(responseData, "UTF-8");
                         }
-                        progressDialog.dismiss();
-                       // view.loginSuccess();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                       // view.loginFailure("Please check Email and Password");
-                    }
-                });
 
-                Volley.newRequestQueue(LoginActivity.this).add(jsonObjectRequest);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else
-            Utilities.internetConnectionError(LoginActivity.this);
     }
-    */
-
-
-    private void getLoginFunction() {
-        if (Connectivity.isConnected(LoginActivity.this)) {
-
-                progressDialog.show();
-                String name = userid_et.getText().toString().trim();
-                String password = password_et.getText().toString().trim();
-                //  session.createLoginSession(name, password);
-
-
-                String Url = ApiLink.ROOT_URL + ApiLink.LOGIN;
-
-                //   String URL = "http://vistacars.in/lms/api/login_user";
-                Map<String, String> map = new HashMap<>();
-                map.put("user_email", name);
-                map.put("user_pass", password);
-                map.put("check_pwd", "");
-
-                GSONRequest<LoginBean> loginGsonRequest = new GSONRequest<LoginBean>(
-                        Request.Method.POST,
-                        Url,
-                        LoginBean.class, map,
-                        new com.android.volley.Response.Listener<LoginBean>() {
-                            @Override
-                            public void onResponse(LoginBean res) {
-                                if (!(res.equals(""))) {
-                                    loginBean = res;
-                                    String UserId = loginBean.getUser().get(0).getUser_id().toString();
-                                    Toast.makeText(LoginActivity.this, UserId, Toast.LENGTH_SHORT).show();
-                                    //     sharedPreferenceData();
-                                    startActivity(new Intent(LoginActivity.this, NavigationDrawerActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
-                                } else {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(LoginActivity.this, "Enter valid credentials", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        },
-                        new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                progressDialog.dismiss();
-                                Utilities.serverError(LoginActivity.this);
-                            }
-                        });
-                loginGsonRequest.setShouldCache(false);
-                Utilities.getRequestQueue(LoginActivity.this).add(loginGsonRequest);
-
-        }
-        else
-            Utilities.internetConnectionError(LoginActivity.this);
-
-        }
-
 }
