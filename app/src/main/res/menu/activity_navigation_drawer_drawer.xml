@@ -3,50 +3,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/main_option"
+        android:checkableBehavior="single"
+        android:visible="true">
         <item
             android:id="@+id/nav_dashboard"
-            android:icon="@drawable/calls"
-            android:title="Dashboard" />
+            android:icon="@drawable/dashboard_icon"
+            android:title="Dashboard"
+            />
         <item
-            android:id="@+id/nav_add_new_lead"
-            android:icon="@drawable/calls"
-            android:title="Add New Lead" />
+            android:id="@+id/nav_track_sales_person"
+            android:icon="@drawable/sales_track_icon"
+            android:title="Track Sales Person" />
         <item
-            android:id="@+id/nav_lead_status"
-            android:icon="@drawable/calls"
-            android:title="Lead Status" />
+            android:id="@+id/nav_manager"
+            android:icon="@drawable/manage_icon"
+            android:title="Manager" />
         <item
-            android:id="@+id/nav_master"
-            android:icon="@drawable/calls"
-            android:title="Master"
-            android:visible="false"/>
+            android:id="@+id/nav_reassignment_request"
+            android:icon="@drawable/reassignment_request_icon"
+            android:title="Reassignment Request"
+            />
 
         <item
-            android:id="@+id/nav_my_profile"
-            android:icon="@drawable/calls"
-            android:title="My Profile" />
-        <item
-            android:id="@+id/nav_change_password"
-            android:icon="@drawable/calls"
-            android:title="Change Password" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/calls"
-            android:title="LogOut" />
+            android:id="@+id/nav_reports"
+            android:icon="@drawable/reports"
+            android:title="Reports" />
 
     </group>
 
-    <item android:title="Communicate">
+    <group
+        android:id="@+id/manager_option"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/nav_manager_title"
+            android:icon="@drawable/calls"
+            android:title="Manager" />
+        <item
+            android:id="@+id/nav_workinghours_attendance"
+            android:title="Track Sales Person" />
+        <item
+            android:id="@+id/nav_manage_tasks"
+            android:title="Manage Tasks" />
+        <item
+            android:id="@+id/nav_manage_client"
+            android:title="Manage Client"
+            />
+        <item
+            android:id="@+id/nav_manage_sales_person"
+            android:title="Manage Sales Person" />
+        <item
+            android:id="@+id/nav_manage_sales_person_target"
+            android:title="Manage Sales Person Target"
+            />
+        <item
+            android:id="@+id/nav_expenses"
+            android:title="Expenses"
+            />
+
+    </group>
+
+    <group
+        android:id="@+id/reports_option"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/nav_Reports_title"
+            android:icon="@drawable/calls"
+            android:title="Reports" />
+        <item
+            android:id="@+id/nav_attendance"
+            android:title="Attendance" />
+        <item
+            android:id="@+id/nav_all_visits"
+            android:title="All Visits" />
+        <item
+            android:id="@+id/nav_visits_done"
+            android:title="Visits Done"
+            />
+        <item
+            android:id="@+id/nav_visits_pending"
+            android:title="Visits Pending" />
+        <item
+            android:id="@+id/nav_all_calls"
+            android:title="All Calls"
+            />
+        <item
+            android:id="@+id/nav_calls_done"
+            android:title="Calls Done"
+            />
+        <item
+            android:id="@+id/nav_calls_pending"
+            android:title="Calls Pending"
+            />
+        <item
+            android:id="@+id/nav_calls_expenses"
+            android:title="Expenses"
+            />
+
+    </group>
+
+    <item android:title="">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/user_icon"
+                android:title="Profile" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_clients"
+                android:title="Clients" />
+            <item
+                android:id="@+id/nav_pending_requests"
+                android:title="Pending Requests" />
         </menu>
     </item>
 

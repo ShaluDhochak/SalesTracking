@@ -61,7 +61,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_btn)
     public void login()  {
-        if(userid_et.getText().toString().trim().length() > 0 && password_et.getText().toString().trim().length() > 0)
+
+        startActivity(new Intent(LoginActivity.this, NavigationDrawerActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+    /*    if(userid_et.getText().toString().trim().length() > 0 && password_et.getText().toString().trim().length() > 0)
         {
             if(StringUtils.isEmailValid(userid_et.getText().toString())) {
                 if (NetworkUtilities.isInternet(this)) {
@@ -75,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         else{
             Toast.makeText(this, "Email Id or Password cannot be empty.", Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
 
