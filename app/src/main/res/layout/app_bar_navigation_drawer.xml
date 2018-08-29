@@ -15,20 +15,35 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/register1"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <RelativeLayout
+                android:id="@+id/tootlbar_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/toolbarLogo_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/horizontal_logo_white"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    />
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Title"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
                 android:paddingTop="15dp"
-                android:layout_marginRight="70dp"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="15dp"/>
+
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

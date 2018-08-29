@@ -1,11 +1,16 @@
 package com.sales.tracking.salestracking.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,10 +65,17 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.login_btn)
     TextView login_btn;
 
+    @BindView(R.id.rememberMe_cb)
+    CheckBox rememberMe_cb;
+
     ProgressDialog progressDialog;
     SessionManagement session;
     LoginBean loginBean;
     RequestQueue requestQueue;
+
+    String rememberMe_token = "0";
+
+    String user_id, user_password,userId, userName, userEmail, userMobile, userComId, userdesId, userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +97,52 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_btn)
     public void login() {
-        loginFunction();
+
+        user_id = userid_et.getText().toString();
+        user_password = password_et.getText().toString();
+
+        if(userid_et.getText().toString().trim().length() > 0 && password_et.getText().toString().trim().length() > 0) {
+            if(StringUtils.isEmailValid(userid_et.getText().toString())) {
+                if (NetworkUtilities.isInternet(this)) {
+                    loginFunction();
+                }else
+                    StringUtils.internetError(this);
+            }else{
+                Toast.makeText(this,"Enter valid Email",Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, "Email Id or Password cannot be empty.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.rememberMe_cb)
+    public void rememberMe(){
+        if (rememberMe_token.equals("0")){
+            rememberMe_token= "1";
+            rememberMe_cb.setChecked(true);
+        }else if (rememberMe_token.equals("1")){
+            rememberMe_token= "0";
+            rememberMe_cb.setChecked(false);
+        }
+    }
+
+    public void sharedPreferenceData(){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.putString("user_id", userId);
+        edit.putString("user_name", userName);
+        edit.putString("user_pass", password_et.getText().toString());
+        edit.putString("user_email", userEmail);
+        edit.putString("user_mobile", userMobile);
+        edit.putString("user_com_id", userComId);
+        edit.putString("user_des_id", userdesId);
+        edit.putString("user_type", userType);
+        edit.commit();
     }
 
     private void loginFunction() {
         try {
-
             String URL = ApiLink.ROOT_URL + ApiLink.LOGIN;
-
             final String requestBody = "user_email=" + userid_et.getText().toString() + "&user_pass=" +
                     password_et.getText().toString() + "&check_pwd=";
 
@@ -103,32 +153,45 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(String response) {
 
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONObject userJson = jsonObject.getJSONObject("0");
-                        Log.i("User Id", userJson.getString("user_id"));
-                        Log.i("User Name", userJson.getString("user_name"));
-                        Log.i("User Email", userJson.getString("user_email"));
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONObject userJson = jsonObject.getJSONObject("0");
+                            Log.i("User Id", userJson.getString("user_id"));
+                            Log.i("User Name", userJson.getString("user_name"));
+                            Log.i("User Email", userJson.getString("user_email"));
 
+                            userId = userJson.getString("user_id");
+                            userName = userJson.getString("user_name");
+                            userEmail = userJson.getString("user_email");
+                            userMobile = userJson.getString("user_mobile");
+                            userComId = userJson.getString("user_comid");
+                            userdesId = userJson.getString("user_desiid");
+                            userType = userJson.getString("user_type");
+                            sharedPreferenceData();
+                            if (rememberMe_token.equals("1")) {
+                                session.createLoginSession(user_id, user_password);
+                            }
+                            Intent loginIntent = new Intent(LoginActivity.this, NavigationDrawerActivity.class);
+                            startActivity(loginIntent);
 
-/*
-
+                           /*
                         JSONArray array = jsonObject.getJSONArray("0");
 
                         for (int i=0;i<array.length();i++){
                             JSONObject jsonObject1 = array.getJSONObject(i);
                         }
 */
-
                     } catch (Exception e) {
-
+                        Toast.makeText(LoginActivity.this, "Something went Wrong!!, Please login again with correct credentials..", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("VOLLEY", error.toString());
                 }
-            }) {
+            })
+            {
                 @Override
                 public String getBodyContentType() {
                     return "application/json; charset=utf-8";
@@ -171,5 +234,17 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                .setMessage("Are you sure want to Exit?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        moveTaskToBack(true);
+                    }
+                }).setNegativeButton("no", null).show();
     }
 }

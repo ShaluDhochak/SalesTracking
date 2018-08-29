@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#1ecafb</color>
+    <color name="colorPrimaryDark">#1e9cf7</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--<color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    -->
 
     <color name="textcolor">#446177</color>
     <color name="inputBorder">#888888</color>
@@ -12,5 +17,8 @@
     <color name="register1">#1e9cf7</color>
     <color name="register2">#1ecafb</color>
 
+    <color name="header_bg">#0086e6</color>
+    <color name="header_bg1">#30a8fe</color>
 
+    <color name="title_bg">#2c2c43</color>
 </resources>

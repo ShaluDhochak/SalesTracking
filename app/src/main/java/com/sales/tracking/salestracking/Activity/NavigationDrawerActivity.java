@@ -1,9 +1,12 @@
 package com.sales.tracking.salestracking.Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +20,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.R;
+import com.sales.tracking.salestracking.Utility.SessionManagement;
 
 import butterknife.ButterKnife;
 
@@ -27,16 +32,30 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     DrawerLayout drawer;
     NavigationView navigationView;
     TextView toolbar_title;
+    TextView nav_user, userEmailHeading_tv;
 
     //header recyclerview
     RelativeLayout reportHeading_rl, menu_rl;
+    SessionManagement session;
 
+    SharedPreferences sharedPref;
+    String userNamePref, userEmailPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         ButterKnife.bind(this);
+        initialiseUI();
+    }
+
+    private void initialiseUI(){
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(NavigationDrawerActivity.this);
+        userNamePref = sharedPref.getString("user_name", "");
+        userEmailPref = sharedPref.getString("user_email", "");
+
+        session = new SessionManagement(getApplicationContext());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,21 +76,22 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.getMenu().getItem(2).setActionView(R.layout.menu_layout);
         navigationView.getMenu().getItem(3).setActionView(R.layout.menu_layout);
         navigationView.getMenu().getItem(4).setActionView(R.layout.menu_layout);
 
-        navigationView.getMenu().getItem(6).setActionView(R.layout.menu_layout);
+        //  navigationView.getMenu().getItem(6).setActionView(R.layout.menu_layout);
         navigationView.getMenu().getItem(7).setActionView(R.layout.menu_layout);
-        navigationView.getMenu().getItem(8).setActionView(R.layout.menu_layout);
-        navigationView.getMenu().getItem(9).setActionView(R.layout.menu_layout);
-
+        navigationView.getMenu().getItem(11).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(14).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(17).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(20).setActionView(R.layout.menu_layout);
 
         View hView =  navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.usernameHeading_tv);
+        nav_user = (TextView)hView.findViewById(R.id.usernameHeading_tv);
+        userEmailHeading_tv = (TextView) hView.findViewById(R.id.userEmailHeading_tv);
 
         reportHeading_rl = (RelativeLayout) hView.findViewById(R.id.reportHeading_rl);
         reportHeading_rl.setOnClickListener(this);
@@ -79,7 +99,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         menu_rl = (RelativeLayout) hView.findViewById(R.id.menu_rl);
         //  menu_rl.setOnClickListener(this);
 
-        nav_user.setText("user name here");
+        nav_user.setText(userNamePref);
+        userEmailHeading_tv.setText(userEmailPref);
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -118,31 +139,120 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         int id = item.getItemId();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (id == R.id.nav_dashboard) {
+        if (id == R.id.nav_dashboard)
+        {
+            dashboardFragment();
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_track_sales_person) {
+        }
+        else if (id == R.id.nav_track_sales_person)
+        {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_manager) {
+        }
+        else if (id == R.id.nav_manager)
+        {
             navigationView.getMenu().setGroupVisible(R.id.manager_option, true);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+
             drawer.openDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_reassignment_request) {
+        }
+        else if (id == R.id.nav_reassignment_request)
+        {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (id == R.id.nav_reports) {
-            menu_rl.setVisibility(View.GONE);
-            reportHeading_rl.setVisibility(View.VISIBLE);
+        }
+        else if (id == R.id.nav_reports)
+        {
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
             navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reports_option, true);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
-        } else if (id == R.id.nav_profile) {
+        }
+        else if (id == R.id.nav_profile)
+        {
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id == R.id.nav_manager_title){
-            setDefaultDrawer();
-        }else if (id ==R.id.nav_Reports_title){
+        }
+        else if (id == R.id.nav_manager_title)
+        {
             setDefaultDrawer();
         }
-
+        else if (id ==R.id.nav_Reports_title)
+        {
+            setDefaultDrawer();
+        }
+        else if (id == R.id.nav_expenses)
+        {
+            setDefaultManageTask();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(21).setVisible(true);
+            navigationView.getMenu().getItem(22).setVisible(true);
+        }
+        else if (id==R.id.nav_manage_sales_person_target)
+        {
+            setDefaultExpenses();
+            setDefaultManageTask();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(18).setVisible(true);
+            navigationView.getMenu().getItem(19).setVisible(true);
+        }
+        else if (id==R.id.nav_manage_sales_person)
+        {
+            setDefaultExpenses();
+            setDefaultManageTask();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(15).setVisible(true);
+            navigationView.getMenu().getItem(16).setVisible(true);
+        }
+        else if (id==R.id.nav_manage_client)
+        {
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            navigationView.getMenu().getItem(12).setVisible(true);
+            navigationView.getMenu().getItem(13).setVisible(true);
+        }
+        else if (id==R.id.nav_manage_tasks)
+        {
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(10).setVisible(true);
+            navigationView.getMenu().getItem(9).setVisible(true);
+            navigationView.getMenu().getItem(8).setVisible(true);
+        }
+        else if(id==R.id.nav_workinghours_attendance)
+        {
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+        }
+        else if (id==R.id.nav_view_collection)
+        {
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+        }
+        else if (id==R.id.nav_layout)
+        {
+            session.logoutUser();
+            drawer.closeDrawers();
+        }
         return true;
     }
 
@@ -150,6 +260,33 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_option, true);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+    }
+
+    private void setDefaultExpenses(){
+
+        navigationView.getMenu().getItem(21).setVisible(false);
+        navigationView.getMenu().getItem(22).setVisible(false);
+    }
+
+    private void setDefaultManageSalesPersonTarget(){
+        navigationView.getMenu().getItem(18).setVisible(false);
+        navigationView.getMenu().getItem(19).setVisible(false);
+    }
+
+    private void setDefaultManageSalesPerson(){
+        navigationView.getMenu().getItem(15).setVisible(false);
+        navigationView.getMenu().getItem(16).setVisible(false);
+    }
+
+    private void setDefaultManageClient(){
+        navigationView.getMenu().getItem(12).setVisible(false);
+        navigationView.getMenu().getItem(13).setVisible(false);
+    }
+
+    private void setDefaultManageTask(){
+        navigationView.getMenu().getItem(10).setVisible(false);
+        navigationView.getMenu().getItem(9).setVisible(false);
+        navigationView.getMenu().getItem(8).setVisible(false);
     }
 
     @Override
@@ -166,5 +303,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 break;
 
         }
+    }
+
+    public void dashboardFragment() {
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        DashboardFragment dfragment = new DashboardFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, dfragment);
+        dtransaction.commit();
     }
 }

@@ -8,6 +8,6 @@
     <LinearLayout
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/calls"></LinearLayout>
+        android:background="@drawable/angle_right"/>
 
 </LinearLayout>

@@ -6,22 +6,30 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sales.tracking.salestracking.R;
+import com.sales.tracking.salestracking.Utility.SessionManagement;
 
 public class SplashActivity extends AppCompatActivity {
+
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        launchLoginScreen();
+        session = new SessionManagement(getApplicationContext());
+        session.checkLogin();
+        if (session.isLoggedIn()){
+            launchLoginScreen();
+        }
+
     }
 
     private void launchLoginScreen(){
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                startActivity(new Intent(SplashActivity.this, NavigationDrawerActivity.class));
                 finish();
             }
         }, secondsDelayed * 3000);

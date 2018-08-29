@@ -40,27 +40,76 @@
         <item
             android:id="@+id/nav_manager_title"
             android:icon="@drawable/calls"
-            android:title="Manager" />
+            android:title="Manager"
+            />
         <item
             android:id="@+id/nav_workinghours_attendance"
-            android:title="Track Sales Person" />
+            android:title="Working Hours/Attendance" />
         <item
             android:id="@+id/nav_manage_tasks"
             android:title="Manage Tasks" />
+        <item
+            android:id="@+id/nav_view_meeting_tasks"
+            android:title="View Meeting Tasks"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_view_salescalls_tasks"
+            android:title="View Sales Calls Tasks"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_add_manage_tasks"
+            android:title="Add"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_manage_client"
             android:title="Manage Client"
             />
         <item
+            android:id="@+id/nav_view_manage_client"
+            android:title="View"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_add_manage_client"
+            android:title="Add"
+            android:visible="false"/>
+        <item
             android:id="@+id/nav_manage_sales_person"
             android:title="Manage Sales Person" />
         <item
+            android:id="@+id/nav_view_manage_sales_person"
+            android:title="View"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_add_manage_sales_person"
+            android:title="Add"
+            android:visible="false"/>
+        <item
             android:id="@+id/nav_manage_sales_person_target"
-            android:title="Manage Sales Person Target"
+            android:title="Sales Person Target"
             />
+        <item
+            android:id="@+id/nav_view_manage_sales_person_target"
+            android:title="View"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_add_manage_sales_person_target"
+            android:title="Add"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_expenses"
             android:title="Expenses"
+            />
+        <item
+            android:id="@+id/nav_view_expenses"
+            android:title="View"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_add_expenses"
+            android:title="Add"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_view_collection"
+            android:title="View Collection"
             />
 
     </group>
@@ -117,6 +166,10 @@
             <item
                 android:id="@+id/nav_pending_requests"
                 android:title="Pending Requests" />
+
+            <item
+                android:id="@+id/nav_layout"
+                android:title="Layout" />
         </menu>
     </item>
 
