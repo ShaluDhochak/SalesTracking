@@ -158,13 +158,13 @@ public class LoginActivity extends AppCompatActivity {
                             Intent loginIntent = new Intent(LoginActivity.this, NavigationDrawerActivity.class);
                             startActivity(loginIntent);
 
-                           /*
+                        /*
                         JSONArray array = jsonObject.getJSONArray("0");
 
                         for (int i=0;i<array.length();i++){
                             JSONObject jsonObject1 = array.getJSONObject(i);
                         }
-*/
+                        */
                     } catch (Exception e) {
                         Toast.makeText(LoginActivity.this, "Something went Wrong!!, Please login again with correct credentials..", Toast.LENGTH_SHORT).show();
                     }

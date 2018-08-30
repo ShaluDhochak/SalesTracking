@@ -39,7 +39,7 @@
         android:visible="false">
         <item
             android:id="@+id/nav_manager_title"
-            android:icon="@drawable/calls"
+            android:icon="@drawable/arrow_left"
             android:title="Manager"
             />
         <item
@@ -120,7 +120,7 @@
         android:visible="false">
         <item
             android:id="@+id/nav_Reports_title"
-            android:icon="@drawable/calls"
+            android:icon="@drawable/arrow_left"
             android:title="Reports" />
         <item
             android:id="@+id/nav_attendance"
@@ -166,7 +166,6 @@
             <item
                 android:id="@+id/nav_pending_requests"
                 android:title="Pending Requests" />
-
             <item
                 android:id="@+id/nav_layout"
                 android:title="Layout" />

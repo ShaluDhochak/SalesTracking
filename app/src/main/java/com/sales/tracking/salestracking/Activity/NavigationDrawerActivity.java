@@ -1,5 +1,6 @@
 package com.sales.tracking.salestracking.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
+import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 
@@ -68,7 +70,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                         .setAction("Action", null).show();
             }
         });
-
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -147,6 +148,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         else if (id == R.id.nav_track_sales_person)
         {
             drawer.closeDrawer(GravityCompat.START);
+            Intent trackSlaesTrackingIntent = new Intent(NavigationDrawerActivity.this, TrackSalesPersonActivity.class);
+            startActivity(trackSlaesTrackingIntent);
         }
         else if (id == R.id.nav_manager)
         {
