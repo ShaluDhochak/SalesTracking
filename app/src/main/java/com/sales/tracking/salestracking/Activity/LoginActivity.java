@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,28 +24,15 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.sales.tracking.salestracking.Bean.LoginBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
-import com.sales.tracking.salestracking.Utility.Connectivity;
-import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.NetworkUtilities;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 import com.sales.tracking.salestracking.Utility.StringUtils;
-import com.sales.tracking.salestracking.Utility.Utilities;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     SessionManagement session;
-    LoginBean loginBean;
     RequestQueue requestQueue;
 
     String rememberMe_token = "0";
