@@ -1,5 +1,6 @@
 package com.sales.tracking.salestracking.Adapter;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import java.util.List;
 public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTaskSalesPersonAdapter.MyViewHolder> {
     private List<DashboardSalesPersonBean.sp_meetings_today> tasksList;
     Context context;
+    Fragment fragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView clientNameValueTodaysTask_tv,timeValueTodaysTask_tv, dateValueTodaysTask_tv;
@@ -39,9 +41,10 @@ public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTas
         }
     }
 
-    public TodaysTaskSalesPersonAdapter(Context context,List<DashboardSalesPersonBean.sp_meetings_today> tasksList) {
+    public TodaysTaskSalesPersonAdapter(Context context, List<DashboardSalesPersonBean.sp_meetings_today> tasksList, Fragment fragment) {
         this.tasksList = tasksList;
         this.context = context;
+        this.fragment = fragment;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTas
             public void onClick(View v) {
                 holder.plusTodaysTask_iv.setVisibility(View.GONE);
                 holder.minusTodaysTask_iv.setVisibility(View.VISIBLE);
+                context.getTotalTaskBean(bean);
             }
         });
 

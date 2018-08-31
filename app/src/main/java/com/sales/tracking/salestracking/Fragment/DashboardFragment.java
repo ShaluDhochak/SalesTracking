@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class DashboardFragment extends Fragment {
@@ -52,6 +54,23 @@ public class DashboardFragment extends Fragment {
     TextView countTotalCalls_tv;
     @BindView(R.id.countTotalLeads_tv)
     TextView countTotalLeads_tv;
+
+    //sales person details View
+    @BindView(R.id.minusTodaysTask_iv)
+    ImageView minusTodaysTask_iv;
+
+    @BindView(R.id.assignByTaskSalePersonValue_tv)
+            TextView assignByTaskSalePersonValue_tv;
+    @BindView(R.id.addressTaskSalePersonValue_tv)
+            TextView addressTaskSalePersonValue_tv;
+    @BindView(R.id.purposeTaskSalePersonValue_tv)
+            TextView purposeTaskSalePersonValue_tv ;
+    @BindView(R.id.clientNameValueTodaysTaskDetails_tv)
+            TextView clientNameValueTodaysTaskDetails_tv;
+    @BindView(R.id.timeValueTodaysTaskDetails_tv)
+            TextView timeValueTodaysTaskDetails_tv;
+
+
 
     View view;
     TodaysTaskSalesPersonAdapter todaysTaskSalesPersonAdapter;
@@ -217,7 +236,7 @@ public class DashboardFragment extends Fragment {
                                     spMeetingTodayList.clear();
                                     spMeetingTodayList.addAll(response.getSp_meetings_today());
 
-                                    todaysTaskSalesPersonAdapter = new TodaysTaskSalesPersonAdapter(getActivity(),response.getSp_meetings_today());
+                                    todaysTaskSalesPersonAdapter = new TodaysTaskSalesPersonAdapter(getActivity(),response.getSp_meetings_today(), this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                                     todayTaskSalesPerson_rv.setLayoutManager(mLayoutManager);
                                     todayTaskSalesPerson_rv.setItemAnimator(new DefaultItemAnimator());
@@ -237,6 +256,16 @@ public class DashboardFragment extends Fragment {
             dashboardGsonRequest.setShouldCache(false);
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
+    }
+
+    public void getTotalTaskBean(DashboardSalesPersonBean.sp_meetings_today bean){
+
+    }
+
+    @OnClick(R.id.minusTodaysTask_iv)
+    public void hideDetailsTask(){
+        todayTaskSalesPerson_rv.setVisibility(View.VISIBLE);
+
     }
 
 }

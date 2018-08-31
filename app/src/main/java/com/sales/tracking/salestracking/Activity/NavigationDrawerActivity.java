@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
+import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
+import com.sales.tracking.salestracking.Fragment.WorkingHoursAttendanceManagerFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 
@@ -267,6 +269,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageSalesPersonTarget();
             setDefaultManageSalesPerson();
             setDefaultManageClient();
+
+            workingHoursAttendanceFragment();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id==R.id.nav_view_collection)
         {
@@ -281,8 +286,10 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             session.logoutUser();
             drawer.closeDrawers();
 
-        }
-        else if (id==R.id.nav_manage_salesperson)
+        }else if(id==R.id.nav_view_meeting_tasks){              //Manager- View Meeting task
+            viewMeetingTaskManagerFragment();
+            drawer.closeDrawer(GravityCompat.START);
+        }else if (id==R.id.nav_manage_salesperson)
         {
             navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
@@ -530,6 +537,24 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         DashboardFragment dfragment = new DashboardFragment();
         FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
         dtransaction.replace(R.id.fragment_Container, dfragment);
+        dtransaction.commit();
+    }
+
+    public void workingHoursAttendanceFragment(){
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        WorkingHoursAttendanceManagerFragment wfragment = new WorkingHoursAttendanceManagerFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, wfragment);
+        dtransaction.commit();
+    }
+
+    public void viewMeetingTaskManagerFragment(){
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        ViewMeetingTaskManagerFragment vfragment = new ViewMeetingTaskManagerFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, vfragment);
         dtransaction.commit();
     }
 }
