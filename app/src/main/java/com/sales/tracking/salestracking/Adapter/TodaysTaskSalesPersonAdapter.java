@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sales.tracking.salestracking.Bean.DashboardSalesPersonBean;
+import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.sql.Time;
@@ -24,7 +25,7 @@ import java.util.List;
 public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTaskSalesPersonAdapter.MyViewHolder> {
     private List<DashboardSalesPersonBean.sp_meetings_today> tasksList;
     Context context;
-    Fragment fragment;
+    DashboardFragment fragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView clientNameValueTodaysTask_tv,timeValueTodaysTask_tv, dateValueTodaysTask_tv;
@@ -41,7 +42,7 @@ public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTas
         }
     }
 
-    public TodaysTaskSalesPersonAdapter(Context context, List<DashboardSalesPersonBean.sp_meetings_today> tasksList, Fragment fragment) {
+    public TodaysTaskSalesPersonAdapter(Context context, List<DashboardSalesPersonBean.sp_meetings_today> tasksList, DashboardFragment fragment) {
         this.tasksList = tasksList;
         this.context = context;
         this.fragment = fragment;
@@ -56,7 +57,7 @@ public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTas
 
     @Override
     public void onBindViewHolder(final TodaysTaskSalesPersonAdapter.MyViewHolder holder, final int position) {
-        DashboardSalesPersonBean.sp_meetings_today bean = tasksList.get(position);
+        final DashboardSalesPersonBean.sp_meetings_today bean = tasksList.get(position);
 
         holder.clientNameValueTodaysTask_tv.setText(bean.getLead_company());
 
@@ -74,7 +75,7 @@ public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTas
             public void onClick(View v) {
                 holder.plusTodaysTask_iv.setVisibility(View.GONE);
                 holder.minusTodaysTask_iv.setVisibility(View.VISIBLE);
-                context.getTotalTaskBean(bean);
+                fragment.getTotalTaskBean(bean);
             }
         });
 

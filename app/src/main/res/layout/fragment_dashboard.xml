@@ -437,7 +437,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_below="@+id/separatorBelowPurpose"
+                        android:layout_below="@+id/separatorBelowAddress"
                         android:layout_margin="10dp"
                         >
 
