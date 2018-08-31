@@ -1,40 +1,33 @@
 package com.sales.tracking.salestracking.Bean;
 
 public class InfoWindowData {
-    private String image;
-        private String hotel;
-        private String food;
-        private String transport;
+        private String name;
+        private String address;
 
-        public String getImage() {
-            return image;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setImage(String image) {
-            this.image = image;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public String getHotel() {
-            return hotel;
-        }
+    public String getAddress() {
+        return address;
+    }
 
-        public void setHotel(String hotel) {
-            this.hotel = hotel;
-        }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-        public String getFood() {
-            return food;
-        }
+    public String getContact() {
+        return contact;
+    }
 
-        public void setFood(String food) {
-            this.food = food;
-        }
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
-        public String getTransport() {
-            return transport;
-        }
+    private String contact;
 
-        public void setTransport(String transport) {
-            this.transport = transport;
-        }
 }

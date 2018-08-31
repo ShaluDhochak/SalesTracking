@@ -1,17 +1,38 @@
 package com.sales.tracking.salestracking.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
+import com.sales.tracking.salestracking.Adapter.TodaysTaskSalesPersonAdapter;
+import com.sales.tracking.salestracking.Bean.DashboardSalesPersonBean;
 import com.sales.tracking.salestracking.R;
+import com.sales.tracking.salestracking.Utility.ApiLink;
+import com.sales.tracking.salestracking.Utility.Connectivity;
+import com.sales.tracking.salestracking.Utility.GSONRequest;
+import com.sales.tracking.salestracking.Utility.Utilities;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class DashboardFragment extends Fragment {
@@ -19,18 +40,203 @@ public class DashboardFragment extends Fragment {
     @BindView(R.id.dashboardDetail_rv)
     RecyclerView dashboardDetail_rv;
 
+    @BindView(R.id.todayTaskSalesPerson_rv)    //Recycler view for Today's Task Sales Person
+    RecyclerView todayTaskSalesPerson_rv;
+
+    @BindView(R.id.salesHeader_rl)
+    RelativeLayout salesHeader_rl;
+
+    @BindView(R.id.countTotalMeeting_tv)
+    TextView countTotalMeeting_tv;
+    @BindView(R.id.countTotalCalls_tv)
+    TextView countTotalCalls_tv;
+    @BindView(R.id.countTotalLeads_tv)
+    TextView countTotalLeads_tv;
+
     View view;
+    TodaysTaskSalesPersonAdapter todaysTaskSalesPersonAdapter;
+    SharedPreferences sharedPref;
+    String userNamePref, userEmailPref, userTypePref;
+
+
+    ArrayList<DashboardSalesPersonBean.sp_meetings_today> spMeetingTodayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        ButterKnife.bind(this, view);
         initialiseUI();
         return view;
     }
 
     private void initialiseUI(){
 
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        userNamePref = sharedPref.getString("user_name", "");
+        userEmailPref = sharedPref.getString("user_email", "");
+        userTypePref = sharedPref.getString("user_type", "");
+
+
+        if (userTypePref.equals("Sales Executive")){
+
+            salesHeader_rl.setVisibility(View.VISIBLE);
+            dashboardDetail_rv.setVisibility(View.GONE);
+            getTodayMeeting();
+            getTotalLeads();
+            getTotalCalls();
+
+            getTodaysTaskRecyclerView();
+        }else if (userTypePref.equals("Sales Manager")){
+            salesHeader_rl.setVisibility(View.GONE);
+            dashboardDetail_rv.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void getTotalCalls(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+            Map<String, String> map = new HashMap<>();
+            map.put("count_b_calls", "");
+            map.put("service_uid", "20");
+
+            GSONRequest<DashboardSalesPersonBean> dashboardGsonRequest = new GSONRequest<DashboardSalesPersonBean>(
+                    Request.Method.POST,
+                    Url,
+                    DashboardSalesPersonBean.class, map,
+                    new com.android.volley.Response.Listener<DashboardSalesPersonBean>() {
+                        @Override
+                        public void onResponse(DashboardSalesPersonBean response) {
+                            try{
+                                if (response.getCalls_count().size()>0){
+                                    countTotalCalls_tv.setText(response.getCalls_count().get(0).getTot_calls());
+                                }
+                            }catch(Exception e){
+                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getTotalLeads(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+            Map<String, String> map = new HashMap<>();
+            map.put("count_c_leads", "");
+            map.put("lead_uid", "20");
+
+            GSONRequest<DashboardSalesPersonBean> dashboardGsonRequest = new GSONRequest<DashboardSalesPersonBean>(
+                    Request.Method.POST,
+                    Url,
+                    DashboardSalesPersonBean.class, map,
+                    new com.android.volley.Response.Listener<DashboardSalesPersonBean>() {
+                        @Override
+                        public void onResponse(DashboardSalesPersonBean response) {
+                            try{
+                                if (response.getLeads_count().size()>0){
+                                    countTotalLeads_tv.setText(response.getLeads_count().get(0).getTot_leads());
+                                }
+                            }catch(Exception e){
+                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getTodayMeeting() {
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+            Map<String, String> map = new HashMap<>();
+            map.put("count_a_meetings", "");
+            map.put("visit_uid", "20");
+
+            GSONRequest<DashboardSalesPersonBean> dashboardGsonRequest = new GSONRequest<DashboardSalesPersonBean>(
+                    Request.Method.POST,
+                    Url,
+                    DashboardSalesPersonBean.class, map,
+                    new com.android.volley.Response.Listener<DashboardSalesPersonBean>() {
+                        @Override
+                        public void onResponse(DashboardSalesPersonBean response) {
+                            try{
+                            if (response.getMeeting_count().size()>0){
+                                countTotalMeeting_tv.setText(response.getMeeting_count().get(0).getTot_meetings());
+                            }
+                            }catch(Exception e){
+                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getTodaysTaskRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+            Map<String, String> map = new HashMap<>();
+            map.put("visit_uid", "20");
+            map.put("sel_user_dash", "");
+            map.put("today", "");
+
+            GSONRequest<DashboardSalesPersonBean> dashboardGsonRequest = new GSONRequest<DashboardSalesPersonBean>(
+                    Request.Method.POST,
+                    Url,
+                    DashboardSalesPersonBean.class, map,
+                    new com.android.volley.Response.Listener<DashboardSalesPersonBean>() {
+                        @Override
+                        public void onResponse(DashboardSalesPersonBean response) {
+                            try{
+                                if (response.getSp_meetings_today().size()>0){
+                                    spMeetingTodayList.clear();
+                                    spMeetingTodayList.addAll(response.getSp_meetings_today());
+
+                                    todaysTaskSalesPersonAdapter = new TodaysTaskSalesPersonAdapter(getActivity(),response.getSp_meetings_today());
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                                    todayTaskSalesPerson_rv.setLayoutManager(mLayoutManager);
+                                    todayTaskSalesPerson_rv.setItemAnimator(new DefaultItemAnimator());
+                                    todayTaskSalesPerson_rv.setAdapter(todaysTaskSalesPersonAdapter);
+
+                                }
+                            }catch(Exception e){
+                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
     }
 
 }

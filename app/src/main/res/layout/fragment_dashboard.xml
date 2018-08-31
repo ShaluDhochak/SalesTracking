@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.DashboardFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.DashboardFragment"
+    android:background="@drawable/screen_bg_navigation">
 
     <ScrollView
         android:id="@+id/scrollView_dashboard"
@@ -12,7 +14,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+
+        >
 
         <RelativeLayout
             android:id="@+id/titleDashboard_rl"
@@ -41,8 +45,191 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             />
 
+        <RelativeLayout
+            android:id="@+id/salesHeader_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+
+            >
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/salesPersonHeader_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/salesPersonHeaderOption_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    >
+
+                <RelativeLayout
+                    android:id="@+id/salesPersonMeeting_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/meeting_iv"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/meeting_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+
+                        />
+                    <TextView
+                        android:id="@+id/totalMeetingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Meetings : "
+                        android:textSize="12sp"
+                        android:textColor="@color/textcolor"
+                        android:layout_below="@+id/meeting_iv"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/countTotalMeeting_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="0"
+                        android:textSize="14sp"
+                        android:textColor="@color/orange_count"
+                        android:textColorHint="@color/orange_count"
+                        android:layout_toRightOf="@+id/totalMeetingHeading_tv"
+                        android:layout_below="@+id/meeting_iv"
+                        />
+
+                </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/salesPersonTotalCalls_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/totalCalls_iv"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/calls"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <TextView
+                        android:id="@+id/totalCallsHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Calls : "
+                        android:textSize="12sp"
+                        android:textColor="@color/textcolor"
+                        android:layout_below="@+id/totalCalls_iv"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/countTotalCalls_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="0"
+                        android:textColor="@color/orange_count"
+                        android:textSize="14sp"
+                        android:textColorHint="@color/orange_count"
+                        android:layout_toRightOf="@+id/totalCallsHeading_tv"
+                        android:layout_below="@+id/totalCalls_iv"
+                        />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/salesPersonTotalLeads_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/totalLeads_iv"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/leads"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+
+                            />
+                        <TextView
+                            android:id="@+id/totalLeadsHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Leads : "
+                            android:textSize="12sp"
+                            android:textColor="@color/textcolor"
+                            android:layout_below="@+id/totalLeads_iv"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="10dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/countTotalLeads_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="5"
+                            android:textSize="14sp"
+                            android:textColor="@color/orange_count"
+                            android:textColorHint="@color/orange_count"
+                            android:layout_toRightOf="@+id/totalLeadsHeading_tv"
+                            android:layout_below="@+id/totalLeads_iv"
+                            />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/todayTaskSalesPerson_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/salesPersonHeader_cv"
+                    >
+
+                    <TextView
+                        android:id="@+id/todayTaskHeading_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Today's Task"
+                        android:textSize="17dp"
+                        android:textColor="@color/textcolor"
+                        android:textStyle="bold"
+                        android:layout_margin="10dp"
+                        />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/todayTaskSalesPerson_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/todayTaskHeading_tv"/>
+
+                </RelativeLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
     </ScrollView>
 </FrameLayout>

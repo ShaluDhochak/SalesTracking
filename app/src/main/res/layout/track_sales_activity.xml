@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+   <RelativeLayout
+       android:id="@+id/headerTrackeSales_rl"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       >
+       <include
+           layout="@layout/header_layout"/>
+
+   </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/titleTrackSales_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/title_bg"
+        android:layout_below="@+id/headerTrackeSales_rl">
+
+        <TextView
+            android:id="@+id/titleTrackSalesPerson_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Track Sales Person"
+            android:textColor="@android:color/white"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:textStyle="bold"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/haeddingTrackSales_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleTrackSales_rl"
+        >
+        <include
+            layout="@layout/activity_track_sales_person"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

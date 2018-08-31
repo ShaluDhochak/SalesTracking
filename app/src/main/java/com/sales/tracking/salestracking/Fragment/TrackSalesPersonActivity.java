@@ -2,6 +2,7 @@ package com.sales.tracking.salestracking.Fragment;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Adapter.CustomInfoWindowGoogleMap;
 import com.sales.tracking.salestracking.Bean.InfoWindowData;
 import com.sales.tracking.salestracking.R;
@@ -29,7 +33,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TrackSalesPersonActivity extends FragmentActivity implements OnMapReadyCallback{
+public class TrackSalesPersonActivity extends FragmentActivity implements OnMapReadyCallback,View.OnClickListener{
+
+    ImageView drawerIcon_iv;
 
     private GoogleMap mMap;
     //private MarkerOptions options = new MarkerOptions();
@@ -40,7 +46,10 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_track_sales_person);
+        setContentView(R.layout.track_sales_activity);
+
+        drawerIcon_iv = (ImageView) findViewById(R.id.drawerIcon_iv);
+        drawerIcon_iv.setOnClickListener(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -54,9 +63,7 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
 
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-       /* LatLng marker1 = new LatLng(19.0604489, 72.8369127);
-        LatLng marker2= new LatLng(18.5233964, 73.9317373);
-
+       /*
         // Markers All day long
         markersList.add(mMap.addMarker(new MarkerOptions().position(marker1).title("Pune").snippet("Android").snippet("android2")));
         markersList.add(mMap.addMarker(new MarkerOptions().position(marker2)));
@@ -67,50 +74,58 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setMinZoomPreference(1);
 
-        LatLng snowqualmie = new LatLng(47.5287132, -121.8253906);
-        LatLng mumbai = new LatLng(19.0604489, 72.8369127);
+        LatLng marker1 = new LatLng(19.0604489, 72.8369127);
+        LatLng marker2= new LatLng(18.5233964, 73.9317373);
 
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(snowqualmie)
-                .title("Snowqualmie Falls")
-                .snippet("Snoqualmie Falls is located 25 miles east of Seattle.")
+        markerOptions.position(marker1)
+                .title("")
+                .snippet("")
                 .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_BLUE));
 
         MarkerOptions markerOptions1 = new MarkerOptions();
-        markerOptions1.position(mumbai)
-                .title("Mumbai here")
-                .snippet("located in india")
+        markerOptions1.position(marker2)
+                .title("")
+                .snippet("")
                 .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_CYAN));
 
         InfoWindowData info = new InfoWindowData();
-        info.setImage("snowqualmie");
-        info.setHotel("Hotel : excellent hotels available");
-        info.setFood("Food : all types of restaurants available");
-        info.setTransport("Reach the site by bus, car and train.");
+         info.setName("Mayuri");
+        info.setAddress("Mumbai");
+        info.setContact("2266114422");
 
         InfoWindowData info1 = new InfoWindowData();
-        info1.setImage("shalu");
-        info1.setHotel("Hotel : shalu dhochak");
-        info1.setFood("Food : all type");
-        info1.setTransport("reach there");
+        info1.setName("shalu dhochak");
+        info1.setAddress("Pune");
+        info1.setContact("2211223322");
 
         CustomInfoWindowGoogleMap customInfoWindow1 = new CustomInfoWindowGoogleMap(this);
         mMap.setInfoWindowAdapter(customInfoWindow1);
 
-        Marker m1 = mMap.addMarker(markerOptions1);
+        final Marker m1 = mMap.addMarker(markerOptions1);
         m1.setTag(info1);
-        m1.showInfoWindow();
+      //  m1.showInfoWindow();
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mumbai, 7.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker1, 7.0f));
 
         CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
         mMap.setInfoWindowAdapter(customInfoWindow);
 
-        Marker m = mMap.addMarker(markerOptions);
+        final Marker m = mMap.addMarker(markerOptions);
         m.setTag(info);
-        m.showInfoWindow();
+       // m.showInfoWindow();
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(snowqualmie, 7.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker2, 7.0f));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                marker.showInfoWindow();
+
+                return false;
+            }
+        });
 
         /*
         final JSONArray array = new JSONArray(jsonStrOportunidades);
@@ -160,4 +175,14 @@ for (int i = 0; i < array.length(); i++)
          */
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.drawerIcon_iv :
+                Intent backIntent  =new Intent(TrackSalesPersonActivity.this, NavigationDrawerActivity.class);
+                backIntent.putExtra("drawer_Open", "open_track_sales" );
+                startActivity(backIntent);
+                break;
+        }
+    }
 }

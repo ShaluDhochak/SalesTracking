@@ -21,35 +21,26 @@ public class CustomInfoWindowGoogleMap implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
-        return null;
-    }
 
-    @Override
-    public View getInfoContents(Marker marker) {
         View view = ((Activity)context).getLayoutInflater()
                 .inflate(R.layout.marher_info_content, null);
 
         TextView name_tv = view.findViewById(R.id.name);
-        TextView details_tv = view.findViewById(R.id.details);
-        ImageView img = view.findViewById(R.id.pic);
-
-        TextView hotel_tv = view.findViewById(R.id.hotels);
-        TextView food_tv = view.findViewById(R.id.food);
-        TextView transport_tv = view.findViewById(R.id.transport);
-
-        name_tv.setText(marker.getTitle());
-        details_tv.setText(marker.getSnippet());
+        TextView addressDetails_tv = view.findViewById(R.id.addressDetails);
+        TextView contactDetails_tv = view.findViewById(R.id.contactDetails);
+        //  name_tv.setText(marker.getTitle());
+        // addressDetails_tv.setText(marker.getSnippet());
 
         InfoWindowData infoWindowData = (InfoWindowData) marker.getTag();
-
-        int imageId = context.getResources().getIdentifier(infoWindowData.getImage().toLowerCase(),
-                "drawable", context.getPackageName());
-        img.setImageResource(imageId);
-
-        hotel_tv.setText(infoWindowData.getHotel());
-        food_tv.setText(infoWindowData.getFood());
-        transport_tv.setText(infoWindowData.getTransport());
+        name_tv.setText(infoWindowData.getName());
+        contactDetails_tv.setText(infoWindowData.getContact());
+        addressDetails_tv.setText(infoWindowData.getAddress());
 
         return view;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
     }
 }

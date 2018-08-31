@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
@@ -41,7 +42,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     SessionManagement session;
 
     SharedPreferences sharedPref;
-    String userNamePref, userEmailPref;
+    String userNamePref, userEmailPref, userTypePref;
+
+    String drawer_Open = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +55,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     }
 
     private void initialiseUI(){
-
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(NavigationDrawerActivity.this);
         userNamePref = sharedPref.getString("user_name", "");
         userEmailPref = sharedPref.getString("user_email", "");
+        userTypePref = sharedPref.getString("user_type", "");
 
         session = new SessionManagement(getApplicationContext());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,6 +85,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().getItem(17).setActionView(R.layout.menu_layout);
         navigationView.getMenu().getItem(20).setActionView(R.layout.menu_layout);
 
+        navigationView.getMenu().getItem(25).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(28).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(31).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(35).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(38).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(41).setActionView(R.layout.menu_layout);
+        navigationView.getMenu().getItem(45).setActionView(R.layout.menu_layout);
+
         View hView =  navigationView.getHeaderView(0);
         nav_user = (TextView)hView.findViewById(R.id.usernameHeading_tv);
         userEmailHeading_tv = (TextView) hView.findViewById(R.id.userEmailHeading_tv);
@@ -103,7 +106,30 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         nav_user.setText(userNamePref);
         userEmailHeading_tv.setText(userEmailPref);
 
+        dashboardFragment();
+
+        setDrawerFromActivity();
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (userTypePref.equals("Sales Executive")){
+            navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, true);
+            navigationView.getMenu().setGroupVisible(R.id.main_option, false);
+        }else if (userTypePref.equals("Sales Manager")){
+            navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.main_option, true);
+        }
+
+    }
+
+    private void setDrawerFromActivity(){
+        drawer_Open = getIntent().getStringExtra("drawer_Open");
+    try {
+        if (drawer_Open.equals("open_track_sales")) {
+            drawer.openDrawer(GravityCompat.START);
+        } else {
+
+        }
+    }catch(Exception e){ }
     }
 
     @Override
@@ -138,7 +164,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (id == R.id.nav_dashboard)
         {
@@ -251,11 +276,171 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageSalesPerson();
             setDefaultManageClient();
         }
-        else if (id==R.id.nav_layout)
+        else if (id==R.id.nav_logout)
         {
             session.logoutUser();
             drawer.closeDrawers();
+
         }
+        else if (id==R.id.nav_manage_salesperson)
+        {
+            navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.main_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
+
+            navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+
+        }
+        else if (id==R.id.nav_manager_salesperson_title)
+        {
+            navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.main_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, true);
+
+            navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, false);
+
+        }
+        else if(id==R.id.nav_attendance_salesperson)
+        {
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_visit_tasks_salesperson)
+        {
+            navigationView.getMenu().getItem(29).setVisible(true);
+            navigationView.getMenu().getItem(30).setVisible(true);
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_view_visit_tasks_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_add_visit_tasks_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_call_task_salesperson)
+        {
+
+            navigationView.getMenu().getItem(32).setVisible(true);
+            navigationView.getMenu().getItem(33).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_view_call_task_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_add_call_task_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_create_visit_task_salesperson)
+        {
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_request_salesperson)
+        {
+            navigationView.getMenu().getItem(36).setVisible(true);
+            navigationView.getMenu().getItem(37).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_view_request_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_add_request_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_lead_salesperson)
+        {
+            navigationView.getMenu().getItem(39).setVisible(true);
+            navigationView.getMenu().getItem(40).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultCustomerFeedbackSalesPerson();
+        }else if(id==R.id.nav_view_lead_salesperson)
+        {
+
+        }else if(id==R.id.nav_add_lead_salesperson)
+        {
+
+        }else if(id==R.id.nav_expenses_salesperson)
+        {
+            navigationView.getMenu().getItem(42).setVisible(true);
+            navigationView.getMenu().getItem(43).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if (id==R.id.nav_view_expenses_salesperson)
+        {
+
+        }
+        else if (id==R.id.nav_add_expenses_salesperson)
+        {
+
+        }
+        else if(id==R.id.nav_view_totalcollection)
+        {
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if (id==R.id.nav_customerfeedback_salesperson)
+        {
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            navigationView.getMenu().getItem(46).setVisible(true);
+            navigationView.getMenu().getItem(47).setVisible(true);
+        }
+        else if (id==R.id.nav_view_customerfeedback_salesperson)
+        {
+
+        }else if(id==R.id.nav_add_customerfeedback_salesperson)
+        {
+
+        }
+
         return true;
     }
 
@@ -263,6 +448,37 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_option, true);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+    }
+
+    private void setDefaultVisitTaskSalesPerson(){
+        navigationView.getMenu().getItem(29).setVisible(false);
+        navigationView.getMenu().getItem(30).setVisible(false);
+    }
+
+    private void setDefaultCallsTaskSalesPerson(){
+        navigationView.getMenu().getItem(32).setVisible(false);
+        navigationView.getMenu().getItem(33).setVisible(false);
+    }
+
+    private void setDefaultRequestSalesPerson(){
+        navigationView.getMenu().getItem(36).setVisible(false);
+        navigationView.getMenu().getItem(37).setVisible(false);
+    }
+
+    private void setDefaultLeadSalesPerson(){
+        navigationView.getMenu().getItem(39).setVisible(false);
+        navigationView.getMenu().getItem(40).setVisible(false);
+    }
+
+    private void setDefaultCustomerFeedbackSalesPerson(){
+        navigationView.getMenu().getItem(46).setVisible(false);
+        navigationView.getMenu().getItem(47).setVisible(false);
+    }
+
+    private void setDefaultSalesPersonExpenses(){
+
+        navigationView.getMenu().getItem(42).setVisible(false);
+        navigationView.getMenu().getItem(43).setVisible(false);
     }
 
     private void setDefaultExpenses(){

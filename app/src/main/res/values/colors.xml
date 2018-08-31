@@ -21,4 +21,5 @@
     <color name="header_bg1">#30a8fe</color>
 
     <color name="title_bg">#2c2c43</color>
+    <color name="orange_count">#ffb04e</color>
 </resources>
