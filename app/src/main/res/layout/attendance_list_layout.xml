@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/attendanceDetails_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        android:layout_margin="5dp"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/attendancePerson_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RelativeLayout
+                android:id="@+id/dateAttendance_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="visible"
+                >
+                <TextView
+                    android:id="@+id/dateAttendanceHeading_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textSize="12sp"
+                    android:textColor="@color/textcolor"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/dateValueAttendance_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="01 August, 2018"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/dateAttendanceHeading_tv"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/timeAttendance_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                >
+                <TextView
+                    android:id="@+id/timeAttendanceHeading_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:textSize="10sp"
+                    android:textColor="@color/textcolor"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/timeValueAttendance_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="06:00 PM"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/timeAttendanceHeading_tv"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/nameAttendance_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:id="@+id/nameAttendanceHeading_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sales Person"
+                    android:textSize="10sp"
+                    android:textColor="@color/textcolor"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/nameValueAttendance_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Shalu Dhochak"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/nameAttendanceHeading_tv"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/plusMinusTodaysTask_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+
+                >
+                <ImageView
+                    android:id="@+id/deleteAttendance_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus_color_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="3dp"
+                    android:visibility="gone"
+                    />
+
+                <ImageView
+                    android:id="@+id/editAttendance_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus_color_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="3dp"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@+id/deleteAttendance_iv"
+                    />
+
+                <ImageView
+                    android:id="@+id/plusAttendance_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus_color_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/editAttendance_iv"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+</RelativeLayout>

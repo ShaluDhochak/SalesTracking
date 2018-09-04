@@ -11,6 +11,8 @@ public interface ApiLink {
     //Dashboard Sales Exceutive
     String Dashboard_SalesPerson ="task_meeting.php";
 
+    String Attendance_Manager = "sp_attendance.php";
+
     /*
             )
   ( 1 to 3 is for counts  and 4 th to view all records  of meetings of   sales executive today on dashboard ).

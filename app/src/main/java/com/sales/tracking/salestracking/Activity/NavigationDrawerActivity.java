@@ -22,8 +22,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
+import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 
@@ -262,19 +264,25 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_workinghours_attendance)
         {
+
+            attendanceFragment();
+            drawer.closeDrawer(GravityCompat.START);
             setDefaultManageTask();
             setDefaultExpenses();
             setDefaultManageSalesPersonTarget();
             setDefaultManageSalesPerson();
             setDefaultManageClient();
         }
-        else if (id==R.id.nav_view_collection)
+        else if (id==R.id.nav_view_collection)    //manager View Total Collection
         {
             setDefaultManageTask();
             setDefaultExpenses();
             setDefaultManageSalesPersonTarget();
             setDefaultManageSalesPerson();
             setDefaultManageClient();
+
+            totalCollectionManagerFragment();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id==R.id.nav_logout)
         {
@@ -531,5 +539,21 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
         dtransaction.replace(R.id.fragment_Container, dfragment);
         dtransaction.commit();
+    }
+
+    public void attendanceFragment(){
+      //  navigationView.getMenu().getItem(0).setChecked(true);
+
+        AttendanceManagerFragment attendancefragment = new AttendanceManagerFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, attendancefragment);
+        atransaction.commit();
+    }
+
+    public void totalCollectionManagerFragment(){
+        ViewTotalCollectionFragment vfragment = new ViewTotalCollectionFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vfragment);
+        atransaction.commit();
     }
 }

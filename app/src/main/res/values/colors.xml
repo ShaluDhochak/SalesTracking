@@ -22,4 +22,6 @@
 
     <color name="title_bg">#2c2c43</color>
     <color name="orange_count">#ffb04e</color>
+
+    <color name="green_box_bg">#00828f</color>
 </resources>

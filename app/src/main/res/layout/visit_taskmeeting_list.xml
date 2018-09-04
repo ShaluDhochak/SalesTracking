@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/visitTaskMeetingDetails_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        android:layout_margin="5dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/visitTaskMeetingPerson_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RelativeLayout
+                android:id="@+id/dateVisitTaskMeeting_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="visible"
+                >
+                <TextView
+                    android:id="@+id/dateVisitTaskMeetingHeading_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="12sp"
+                    android:textColor="@color/textcolor"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/dateValueVisitTaskMeeting_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="01 August, 2018"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/dateVisitTaskMeetingHeading_tv"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/timeVisitTaskMeeting_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:id="@+id/timeVisitTaskMeetingHeading_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="10sp"
+                    android:textColor="@color/textcolor"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/timeValueVisitTaskMeeting_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="06:00 PM"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/timeVisitTaskMeetingHeading_tv"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/plusMinusVisitTaskMeeting_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+
+                >
+                <ImageView
+                    android:id="@+id/deleteVisitTaskMeeting_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus_color_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="3dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/editVisitTaskMeeting_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus_color_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="3dp"
+                    android:layout_toRightOf="@+id/deleteVisitTaskMeeting_iv"
+                    />
+
+                <ImageView
+                    android:id="@+id/plusVisitTaskMeeting_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus_color_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/editVisitTaskMeeting_iv"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

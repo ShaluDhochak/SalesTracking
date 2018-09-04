@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/screen_bg_navigation"
+    tools:context=".Fragment.ViewTotalCollectionFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_viewCollection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <RelativeLayout
+        android:id="@+id/titleViewCollection_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/title_bg">
+
+        <TextView
+            android:id="@+id/titleViewCollection_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Total Collection"
+            android:textColor="@android:color/white"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/salesViewCollectionHeader_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/viewCollectionManager_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
+    </RelativeLayout>
+
+
+
+    </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>
