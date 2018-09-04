@@ -60,17 +60,15 @@ public class DashboardFragment extends Fragment {
     ImageView minusTodaysTask_iv;
 
     @BindView(R.id.assignByTaskSalePersonValue_tv)
-            TextView assignByTaskSalePersonValue_tv;
+    TextView assignByTaskSalePersonValue_tv;
     @BindView(R.id.addressTaskSalePersonValue_tv)
-            TextView addressTaskSalePersonValue_tv;
+    TextView addressTaskSalePersonValue_tv;
     @BindView(R.id.purposeTaskSalePersonValue_tv)
-            TextView purposeTaskSalePersonValue_tv ;
+    TextView purposeTaskSalePersonValue_tv ;
     @BindView(R.id.clientNameValueTodaysTaskDetails_tv)
-            TextView clientNameValueTodaysTaskDetails_tv;
+    TextView clientNameValueTodaysTaskDetails_tv;
     @BindView(R.id.timeValueTodaysTaskDetails_tv)
-            TextView timeValueTodaysTaskDetails_tv;
-
-
+    TextView timeValueTodaysTaskDetails_tv;
 
     View view;
     TodaysTaskSalesPersonAdapter todaysTaskSalesPersonAdapter;
@@ -96,7 +94,6 @@ public class DashboardFragment extends Fragment {
         userEmailPref = sharedPref.getString("user_email", "");
         userTypePref = sharedPref.getString("user_type", "");
 
-
         if (userTypePref.equals("Sales Executive")){
 
             salesHeader_rl.setVisibility(View.VISIBLE);
@@ -104,7 +101,6 @@ public class DashboardFragment extends Fragment {
             getTodayMeeting();
             getTotalLeads();
             getTotalCalls();
-
             getTodaysTaskRecyclerView();
         }else if (userTypePref.equals("Sales Manager")){
             salesHeader_rl.setVisibility(View.GONE);
@@ -259,7 +255,6 @@ public class DashboardFragment extends Fragment {
     }
 
     public void getTotalTaskBean(DashboardSalesPersonBean.sp_meetings_today bean){
-
     }
 
     @OnClick(R.id.minusTodaysTask_iv)
