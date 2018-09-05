@@ -3,12 +3,960 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.ViewMeetingTaskManagerFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.ViewMeetingTaskManagerFragment"
+    android:background="@drawable/screen_bg_navigation">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        android:id="@+id/scrollView_viewMeetingTask"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/titleViewMeetingTask_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:id="@+id/titleViewMeetingTask_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Meeting Task"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/salesViewMeetingTaskHeader_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/viewMeetingTaskManager_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/viewMeetingTaskeDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/salesViewMeetingTaskHeader_rl"
+                >
+                <RelativeLayout
+                    android:id="@+id/viewMeetingTaskDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/dateViewMeetingTask_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="3"
+                        android:orientation="horizontal"
+                        android:background="@color/active_bg"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/dateViewMeetingTask_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_box_bg"
+                            android:layout_weight="1"
+                            >
+
+                            <TextView
+                                android:id="@+id/dateViewMeetingTaskHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/dateViewMeetingTask_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="01 August, 2018"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/dateViewMeetingTaskHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/timeMeetingTaskDetail_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/green_box_bg"
+                            >
+                            <TextView
+                                android:id="@+id/timeMeetingTaskDetailHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Time"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/timeValueMeetingTaskDetail_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="6:oo pm"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/timeMeetingTaskDetailHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editMinusViewMeetingTask_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@color/green_box_bg">
+
+                            <ImageView
+                                android:id="@+id/deleteVisitTaskMeetingDetail_iv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/delete_white_icon"
+                                android:layout_marginRight="3dp"
+                                />
+
+                            <ImageView
+                                android:id="@+id/editVisitTaskMeetingDetail_iv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/edit_icon"
+                                android:layout_marginRight="3dp"
+                                android:layout_toRightOf="@+id/deleteVisitTaskMeetingDetail_iv"
+                                />
+
+                            <ImageView
+                                android:id="@+id/minusVisitTaskMeetingDetail_iv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/minus_white_icon"
+                                android:layout_toRightOf="@+id/editVisitTaskMeetingDetail_iv"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/clientNameMeetingTaskDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dateViewMeetingTask_ll"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/clientNameMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Client Name"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/clientNameMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/clientNameMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowClientNameMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/clientNameMeetingTaskDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/assignToViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowClientNameMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/assignToViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assigned To"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/assignToViewMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/assignToViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowAssignToViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/assignToViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/purposeViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowAssignToViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/purposeViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Purpose"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/purposeViewMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/purposeViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowPurposeViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/purposeViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+                    <RelativeLayout
+                        android:id="@+id/addressViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowPurposeViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/addressViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/addressViewMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/addressViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowAddressViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/addressViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/descriptionViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowAddressViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/descriptionViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/descriptionViewMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/descriptionViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowDescriptionViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/descriptionViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/photoViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowDescriptionViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/photoViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Photo"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <ImageView
+                            android:id="@+id/photoViewMeetingTask_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/photoViewMeetingTaskHeading_tv"
+                            android:src="@drawable/default_img"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowPhotoViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/photoViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/statusViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowPhotoViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/statusViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/statusViewMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/statusViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/editViewMeetingTaskeDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/viewMeetingTaskeDetails_cv"
+                >
+                <RelativeLayout
+                    android:id="@+id/editViewMeetingTaskDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/dateEditViewMeetingTask_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="3"
+                        android:orientation="horizontal"
+                        android:background="@color/active_bg"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/dateEditViewMeetingTask_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_box_bg"
+                            android:layout_weight="1"
+                            >
+
+                            <TextView
+                                android:id="@+id/datEditViewMeetingTaskHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/dateEditViewMeetingTask_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="01 August, 2018"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/datEditViewMeetingTaskHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/timeEditViewMeetingTaskDetail_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/green_box_bg"
+                            >
+                            <TextView
+                                android:id="@+id/timeEditViewMeetingTaskDetailHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Time"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/timeEditViewValueMeetingTaskDetail_et"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="6:oo pm"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/timeEditViewMeetingTaskDetailHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editEditViewMeetingTask_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@color/green_box_bg">
+
+                            <ImageView
+                                android:id="@+id/deletEditVieweVisitTaskMeetingDetail_iv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/delete_white_icon"
+                                android:layout_marginRight="3dp"
+                                android:visibility="gone"
+                                />
+
+                            <ImageView
+                                android:id="@+id/editEditViewVisitTaskMeetingDetail_iv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/edit_icon"
+                                android:layout_marginRight="3dp"
+                                android:visibility="gone"
+                                android:layout_toRightOf="@+id/deletEditVieweVisitTaskMeetingDetail_iv"
+                                />
+                            <TextView
+                                android:id="@+id/editOkButtonVisitTaskMeetingDetail_tv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:text="OK"
+                                android:textColor="@android:color/white"
+                                />
+
+                            <ImageView
+                                android:id="@+id/minusEditViewVisitTaskMeetingDetail_iv"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/minus_white_icon"
+
+                                android:layout_toRightOf="@+id/editOkButtonVisitTaskMeetingDetail_tv"
+                                />
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/clientNameEditMeetingTaskDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editViewEditMeetingTaskDetail_rl"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/clientNameEditMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Client Name"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <Spinner
+                            android:id="@+id/clientNameEditMeetingTask_sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/clientNameEditMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowClientNameEditMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/clientNameEditMeetingTaskDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/assignToEditViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowClientNameEditMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/assignToEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assigned To"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <Spinner
+                            android:id="@+id/assignToEditViewMeetingTask_sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/assignToEditViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowAssignToEditViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/assignToEditViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/purposeEditViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowAssignToEditViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/purposeEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Purpose"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <Spinner
+                            android:id="@+id/purposeEditViewMeetingTask_sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/purposeEditViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowPurposeEditViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/purposeEditViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+                    <RelativeLayout
+                        android:id="@+id/addresseditViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowPurposeEditViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/addressEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/addressEditViewMeetingTask_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/addressEditViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowAddressEditViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/addresseditViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/descriptionEditViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowAddressEditViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/descriptionEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/descriptionEditViewMeetingTask_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/descriptionEditViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowDescriptionEditViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/descriptionEditViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/photoEditViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowDescriptionEditViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/photoEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Photo"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <ImageView
+                            android:id="@+id/photoEditViewMeetingTask_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/photoEditViewMeetingTaskHeading_tv"
+                            android:src="@drawable/default_img"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowPhotoEditViewMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/photoEditViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/statusEditViewMeetingTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowPhotoEditViewMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/statusEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/statusEditViewMeetingTask_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/statusEditViewMeetingTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </RelativeLayout>
+    </ScrollView>
 
 </FrameLayout>

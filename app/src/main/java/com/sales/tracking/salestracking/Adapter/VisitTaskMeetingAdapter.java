@@ -8,14 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sales.tracking.salestracking.Bean.DashboardSalesPersonBean;
+import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
+import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
 public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeetingAdapter.MyViewHolder> {
-    private List<DashboardSalesPersonBean.sp_meetings_today> tasksList;
+    private List<TaskMeetingBean.All_Meetings_Mgr> tasksList;
     Context context;
+    ViewMeetingTaskManagerFragment viewMeetingTaskManagerFragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView dateValueVisitTaskMeeting_tv,timeValueVisitTaskMeeting_tv;
@@ -34,9 +36,10 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
         }
     }
 
-    public VisitTaskMeetingAdapter(Context context,List<DashboardSalesPersonBean.sp_meetings_today> tasksList) {
+    public VisitTaskMeetingAdapter(Context context,List<TaskMeetingBean.All_Meetings_Mgr> tasksList, ViewMeetingTaskManagerFragment viewMeetingTaskManagerFragment) {
         this.tasksList = tasksList;
         this.context = context;
+        this.viewMeetingTaskManagerFragment = viewMeetingTaskManagerFragment;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
 
     @Override
     public void onBindViewHolder(final VisitTaskMeetingAdapter.MyViewHolder holder, final int position) {
-        DashboardSalesPersonBean.sp_meetings_today bean = tasksList.get(position);
+        TaskMeetingBean.All_Meetings_Mgr bean = tasksList.get(position);
 
         String date = bean.getVisit_datetime();
         String[] date1 = date.split(" ");
@@ -62,7 +65,7 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
         holder.plusVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                viewMeetingTaskManagerFragment.getViewMeetingTask(tasksList.get(position));
             }
         });
 

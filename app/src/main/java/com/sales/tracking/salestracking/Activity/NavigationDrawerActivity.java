@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
+import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
+import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
@@ -224,6 +226,22 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageClient();
             navigationView.getMenu().getItem(21).setVisible(true);
             navigationView.getMenu().getItem(22).setVisible(true);
+        }else if(id==R.id.nav_view_meeting_tasks){
+            viewMeetingTaskFragment();
+            drawer.closeDrawer(GravityCompat.START);
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+        }else if (id==R.id.nav_view_salescalls_tasks){
+            viewSaleCallTaskFragment();
+            drawer.closeDrawer(GravityCompat.START);
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
         }
         else if (id==R.id.nav_manage_sales_person_target)
         {
@@ -547,6 +565,20 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         AttendanceManagerFragment attendancefragment = new AttendanceManagerFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, attendancefragment);
+        atransaction.commit();
+    }
+
+    public void viewMeetingTaskFragment(){
+        ViewMeetingTaskManagerFragment vfragment = new ViewMeetingTaskManagerFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vfragment);
+        atransaction.commit();
+    }
+
+    public void viewSaleCallTaskFragment(){
+        ViewSalesCallTaskFragment vsfragment = new ViewSalesCallTaskFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vsfragment);
         atransaction.commit();
     }
 
