@@ -22,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
@@ -242,8 +243,15 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageSalesPersonTarget();
             setDefaultManageSalesPerson();
             setDefaultManageClient();
-        }
-        else if (id==R.id.nav_manage_sales_person_target)
+        }else if (id==R.id.nav_add_manage_tasks) {
+            addMeetingSaleCallTaskFragment();
+            drawer.closeDrawer(GravityCompat.START);
+            setDefaultManageTask();
+            setDefaultExpenses();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+        }else if (id==R.id.nav_manage_sales_person_target)
         {
             setDefaultExpenses();
             setDefaultManageTask();
@@ -581,6 +589,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.replace(R.id.fragment_Container, vsfragment);
         atransaction.commit();
     }
+    public void addMeetingSaleCallTaskFragment(){
+        AddMeetingTaskFragment addfragment = new AddMeetingTaskFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, addfragment);
+        atransaction.commit();
+    }
+
 
     public void totalCollectionManagerFragment(){
         ViewTotalCollectionFragment vfragment = new ViewTotalCollectionFragment();

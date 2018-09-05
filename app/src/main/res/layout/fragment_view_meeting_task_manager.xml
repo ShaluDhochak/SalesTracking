@@ -63,6 +63,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="visible"
                 android:layout_below="@+id/salesViewMeetingTaskHeader_rl"
                 >
                 <RelativeLayout
@@ -154,32 +155,34 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="right|center"
                             android:background="@color/green_box_bg">
 
                             <ImageView
                                 android:id="@+id/deleteVisitTaskMeetingDetail_iv"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/delete_white_icon"
                                 android:layout_marginRight="3dp"
+                                android:visibility="gone"
                                 />
 
                             <ImageView
                                 android:id="@+id/editVisitTaskMeetingDetail_iv"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/edit_icon"
                                 android:layout_marginRight="3dp"
+                                android:visibility="gone"
                                 android:layout_toRightOf="@+id/deleteVisitTaskMeetingDetail_iv"
                                 />
 
                             <ImageView
                                 android:id="@+id/minusVisitTaskMeetingDetail_iv"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
                                 android:src="@drawable/minus_white_icon"
-                                android:layout_toRightOf="@+id/editVisitTaskMeetingDetail_iv"
                                 />
 
                         </RelativeLayout>
@@ -464,6 +467,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/separatorBelowPhotoViewMeetingTask"
                         android:layout_weight="4.5"
+                        android:visibility="visible"
                         >
 
                         <TextView
@@ -509,6 +513,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="visible"
                 android:layout_below="@+id/viewMeetingTaskeDetails_cv"
                 >
                 <RelativeLayout
@@ -623,16 +628,20 @@
                                 />
                             <TextView
                                 android:id="@+id/editOkButtonVisitTaskMeetingDetail_tv"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
                                 android:text="OK"
+                                android:textSize="17sp"
+                                android:gravity="center"
+                                android:layout_centerVertical="true"
                                 android:textColor="@android:color/white"
                                 />
 
                             <ImageView
                                 android:id="@+id/minusEditViewVisitTaskMeetingDetail_iv"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
                                 android:src="@drawable/minus_white_icon"
 
                                 android:layout_toRightOf="@+id/editOkButtonVisitTaskMeetingDetail_tv"
@@ -647,7 +656,7 @@
                         android:id="@+id/clientNameEditMeetingTaskDetail_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/editViewEditMeetingTaskDetail_rl"
+                        android:layout_below="@+id/dateEditViewMeetingTask_ll"
                         android:layout_weight="4.5"
                         >
 
@@ -659,21 +668,19 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
 
                         <Spinner
                             android:id="@+id/clientNameEditMeetingTask_sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/clientNameEditMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="1dp"
                             />
 
                     </RelativeLayout>
@@ -704,21 +711,19 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
 
                         <Spinner
                             android:id="@+id/assignToEditViewMeetingTask_sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/assignToEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="1dp"
                             />
 
                     </RelativeLayout>
@@ -749,21 +754,20 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
 
                         <Spinner
                             android:id="@+id/purposeEditViewMeetingTask_sp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/purposeEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="1dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="10dp"
+
                             />
 
                     </RelativeLayout>
@@ -794,21 +798,23 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
+                            android:layout_marginBottom="5dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
 
                         <EditText
                             android:id="@+id/addressEditViewMeetingTask_et"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/addressEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint=""
+                            android:hint="Pune"
+                            android:textColorHint="@android:color/black"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
+                            android:background="@android:color/transparent"
                             />
 
                     </RelativeLayout>
@@ -840,21 +846,23 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
+                            android:layout_marginBottom="5dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
 
                         <EditText
                             android:id="@+id/descriptionEditViewMeetingTask_et"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/descriptionEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint=""
+                            android:hint="Description here"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
+                            android:textColorHint="@android:color/black"
                             android:layout_marginLeft="10dp"
+                            android:background="@android:color/transparent"
                             />
 
                     </RelativeLayout>
@@ -912,7 +920,7 @@
                         android:layout_below="@+id/photoEditViewMeetingTask_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         />
 
                     <RelativeLayout
@@ -921,6 +929,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/separatorBelowPhotoEditViewMeetingTask"
                         android:layout_weight="4.5"
+                        android:visibility="gone"
                         >
 
                         <TextView
@@ -936,8 +945,8 @@
                             android:textColor="@color/textcolor"
                             />
 
-                        <EditText
-                            android:id="@+id/statusEditViewMeetingTask_et"
+                        <Spinner
+                            android:id="@+id/statusEditViewMeetingTask_sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/statusEditViewMeetingTaskHeading_tv"

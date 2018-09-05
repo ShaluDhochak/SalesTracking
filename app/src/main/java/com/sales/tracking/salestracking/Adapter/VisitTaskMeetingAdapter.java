@@ -73,13 +73,14 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
         holder.deleteVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                viewMeetingTaskManagerFragment.getDeleteMeetingTask(tasksList.get(position));
             }
         });
 
         holder.editVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewMeetingTaskManagerFragment.getEditViewMeetingTask(tasksList.get(position));
 
             }
         });

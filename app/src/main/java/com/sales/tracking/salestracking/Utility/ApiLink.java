@@ -13,6 +13,8 @@ public interface ApiLink {
 
     String Attendance_Manager = "sp_attendance.php";
 
+    String TASK_SERVICECALL ="task_servicecall.php"; //adding SALES CALL
+
     /*
             )
   ( 1 to 3 is for counts  and 4 th to view all records  of meetings of   sales executive today on dashboard ).
