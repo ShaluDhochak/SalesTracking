@@ -2,6 +2,8 @@ package com.sales.tracking.salestracking.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.AttendanceAddapter;
+import com.sales.tracking.salestracking.Adapter.SpAttendanceAdapter;
 import com.sales.tracking.salestracking.Adapter.TodaysTaskSalesPersonAdapter;
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
 import com.sales.tracking.salestracking.Bean.DashboardSalesPersonBean;
@@ -33,6 +36,8 @@ import com.sales.tracking.salestracking.Utility.Utilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -69,13 +74,13 @@ public class AttendanceManagerFragment extends Fragment {
     @BindView(R.id.outLocationAttendance_tv)
     TextView outLocationAttendance_tv;
 
-
-
     SharedPreferences sharedPref;
     String userIdPref, userTypePref;
 
     AttendanceAddapter attendanceAddapter;
-    ArrayList<AttendanceManagerBean.Sp_Att_Und_Mgr> spAttendanceList = new ArrayList<>();
+    ArrayList<AttendanceManagerBean.Sp_Att_Und_Mgr> attendanceList = new ArrayList<>();
+    SpAttendanceAdapter spAttendanceAddapter;
+    ArrayList<AttendanceManagerBean.Single_sp_att> spAttendanceList = new ArrayList<>();
 
 
     @Override
@@ -99,6 +104,8 @@ public class AttendanceManagerFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
         if (userTypePref.equals("Sales Manager")) {
             getAttendanceRecyclerView();
+        }else if (userTypePref.equals("Sales Executive")){
+            getSPAttendanceRecyclerView();
         }
 
         viewAttendanceDetails_cv.setVisibility(View.GONE);
@@ -110,6 +117,8 @@ public class AttendanceManagerFragment extends Fragment {
         attendanceDetail_rv.setVisibility(View.VISIBLE);
         if (userTypePref.equals("Sales Manager")) {
             getAttendanceRecyclerView();
+        }else if (userTypePref.equals("Sales Executive")){
+            getSPAttendanceRecyclerView();
         }
     }
 
@@ -127,14 +136,37 @@ public class AttendanceManagerFragment extends Fragment {
         location.setLatitude(Double.parseDouble(bean.getAtten_out_latitude()));
         location.setLongitude(Double.parseDouble(bean.getAtten_out_longitude()));
        // location.setTime(new Date().getTime()); //Set time as current Date
-        outLocationAttendance_tv.setText(location.toString());
 
         dateViewAttendance_tv.setText(indate1[0]);
         salesPersonValueAttendanceDetail_tv.setText(bean.getUser_name());
         inTimeAttendance_tv.setText(indate1[1]);
-        inLocationAttendance_tv.setText(bean.getAtten_in_latitude());
+        inLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_in_latitude()),Double.parseDouble(bean.getAtten_in_longitude())));
         outTimeAttendance_tv.setText(outDate1[1]);
-    //    outLocationAttendance_tv.setText(bean.getAtten_out_longitude());
+        outLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_out_latitude()),Double.parseDouble(bean.getAtten_out_longitude())));
+
+        //    outLocationAttendance_tv.setText(bean.getAtten_out_longitude());
+    }
+
+    public void getSpAttendanceData(AttendanceManagerBean.Single_sp_att bean){
+        viewAttendanceDetails_cv.setVisibility(View.VISIBLE);
+        attendanceDetail_rv.setVisibility(View.GONE);
+
+        String indate = bean.getAtten_in_datetime();
+        String[] indate1 = indate.split( " ");
+
+        String outDate = bean.getAtten_out_datetime();
+        String[] outDate1 = outDate.split(" ");
+
+
+        dateViewAttendance_tv.setText(indate1[0]);
+        salesPersonValueAttendanceDetail_tv.setText(bean.getUser_name());
+        inTimeAttendance_tv.setText(convertIn12Hours(indate1[1]));
+
+        inLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_in_latitude()),Double.parseDouble(bean.getAtten_in_longitude())));
+     //   inLocationAttendance_tv.setText(bean.getAtten_in_latitude());
+        outTimeAttendance_tv.setText(convertIn12Hours(outDate1[1]));
+        outLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_out_latitude()),Double.parseDouble(bean.getAtten_out_longitude())));
+
     }
 
     private void getAttendanceRecyclerView(){
@@ -156,8 +188,8 @@ public class AttendanceManagerFragment extends Fragment {
                             try{
                                 if (response.getSp_att_und_mgr().size()>0){
                                 // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
-                                    spAttendanceList.clear();
-                                    spAttendanceList.addAll(response.getSp_att_und_mgr());
+                                    attendanceList.clear();
+                                    attendanceList.addAll(response.getSp_att_und_mgr());
 
                                     attendanceAddapter = new AttendanceAddapter(getActivity(),response.getSp_att_und_mgr(), AttendanceManagerFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -182,5 +214,82 @@ public class AttendanceManagerFragment extends Fragment {
         }
     }
 
+    private String convertIn12Hours(String time){
+
+        String timeToDisplay = "";
+        String[] timeArray = time.split(":");
+        Integer hours = Integer.parseInt(timeArray[0]);
+
+        if(hours > 12){
+            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+        }else{
+            timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
+        }
+
+        return timeToDisplay;
+    }
+
+    private void getSPAttendanceRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
+            Map<String, String> map = new HashMap<>();
+            map.put("select", "");
+            map.put("atten_uid", userIdPref);
+
+            GSONRequest<AttendanceManagerBean> dashboardGsonRequest = new GSONRequest<AttendanceManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    AttendanceManagerBean.class, map,
+                    new com.android.volley.Response.Listener<AttendanceManagerBean>() {
+                        @Override
+                        public void onResponse(AttendanceManagerBean response) {
+                            try{
+                                if (response.getSingle_sp_att().size()>0){
+                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
+                                    spAttendanceList.clear();
+                                    spAttendanceList.addAll(response.getSingle_sp_att());
+
+                                    spAttendanceAddapter = new SpAttendanceAdapter(getActivity(),response.getSingle_sp_att(), AttendanceManagerFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    attendanceDetail_rv.setLayoutManager(mLayoutManager);
+                                    attendanceDetail_rv.setItemAnimator(new DefaultItemAnimator());
+                                    attendanceDetail_rv.setAdapter(spAttendanceAddapter);
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return strAdd;
+    }
 
 }

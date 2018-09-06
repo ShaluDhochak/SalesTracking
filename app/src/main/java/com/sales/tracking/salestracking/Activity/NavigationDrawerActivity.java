@@ -29,6 +29,7 @@ import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
+import com.sales.tracking.salestracking.Fragment.ViewVisitTaskSpFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 
@@ -315,6 +316,10 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             session.logoutUser();
             drawer.closeDrawers();
 
+        }else if (id==R.id.nav_sale_person_dashboard){
+            dashboardFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
         }
         else if (id==R.id.nav_manage_salesperson)
         {
@@ -344,6 +349,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_attendance_salesperson)
         {
+            attendanceFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
             setDefaultVisitTaskSalesPerson();
             setDefaultCallsTaskSalesPerson();
             setDefaultRequestSalesPerson();
@@ -363,6 +371,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_view_visit_tasks_salesperson)
         {
+            viewVisitTaskSpFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
+            navigationView.getMenu().getItem(29).setVisible(true);
+            navigationView.getMenu().getItem(30).setVisible(true);
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
 
         }
         else if(id==R.id.nav_add_visit_tasks_salesperson)
@@ -593,6 +611,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         AddMeetingTaskFragment addfragment = new AddMeetingTaskFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, addfragment);
+        atransaction.commit();
+    }
+
+    public void viewVisitTaskSpFragment(){
+        ViewVisitTaskSpFragment vspfragment = new ViewVisitTaskSpFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vspfragment);
         atransaction.commit();
     }
 

@@ -66,15 +66,14 @@ public class TodaysTaskSalesPersonAdapter extends RecyclerView.Adapter<TodaysTas
         holder.dateValueTodaysTask_tv.setText(date1[0]);
 
         String time = date1[1];
-        holder.timeValueTodaysTask_tv.setText(time);
+        holder.timeValueTodaysTask_tv.setText( fragment.convertIn12Hours(time));
 
         holder.minusTodaysTask_iv.setVisibility(View.GONE);
 
         holder.plusTodaysTask_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.plusTodaysTask_iv.setVisibility(View.GONE);
-                holder.minusTodaysTask_iv.setVisibility(View.VISIBLE);
+                // holder.minusTodaysTask_iv.setVisibility(View.VISIBLE);
                 fragment.getTotalTaskBean(bean);
             }
         });

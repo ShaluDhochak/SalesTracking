@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.VisitTaskUpdateSpFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_updateVisitTaskSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/titleUpdateVisitTaskSp_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:id="@+id/titleUpdateVisitTaskSp_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Update Visit Task"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/editUpdateVisitTaskSpDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"
+                >
+                <RelativeLayout
+                    android:id="@+id/updateVisitTaskSpDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <RelativeLayout
+                        android:id="@+id/vtaskUpdateVisitTaskSpDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/vtaskUpdateVisitTaskSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Visit Task"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <Spinner
+                            android:id="@+id/vtaskUpdateVisitTaskSp_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vtaskUpdateVisitTaskSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowVtaskUpdateVisitTaskSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/vtaskUpdateVisitTaskSpDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+
+                    <RelativeLayout
+                        android:id="@+id/commentUpdateVisitTaskSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowVtaskUpdateVisitTaskSp"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/commentUpdateVisitTaskSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Comments"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/commentUpdateVisitTaskSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/commentUpdateVisitTaskSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Date"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowCommentUpdateVisitTaskSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/commentUpdateVisitTaskSp_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/photoUpdateVisitTaskSpDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        android:layout_below="@+id/separatorBelowCommentUpdateVisitTaskSp"
+                        >
+
+                        <TextView
+                            android:id="@+id/photoUpdateVisitTaskSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Photo"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/photoUpdateVisitTaskSp_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/photoUpdateVisitTaskSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="select"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowPhotoUpdateVisitTaskSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/photoUpdateVisitTaskSpDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/statusUpdateVisitTaskSpDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        android:layout_below="@+id/separatorBelowPhotoUpdateVisitTaskSp"
+                        >
+
+                        <TextView
+                            android:id="@+id/statusUpdateVisitTaskSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <Spinner
+                            android:id="@+id/statusUpdateVisitTaskSp_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/statusUpdateVisitTaskSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowStatusUpdateVisitTaskSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/statusUpdateVisitTaskSpDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+                    <RelativeLayout
+                        android:id="@+id/dateUpdateVisitTaskSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowStatusUpdateVisitTaskSp"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/dateUpdateVisitTaskSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/dateUpdateVisitTaskSp_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dateUpdateVisitTaskSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Date"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+                    <View
+                        android:id="@+id/separatorBelowDateUpdateVisitTaskSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/dateUpdateVisitTaskSp_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/timeUpdateVisitTaskSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowDateUpdateVisitTaskSp"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/timeUpdateVisitTaskSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Time"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/timeUpdateVisitTaskSp_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/timeUpdateVisitTaskSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Time"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/submitUpdateVisitTaskSp_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SUBMIt"
+                        android:layout_below="@+id/timeUpdateVisitTaskSp_rl"
+                        android:background="@color/active_bg"
+                        android:textColor="@android:color/white"
+                        />
+
+                    <Button
+                        android:id="@+id/submitAddSalesCallTask_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SUBMIt"
+                        android:layout_below="@+id/phoneAddMeetingTask_rl"
+                        android:background="@color/active_bg"
+                        android:textColor="@android:color/white"
+                        />
+
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -202,10 +202,6 @@
                     android:id="@+id/todayTaskSalesPerson_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="10dp"
                     android:layout_below="@+id/salesPersonHeader_cv"
                     >
 
@@ -263,7 +259,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Time"
-                                android:layout_centerHorizontal="true"
                                 android:textSize="10sp"
                                 android:textColor="@android:color/white"
                                 android:paddingTop="10dp"
@@ -279,7 +274,6 @@
                                 android:hint="06:00 PM"
                                 android:textColor="@android:color/white"
                                 android:textSize="14dp"
-                                android:layout_centerHorizontal="true"
                                 android:layout_below="@+id/timeHeadingDetails_tv"
                                 android:paddingLeft="10dp"
                                 android:paddingBottom="10dp"
@@ -299,7 +293,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Client Name"
-                                android:layout_centerHorizontal="true"
                                 android:textSize="10sp"
                                 android:textColor="@android:color/white"
                                 android:paddingTop="10dp"
@@ -315,7 +308,6 @@
                                 android:hint="Shalu Dhochak"
                                 android:textColor="@android:color/white"
                                 android:textSize="14dp"
-                                android:layout_centerHorizontal="true"
                                 android:layout_below="@+id/clientNameHeadingDetails_tv"
                                 android:paddingLeft="10dp"
                                 android:paddingBottom="10dp"
@@ -331,7 +323,7 @@
                             android:layout_weight="1"
                             >
                             <ImageView
-                                android:id="@+id/plusTodaysTask_iv"
+                                android:id="@+id/plusDashboardTodaysTask_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/plus_white_icon"
@@ -341,7 +333,7 @@
                                 />
 
                             <ImageView
-                                android:id="@+id/minusTodaysTask_iv"
+                                android:id="@+id/minusDashboardTodaysTask_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/minus_white_icon"
@@ -468,6 +460,7 @@
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
                         android:layout_below="@+id/assignByTaskSalesPerson_ll"
+                        android:visibility="gone"
                         />
 
 
