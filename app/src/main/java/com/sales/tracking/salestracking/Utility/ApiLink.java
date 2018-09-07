@@ -13,7 +13,10 @@ public interface ApiLink {
 
     String Attendance_Manager = "sp_attendance.php";
 
-    String TASK_SERVICECALL ="task_servicecall.php"; //adding SALES CALL
+    String TASK_SERVICECALL ="task_servicecall.php";
+
+    String VISIT_TASK_SPINNER = "sp_visitupdate.php";
+    //adding SALES CALL
 
     /*
             )

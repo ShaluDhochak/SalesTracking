@@ -119,8 +119,6 @@ public class AddMeetingTaskFragment extends Fragment {
     @BindView(R.id.dateAddViewMeetingTask_rl)
     RelativeLayout dateAddViewMeetingTask_rl;
 
-
-
     String selectTaskType, selectTaskTypeId, selectPurpose, selectPurposeId, selectclientName, selectClientNameId, selectAssignTo, selectAssignToId;
     String currentuserName, currentClientUserName, currentPurposeName;
 
@@ -131,7 +129,6 @@ public class AddMeetingTaskFragment extends Fragment {
     Map<String, String> purposeNameMap = new HashMap<>();
     Map<String, String> clientNameMap = new HashMap<>();
     Map<String, String> assignToUserMap = new HashMap<>();
-
 
     DatePickerDialog datePickerDialog;
     ProgressDialog pDialog;
