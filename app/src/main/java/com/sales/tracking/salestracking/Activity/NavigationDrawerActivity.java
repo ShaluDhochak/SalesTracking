@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
+import com.sales.tracking.salestracking.Fragment.RequestViewFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
@@ -438,6 +439,17 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         else if(id==R.id.nav_view_request_salesperson)
         {
 
+            viewRequestTaskSpFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
+
+            navigationView.getMenu().getItem(36).setVisible(true);
+            navigationView.getMenu().getItem(37).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
         }
         else if(id==R.id.nav_add_request_salesperson)
         {
@@ -635,6 +647,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         VisitTaskUpdateSpFragment uspfragment = new VisitTaskUpdateSpFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, uspfragment);
+        atransaction.commit();
+    }
+
+    public void viewRequestTaskSpFragment(){
+        RequestViewFragment rvfragment = new RequestViewFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, rvfragment);
         atransaction.commit();
     }
 

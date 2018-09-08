@@ -18,6 +18,8 @@ public interface ApiLink {
     String VISIT_TASK_SPINNER = "sp_visitupdate.php";
     //adding SALES CALL
 
+    String REQUEST_VIEW_SP = "request_salesperson.php";
+
     /*
             )
   ( 1 to 3 is for counts  and 4 th to view all records  of meetings of   sales executive today on dashboard ).
