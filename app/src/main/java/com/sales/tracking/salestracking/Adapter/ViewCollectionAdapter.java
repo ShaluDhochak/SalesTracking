@@ -9,18 +9,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sales.tracking.salestracking.Bean.CollectionListBean;
 import com.sales.tracking.salestracking.Bean.DashboardSalesPersonBean;
+import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
 public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAdapter.MyViewHolder> {
-    private List<DashboardSalesPersonBean.sp_meetings_today> tasksList;
+    private List<CollectionListBean.Collections> tasksList;
+    ViewTotalCollectionFragment viewTotalCollectionFragment;
     Context context;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView dateValueCollection_tv,salesPersonValueCollection_tv;
-        ImageView deleteCollection_iv,plusCollection_iv, minusViewLead_iv;
+        ImageView deleteCollection_iv;
 
         CardView viewCollectionDetails_cv,collectionDetails_cv;
 
@@ -34,13 +37,13 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
             salesPersonValueCollection_tv = (TextView) view.findViewById(R.id.salesPersonValueCollection_tv);
 
             deleteCollection_iv = (ImageView) view.findViewById(R.id.deleteCollection_iv);
-            plusCollection_iv = (ImageView) view.findViewById(R.id.plusCollection_iv);
         }
     }
 
-    public ViewCollectionAdapter(Context context,List<DashboardSalesPersonBean.sp_meetings_today> tasksList) {
+    public ViewCollectionAdapter(Context context, List<CollectionListBean.Collections> tasksList, ViewTotalCollectionFragment viewTotalCollectionFragment) {
         this.tasksList = tasksList;
         this.context = context;
+        this.viewTotalCollectionFragment = viewTotalCollectionFragment;
     }
 
     @Override
@@ -52,42 +55,18 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
 
     @Override
     public void onBindViewHolder(final ViewCollectionAdapter.MyViewHolder holder, final int position) {
-        DashboardSalesPersonBean.sp_meetings_today bean = tasksList.get(position);
+        CollectionListBean.Collections bean = tasksList.get(position);
 
-        holder.salesPersonValueCollection_tv.setText(bean.getLead_company());
+        holder.salesPersonValueCollection_tv.setText(bean.getCollection_amount());
+        holder.dateValueCollection_tv.setText(bean.getCollection_date());
 
-        String date = bean.getVisit_datetime();
-        String[] date1 = date.split(" ");
-        holder.dateValueCollection_tv.setText(date1[0]);
-
-        String time = date1[1];
-        holder.dateValueCollection_tv.setText(time);
         holder.viewCollectionDetails_cv.setVisibility(View.GONE);
-           holder.collectionDetails_cv.setVisibility(View.VISIBLE);
-
-        holder.plusCollection_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.viewCollectionDetails_cv.setVisibility(View.VISIBLE);
-                holder.collectionDetails_cv.setVisibility(View.GONE);
-
-            }
-        });
-
-        holder.minusViewLead_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.viewCollectionDetails_cv.setVisibility(View.GONE);
-                holder.collectionDetails_cv.setVisibility(View.VISIBLE);
-
-            }
-        });
+        holder.collectionDetails_cv.setVisibility(View.VISIBLE);
 
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                viewTotalCollectionFragment.getDeleteTotalCollection(tasksList.get(position));
             }
         });
     }

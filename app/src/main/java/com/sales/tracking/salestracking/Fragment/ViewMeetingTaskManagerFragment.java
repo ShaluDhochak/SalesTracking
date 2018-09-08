@@ -324,7 +324,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         timeEditViewValueMeetingTaskDetail_et.setText(indate1[1]);
 
         descriptionEditViewMeetingTask_et.setText(bean.getVisit_comments());
-
     }
 
     @OnClick(R.id.dateEditViewMeetingTask_tv)

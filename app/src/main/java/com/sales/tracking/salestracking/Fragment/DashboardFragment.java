@@ -241,7 +241,7 @@ public class DashboardFragment extends Fragment {
                                     spMeetingTodayList.addAll(response.getSp_meetings_today());
 
                                     todaysTaskSalesPersonAdapter = new TodaysTaskSalesPersonAdapter(getActivity(),response.getSp_meetings_today(), DashboardFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     todayTaskSalesPerson_rv.setLayoutManager(mLayoutManager);
                                     todayTaskSalesPerson_rv.setItemAnimator(new DefaultItemAnimator());
                                     todayTaskSalesPerson_rv.setAdapter(todaysTaskSalesPersonAdapter);

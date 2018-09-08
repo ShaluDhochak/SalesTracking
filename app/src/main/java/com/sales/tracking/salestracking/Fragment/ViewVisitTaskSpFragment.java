@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -93,7 +94,6 @@ public class ViewVisitTaskSpFragment extends Fragment {
     SharedPreferences sharedPref;
     String userIdPref, userTypePref;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -116,8 +116,6 @@ public class ViewVisitTaskSpFragment extends Fragment {
             getviewVisitTaskSpRecyclerView();
         }
         viewVisitSpTaskDetails_cv.setVisibility(View.GONE);
-
-
     }
 
     private void getviewVisitTaskSpRecyclerView(){

@@ -140,7 +140,6 @@ public class RequestViewFragment extends Fragment {
         type_id = bean.getRequest_type_id().toString();
 
         getSPRequestTask();
-
     }
 
     private void getSPRequestViewRecyclerView(){

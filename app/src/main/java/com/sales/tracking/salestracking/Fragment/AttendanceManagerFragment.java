@@ -157,7 +157,6 @@ public class AttendanceManagerFragment extends Fragment {
         String outDate = bean.getAtten_out_datetime();
         String[] outDate1 = outDate.split(" ");
 
-
         dateViewAttendance_tv.setText(indate1[0]);
         salesPersonValueAttendanceDetail_tv.setText(bean.getUser_name());
         inTimeAttendance_tv.setText(convertIn12Hours(indate1[1]));

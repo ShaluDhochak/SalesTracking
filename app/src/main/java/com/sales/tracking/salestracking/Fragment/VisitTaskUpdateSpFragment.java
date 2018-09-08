@@ -1,6 +1,7 @@
 package com.sales.tracking.salestracking.Fragment;
 
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,7 +38,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +100,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
     private static final String TAG_MESSAGE = "message";
 
     JSONParser jsonParser = new JSONParser();
+    TimePickerDialog timePickerDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,7 +113,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         initialiseUI();
     }
 
@@ -236,7 +240,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             visit_comment = commentUpdateVisitTaskSp_et.getText().toString();
 
             visit_date = dateUpdateVisitTaskSp_tv.getText().toString();
-            visit_time = "20:00:00";
+            visit_time = timeUpdateVisitTaskSp_tv.getText().toString();
             visit_status = selectedTaskStatusId;
             visit_photo = "";
             visit_id= selectedvisit_id;
@@ -302,6 +306,23 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         timeUpdateVisitTaskSp_tv.setText("");
         vtaskUpdateVisitTaskSp_sp.setSelection(0);
 
+    }
+
+    @OnClick(R.id.timeUpdateVisitTaskSp_tv)
+    public void updateVisitTime(){
+        final String time;
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss a");
+        time = simpleDateFormat.format(mcurrentTime.getTime());
+        timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                timeUpdateVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute + ":00" + ((selectedHour>=12) ? " PM" : " AM"));
+            }
+        }, hour, minute, true);//Yes 24 hour time
+        timePickerDialog.show();
     }
 
 }

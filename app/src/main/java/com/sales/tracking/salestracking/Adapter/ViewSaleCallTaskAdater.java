@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
@@ -16,17 +17,18 @@ import com.sales.tracking.salestracking.R;
 import java.util.List;
 
 public class ViewSaleCallTaskAdater  extends RecyclerView.Adapter<ViewSaleCallTaskAdater.MyViewHolder> {
-    private List<TaskMeetingBean.All_Meetings_Mgr> tasksList;
+    private List<SalesCallTaskSpBean.Sp_All_Service_Calls> tasksList;
     Context context;
     ViewSalesCallTaskFragment viewSalesCallTaskFragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView dateValueVisitTaskMeeting_tv,timeValueVisitTaskMeeting_tv;
+        TextView dateValueVisitTaskMeeting_tv,timeValueVisitTaskMeeting_tv, timeVisitTaskMeetingHeading_tv;
         ImageView plusVisitTaskMeeting_iv,editVisitTaskMeeting_iv, deleteVisitTaskMeeting_iv;
 
         MyViewHolder(View view) {
             super(view);
 
+            timeVisitTaskMeetingHeading_tv = (TextView) view.findViewById(R.id.timeVisitTaskMeetingHeading_tv);
             timeValueVisitTaskMeeting_tv = (TextView) view.findViewById(R.id.timeValueVisitTaskMeeting_tv);
             dateValueVisitTaskMeeting_tv = (TextView) view.findViewById(R.id.dateValueVisitTaskMeeting_tv);
 
@@ -37,7 +39,7 @@ public class ViewSaleCallTaskAdater  extends RecyclerView.Adapter<ViewSaleCallTa
         }
     }
 
-    public ViewSaleCallTaskAdater(Context context,List<TaskMeetingBean.All_Meetings_Mgr> tasksList, ViewSalesCallTaskFragment viewSalesCallTaskFragment) {
+    public ViewSaleCallTaskAdater(Context context,List<SalesCallTaskSpBean.Sp_All_Service_Calls> tasksList, ViewSalesCallTaskFragment viewSalesCallTaskFragment) {
         this.tasksList = tasksList;
         this.context = context;
         this.viewSalesCallTaskFragment = viewSalesCallTaskFragment;
@@ -52,21 +54,22 @@ public class ViewSaleCallTaskAdater  extends RecyclerView.Adapter<ViewSaleCallTa
 
     @Override
     public void onBindViewHolder(final ViewSaleCallTaskAdater.MyViewHolder holder, final int position) {
-        TaskMeetingBean.All_Meetings_Mgr bean = tasksList.get(position);
+        SalesCallTaskSpBean.Sp_All_Service_Calls bean = tasksList.get(position);
 
-        String date = bean.getVisit_datetime();
+        holder.timeVisitTaskMeetingHeading_tv.setText("Client Name");
+        holder.timeValueVisitTaskMeeting_tv.setText(bean.getLead_company());
+
+        String date = bean.getService_createddt();
         String[] date1 = date.split(" ");
         holder.dateValueVisitTaskMeeting_tv.setText(date1[0]);
 
-        String time = date1[1];
-        holder.timeValueVisitTaskMeeting_tv.setText(time);
-
-        holder.editVisitTaskMeeting_iv.setVisibility(View.VISIBLE);
+        holder.editVisitTaskMeeting_iv.setVisibility(View.GONE);
+        holder.deleteVisitTaskMeeting_iv.setVisibility(View.GONE);
 
         holder.plusVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-          //      viewMeetingTaskManagerFragment.getViewMeetingTask(tasksList.get(position));
+                viewSalesCallTaskFragment.getViewSaleCallTask(tasksList.get(position));
             }
         });
 

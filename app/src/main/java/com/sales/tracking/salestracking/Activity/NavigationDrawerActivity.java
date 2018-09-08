@@ -22,14 +22,20 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sales.tracking.salestracking.Fragment.AddLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
+import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
+import com.sales.tracking.salestracking.Fragment.RequestAddFragment;
 import com.sales.tracking.salestracking.Fragment.RequestViewFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
+import com.sales.tracking.salestracking.Fragment.UpdateSaleCallTaskFragment;
+import com.sales.tracking.salestracking.Fragment.ViewLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
+import com.sales.tracking.salestracking.Fragment.ViewTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.ViewVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.VisitTaskUpdateSpFragment;
 import com.sales.tracking.salestracking.R;
@@ -246,7 +252,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageSalesPersonTarget();
             setDefaultManageSalesPerson();
             setDefaultManageClient();
-        }else if (id==R.id.nav_add_manage_tasks) {
+        }
+
+        else if (id==R.id.nav_add_manage_tasks) {
             addMeetingSaleCallTaskFragment();
             drawer.closeDrawer(GravityCompat.START);
             setDefaultManageTask();
@@ -400,7 +408,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_call_task_salesperson)
         {
-
             navigationView.getMenu().getItem(32).setVisible(true);
             navigationView.getMenu().getItem(33).setVisible(true);
             setDefaultVisitTaskSalesPerson();
@@ -411,14 +418,35 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_view_call_task_salesperson)
         {
+            viewSaleCallTaskFragment();
+            drawer.closeDrawer(GravityCompat.START);
 
+            navigationView.getMenu().getItem(32).setVisible(true);
+            navigationView.getMenu().getItem(33).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
         }
         else if(id==R.id.nav_add_call_task_salesperson)
         {
+            updateSaleCallTaskFragment();
+            drawer.closeDrawer(GravityCompat.START);
 
+            navigationView.getMenu().getItem(32).setVisible(true);
+            navigationView.getMenu().getItem(33).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
         }
         else if(id==R.id.nav_create_visit_task_salesperson)
         {
+            addVisitTaskSpFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
             setDefaultVisitTaskSalesPerson();
             setDefaultCallsTaskSalesPerson();
             setDefaultRequestSalesPerson();
@@ -438,10 +466,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_view_request_salesperson)
         {
-
             viewRequestTaskSpFragment();
             drawer.closeDrawer(GravityCompat.START);
-
 
             navigationView.getMenu().getItem(36).setVisible(true);
             navigationView.getMenu().getItem(37).setVisible(true);
@@ -453,7 +479,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_add_request_salesperson)
         {
+            addRequestTaskSpFragment();
+            drawer.closeDrawer(GravityCompat.START);
 
+            navigationView.getMenu().getItem(36).setVisible(true);
+            navigationView.getMenu().getItem(37).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
         }
         else if(id==R.id.nav_lead_salesperson)
         {
@@ -464,13 +499,34 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultRequestSalesPerson();
             setDefaultSalesPersonExpenses();
             setDefaultCustomerFeedbackSalesPerson();
-        }else if(id==R.id.nav_view_lead_salesperson)
+        }
+        else if(id==R.id.nav_view_lead_salesperson)
         {
+            viewLeadSpFragment();
+            drawer.closeDrawer(GravityCompat.START);
 
-        }else if(id==R.id.nav_add_lead_salesperson)
+            navigationView.getMenu().getItem(39).setVisible(true);
+            navigationView.getMenu().getItem(40).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_add_lead_salesperson)
         {
+            addLeadSpFragment();
+            drawer.closeDrawer(GravityCompat.START);
 
-        }else if(id==R.id.nav_expenses_salesperson)
+            navigationView.getMenu().getItem(39).setVisible(true);
+            navigationView.getMenu().getItem(40).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultCustomerFeedbackSalesPerson();
+        }
+        else if(id==R.id.nav_expenses_salesperson)
         {
             navigationView.getMenu().getItem(42).setVisible(true);
             navigationView.getMenu().getItem(43).setVisible(true);
@@ -482,7 +538,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if (id==R.id.nav_view_expenses_salesperson)
         {
+            viewTotalExpensesFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
 
+            navigationView.getMenu().getItem(42).setVisible(true);
+            navigationView.getMenu().getItem(43).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
         }
         else if (id==R.id.nav_add_expenses_salesperson)
         {
@@ -490,6 +555,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if(id==R.id.nav_view_totalcollection)
         {
+            totalCollectionManagerFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
             setDefaultVisitTaskSalesPerson();
             setDefaultCallsTaskSalesPerson();
             setDefaultRequestSalesPerson();
@@ -550,13 +618,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     }
 
     private void setDefaultSalesPersonExpenses(){
-
         navigationView.getMenu().getItem(42).setVisible(false);
         navigationView.getMenu().getItem(43).setVisible(false);
     }
 
     private void setDefaultExpenses(){
-
         navigationView.getMenu().getItem(21).setVisible(false);
         navigationView.getMenu().getItem(22).setVisible(false);
     }
@@ -622,6 +688,12 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.replace(R.id.fragment_Container, vfragment);
         atransaction.commit();
     }
+    public void addMeetingSaleCallTaskFragment(){
+        AddMeetingTaskFragment addfragment = new AddMeetingTaskFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, addfragment);
+        atransaction.commit();
+    }
 
     public void viewSaleCallTaskFragment(){
         ViewSalesCallTaskFragment vsfragment = new ViewSalesCallTaskFragment();
@@ -629,10 +701,23 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.replace(R.id.fragment_Container, vsfragment);
         atransaction.commit();
     }
-    public void addMeetingSaleCallTaskFragment(){
-        AddMeetingTaskFragment addfragment = new AddMeetingTaskFragment();
+    public void updateSaleCallTaskFragment(){
+        UpdateSaleCallTaskFragment updateSaleCallTaskFragment = new UpdateSaleCallTaskFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
-        atransaction.replace(R.id.fragment_Container, addfragment);
+        atransaction.replace(R.id.fragment_Container, updateSaleCallTaskFragment);
+        atransaction.commit();
+    }
+
+    public void addLeadSpFragment(){
+        AddLeadSpFragment addLeadSpFragment = new AddLeadSpFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, addLeadSpFragment);
+        atransaction.commit();
+    }
+    public void viewLeadSpFragment(){
+        ViewLeadSpFragment viewLeadSpFragment = new ViewLeadSpFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, viewLeadSpFragment);
         atransaction.commit();
     }
 
@@ -642,11 +727,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.replace(R.id.fragment_Container, vspfragment);
         atransaction.commit();
     }
-
     public void updateVisitTaskSpFragment(){
         VisitTaskUpdateSpFragment uspfragment = new VisitTaskUpdateSpFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, uspfragment);
+        atransaction.commit();
+    }
+    public void addVisitTaskSpFragment(){
+        AddVisitTaskSpFragment avtspfragment = new AddVisitTaskSpFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, avtspfragment);
         atransaction.commit();
     }
 
@@ -656,7 +746,19 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.replace(R.id.fragment_Container, rvfragment);
         atransaction.commit();
     }
+    public void addRequestTaskSpFragment(){
+        RequestAddFragment rafragment = new RequestAddFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, rafragment);
+        atransaction.commit();
+    }
 
+    public void viewTotalExpensesFragmnet(){
+        ViewTotalExpensesFragment tefragment = new ViewTotalExpensesFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, tefragment);
+        atransaction.commit();
+    }
 
     public void totalCollectionManagerFragment(){
         ViewTotalCollectionFragment vfragment = new ViewTotalCollectionFragment();

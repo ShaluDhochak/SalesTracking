@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.ViewSaleCallTaskAdater;
 import com.sales.tracking.salestracking.Adapter.VisitTaskMeetingAdapter;
+import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ViewSalesCallTaskFragment extends Fragment {
 
@@ -46,11 +48,19 @@ public class ViewSalesCallTaskFragment extends Fragment {
     @BindView(R.id.viewSaleCallTask_rv)
     RecyclerView viewSaleCallTask_rv;
 
+    @BindView(R.id.salesCallTaskHeader_rl)
+    RelativeLayout salesCallTaskHeader_rl;
+
     @BindView(R.id.viewSaleCallTaskDetails_cv)
     CardView viewSaleCallTaskDetails_cv;
 
+
+
     @BindView(R.id.dateViewSaleCallTask_tv)
     TextView dateViewSaleCallTask_tv;
+
+    @BindView(R.id.cnameValueSaleCallTaskDetail_tv)
+    TextView cnameValueSaleCallTaskDetail_tv;
 
     @BindView(R.id.contactNameSaleCallTask_tv)
     TextView contactNameSaleCallTask_tv;
@@ -74,7 +84,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
     ImageView minusVisitSaleCallTaskDetail_iv;
 
     ViewSaleCallTaskAdater viewSaleCallTaskAdater;
-    ArrayList<TaskMeetingBean.All_Meetings_Mgr> spAttendanceList = new ArrayList<>();
+    ArrayList<SalesCallTaskSpBean.Sp_All_Service_Calls> spAttendanceList = new ArrayList<>();
 
 
     @Override
@@ -96,6 +106,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+
         if (userTypePref.equals("Sales Manager")) {
           //  getVisitTaskMeetingRecyclerView();
             assignToByViewSaleCallTaskHeading_tv.setText("Assigned To");
@@ -108,30 +119,29 @@ public class ViewSalesCallTaskFragment extends Fragment {
         viewSaleCallTaskDetails_cv.setVisibility(View.GONE);
     }
 
-
     private void getSaleCallVisitSpRecyclerView(){
         if (Connectivity.isConnected(getActivity())) {
 
-            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+            String Url = ApiLink.ROOT_URL + ApiLink.TASK_SERVICECALL;
             Map<String, String> map = new HashMap<>();
             map.put("select", "");
-            map.put("m_all", "");
-            map.put("visit_assignedby", userIdPref);
+            map.put("all", "");
+            map.put("service_uid", userIdPref);
 
-            GSONRequest<TaskMeetingBean> dashboardGsonRequest = new GSONRequest<TaskMeetingBean>(
+            GSONRequest<SalesCallTaskSpBean> dashboardGsonRequest = new GSONRequest<SalesCallTaskSpBean>(
                     Request.Method.POST,
                     Url,
-                    TaskMeetingBean.class, map,
-                    new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                    SalesCallTaskSpBean.class, map,
+                    new com.android.volley.Response.Listener<SalesCallTaskSpBean>() {
                         @Override
-                        public void onResponse(TaskMeetingBean response) {
+                        public void onResponse(SalesCallTaskSpBean response) {
                             try{
-                                if (response.getAll_meetings_mgr().size()>0){
+                                if (response.getSp_all_service_calls().size()>0){
                                     // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
                                     spAttendanceList.clear();
-                                    spAttendanceList.addAll(response.getAll_meetings_mgr());
+                                    spAttendanceList.addAll(response.getSp_all_service_calls());
 
-                                    viewSaleCallTaskAdater = new ViewSaleCallTaskAdater(getActivity(),response.getAll_meetings_mgr(), ViewSalesCallTaskFragment.this);
+                                    viewSaleCallTaskAdater = new ViewSaleCallTaskAdater(getActivity(),response.getSp_all_service_calls(), ViewSalesCallTaskFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewSaleCallTask_rv.setLayoutManager(mLayoutManager);
                                     viewSaleCallTask_rv.setItemAnimator(new DefaultItemAnimator());
@@ -154,7 +164,29 @@ public class ViewSalesCallTaskFragment extends Fragment {
         }
     }
 
+    public void getViewSaleCallTask(SalesCallTaskSpBean.Sp_All_Service_Calls bean){
+        viewSaleCallTaskDetails_cv.setVisibility(View.VISIBLE);
+        salesCallTaskHeader_rl.setVisibility(View.GONE);
 
 
+        String date = bean.getService_createddt();
+        String[] date1 = date.split(" ");
+       dateViewSaleCallTask_tv.setText(date1[0]);
+        cnameValueSaleCallTaskDetail_tv.setText(bean.getLead_company());
+     //   dateViewSaleCallTask_tv.setText(bean.getService_createddt());
+        contactNameSaleCallTask_tv.setText(bean.getService_person());
+        phoneSaleCallTask_tv.setText(bean.getService_contactno());
+        assignToByViewSaleCallTaskHeading_tv.setText("Assign By");
+        assignToByViewSaleCallTask_tv.setText(bean.getUser_name());
+        commentsViewSaleCallTask_tv.setText(bean.getService_comments());
+        statusViewSaleCallTask_tv.setText(bean.getService_status());
 
+    }
+
+    @OnClick(R.id.minusVisitSaleCallTaskDetail_iv)
+    public void minusVisitSaleCallTaskDetail(){
+        viewSaleCallTaskDetails_cv.setVisibility(View.GONE);
+        salesCallTaskHeader_rl.setVisibility(View.VISIBLE);
+
+    }
 }

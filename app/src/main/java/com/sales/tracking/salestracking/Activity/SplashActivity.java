@@ -16,13 +16,16 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         session = new SessionManagement(getApplicationContext());
         session.checkLogin();
         if (session.isLoggedIn()){
             launchLoginScreen();
         }
-
     }
 
     private void launchLoginScreen(){

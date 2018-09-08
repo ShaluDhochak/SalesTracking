@@ -16,9 +16,18 @@ public interface ApiLink {
     String TASK_SERVICECALL ="task_servicecall.php";
 
     String VISIT_TASK_SPINNER = "sp_visitupdate.php";
+
+    String SALE_CALL_TASK_UPDATE = "sp_servicecallupdate.php";
     //adding SALES CALL
 
     String REQUEST_VIEW_SP = "request_salesperson.php";
+
+    String LEAD_VIEW_SALESPERSON = "sp_lead.php";
+
+    String COLLECTION_SP = "collection.php";
+
+    String Expenses_SP = "expences.php";
+
 
     /*
             )
