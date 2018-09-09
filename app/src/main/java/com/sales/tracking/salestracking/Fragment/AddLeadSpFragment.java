@@ -49,7 +49,7 @@ public class AddLeadSpFragment extends Fragment {
 
     View view;
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref, user_comidPref;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -105,6 +105,7 @@ public class AddLeadSpFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        user_comidPref = sharedPref.getString("user_com_id", "");
 
         selectleadType();
     }
@@ -115,9 +116,9 @@ public class AddLeadSpFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
                 Map<String, String> map = new HashMap<>();
                 map.put("leadtype_dropdown","" );
-                map.put("lead_comid", "1");
+                map.put("lead_comid", user_comidPref);
 
-                final GSONRequest<LeadSpBean> locationSpinnerGsonRequest = new GSONRequest<LeadSpBean>(
+                final GSONRequest<LeadSpBean> leadTypeGsonRequest = new GSONRequest<LeadSpBean>(
                         Request.Method.POST,
                         Url,
                         LeadSpBean.class,map,
@@ -139,15 +140,15 @@ public class AddLeadSpFragment extends Fragment {
                                 Utilities.serverError(getActivity());
                             }
                         });
-                locationSpinnerGsonRequest.setShouldCache(false);
-                Utilities.getRequestQueue(getActivity()).add(locationSpinnerGsonRequest);
+                leadTypeGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(leadTypeGsonRequest);
             }
             leadTypeAddLeadSp = new ArrayList<String>();
             leadTypeAddLeadSp.clear();
             leadTypeAddLeadSp.add("Lead Type");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, leadTypeAddLeadSp);
-            quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-            lTypeAddLeadSp_sp.setAdapter(quotationLocationDataAdapter);
+            ArrayAdapter<String> leadTypeDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, leadTypeAddLeadSp);
+            leadTypeDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            lTypeAddLeadSp_sp.setAdapter(leadTypeDataAdapter);
 
         }catch (Exception e){
         }
@@ -170,7 +171,31 @@ public class AddLeadSpFragment extends Fragment {
     public void submitAddLead(){
 
         if (!selectedLeadType.equals("Lead Type")) {
-            new addLeadSp().execute();
+            if (clientCompanyNameAddLeadSp_et.getText().toString().length()>0){
+                if (contactPersonAddLeadSp_et.getText().toString().length()>0){
+                    if (emailAddLeadSp_et.getText().toString().length()>0){
+                        if (mobileAddLeadSp_et.getText().toString().length()>0 && mobileAddLeadSp_et.getText().toString().length()==10){
+                            if (websiteAddLeadSp_et.getText().toString().length()>0){
+                                if (addressAddLeadSp_et.getText().toString().length()>0){
+                                    new addLeadSp().execute();
+                                }else{
+                                    Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                Toast.makeText(getActivity(), "Please Enter Website ", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(getActivity(), "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getActivity(), "Please Enter Email Id", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getActivity(), "Please Enter Contact Person", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(getActivity(), "Please enter Client Company Name", Toast.LENGTH_SHORT).show();
+            }
         }else {
             Toast.makeText(getActivity(), "Please select Lead Type", Toast.LENGTH_SHORT).show();
         }
@@ -255,5 +280,6 @@ public class AddLeadSpFragment extends Fragment {
         emailAddLeadSp_et.setText("");
         contactPersonAddLeadSp_et.setText("");
         websiteAddLeadSp_et.setText("");
+        mobileAddLeadSp_et.setText("");
     }
 }

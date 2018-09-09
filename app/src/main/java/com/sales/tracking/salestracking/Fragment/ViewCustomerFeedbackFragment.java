@@ -22,10 +22,10 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Adapter.CustomerFeedbackAdapter;
 import com.sales.tracking.salestracking.Adapter.LeadSpAdapter;
-import com.sales.tracking.salestracking.Adapter.RequestSpAdapter;
+import com.sales.tracking.salestracking.Bean.CustomerFeedbackBean;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
-import com.sales.tracking.salestracking.Bean.RequestSpBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
@@ -49,63 +49,50 @@ import butterknife.OnClick;
 
 import static android.widget.Toast.makeText;
 
-public class ViewLeadSpFragment extends Fragment {
+
+public class ViewCustomerFeedbackFragment extends Fragment {
 
     View view;
 
-    @BindView(R.id.leadTask_rv)
-    RecyclerView leadTask_rv;
-
-    @BindView(R.id.leadTaskHeader_rl)
-    RelativeLayout leadTaskHeader_rl;
-
-    @BindView(R.id.viewLeadTaskDetails_cv)
-    CardView viewLeadTaskDetails_cv;
-
-    @BindView(R.id.minusLeadTypeDetail_iv)
-    ImageView minusLeadTypeDetail_iv;
-
-    @BindView(R.id.clientCompanyNameLeadTask_tv)
-    TextView clientCompanyNameLeadTask_tv;
-
-    @BindView(R.id.leadTypeViewLead_tv)
-    TextView leadTypeViewLead_tv;
-
-    @BindView(R.id.contactPersonLeadView_tv)
-    TextView contactPersonLeadView_tv;
-
-    @BindView(R.id.emailLeadViewTask_tv)
-    TextView emailLeadViewTask_tv;
-
-    @BindView(R.id.mobileLeadViewTask_tv)
-    TextView mobileLeadViewTask_tv;
-
-    @BindView(R.id.websiteLeadViewTask_tv)
-    TextView websiteLeadViewTask_tv;
-
-    @BindView(R.id.addressLeadViewTask_tv)
-    TextView addressLeadViewTask_tv;
-
-    @BindView(R.id.statusLeadViewTask_tv)
-    TextView statusLeadViewTask_tv;
+    ProgressDialog pDialog;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref, user_comidPref, lead_iid;
+    String userIdPref, userTypePref, fb_id;
 
-    LeadSpAdapter leadSpAdapter;
-    ArrayList<LeadSpBean.Leads> leadList = new ArrayList<>();
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 
     JSONParser jsonParser = new JSONParser();
-    ProgressDialog pDialog;
+
+    CustomerFeedbackAdapter customerAdapter;
+    ArrayList<CustomerFeedbackBean.Customer_Feedback> leadList = new ArrayList<>();
+
+    @BindView(R.id.customerFeedback_rv)
+    RecyclerView customerFeedback_rv;
+
+    @BindView(R.id.viewCustomerFeedbackDetails_cv)
+    CardView viewCustomerFeedbackDetails_cv;
+
+    @BindView(R.id.customerFeedbackHeader_rl)
+    RelativeLayout customerFeedbackHeader_rl;
+
+    @BindView(R.id.clientCustomerFeedback_tv)
+    TextView clientCustomerFeedback_tv;
+
+    @BindView(R.id.minusCustomerFeedbackDetail_iv)
+    ImageView minusCustomerFeedbackDetail_iv;
+
+    @BindView(R.id.commentCustomerFeedback_tv)
+    TextView commentCustomerFeedback_tv;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_view_lead_sp, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+       view = inflater.inflate(R.layout.fragment_view_customer_feedback, container, false);
+
         ButterKnife.bind(this, view);
-        return view;
+       return view;
     }
 
     @Override
@@ -118,76 +105,60 @@ public class ViewLeadSpFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
-        user_comidPref = sharedPref.getString("user_com_id", "");
-
         if (userTypePref.equals("Sales Manager")) {
             //  getAttendanceRecyclerView();
         }else if (userTypePref.equals("Sales Executive")){
-            getSPLeadViewRecyclerView();
+            getSPCustomerFeedbackRecyclerView();
         }
 
-        viewLeadTaskDetails_cv.setVisibility(View.GONE);
+        viewCustomerFeedbackDetails_cv.setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.minusLeadTypeDetail_iv)
+    @OnClick(R.id.minusCustomerFeedbackDetail_iv)
     public void hideLeadDetails(){
-        viewLeadTaskDetails_cv.setVisibility(View.GONE);
-        leadTaskHeader_rl.setVisibility(View.VISIBLE);
+        viewCustomerFeedbackDetails_cv.setVisibility(View.GONE);
+        customerFeedbackHeader_rl.setVisibility(View.VISIBLE);
         if (userTypePref.equals("Sales Manager")) {
             //  getAttendanceRecyclerView();
         }else if (userTypePref.equals("Sales Executive")){
-            getSPLeadViewRecyclerView();
+            getSPCustomerFeedbackRecyclerView();
         }
     }
 
-    public void getLeadData(LeadSpBean.Leads bean){
-        viewLeadTaskDetails_cv.setVisibility(View.VISIBLE);
-        leadTaskHeader_rl.setVisibility(View.GONE);
+    public void getCustomerFeedbackData(CustomerFeedbackBean.Customer_Feedback bean){
+        viewCustomerFeedbackDetails_cv.setVisibility(View.VISIBLE);
+        customerFeedbackHeader_rl.setVisibility(View.GONE);
 
-        clientCompanyNameLeadTask_tv.setText(bean.getLead_company());
-        leadTypeViewLead_tv.setText(bean.getLeadtype_name());
-        contactPersonLeadView_tv.setText(bean.getLead_name());
-        emailLeadViewTask_tv.setText(bean.getLead_email());
-        mobileLeadViewTask_tv.setText(bean.getLead_contact());
-        websiteLeadViewTask_tv.setText(bean.getLead_website());
-        addressLeadViewTask_tv.setText(bean.getLead_address());
-        statusLeadViewTask_tv.setText(bean.getLead_status());
+        clientCustomerFeedback_tv.setText(bean.getLead_company());
+        commentCustomerFeedback_tv.setText(bean.getFb_client_comments());
+
     }
 
-    public void deleteLeadData(LeadSpBean.Leads bean){
-        viewLeadTaskDetails_cv.setVisibility(View.GONE);
-        leadTaskHeader_rl.setVisibility(View.VISIBLE);
-
-        lead_iid = bean.getLead_id().toString();
-        new deleteLeadSp().execute();
-    }
-
-    private void getSPLeadViewRecyclerView(){
+    private void getSPCustomerFeedbackRecyclerView(){
         if (Connectivity.isConnected(getActivity())) {
 
-            String Url = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
+            String Url = ApiLink.ROOT_URL + ApiLink.CUSTOMER_FEEDBACK;
             Map<String, String> map = new HashMap<>();
             map.put("select", "");
-            map.put("lead_uid", userIdPref);
-            map.put("lead_comid", user_comidPref);
+            map.put("fb_lead_uid", userIdPref);
 
-            GSONRequest<LeadSpBean> dashboardGsonRequest = new GSONRequest<LeadSpBean>(
+            GSONRequest<CustomerFeedbackBean> dashboardGsonRequest = new GSONRequest<CustomerFeedbackBean>(
                     Request.Method.POST,
                     Url,
-                    LeadSpBean.class, map,
-                    new com.android.volley.Response.Listener<LeadSpBean>() {
+                    CustomerFeedbackBean.class, map,
+                    new com.android.volley.Response.Listener<CustomerFeedbackBean>() {
                         @Override
-                        public void onResponse(LeadSpBean response) {
+                        public void onResponse(CustomerFeedbackBean response) {
                             try{
-                                if (response.getLeads().size()>0){
+                                if (response.getCustomer_feedback().size()>0){
                                     leadList.clear();
-                                    leadList.addAll(response.getLeads());
+                                    leadList.addAll(response.getCustomer_feedback());
 
-                                    leadSpAdapter = new LeadSpAdapter(getActivity(),response.getLeads(), ViewLeadSpFragment.this);
+                                    customerAdapter = new CustomerFeedbackAdapter(getActivity(),response.getCustomer_feedback(), ViewCustomerFeedbackFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    leadTask_rv.setLayoutManager(mLayoutManager);
-                                    leadTask_rv.setItemAnimator(new DefaultItemAnimator());
-                                    leadTask_rv.setAdapter(leadSpAdapter);
+                                    customerFeedback_rv.setLayoutManager(mLayoutManager);
+                                    customerFeedback_rv.setItemAnimator(new DefaultItemAnimator());
+                                    customerFeedback_rv.setAdapter(customerAdapter);
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
@@ -204,18 +175,24 @@ public class ViewLeadSpFragment extends Fragment {
         }
     }
 
-    public class deleteLeadSp extends AsyncTask<String, JSONObject, JSONObject> {
-        String lead_uid, lead_id,lead_comid;
+    public void deleteCustomerFeedbackData(CustomerFeedbackBean.Customer_Feedback bean){
+        viewCustomerFeedbackDetails_cv.setVisibility(View.GONE);
+        customerFeedbackHeader_rl.setVisibility(View.VISIBLE);
+
+        fb_id = bean.getFb_id();
+        new deleteCustomerFeedbackSp().execute();
+    }
+
+    public class deleteCustomerFeedbackSp extends AsyncTask<String, JSONObject, JSONObject> {
+        String fb_idd;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            lead_uid = userIdPref;
-            lead_id = lead_iid;
-            lead_comid = user_comidPref;
+           fb_idd = fb_id;
 
             pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Deleting Lead...");
+            pDialog.setMessage("Deleting Customer Feedback...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -225,12 +202,10 @@ public class ViewLeadSpFragment extends Fragment {
         protected JSONObject doInBackground(String... args) {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("lead_uid", lead_uid));
-            params.add(new BasicNameValuePair("lead_id", lead_id));
-            params.add(new BasicNameValuePair("lead_comid", lead_comid));
+            params.add(new BasicNameValuePair("fb_id", fb_id));
             params.add(new BasicNameValuePair("delete", "delete"));
 
-            String url_add_task = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
+            String url_add_task = ApiLink.ROOT_URL + ApiLink.CUSTOMER_FEEDBACK;
             JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
 
             try {
@@ -253,15 +228,17 @@ public class ViewLeadSpFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
-                    getSPLeadViewRecyclerView();
+                    getSPCustomerFeedbackRecyclerView();
                 }
                 else {
-                    makeText(getActivity(), "Not Deleted", Toast.LENGTH_SHORT).show();
+                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
                     return;
                 }
             } catch (Exception e) {
             }
         }
     }
+
+
 
 }

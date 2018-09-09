@@ -9,18 +9,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sales.tracking.salestracking.Bean.CustomerFeedbackBean;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
-import com.sales.tracking.salestracking.Bean.RequestSpBean;
-import com.sales.tracking.salestracking.Fragment.RequestViewFragment;
+import com.sales.tracking.salestracking.Fragment.ViewCustomerFeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.ViewLeadSpFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
-public class LeadSpAdapter  extends RecyclerView.Adapter<LeadSpAdapter.MyViewHolder> {
-    private List<LeadSpBean.Leads> requestsList;
+public class CustomerFeedbackAdapter  extends RecyclerView.Adapter<CustomerFeedbackAdapter.MyViewHolder> {
+    private List<CustomerFeedbackBean.Customer_Feedback> requestsList;
     Context context;
-    ViewLeadSpFragment viewLeadSpFragment;
+    ViewCustomerFeedbackFragment viewCustomerFeedbackFragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView cfClientCompanyName_tv;
@@ -29,44 +29,45 @@ public class LeadSpAdapter  extends RecyclerView.Adapter<LeadSpAdapter.MyViewHol
         MyViewHolder(View view) {
             super(view);
 
-            cfClientCompanyName_tv = (TextView) view.findViewById(R.id.cfClientCompanyName_tv);
+             cfClientCompanyName_tv = (TextView) view.findViewById(R.id.cfClientCompanyName_tv);
 
             deleteCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.deleteCfClientCompanyName_iv);
             plusCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.plusCfClientCompanyName_iv);
-
         }
     }
 
-    public LeadSpAdapter(Context context,List<LeadSpBean.Leads> requestsList, ViewLeadSpFragment viewLeadSpFragment) {
+    public CustomerFeedbackAdapter(Context context,List<CustomerFeedbackBean.Customer_Feedback> requestsList, ViewCustomerFeedbackFragment viewCustomerFeedbackFragment) {
         this.requestsList = requestsList;
         this.context = context;
-        this.viewLeadSpFragment = viewLeadSpFragment;
+        this.viewCustomerFeedbackFragment = viewCustomerFeedbackFragment;
     }
 
     @Override
-    public LeadSpAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CustomerFeedbackAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.customer_feedback_layout, parent, false);
-        return new LeadSpAdapter.MyViewHolder(itemView);
+        return new CustomerFeedbackAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final LeadSpAdapter.MyViewHolder holder, final int position) {
-        LeadSpBean.Leads bean = requestsList.get(position);
+    public void onBindViewHolder(final CustomerFeedbackAdapter.MyViewHolder holder, final int position) {
+        CustomerFeedbackBean.Customer_Feedback bean = requestsList.get(position);
 
         holder.cfClientCompanyName_tv.setText(bean.getLead_company());
+
+        holder.deleteCfClientCompanyName_iv.setVisibility(View.VISIBLE);
 
         holder.plusCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewLeadSpFragment.getLeadData(requestsList.get(position));
+                viewCustomerFeedbackFragment.getCustomerFeedbackData(requestsList.get(position));
             }
         });
 
         holder.deleteCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewLeadSpFragment.deleteLeadData(requestsList.get(position));
+                viewCustomerFeedbackFragment.deleteCustomerFeedbackData(requestsList.get(position));
             }
         });
 

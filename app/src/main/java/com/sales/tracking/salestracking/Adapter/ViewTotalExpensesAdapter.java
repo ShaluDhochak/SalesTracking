@@ -74,14 +74,14 @@ public class ViewTotalExpensesAdapter  extends RecyclerView.Adapter<ViewTotalExp
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //viewTotalCollectionFragment.getDeleteTotalCollection(tasksList.get(position));
+                viewTotalExpensesFragment.getExpensesDeleteData(tasksList.get(position));
             }
         });
 
         holder.plusCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // viewTotalExpensesFragment.get(tasksList.get(position));
+                viewTotalExpensesFragment.getExpensesData(tasksList.get(position));
             }
         });
     }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -32,12 +33,21 @@ import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.JSONParser;
 import com.sales.tracking.salestracking.Utility.Utilities;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.widget.Toast.makeText;
 
 public class ViewTotalExpensesFragment extends Fragment {
 
@@ -56,6 +66,9 @@ public class ViewTotalExpensesFragment extends Fragment {
     @BindView(R.id.deleteViewExpensesSpDetail_iv)
     ImageView deleteViewExpensesSpDetail_iv;
 
+    @BindView(R.id.minusViewExpensesSpDetail_iv)
+    ImageView minusViewExpensesSpDetail_iv;
+
     @BindView(R.id.categoryExpensesSpDetail_tv)
     TextView categoryExpensesSpDetail_tv;
 
@@ -73,7 +86,7 @@ public class ViewTotalExpensesFragment extends Fragment {
 
     View view;
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref, expenses_id, deleteExpenses_id;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -138,7 +151,7 @@ public class ViewTotalExpensesFragment extends Fragment {
 
                                 }
                             } catch (Exception e) {
-                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -153,14 +166,105 @@ public class ViewTotalExpensesFragment extends Fragment {
     }
 
     public void getExpensesData(ExpencesSpBean.Salesperson_Expenses bean) {
-        dateExpensesSpTask_tv.setText("");
-        //  deleteViewExpensesSpDetail_iv.setText("");
-        categoryExpensesSpDetail_tv.setText("");
-        amountExpensesSpDetail_tv.setText("");
-        modeExpensesSpDetail_tv.setText("");
-        detailsExpensesSpDetail_tv.setText("");
+
+        viewExpensesSpDetails_cv.setVisibility(View.VISIBLE);
+        viewExpensesHeader_rl.setVisibility(View.GONE);
+
+        String date = bean.getExpense_date();
+        String[] date1 = date.split(" ");
+        dateExpensesSpTask_tv.setText(date1[0]);
+        categoryExpensesSpDetail_tv.setText(bean.getExpcat_name());
+        amountExpensesSpDetail_tv.setText(bean.getExpense_amt());
+        modeExpensesSpDetail_tv.setText(bean.getExpense_mode());
+        detailsExpensesSpDetail_tv.setText(bean.getExpense_details());
      //   photoExpensesSpDetail_tv.setText("");
 
     }
+
+    @OnClick(R.id.deleteViewExpensesSpDetail_iv)
+    public void deleteExpensesRowdetails(){
+        viewExpensesSpDetails_cv.setVisibility(View.GONE);
+        viewExpensesHeader_rl.setVisibility(View.VISIBLE);
+
+
+
+        getExpensesRecyclerView();
+    }
+
+    @OnClick(R.id.minusViewExpensesSpDetail_iv)
+    public void hideExpensesDetails(){
+        viewExpensesSpDetails_cv.setVisibility(View.GONE);
+        viewExpensesHeader_rl.setVisibility(View.VISIBLE);
+
+        getExpensesRecyclerView();
+
+    }
+
+    public void getExpensesDeleteData(ExpencesSpBean.Salesperson_Expenses bean) {
+
+        expenses_id = bean.getExpense_id();
+        new deleteTotalCollectionSp().execute();
+    }
+
+    public class deleteTotalCollectionSp extends AsyncTask<String, JSONObject, JSONObject> {
+        String expense_uid, expense_id;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            expense_uid = userIdPref;
+            expense_id = expenses_id;
+
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Deleting Expenses...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("expense_uid", expense_uid));
+            params.add(new BasicNameValuePair("expense_id", expenses_id));
+            params.add(new BasicNameValuePair("delete", "delete"));
+
+            String url_add_task = ApiLink.ROOT_URL + ApiLink.Expenses_SP;
+            JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
+
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+                String message = json.getString(TAG_MESSAGE);
+                if (success == 1 && message.equals("Deleted Successfully")) {
+                    return json;
+                }
+                else {
+                    return null;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONObject response) {
+            try {
+                pDialog.dismiss();
+                if (!(response == null)) {
+                    makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
+                   // clearAll();
+
+                    getExpensesRecyclerView();
+                }
+                else {
+                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
 
 }

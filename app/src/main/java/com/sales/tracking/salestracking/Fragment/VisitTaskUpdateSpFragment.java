@@ -221,14 +221,29 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             dateUpdateVisitTaskSp_rl.setVisibility(View.VISIBLE);
             separatorBelowStatusUpdateVisitTaskSp.setVisibility(View.VISIBLE);
             separatorBelowDateUpdateVisitTaskSp.setVisibility(View.VISIBLE);
-        }else if (selectTaskStatus.equals("NI")){
-            selectedTaskStatusId = "NI";
+        }else if (selectTaskStatus.equals("Not Interested")){
+            selectedTaskStatusId = "Not Interested";
         }
     }
 
     @OnClick(R.id.submitUpdateVisitTaskSp_btn)
     public void updateVisitTask(){
-      new UpdateVisitTaskSp().execute();
+
+        if (!selectedVisitTask.equals("Visit Task")){
+            if (commentUpdateVisitTaskSp_et.getText().toString().length()>0){
+                if (!selectTaskStatus.equals("Status")){
+                    new UpdateVisitTaskSp().execute();
+                }else{
+                    Toast.makeText(getActivity(), "Please Select Status", Toast.LENGTH_SHORT).show();
+                }
+
+            }else{
+                Toast.makeText(getActivity(), "Please Enter Comment", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity(), "Please Select Visit Task", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public class UpdateVisitTaskSp extends AsyncTask<String, JSONObject, JSONObject> {

@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.AddVisitTaskSpFragment">
+    tools:context=".Fragment.AddTotalExpensesFragment">
 
     <ScrollView
-        android:id="@+id/scrollView_addVisitTaskSp"
+        android:id="@+id/scrollView_addExpensesSp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,16 +17,16 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/titleAddVisitTaskSp_rl"
+                android:id="@+id/titleAddExpensesSp_rl"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/title_bg">
 
                 <TextView
-                    android:id="@+id/titleAddVisitTaskSp_tv"
+                    android:id="@+id/titleAddExpensesSp_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create Visit Task"
+                    android:text="Add Expenses"
                     android:textColor="@android:color/white"
                     android:textSize="17dp"
                     android:paddingTop="10dp"
@@ -35,9 +35,8 @@
                     />
             </RelativeLayout>
 
-
             <android.support.v7.widget.CardView
-                android:id="@+id/addVisitTaskSpDetails_cv"
+                android:id="@+id/addExpensesSpDetails_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
@@ -49,23 +48,22 @@
                 android:visibility="visible"
                 >
                 <RelativeLayout
-                    android:id="@+id/addVisitTaskSpDetail_rl"
+                    android:id="@+id/addExpensesSpDetail_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
                     <RelativeLayout
-                        android:id="@+id/clientAddVisitTaskSpDetail_rl"
+                        android:id="@+id/categoryAddExpensesSpDetail_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/clientAddVisitTaskSpHeading_tv"
+                            android:id="@+id/categoryAddExpensesSpHeading_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Client"
+                            android:text="Category"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -75,10 +73,10 @@
                             />
 
                         <Spinner
-                            android:id="@+id/clientAddVisitTaskSp_sp"
+                            android:id="@+id/categoryAddExpensesSp_sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/clientAddVisitTaskSpHeading_tv"
+                            android:layout_below="@+id/categoryAddExpensesSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
                             />
@@ -86,70 +84,28 @@
                     </RelativeLayout>
 
                     <View
-                        android:id="@+id/separatorBelowClientAddVisitTaskSp"
+                        android:id="@+id/separatorBelowCategoryAddExpenses"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
-                        android:layout_below="@+id/clientAddVisitTaskSpDetail_rl"
+                        android:layout_below="@+id/categoryAddExpensesSpDetail_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         />
 
                     <RelativeLayout
-                        android:id="@+id/purposeAddVisitTaskSpDetail_rl"
+                        android:id="@+id/amountAddExpensesSp_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4.5"
-                        android:layout_below="@+id/separatorBelowClientAddVisitTaskSp"
-                        >
-
-                        <TextView
-                            android:id="@+id/purposeAddVisitTaskSpHeading_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Purpose"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
-                            android:textSize="12dp"
-                            android:textColor="@color/textcolor"
-                            />
-
-                        <Spinner
-                            android:id="@+id/purposeAddVisitTaskSp_sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/purposeAddVisitTaskSpHeading_tv"
-                            android:textColor="@android:color/black"
-                            android:hint=""
-                            />
-
-                    </RelativeLayout>
-
-                    <View
-                        android:id="@+id/separatorBelowPurposeAddVisitTaskSp"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/textcolor"
-                        android:layout_below="@+id/purposeAddVisitTaskSpDetail_rl"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        />
-
-                    <RelativeLayout
-                        android:id="@+id/addressAddVisitTaskSp_rl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowPurposeAddVisitTaskSp"
+                        android:layout_below="@+id/separatorBelowCategoryAddExpenses"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/addressAddVisitTaskSpHeading_tv"
+                            android:id="@+id/amountAddExpensesSpHeading_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Address"
+                            android:text="Amount"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -159,12 +115,12 @@
                             />
 
                         <EditText
-                            android:id="@+id/addressAddVisitTaskSp_et"
+                            android:id="@+id/amountAddExpensesSp_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/addressAddVisitTaskSpHeading_tv"
+                            android:layout_below="@+id/amountAddExpensesSpHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint="address"
+                            android:hint="amount"
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
@@ -174,27 +130,28 @@
                     </RelativeLayout>
 
                     <View
-                        android:id="@+id/separatorBelowAddressAddVisitTaskSp"
+                        android:id="@+id/separatorBelowClientAmountaddExpensesSp"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
-                        android:layout_below="@+id/addressAddVisitTaskSp_rl"
+                        android:layout_below="@+id/amountAddExpensesSp_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         />
+
                     <RelativeLayout
-                        android:id="@+id/dateAddVisitTaskSp_rl"
+                        android:id="@+id/modeAddExpensesSp_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowAddressAddVisitTaskSp"
+                        android:layout_below="@+id/separatorBelowClientAmountaddExpensesSp"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/dateAddVisitTaskSpHeading_tv"
+                            android:id="@+id/modeAddExpensesSpHeading_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date"
+                            android:text="Mode"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -203,45 +160,87 @@
                             android:textColor="@color/textcolor"
                             />
 
-                        <TextView
-                            android:id="@+id/dateAddVisitTaskSp_tv"
+                        <Spinner
+                            android:id="@+id/modeAddExpensesSp_sp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/dateAddVisitTaskSpHeading_tv"
+                            android:layout_below="@+id/modeAddExpensesSpHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint="Date"
+                            android:hint=""
+                            />
+
+                    </RelativeLayout>
+
+
+
+                    <View
+                        android:id="@+id/separatorBelowModeAddExpensesSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/modeAddExpensesSp_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/detailsAddExpensesSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowModeAddExpensesSp"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/detailsAddExpensesSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Details"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/detailsAddExpensesSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detailsAddExpensesSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Details"
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
                             />
 
                     </RelativeLayout>
                     <View
-                        android:id="@+id/separatorBelowDateAddVisitTaskSp"
+                        android:id="@+id/separatorBelowDetailsAddExpensesSp"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
-                        android:layout_below="@+id/dateAddVisitTaskSp_rl"
+                        android:layout_below="@+id/detailsAddExpensesSp_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
-                        android:visibility="visible"
                         />
 
                     <RelativeLayout
-                        android:id="@+id/timeAddVisitTaskSp_rl"
+                        android:id="@+id/photoAddExpensesSp_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowDateAddVisitTaskSp"
+                        android:layout_below="@+id/separatorBelowDetailsAddExpensesSp"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/timeAddVisitTaskSpHeading_tv"
+                            android:id="@+id/photoAddExpensesSpHeading_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Time"
+                            android:text="Photo"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -250,28 +249,25 @@
                             android:textColor="@color/textcolor"
                             />
 
-                        <TextView
-                            android:id="@+id/timeAddVisitTaskSp_tv"
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:id="@+id/photoAddExpensesSp_iv"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/timeAddVisitTaskSpHeading_tv"
-                            android:textColor="@android:color/black"
-                            android:hint="Time"
-                            android:textSize="14sp"
+                            android:layout_below="@+id/photoAddExpensesSpHeading_tv"
+                            android:src="@drawable/default_img"
                             android:layout_marginRight="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
                             />
 
                     </RelativeLayout>
 
                     <Button
-                        android:id="@+id/submitAddVisitTaskSp_btn"
+                        android:id="@+id/submitAddExpensesSp_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="SUBMIt"
-                        android:layout_below="@+id/timeAddVisitTaskSp_rl"
+                        android:text="SUBMIT"
+                        android:layout_below="@+id/photoAddExpensesSp_rl"
                         android:background="@color/active_bg"
                         android:textColor="@android:color/white"
                         />

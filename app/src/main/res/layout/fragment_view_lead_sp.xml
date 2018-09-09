@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.ViewLeadSpFragment">
 
@@ -74,7 +75,7 @@
                         android:id="@+id/clientCompanyNameLeadHeader__ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="3"
+                        android:weightSum="4"
                         android:orientation="horizontal"
                         android:background="@color/active_bg"
                         >
@@ -84,7 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/green_box_bg"
-                            android:layout_weight="0.6"
+                            android:layout_weight="3"
                             >
 
                             <TextView
@@ -120,7 +121,7 @@
                             android:id="@+id/editMinusLeadTypeDetail_rl"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1.8"
+                            android:layout_weight="1"
                             android:gravity="right|center"
                             android:background="@color/green_box_bg">
 
@@ -129,6 +130,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="10dp"
+                                android:visibility="gone"
                                 android:src="@drawable/delete_white_icon"
                                 android:layout_toLeftOf="@+id/minusLeadTypeDetail_iv"
                                 />

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.AddLeadSpFragment">
 
@@ -215,6 +216,7 @@
                             android:textColor="@android:color/black"
                             android:hint="Email"
                             android:textSize="14sp"
+                            android:inputType="textEmailAddress"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
                             android:backgroundTint="@android:color/transparent"
@@ -262,6 +264,7 @@
                             android:textColor="@android:color/black"
                             android:hint="Mobile"
                             android:textSize="14sp"
+                            android:inputType="phone"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
                             android:backgroundTint="@android:color/transparent"

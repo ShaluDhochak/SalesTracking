@@ -152,7 +152,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     DatePickerDialog datePickerDialog;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref, user_comidPref;
 
     ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
@@ -182,6 +182,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        user_comidPref = sharedPref.getString("user_com_id", "");
+
         if (userTypePref.equals("Sales Manager")) {
             getVisitTaskMeetingRecyclerView();
         }
@@ -362,7 +364,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
             Map<String, String> map = new HashMap<>();
             map.put("users","" );
-            map.put("user_comid", "1");
+            map.put("user_comid", user_comidPref);
 
             final GSONRequest<TaskMeetingBean> locationSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
                     Request.Method.POST,
@@ -420,7 +422,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
                 Map<String, String> map = new HashMap<>();
                 map.put("clients", "");
-                map.put("lead_comid", "1");
+                map.put("lead_comid", user_comidPref);
 
                 final GSONRequest<TaskMeetingBean> clientSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
                         Request.Method.POST,

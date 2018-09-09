@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.AttendanceManagerFragment">
 
@@ -146,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="right|center"
                         android:background="@color/green_box_bg">
 
                         <ImageView
@@ -154,18 +155,17 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/minus_white_icon"
-                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/minusViewAttendance_iv"
                             android:layout_marginRight="3dp"
                             android:visibility="gone"
                             />
 
                         <ImageView
                             android:id="@+id/minusViewAttendance_iv"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/minus_white_icon"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/deleteViewAttendance_iv"
+                            android:layout_marginRight="10dp"
                             />
                     </RelativeLayout>
 

@@ -69,6 +69,13 @@ public class RequestSpAdapter  extends RecyclerView.Adapter<RequestSpAdapter.MyV
             }
         });
 
+        holder.deleteAttendance_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestViewFragment.deleteRequestDetails(requestsList.get(position));
+            }
+        });
+
     }
 
     @Override

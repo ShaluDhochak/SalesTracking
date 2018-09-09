@@ -22,8 +22,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sales.tracking.salestracking.Fragment.AddCustomerfeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.AddLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
+import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
@@ -31,6 +33,7 @@ import com.sales.tracking.salestracking.Fragment.RequestAddFragment;
 import com.sales.tracking.salestracking.Fragment.RequestViewFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.UpdateSaleCallTaskFragment;
+import com.sales.tracking.salestracking.Fragment.ViewCustomerFeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.ViewLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
@@ -551,7 +554,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if (id==R.id.nav_add_expenses_salesperson)
         {
+            addTotalExpensesFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
 
+            navigationView.getMenu().getItem(42).setVisible(true);
+            navigationView.getMenu().getItem(43).setVisible(true);
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultLeadSalesPerson();
+            setDefaultCustomerFeedbackSalesPerson();
         }
         else if(id==R.id.nav_view_totalcollection)
         {
@@ -577,10 +589,29 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if (id==R.id.nav_view_customerfeedback_salesperson)
         {
+            viewCustomerFeedbackFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
+
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            navigationView.getMenu().getItem(46).setVisible(true);
+            navigationView.getMenu().getItem(47).setVisible(true);
 
         }else if(id==R.id.nav_add_customerfeedback_salesperson)
         {
+            addCustomerFeedbackFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
 
+            setDefaultVisitTaskSalesPerson();
+            setDefaultCallsTaskSalesPerson();
+            setDefaultRequestSalesPerson();
+            setDefaultSalesPersonExpenses();
+            setDefaultLeadSalesPerson();
+            navigationView.getMenu().getItem(46).setVisible(true);
+            navigationView.getMenu().getItem(47).setVisible(true);
         }
 
         return true;
@@ -757,6 +788,27 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         ViewTotalExpensesFragment tefragment = new ViewTotalExpensesFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, tefragment);
+        atransaction.commit();
+    }
+
+    private void addTotalExpensesFragmnet(){
+        AddTotalExpensesFragment atfragment = new AddTotalExpensesFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, atfragment);
+        atransaction.commit();
+    }
+
+    private void viewCustomerFeedbackFragmnet(){
+        ViewCustomerFeedbackFragment vcffragment = new ViewCustomerFeedbackFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vcffragment);
+        atransaction.commit();
+    }
+
+    private void addCustomerFeedbackFragmnet(){
+        AddCustomerfeedbackFragment addCffragment = new AddCustomerfeedbackFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, addCffragment);
         atransaction.commit();
     }
 

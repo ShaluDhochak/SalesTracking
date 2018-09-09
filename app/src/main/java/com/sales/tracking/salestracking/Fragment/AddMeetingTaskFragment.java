@@ -89,11 +89,12 @@ public class AddMeetingTaskFragment extends Fragment {
     Button submitAddMeetingTask_btn;
 
     @BindView(R.id.submitAddSalesCallTask_btn)
-            Button submitAddSalesCallTask_btn;
+    Button submitAddSalesCallTask_btn;
 
     //Layout for visibility
     @BindView(R.id.phoneAddMeetingTask_rl)
     RelativeLayout phoneAddMeetingTask_rl;
+
     @BindView(R.id.separatorBelowContactPersonNameAddMeetingTask)
     View separatorBelowContactPersonNameAddMeetingTask;
 
@@ -102,20 +103,25 @@ public class AddMeetingTaskFragment extends Fragment {
 
     @BindView(R.id.addressAddMeetingTask_rl)
     RelativeLayout addressAddMeetingTask_rl;
+
     @BindView(R.id.separatorBelowAddressAddMeetingTask)
      View separatorBelowAddressAddMeetingTask;
 
     @BindView(R.id.separatorBelowPurposeAddMeetingTask)
     View separatorBelowPurposeAddMeetingTask;
+
     @BindView(R.id.purposeAddMeetingTask_rl)
     RelativeLayout purposeAddMeetingTask_rl;
+
     @BindView(R.id.separatorBelowTimeAddViewMeetingTask)
     View separatorBelowTimeAddViewMeetingTask;
+
     @BindView(R.id.timeAddViewMeetingTask_rl)
     RelativeLayout timeAddViewMeetingTask_rl;
 
     @BindView(R.id.separatorBelowDateAddMeetingTask)
     View separatorBelowDateAddMeetingTask;
+
     @BindView(R.id.dateAddViewMeetingTask_rl)
     RelativeLayout dateAddViewMeetingTask_rl;
 
@@ -134,7 +140,7 @@ public class AddMeetingTaskFragment extends Fragment {
     ProgressDialog pDialog;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref, user_comidPref;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 
@@ -158,6 +164,7 @@ public class AddMeetingTaskFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        user_comidPref = sharedPref.getString("user_com_id", "");
 
         selectTaskType();
         selectAssignTo();
@@ -207,7 +214,7 @@ public class AddMeetingTaskFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
                 Map<String, String> map = new HashMap<>();
                 map.put("users","" );
-                map.put("user_comid", "1");
+                map.put("user_comid", user_comidPref);
 
                 final GSONRequest<TaskMeetingBean> locationSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
                         Request.Method.POST,
@@ -263,7 +270,7 @@ public class AddMeetingTaskFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
                 Map<String, String> map = new HashMap<>();
                 map.put("clients", "");
-                map.put("lead_comid", "1");
+                map.put("lead_comid", user_comidPref);
 
                 final GSONRequest<TaskMeetingBean> clientSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
                         Request.Method.POST,
@@ -494,17 +501,7 @@ public class AddMeetingTaskFragment extends Fragment {
         }
     }
 
-    /*private void clearAll() {
-        leadFirstName_EditText.setText("");
-        leademail_EditText.setText("");
-        leadContactNo_EditText.setText("");
-        leadAddress_EditText.setText("");
-        locationSpinner.setSelection(0);
-        leadSourceSpinner.setSelection(0);
-        assignToSpinner.setSelection(0);
-        leadComment_EditText.setText("");
-    }
-    */
+
 
     public class CreateNewSalesCallTask extends AsyncTask<String, JSONObject, JSONObject> {
         String service_uid, service_person, service_contactno, service_leadid,service_assignedby;
@@ -571,6 +568,19 @@ public class AddMeetingTaskFragment extends Fragment {
             }
         }
     }
+
+     private void clearAll() {
+      /*  leadFirstName_EditText.setText("");
+        leademail_EditText.setText("");
+        leadContactNo_EditText.setText("");
+        leadAddress_EditText.setText("");
+        locationSpinner.setSelection(0);
+        leadSourceSpinner.setSelection(0);
+        assignToSpinner.setSelection(0);
+        leadComment_EditText.setText("");
+        */
+    }
+
 
 
 }

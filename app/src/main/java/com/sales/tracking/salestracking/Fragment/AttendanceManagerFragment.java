@@ -86,9 +86,7 @@ public class AttendanceManagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_attendance_manager, container, false);
-
         ButterKnife.bind(this, view);
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -245,7 +243,6 @@ public class AttendanceManagerFragment extends Fragment {
                         public void onResponse(AttendanceManagerBean response) {
                             try{
                                 if (response.getSingle_sp_att().size()>0){
-                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
                                     spAttendanceList.clear();
                                     spAttendanceList.addAll(response.getSingle_sp_att());
 

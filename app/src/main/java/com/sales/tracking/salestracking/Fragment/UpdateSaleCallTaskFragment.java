@@ -115,7 +115,7 @@ public class UpdateSaleCallTaskFragment extends Fragment {
                             @Override
                             public void onResponse(SalesCallTaskSpBean response) {
                                 saleTaskUpdateVisitSp.clear();
-                                saleTaskUpdateVisitSp.add("Visit Task");
+                                saleTaskUpdateVisitSp.add("Sale Call Task");
                                 for(int i=0;i<response.getSp_servicecalls_dd().size();i++)
                                 {
                                     saleTaskUpdateVisitSp.add(response.getSp_servicecalls_dd().get(i).getLead_company() + " - "+ response.getSp_servicecalls_dd().get(i).getService_person() + " - "+ response.getSp_servicecalls_dd().get(i).getService_contactno());
@@ -187,7 +187,21 @@ public class UpdateSaleCallTaskFragment extends Fragment {
 
     @OnClick(R.id.submitUpdateSaleTaskSp_btn)
     public void updateVisitTask(){
-        new UpdateSaleCallTaskSp().execute();
+
+        if (selectedSaleTask.equals("Sale Call Task")){
+            if (selectTaskStatus.equals("Status")){
+               if (commentUpdateSaleTaskSp_et.getText().toString().length()>0){
+                   new UpdateSaleCallTaskSp().execute();
+               }else{
+                   Toast.makeText(getActivity(), "Please Enter Comment", Toast.LENGTH_SHORT).show();
+               }
+            }else{
+                Toast.makeText(getActivity(), "Please Select Status", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity(), "Please Select Sale Call Task", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public class UpdateSaleCallTaskSp extends AsyncTask<String, JSONObject, JSONObject> {

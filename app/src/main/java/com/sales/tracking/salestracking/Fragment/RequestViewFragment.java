@@ -1,10 +1,12 @@
 package com.sales.tracking.salestracking.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -31,15 +33,24 @@ import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
 import com.sales.tracking.salestracking.Utility.GSONRequest;
+import com.sales.tracking.salestracking.Utility.JSONParser;
 import com.sales.tracking.salestracking.Utility.Utilities;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.widget.Toast.makeText;
 
 
 public class RequestViewFragment extends Fragment {
@@ -79,7 +90,14 @@ public class RequestViewFragment extends Fragment {
     ImageView minusRequestTaskDetail_iv;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref, type_id;
+    String userIdPref, userTypePref, type_id, req_id, user_comidPref;
+    ProgressDialog pDialog;
+
+
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
+
+    JSONParser jsonParser = new JSONParser();
 
     RequestSpAdapter requestSpAdapter;
     ArrayList<RequestSpBean.Salesperson_requests> requestList = new ArrayList<>();
@@ -102,6 +120,8 @@ public class RequestViewFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        user_comidPref = sharedPref.getString("user_com_id", "");
+
         if (userTypePref.equals("Sales Manager")) {
           //  getAttendanceRecyclerView();
         }else if (userTypePref.equals("Sales Executive")){
@@ -123,9 +143,10 @@ public class RequestViewFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.deleteRequestTaskDetail_iv)
-    public void deleteRequestDetails(){
+     public void deleteRequestDetails(RequestSpBean.Salesperson_requests bean){
 
+        req_id = bean.getRequest_id();
+        new DeleteRequestTaskSp().execute();
     }
 
     public void getRequestData(RequestSpBean.Salesperson_requests bean){
@@ -159,7 +180,6 @@ public class RequestViewFragment extends Fragment {
                         public void onResponse(RequestSpBean response) {
                             try{
                                 if (response.getSalesperson_requests().size()>0){
-                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
                                     requestList.clear();
                                     requestList.addAll(response.getSalesperson_requests());
 
@@ -171,7 +191,6 @@ public class RequestViewFragment extends Fragment {
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
-                              //  Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -226,5 +245,71 @@ public class RequestViewFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
     }
+
+    public class DeleteRequestTaskSp extends AsyncTask<String, JSONObject, JSONObject> {
+        String request_id, request_uid;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            request_id = req_id;
+            request_uid = userIdPref;
+
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Deleting Request...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("request_id", request_id));
+            params.add(new BasicNameValuePair("request_uid", request_uid));
+            params.add(new BasicNameValuePair("delete", "delete"));
+
+
+            String url_add_task = ApiLink.ROOT_URL + ApiLink.REQUEST_VIEW_SP;
+            JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
+
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+                String message = json.getString(TAG_MESSAGE);
+                if (success == 1 && message.equals("Deleted Successfully")) {
+                    return json;
+                }
+                else {
+                    return null;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONObject response) {
+            try {
+                pDialog.dismiss();
+                if (!(response == null)) {
+                    makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
+
+                    if (userTypePref.equals("Sales Manager")) {
+                        //  getAttendanceRecyclerView();
+                    }else if (userTypePref.equals("Sales Executive")){
+                        getSPRequestViewRecyclerView();
+                    }
+
+                }
+                else {
+                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+
 
 }

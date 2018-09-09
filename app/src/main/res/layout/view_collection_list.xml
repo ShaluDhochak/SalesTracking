@@ -35,7 +35,6 @@
                     android:textSize="12sp"
                     android:textColor="@color/textcolor"
                     android:paddingTop="10dp"
-                    android:paddingRight="10dp"
                     android:paddingLeft="10dp"
                     android:paddingBottom="2dp"
                     />
@@ -50,9 +49,7 @@
                     android:layout_below="@+id/dateCollectionHeading_tv"
                     android:paddingLeft="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingRight="10dp"
                     />
-
 
             </RelativeLayout>
             <RelativeLayout
@@ -70,7 +67,6 @@
                     android:textColor="@color/textcolor"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
                     android:paddingBottom="2dp"
                     />
 
@@ -82,7 +78,6 @@
                     android:textColor="@color/textcolor"
                     android:textSize="14dp"
                     android:layout_below="@+id/salesPersonCollectionHeading_tv"
-                    android:paddingLeft="10dp"
                     android:paddingBottom="10dp"
                     android:paddingRight="10dp"
                     />
@@ -104,7 +99,7 @@
                     android:layout_height="20dp"
                     android:src="@drawable/delete"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="10dp"
                     />
 
                 <ImageView

@@ -85,7 +85,7 @@ public class AddVisitTaskSpFragment extends Fragment {
 
     View view;
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref,user_comidPref;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 
@@ -113,6 +113,9 @@ public class AddVisitTaskSpFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        user_comidPref = sharedPref.getString("user_com_id", "");
+
+
         selectClientName();
         selectPurpose();
     }
@@ -158,7 +161,7 @@ public class AddVisitTaskSpFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
                 Map<String, String> map = new HashMap<>();
                 map.put("clients", "");
-                map.put("lead_comid", "1");
+                map.put("lead_comid", user_comidPref);
 
                 final GSONRequest<TaskMeetingBean> clientSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
                         Request.Method.POST,
@@ -265,7 +268,29 @@ public class AddVisitTaskSpFragment extends Fragment {
 
     @OnClick(R.id.submitAddVisitTaskSp_btn)
     public void submitAddVisitTaskSp_btn(){
-        new CreateNewVisitTask().execute();
+        if (!selectclientName.equals("Client Name")){
+            if (!selectPurpose.equals("Purposes")){
+                if (addressAddVisitTaskSp_et.getText().toString().length()>0){
+                    if (dateAddVisitTaskSp_tv.getText().toString().length()>0){
+                        if (timeAddVisitTaskSp_tv.getText().toString().length()>0){
+                            new CreateNewVisitTask().execute();
+                        }else{
+                            Toast.makeText(getActivity(), "Please Select Time", Toast.LENGTH_SHORT).show();
+                        }
+                    }else
+                    {
+                        Toast.makeText(getActivity(), "Please Select Date", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Please Select Address", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
+        }
 
     }
     public class CreateNewVisitTask extends AsyncTask<String, JSONObject, JSONObject> {
@@ -326,7 +351,7 @@ public class AddVisitTaskSpFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Meeting Task Created Successfully", Toast.LENGTH_SHORT).show();
-                    // clearAll();
+                     clearAll();
                 }
                 else {
                     makeText(getActivity(), "Already Inserted ", Toast.LENGTH_SHORT).show();
@@ -335,6 +360,14 @@ public class AddVisitTaskSpFragment extends Fragment {
             } catch (Exception e) {
             }
         }
+    }
+
+    private void clearAll(){
+        addressAddVisitTaskSp_et.setText("");
+        dateAddVisitTaskSp_tv.setText("");
+        timeAddVisitTaskSp_tv.setText("");
+        clientAddVisitTaskSp_sp.setSelection(0);
+        purposeAddVisitTaskSp_sp.setSelection(0);
     }
 
 

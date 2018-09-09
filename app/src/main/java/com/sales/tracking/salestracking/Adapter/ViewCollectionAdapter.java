@@ -23,7 +23,7 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView dateValueCollection_tv,salesPersonValueCollection_tv;
-        ImageView deleteCollection_iv;
+        ImageView deleteCollection_iv, plusCollection_iv;
 
         CardView viewCollectionDetails_cv,collectionDetails_cv;
 
@@ -37,6 +37,7 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
             salesPersonValueCollection_tv = (TextView) view.findViewById(R.id.salesPersonValueCollection_tv);
 
             deleteCollection_iv = (ImageView) view.findViewById(R.id.deleteCollection_iv);
+            plusCollection_iv = (ImageView) view.findViewById(R.id.plusCollection_iv);
         }
     }
 
@@ -62,6 +63,7 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
 
         holder.viewCollectionDetails_cv.setVisibility(View.GONE);
         holder.collectionDetails_cv.setVisibility(View.VISIBLE);
+        holder.plusCollection_iv.setVisibility(View.GONE);
 
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override

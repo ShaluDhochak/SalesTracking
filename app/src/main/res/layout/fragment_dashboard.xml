@@ -318,14 +318,15 @@
 
                         <RelativeLayout
                             android:id="@+id/plusMinusTodaysTask_rl"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:gravity="center|right"
                             >
                             <ImageView
                                 android:id="@+id/plusDashboardTodaysTask_iv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/plus_white_icon"
                                 android:padding="10dp"
                                 android:layout_centerInParent="true"
@@ -334,10 +335,10 @@
 
                             <ImageView
                                 android:id="@+id/minusDashboardTodaysTask_iv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:src="@drawable/minus_white_icon"
-                                android:padding="10dp"
+                                android:layout_marginRight="10dp"
                                 android:visibility="visible"
                                 />
 

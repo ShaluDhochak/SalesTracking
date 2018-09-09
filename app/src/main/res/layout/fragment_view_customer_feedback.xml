@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.ViewCustomerFeedbackFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_viewCustomerFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/titleViewCustomerFeedback_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:id="@+id/titleViewCustomerFeedback_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Customer Feedback"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/customerFeedbackHeader_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/customerFeedback_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/viewCustomerFeedbackDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"
+                android:layout_below="@+id/customerFeedbackHeader_rl"
+                >
+                <RelativeLayout
+                    android:id="@+id/viewCustomerFeedbackDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/clientCustomerFeedbackHeader__ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="4"
+                        android:orientation="horizontal"
+                        android:background="@color/active_bg"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/clientCustomerFeedback_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_box_bg"
+                            android:layout_weight="3"
+                            >
+
+                            <TextView
+                                android:id="@+id/clientCustomerFeedbackHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Client Company Name"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/clientCustomerFeedback_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="abc Company"
+                                android:textColorHint="@android:color/white"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/clientCustomerFeedbackHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editMinusCustomerFeedbackDetail_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:background="@color/green_box_bg">
+
+                            <ImageView
+                                android:id="@+id/deleteCustomerFeedbackDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/delete_white_icon"
+                                android:visibility="gone"
+                                android:layout_toLeftOf="@+id/minusCustomerFeedbackDetail_iv"
+                                />
+
+                            <ImageView
+                                android:id="@+id/minusCustomerFeedbackDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/minus_white_icon"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/commentCustomerFeedbackDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/clientCustomerFeedbackHeader__ll"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/commentCustomerFeedbackHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Comment"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/commentCustomerFeedback_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/commentCustomerFeedbackHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

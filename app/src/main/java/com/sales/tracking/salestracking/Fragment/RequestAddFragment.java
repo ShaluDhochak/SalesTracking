@@ -56,7 +56,7 @@ public class RequestAddFragment extends Fragment {
     ProgressDialog pDialog;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref,user_comidPref;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -95,6 +95,7 @@ public class RequestAddFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        user_comidPref = sharedPref.getString("user_com_id", "");
 
 
         selectTaskType();
@@ -213,7 +214,16 @@ public class RequestAddFragment extends Fragment {
 
     @OnClick(R.id.submitAddRequestSp_btn)
     public void addRequestTask(){
-        new AddRequestTaskSp().execute();
+
+        if (!selectedTaskType.equals("Task type")){
+            if (commentAddRequestSp_et.getText().toString().length()>0){
+                new AddRequestTaskSp().execute();
+            }else {
+                Toast.makeText(getActivity(), "Please Enter Comment", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity(), "Please Select Task Type", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class AddRequestTaskSp extends AsyncTask<String, JSONObject, JSONObject> {
@@ -221,7 +231,7 @@ public class RequestAddFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            request_compid = "1";
+            request_compid = user_comidPref;
             request_uid = userIdPref;
             request_comments = commentAddRequestSp_et.getText().toString();
             request_type = selectedTaskTypeId;
@@ -238,7 +248,7 @@ public class RequestAddFragment extends Fragment {
         protected JSONObject doInBackground(String... args) {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("request_compid", "1"));
+            params.add(new BasicNameValuePair("request_compid", user_comidPref));
             params.add(new BasicNameValuePair("request_uid", request_uid));
             params.add(new BasicNameValuePair("request_comments", request_comments));
             params.add(new BasicNameValuePair("request_type", request_type));

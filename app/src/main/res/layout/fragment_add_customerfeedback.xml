@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.AddCustomerfeedbackFragment">
+
+
+    <ScrollView
+        android:id="@+id/scrollView_addCustomerFeedbackSp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/titleAddCustomerFeedbackSp_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:id="@+id/titleAddCustomerFeedbackSp_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Customer Feedback"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/addCustomerFeedbackDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"
+                >
+                <RelativeLayout
+                    android:id="@+id/addCustomerFeedbackSpDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <RelativeLayout
+                        android:id="@+id/clientNameAddCustomerFeedbackSpDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/clientNameAddCfSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <Spinner
+                            android:id="@+id/clientNameAddCfSp_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/clientNameAddCfSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowClientNameAddCustomerFeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/clientNameAddCustomerFeedbackSpDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/commentsAddCfSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowClientNameAddCustomerFeedback"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/commentsAddCfSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Comments"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/commentsAddCfSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/commentsAddCfSpHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Comments"
+                            android:textSize="14sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/submitAddCustomerFeedbackSp_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SUBMIT"
+                        android:layout_below="@+id/commentsAddCfSp_rl"
+                        android:background="@color/active_bg"
+                        android:textColor="@android:color/white"
+                        />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

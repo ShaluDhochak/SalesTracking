@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.ViewTotalExpensesFragment">
 
@@ -14,6 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/screen_bg_navigation"
             >
 
             <RelativeLayout
@@ -164,6 +166,7 @@
                                 android:src="@drawable/delete_white_icon"
                                 android:layout_marginRight="3dp"
                                 android:visibility="gone"
+                                android:layout_toLeftOf="@+id/minusViewExpensesSpDetail_iv"
                                 />
 
                             <ImageView
@@ -177,10 +180,10 @@
                                 />
 
                             <ImageView
-                                android:id="@+id/minusViewVisitSpDetail_iv"
+                                android:id="@+id/minusViewExpensesSpDetail_iv"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="15dp"
                                 android:src="@drawable/minus_white_icon"
                                 />
 
@@ -350,7 +353,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/photoExpensesSpDetailHeading_tv"
-                          android:src="@drawable/default_img"
+                            android:src="@drawable/default_img"
+                            android:layout_margin="10dp"
                             />
 
                     </RelativeLayout>

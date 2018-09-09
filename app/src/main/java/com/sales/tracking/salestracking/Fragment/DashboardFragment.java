@@ -56,8 +56,10 @@ public class DashboardFragment extends Fragment {
 
     @BindView(R.id.countTotalMeeting_tv)
     TextView countTotalMeeting_tv;
+
     @BindView(R.id.countTotalCalls_tv)
     TextView countTotalCalls_tv;
+
     @BindView(R.id.countTotalLeads_tv)
     TextView countTotalLeads_tv;
 
@@ -67,12 +69,16 @@ public class DashboardFragment extends Fragment {
 
     @BindView(R.id.assignByTaskSalePersonValue_tv)
     TextView assignByTaskSalePersonValue_tv;
+
     @BindView(R.id.addressTaskSalePersonValue_tv)
     TextView addressTaskSalePersonValue_tv;
+
     @BindView(R.id.purposeTaskSalePersonValue_tv)
     TextView purposeTaskSalePersonValue_tv ;
+
     @BindView(R.id.clientNameValueTodaysTaskDetails_tv)
     TextView clientNameValueTodaysTaskDetails_tv;
+
     @BindView(R.id.timeValueTodaysTaskDetails_tv)
     TextView timeValueTodaysTaskDetails_tv;
 
@@ -80,7 +86,6 @@ public class DashboardFragment extends Fragment {
     TodaysTaskSalesPersonAdapter todaysTaskSalesPersonAdapter;
     SharedPreferences sharedPref;
     String userNamePref, userEmailPref, userTypePref, userIdPref;
-
 
     ArrayList<DashboardSalesPersonBean.sp_meetings_today> spMeetingTodayList = new ArrayList<>();
 
@@ -137,7 +142,7 @@ public class DashboardFragment extends Fragment {
                                     countTotalCalls_tv.setText(response.getCalls_count().get(0).getTot_calls());
                                 }
                             }catch(Exception e){
-                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                     //           Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -171,7 +176,7 @@ public class DashboardFragment extends Fragment {
                                     countTotalLeads_tv.setText(response.getLeads_count().get(0).getTot_leads());
                                 }
                             }catch(Exception e){
-                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -205,7 +210,7 @@ public class DashboardFragment extends Fragment {
                                 countTotalMeeting_tv.setText(response.getMeeting_count().get(0).getTot_meetings());
                             }
                             }catch(Exception e){
-                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            //    Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -248,7 +253,7 @@ public class DashboardFragment extends Fragment {
 
                                 }
                             }catch(Exception e){
-                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                           //     Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },

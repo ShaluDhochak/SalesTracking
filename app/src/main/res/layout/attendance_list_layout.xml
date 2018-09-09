@@ -131,7 +131,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.8"
                 android:gravity="right|center"
-
                 >
                 <ImageView
                     android:id="@+id/deleteAttendance_iv"
@@ -148,7 +147,7 @@
                     android:id="@+id/editAttendance_iv"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/plus_color_icon"
+                    android:src="@drawable/edit"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:visibility="gone"
@@ -168,9 +167,6 @@
 
         </LinearLayout>
 
-
     </android.support.v7.widget.CardView>
-
-
 
 </RelativeLayout>
