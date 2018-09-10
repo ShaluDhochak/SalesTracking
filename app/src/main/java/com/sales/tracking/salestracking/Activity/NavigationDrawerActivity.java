@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -54,6 +56,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     NavigationView navigationView;
     TextView toolbar_title;
     TextView nav_user, userEmailHeading_tv;
+    ImageView editUserProfile_iv;
 
     //header recyclerview
     RelativeLayout reportHeading_rl, menu_rl;
@@ -114,6 +117,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         View hView =  navigationView.getHeaderView(0);
         nav_user = (TextView)hView.findViewById(R.id.usernameHeading_tv);
         userEmailHeading_tv = (TextView) hView.findViewById(R.id.userEmailHeading_tv);
+        editUserProfile_iv = (ImageView) hView.findViewById(R.id.editUserProfile_iv);
+        editUserProfile_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myProfileFragment();
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         reportHeading_rl = (RelativeLayout) hView.findViewById(R.id.reportHeading_rl);
         reportHeading_rl.setOnClickListener(this);
@@ -138,6 +149,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
 
     }
+
 
     private void setDrawerFromActivity(){
         drawer_Open = getIntent().getStringExtra("drawer_Open");
