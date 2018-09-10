@@ -1,12 +1,22 @@
 package com.sales.tracking.salestracking.Fragment;
 
+import android.Manifest;
+import android.Manifest.permission;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,6 +55,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
+import static android.app.Activity.RESULT_OK;
 import static android.widget.Toast.makeText;
 
 
@@ -55,6 +68,12 @@ public class AddTotalExpensesFragment extends Fragment {
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+
+    private int SELECT_FILE =1,REQUEST_CODE = 0 ;
+
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
+
 
     JSONParser jsonParser = new JSONParser();
 
@@ -81,6 +100,14 @@ public class AddTotalExpensesFragment extends Fragment {
     @BindView(R.id.submitAddExpensesSp_btn)
     Button submitAddExpensesSp_btn;
 
+    @BindView(R.id.chooseFromGalleryExpenses_tv)
+    TextView chooseFromGalleryExpenses_tv;
+
+    @BindView(R.id.ClickPhotoExpenses_tv)
+    TextView ClickPhotoExpenses_tv;
+
+    @BindView(R.id.photoAddExpensesSp_iv)
+    ImageView photoAddExpensesSp_iv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -291,4 +318,51 @@ public class AddTotalExpensesFragment extends Fragment {
     }
 
 
+    @OnClick(R.id.chooseFromGalleryExpenses_tv)
+    public void openGalleryExpenses(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null){
+            Uri uri = data.getData();
+            try{
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                photoAddExpensesSp_iv.setImageBitmap(bitmap);
+            }catch(Exception e){
+
+            }
+        }
+
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            photoAddExpensesSp_iv.setImageBitmap(photo);
+        }
+    }
+
+    @OnClick(R.id.ClickPhotoExpenses_tv)
+    public void clickViaCamera(){
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            } else {
+                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
 }

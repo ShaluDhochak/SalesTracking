@@ -30,6 +30,10 @@ public interface ApiLink {
 
     String CUSTOMER_FEEDBACK = "cust_fb.php";
 
-    String CHANGE_PASSWORD = "";
+    String CHANGE_PASSWORD = "user_changepwd.php";
+
+    String PROFILE_DETAILS = "profile.php";
+
+
 
 }

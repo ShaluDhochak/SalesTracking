@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,11 +27,17 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sales.tracking.salestracking.Adapter.ViewVisitTaskSpAdapter;
+import com.sales.tracking.salestracking.Bean.VisitTaskSpBean;
+import com.sales.tracking.salestracking.Fragment.ViewVisitTaskSpFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
+import com.sales.tracking.salestracking.Utility.Connectivity;
+import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.NetworkUtilities;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
 import com.sales.tracking.salestracking.Utility.StringUtils;
+import com.sales.tracking.salestracking.Utility.Utilities;
 
 import org.json.JSONObject;
 
@@ -152,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                             userdesId = userJson.getString("user_desiid");
                             userType = userJson.getString("user_type");
                             sharedPreferenceData();
+
                             if (rememberMe_token.equals("1")) {
                                 session.createLoginSession(user_id, user_password);
                             }
@@ -232,4 +242,5 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }).setNegativeButton("no", null).show();
     }
+
 }

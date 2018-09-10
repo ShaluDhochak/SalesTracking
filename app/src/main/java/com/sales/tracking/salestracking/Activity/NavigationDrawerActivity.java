@@ -29,6 +29,7 @@ import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
+import com.sales.tracking.salestracking.Fragment.MyProfileFragment;
 import com.sales.tracking.salestracking.Fragment.RequestAddFragment;
 import com.sales.tracking.salestracking.Fragment.RequestViewFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
@@ -118,7 +119,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         reportHeading_rl.setOnClickListener(this);
 
         menu_rl = (RelativeLayout) hView.findViewById(R.id.menu_rl);
-        //  menu_rl.setOnClickListener(this);
+     //   menu_rl.setOnClickListener(this);
 
         nav_user.setText(userNamePref);
         userEmailHeading_tv.setText(userEmailPref);
@@ -161,7 +162,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       // getMenuInflater().inflate(R.menu.navigation_drawer, menu);
+        getMenuInflater().inflate(R.menu.navigation_drawer, menu);
         return true;
     }
 
@@ -169,7 +170,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_clients) {
             return true;
         }
 
@@ -221,6 +222,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if (id == R.id.nav_profile)
         {
+            myProfileFragment();
             drawer.closeDrawer(GravityCompat.START);
         }
         else if (id == R.id.nav_manager_title)
@@ -701,6 +703,15 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         DashboardFragment dfragment = new DashboardFragment();
         FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
         dtransaction.replace(R.id.fragment_Container, dfragment);
+        dtransaction.commit();
+    }
+
+    public void myProfileFragment() {
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        MyProfileFragment mpfragment = new MyProfileFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, mpfragment);
         dtransaction.commit();
     }
 

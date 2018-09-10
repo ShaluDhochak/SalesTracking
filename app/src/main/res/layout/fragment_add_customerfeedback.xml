@@ -7,7 +7,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.AddCustomerfeedbackFragment">
 
-
     <ScrollView
         android:id="@+id/scrollView_addCustomerFeedbackSp"
         android:layout_width="match_parent"

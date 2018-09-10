@@ -136,7 +136,6 @@ public class ViewVisitTaskSpFragment extends Fragment {
                         public void onResponse(VisitTaskSpBean response) {
                             try{
                                 if (response.getSingle_sp_all_meetings().size()>0){
-                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
                                     spAttendanceList.clear();
                                     spAttendanceList.addAll(response.getSingle_sp_all_meetings());
 
@@ -145,7 +144,6 @@ public class ViewVisitTaskSpFragment extends Fragment {
                                     viewVisitSpTaskManager_rv.setLayoutManager(mLayoutManager);
                                     viewVisitSpTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewVisitSpTaskManager_rv.setAdapter(viewVisitTaskSpAdapter);
-
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
@@ -210,6 +208,5 @@ public class ViewVisitTaskSpFragment extends Fragment {
 
         return timeToDisplay;
     }
-
 
 }

@@ -5,28 +5,29 @@
     android:layout_height="match_parent"
     android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.AddTotalExpensesFragment">
+    tools:context=".Fragment.MyProfileFragment">
 
     <ScrollView
-        android:id="@+id/scrollView_addExpensesSp"
+        android:id="@+id/scrollView_updateProfile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/titleAddExpensesSp_rl"
+                android:id="@+id/titleUpdateProfile_rl"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/title_bg">
 
                 <TextView
-                    android:id="@+id/titleAddExpensesSp_tv"
+                    android:id="@+id/titleUpdateProfile_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add Expenses"
+                    android:text="Profile"
                     android:textColor="@android:color/white"
                     android:textSize="17dp"
                     android:paddingTop="10dp"
@@ -35,8 +36,9 @@
                     />
             </RelativeLayout>
 
+
             <android.support.v7.widget.CardView
-                android:id="@+id/addExpensesSpDetails_cv"
+                android:id="@+id/addUpdateProfile_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
@@ -48,64 +50,23 @@
                 android:visibility="visible"
                 >
                 <RelativeLayout
-                    android:id="@+id/addExpensesSpDetail_rl"
+                    android:id="@+id/addUpdateProfileDetails_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+
                     <RelativeLayout
-                        android:id="@+id/categoryAddExpensesSpDetail_rl"
+                        android:id="@+id/nameUpdateProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/categoryAddExpensesSpHeading_tv"
+                            android:id="@+id/nameUpdateProfileHeading_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Category"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
-                            android:textSize="12dp"
-                            android:textColor="@color/textcolor"
-                            />
-
-                        <Spinner
-                            android:id="@+id/categoryAddExpensesSp_sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/categoryAddExpensesSpHeading_tv"
-                            android:textColor="@android:color/black"
-                            android:hint=""
-                            />
-
-                    </RelativeLayout>
-
-                    <View
-                        android:id="@+id/separatorBelowCategoryAddExpenses"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/textcolor"
-                        android:layout_below="@+id/categoryAddExpensesSpDetail_rl"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        />
-
-                    <RelativeLayout
-                        android:id="@+id/amountAddExpensesSp_rl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowCategoryAddExpenses"
-                        android:layout_weight="4.5"
-                        >
-
-                        <TextView
-                            android:id="@+id/amountAddExpensesSpHeading_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Amount"
+                            android:text="Name"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -115,12 +76,12 @@
                             />
 
                         <EditText
-                            android:id="@+id/amountAddExpensesSp_et"
+                            android:id="@+id/nameUpdateProfile_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/amountAddExpensesSpHeading_tv"
+                            android:layout_below="@+id/nameUpdateProfileHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint="amount"
+                            android:hint="name"
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
@@ -130,72 +91,28 @@
                     </RelativeLayout>
 
                     <View
-                        android:id="@+id/separatorBelowClientAmountaddExpensesSp"
+                        android:id="@+id/separatorBelowNameUpdateProfile"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
-                        android:layout_below="@+id/amountAddExpensesSp_rl"
+                        android:layout_below="@+id/nameUpdateProfile"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         />
 
                     <RelativeLayout
-                        android:id="@+id/modeAddExpensesSp_rl"
+                        android:id="@+id/emailUpdateProfile_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowClientAmountaddExpensesSp"
+                        android:layout_below="@+id/separatorBelowNameUpdateProfile"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/modeAddExpensesSpHeading_tv"
+                            android:id="@+id/emailUpdateProfileHeading_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mode"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
-                            android:textSize="12dp"
-                            android:textColor="@color/textcolor"
-                            />
-
-                        <Spinner
-                            android:id="@+id/modeAddExpensesSp_sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/modeAddExpensesSpHeading_tv"
-                            android:textColor="@android:color/black"
-                            android:hint=""
-                            />
-
-                    </RelativeLayout>
-
-
-
-                    <View
-                        android:id="@+id/separatorBelowModeAddExpensesSp"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/textcolor"
-                        android:layout_below="@+id/modeAddExpensesSp_rl"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        />
-
-                    <RelativeLayout
-                        android:id="@+id/detailsAddExpensesSp_rl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowModeAddExpensesSp"
-                        android:layout_weight="4.5"
-                        >
-
-                        <TextView
-                            android:id="@+id/detailsAddExpensesSpHeading_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Details"
+                            android:text="Email"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -205,12 +122,12 @@
                             />
 
                         <EditText
-                            android:id="@+id/detailsAddExpensesSp_et"
+                            android:id="@+id/emailUpdateProfile_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/detailsAddExpensesSpHeading_tv"
+                            android:layout_below="@+id/emailUpdateProfileHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint="Details"
+                            android:hint="email"
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
@@ -218,29 +135,30 @@
                             />
 
                     </RelativeLayout>
+
                     <View
-                        android:id="@+id/separatorBelowDetailsAddExpensesSp"
+                        android:id="@+id/separatorBelowEmailUpdateProfile"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
-                        android:layout_below="@+id/detailsAddExpensesSp_rl"
+                        android:layout_below="@+id/emailUpdateProfile_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         />
 
                     <RelativeLayout
-                        android:id="@+id/photoAddExpensesSp_rl"
+                        android:id="@+id/contactNoUpdateProfile_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowDetailsAddExpensesSp"
+                        android:layout_below="@+id/separatorBelowEmailUpdateProfile"
                         android:layout_weight="4.5"
                         >
 
                         <TextView
-                            android:id="@+id/photoAddExpensesSpHeading_tv"
-                            android:layout_width="match_parent"
+                            android:id="@+id/contactNoUpdateProfileHeading_tv"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Photo"
+                            android:text="Contact No"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -249,49 +167,14 @@
                             android:textColor="@color/textcolor"
                             />
 
-                        <TextView
-                            android:id="@+id/chooseFromGalleryExpenses_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="Choose Photo"
-                            android:textColor="@color/textcolor"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_below="@+id/photoAddExpensesSpHeading_tv"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/orFromGalleryExpenses_tv"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/contactNoUpdateProfile_et"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/photoAddExpensesSpHeading_tv"
-                            android:layout_toRightOf="@+id/chooseFromGalleryExpenses_tv"
-                            android:text="OR"
-                            android:textColor="@color/textcolor"
-                            android:layout_margin="10dp"
-                            />
-                        <TextView
-                            android:id="@+id/ClickPhotoExpenses_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/photoAddExpensesSpHeading_tv"
-                            android:layout_toRightOf="@+id/orFromGalleryExpenses_tv"
-                            android:text="Click Photo"
-                            android:textColor="@color/textcolor"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-
-                            />
-
-                        <ImageView
-                            android:id="@+id/photoAddExpensesSp_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/photoAddExpensesSpHeading_tv"
-                            android:src="@drawable/default_img"
+                            android:layout_below="@+id/contactNoUpdateProfileHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Contact No"
+                            android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
                             android:backgroundTint="@android:color/transparent"
@@ -300,11 +183,166 @@
                     </RelativeLayout>
 
                     <Button
-                        android:id="@+id/submitAddExpensesSp_btn"
+                        android:id="@+id/submitUpdateProfile_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="SUBMIT"
-                        android:layout_below="@+id/photoAddExpensesSp_rl"
+                        android:layout_below="@+id/contactNoUpdateProfile_rl"
+                        android:background="@color/active_bg"
+                        android:textColor="@android:color/white"
+                        />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/changePasswordProfile_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"
+                android:layout_below="@+id/addUpdateProfile_cv"
+                >
+                <RelativeLayout
+                    android:id="@+id/changePasswordProfileDetails_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/oldChangePasswordProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        >
+                        <TextView
+                            android:id="@+id/oldChangePasswordProfileHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Old Password"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/oldChangePasswordProfile_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/oldChangePasswordProfileHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="old Password"
+                            android:textSize="14sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowOldChangePasswordProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/oldChangePasswordProfile"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/newChangePasswordProfile_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowOldChangePasswordProfile"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/newChangePasswordProfileHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Password"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/newChangePasswordProfile_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/newChangePasswordProfileHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="New Password"
+                            android:textSize="14sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowNewChangePassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/newChangePasswordProfile_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/confirmChangePasswordProfile_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowNewChangePassword"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/confirmChangePasswordProfileHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Confirm Password"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/confirmChangePasswordProfile_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/confirmChangePasswordProfileHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Confirm Password"
+                            android:textSize="14sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/submitChangePasswordProfile_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SUBMIT"
+                        android:layout_below="@+id/confirmChangePasswordProfile_rl"
                         android:background="@color/active_bg"
                         android:textColor="@android:color/white"
                         />
@@ -314,5 +352,7 @@
 
         </RelativeLayout>
     </ScrollView>
+
+
 
 </FrameLayout>
