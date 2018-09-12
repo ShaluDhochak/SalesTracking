@@ -103,6 +103,12 @@ public class VisitPendingNotificationFragment extends Fragment {
     @BindView(R.id.minusViewSaleCallPendingDetail_iv)
     ImageView minusViewSaleCallPendingDetail_iv;
 
+    @BindView(R.id.followUpDateTimeViewSaleCallPending_rl)
+    RelativeLayout followUpDateTimeViewSaleCallPending_rl;
+
+    @BindView(R.id.separatorBelowStatusViewSaleCallPending)
+    View separatorBelowStatusViewSaleCallPending;
+
     Integer count = 0;
 
     VisitPendingAdapter visitPendingAdapter;
@@ -256,6 +262,13 @@ public class VisitPendingNotificationFragment extends Fragment {
         purposeViewSaleCallPending_tv.setText(bean.getPurpose_name());
         statusViewSaleCallPending_tv.setText(bean.getVisit_status());
         addressViewSaleCallPending_tv.setText(bean.getVisit_address());
+        if (bean.getVisit_status().toString().equals("Followup")){
+            followUpDateTimeViewSaleCallPending_rl.setVisibility(View.VISIBLE);
+            separatorBelowStatusViewSaleCallPending.setVisibility(View.VISIBLE);
+        }else{
+            followUpDateTimeViewSaleCallPending_rl.setVisibility(View.GONE);
+            separatorBelowStatusViewSaleCallPending.setVisibility(View.GONE);
+        }
         followUpDateTimeViewSaleCallPending_tv.setText(followdate1[0] + " / " + convertIn12Hours(followdate1[1]));
 
     }
