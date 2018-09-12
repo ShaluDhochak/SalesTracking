@@ -2,6 +2,7 @@ package com.sales.tracking.salestracking.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -26,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -49,6 +51,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -150,6 +153,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
 
     DatePickerDialog datePickerDialog;
+    TimePickerDialog timePickerDialog;
 
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref;
@@ -236,8 +240,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
     }
-
-
 
     @OnClick(R.id.minusVisitTaskMeetingDetail_iv)
     public void hideDetails(){
@@ -348,7 +350,19 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     @OnClick(R.id.timeEditViewValueMeetingTaskDetail_et)
     public void selectTime(){
-
+        final String time;
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss a");
+        time = simpleDateFormat.format(mcurrentTime.getTime());
+        timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                timeEditViewValueMeetingTaskDetail_et.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
+            }
+        }, hour, minute, true);//Yes 24 hour time
+        timePickerDialog.show();
     }
 
     @OnClick(R.id.editOkButtonVisitTaskMeetingDetail_tv)
@@ -562,7 +576,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
             visit_date = dateEditViewMeetingTask_tv.getText().toString();
             //visit_time = timeAddMeetingTask_tv.getText().toString();
-            visit_time = "4:00:00";
+            visit_time = timeEditViewValueMeetingTaskDetail_et.getText().toString();
             visit_uid = selectAssignToId;
             visit_assignedby = userIdPref;
             visit_leadid = selectClientNameId;
@@ -679,5 +693,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             }
         }
     }
+
 
 }

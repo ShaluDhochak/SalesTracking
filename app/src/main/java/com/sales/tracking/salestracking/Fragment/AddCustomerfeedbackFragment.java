@@ -110,8 +110,6 @@ public class AddCustomerfeedbackFragment extends Fragment {
         }
     }
 
-
-
     public class addCustomerFeedbackSp extends AsyncTask<String, JSONObject, JSONObject> {
         String fb_leadid, fb_lead_uid,fb_client_comments;
         @Override
@@ -177,8 +175,6 @@ public class AddCustomerfeedbackFragment extends Fragment {
         commentsAddCfSp_et.setText("");
     }
 
-
-
     private void selectClientName() {
 
         try{
@@ -216,13 +212,15 @@ public class AddCustomerfeedbackFragment extends Fragment {
             clientCustomerFeedbackSp = new ArrayList<String>();
             clientCustomerFeedbackSp.clear();
             clientCustomerFeedbackSp.add("Client Name");
-            ArrayAdapter<String> clientCfAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, clientCustomerFeedbackSp);
+            ArrayAdapter<String> clientCfAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, clientCustomerFeedbackSp);
             clientCfAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             clientNameAddCfSp_sp.setAdapter(clientCfAdapter);
 
         }catch (Exception e){
         }
     }
+
+    //support_simple_spinner_dropdown_item
 
     @OnItemSelected(R.id.clientNameAddCfSp_sp)
     public void categorySelected(Spinner spinner, int position) {

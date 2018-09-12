@@ -81,6 +81,7 @@
                             android:layout_below="@+id/clientAddVisitTaskSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
@@ -123,6 +124,7 @@
                             android:layout_below="@+id/purposeAddVisitTaskSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>

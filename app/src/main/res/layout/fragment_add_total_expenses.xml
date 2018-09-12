@@ -79,6 +79,7 @@
                             android:layout_below="@+id/categoryAddExpensesSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
@@ -167,6 +168,7 @@
                             android:layout_below="@+id/modeAddExpensesSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
@@ -278,7 +280,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/photoAddExpensesSpHeading_tv"
                             android:layout_toRightOf="@+id/orFromGalleryExpenses_tv"
-                            android:text="Click Photo"
+                            android:text="Take Photo"
                             android:textColor="@color/textcolor"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
@@ -290,7 +292,7 @@
                             android:id="@+id/photoAddExpensesSp_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/photoAddExpensesSpHeading_tv"
+                            android:layout_below="@+id/ClickPhotoExpenses_tv"
                             android:src="@drawable/default_img"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"

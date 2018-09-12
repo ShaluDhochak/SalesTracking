@@ -285,6 +285,4 @@ public class ViewTotalCollectionFragment extends Fragment {
     }
 
 
-
-
 }

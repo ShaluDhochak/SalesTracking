@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.VisitTaskUpdateSpFragment">
 
@@ -80,6 +81,7 @@
                             android:layout_below="@+id/vtaskUpdateVisitTaskSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
@@ -213,6 +215,7 @@
                             android:layout_below="@+id/statusUpdateVisitTaskSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
@@ -254,7 +257,6 @@
                             android:layout_below="@+id/dateUpdateVisitTaskSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint="Date"
-
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="10dp"
@@ -302,7 +304,6 @@
                             android:layout_below="@+id/timeUpdateVisitTaskSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint="Time"
-
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="10dp"

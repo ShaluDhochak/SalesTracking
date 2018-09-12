@@ -187,6 +187,6 @@ public class ViewSalesCallTaskFragment extends Fragment {
     public void minusVisitSaleCallTaskDetail(){
         viewSaleCallTaskDetails_cv.setVisibility(View.GONE);
         salesCallTaskHeader_rl.setVisibility(View.VISIBLE);
-
+        getSaleCallVisitSpRecyclerView();
     }
 }

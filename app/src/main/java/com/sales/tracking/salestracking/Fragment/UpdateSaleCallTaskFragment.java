@@ -135,7 +135,7 @@ public class UpdateSaleCallTaskFragment extends Fragment {
             saleTaskUpdateVisitSp = new ArrayList<String>();
             saleTaskUpdateVisitSp.clear();
             saleTaskUpdateVisitSp.add("Sale Call Task");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, saleTaskUpdateVisitSp);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, saleTaskUpdateVisitSp);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             vtaskUpdateSaleTaskSp_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -164,7 +164,7 @@ public class UpdateSaleCallTaskFragment extends Fragment {
         statusSpinner.add("Done");
         statusSpinner.add("Cancel");
 
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, statusSpinner);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         statusUpdateSaleTaskSp_sp.setAdapter(statusAdapter);
     }

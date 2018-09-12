@@ -149,7 +149,7 @@ public class AddVisitTaskSpFragment extends Fragment {
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeAddVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute + ":00" + ((selectedHour>=12) ? " PM" : " AM"));
+                timeAddVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
             }
         }, hour, minute, true);//Yes 24 hour time
         timePickerDialog.show();
@@ -190,7 +190,7 @@ public class AddVisitTaskSpFragment extends Fragment {
             clientNameCompany = new ArrayList<String>();
             clientNameCompany.clear();
             clientNameCompany.add("Client Name");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, clientNameCompany);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, clientNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             clientAddVisitTaskSp_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -246,7 +246,7 @@ public class AddVisitTaskSpFragment extends Fragment {
             purposesNameCompany = new ArrayList<String>();
             purposesNameCompany.clear();
             purposesNameCompany.add("Purposes");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, purposesNameCompany);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             purposeAddVisitTaskSp_sp.setAdapter(quotationLocationDataAdapter);
 

@@ -1,5 +1,6 @@
 package com.sales.tracking.salestracking.Fragment;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -88,7 +90,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
     Button submitUpdateVisitTaskSp_btn;
 
     String selectedVisitTask, selectedVisitTaskId, selectedvisit_id, selectTaskStatus, selectedTaskStatusId;
-
     ArrayList<String> visitTaskUpdateVisitSp;
 
     Map<String, String> visitTaskMap = new HashMap<>();
@@ -101,6 +102,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
 
     JSONParser jsonParser = new JSONParser();
     TimePickerDialog timePickerDialog;
+    DatePickerDialog datePickerDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,10 +123,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
 
-        timeUpdateVisitTaskSp_rl.setVisibility(View.GONE);
-        dateUpdateVisitTaskSp_rl.setVisibility(View.GONE);
-        separatorBelowStatusUpdateVisitTaskSp.setVisibility(View.GONE);
-        separatorBelowDateUpdateVisitTaskSp.setVisibility(View.GONE);
+        setDefaultDateTimeVisibility();
 
         selectVisittask();
         selectTaskStatus();
@@ -166,7 +165,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             visitTaskUpdateVisitSp = new ArrayList<String>();
             visitTaskUpdateVisitSp.clear();
             visitTaskUpdateVisitSp.add("Visit Task");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, visitTaskUpdateVisitSp);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, visitTaskUpdateVisitSp);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             vtaskUpdateVisitTaskSp_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -195,9 +194,9 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         statusSpinner.add("Done");
         statusSpinner.add("Cancel");
         statusSpinner.add("Followup");
-        statusSpinner.add("NI");
+        statusSpinner.add("Not Interested");
 
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, statusSpinner);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         statusUpdateVisitTaskSp_sp.setAdapter(statusAdapter);
     }
@@ -208,12 +207,17 @@ public class VisitTaskUpdateSpFragment extends Fragment {
 
         if (selectTaskStatus.equals("Status")) {
             selectedTaskStatusId = "";
+            setDefaultDateTimeVisibility();
         }else if (selectTaskStatus.equals("Pending")){
             selectedTaskStatusId = "Pending";
+
+            setDefaultDateTimeVisibility();
         }else if (selectTaskStatus.equals("Done")){
             selectedTaskStatusId = "Done";
+            setDefaultDateTimeVisibility();
         }else if (selectTaskStatus.equals("Cancel")){
             selectedTaskStatusId = "Cancel";
+            setDefaultDateTimeVisibility();
         }else if (selectTaskStatus.equals("Followup")){
             selectedTaskStatusId = "Followup";
 
@@ -223,7 +227,15 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             separatorBelowDateUpdateVisitTaskSp.setVisibility(View.VISIBLE);
         }else if (selectTaskStatus.equals("Not Interested")){
             selectedTaskStatusId = "Not Interested";
+            setDefaultDateTimeVisibility();
         }
+    }
+
+    private void setDefaultDateTimeVisibility(){
+        timeUpdateVisitTaskSp_rl.setVisibility(View.GONE);
+        dateUpdateVisitTaskSp_rl.setVisibility(View.GONE);
+        separatorBelowStatusUpdateVisitTaskSp.setVisibility(View.GONE);
+        separatorBelowDateUpdateVisitTaskSp.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.submitUpdateVisitTaskSp_btn)
@@ -320,7 +332,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         dateUpdateVisitTaskSp_tv.setText("");
         timeUpdateVisitTaskSp_tv.setText("");
         vtaskUpdateVisitTaskSp_sp.setSelection(0);
-
     }
 
     @OnClick(R.id.timeUpdateVisitTaskSp_tv)
@@ -334,10 +345,28 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeUpdateVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute + ":00" + ((selectedHour>=12) ? " PM" : " AM"));
+                timeUpdateVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute + ((selectedHour>=12) ? " PM" : " AM"));
             }
         }, hour, minute, true);//Yes 24 hour time
         timePickerDialog.show();
+    }
+
+    @OnClick(R.id.dateUpdateVisitTaskSp_tv)
+    public void updatevisitTime(){
+        final Calendar calenderObj = Calendar.getInstance();
+        int mYear = calenderObj.get(Calendar.YEAR);
+        int mMonth = calenderObj.get(Calendar.MONTH);
+        int mDay = calenderObj.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dateUpdateVisitTaskSp_tv.setText(year + "-" + (monthOfYear + 1)+ "-" + dayOfMonth);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
 }

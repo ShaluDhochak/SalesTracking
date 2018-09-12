@@ -82,6 +82,7 @@
                             android:layout_below="@+id/clientNameAddCfSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>

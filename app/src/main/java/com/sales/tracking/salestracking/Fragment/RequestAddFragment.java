@@ -165,7 +165,7 @@ public class RequestAddFragment extends Fragment {
                 serviceTaskAddRequestSp.add("Visit Task");
             }
 
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, serviceTaskAddRequestSp);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, serviceTaskAddRequestSp);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             saleCallTaskRequestSp_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -193,7 +193,7 @@ public class RequestAddFragment extends Fragment {
         selectSpinner.add("Sales Call");
         selectSpinner.add("Visit");
 
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, selectSpinner);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, selectSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         taskTypeAddRequestSp_sp.setAdapter(statusAdapter);
     }

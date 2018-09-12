@@ -266,7 +266,7 @@ public class AddTotalExpensesFragment extends Fragment {
             categoryExpensesSp = new ArrayList<String>();
             categoryExpensesSp.clear();
             categoryExpensesSp.add("Category");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, categoryExpensesSp);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, categoryExpensesSp);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             categoryAddExpensesSp_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -297,7 +297,7 @@ public class AddTotalExpensesFragment extends Fragment {
         modeSpinner.add("Card");
         modeSpinner.add("Online Transfer");
 
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, modeSpinner);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, modeSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         modeAddExpensesSp_sp.setAdapter(statusAdapter);
     }

@@ -146,7 +146,7 @@ public class AddLeadSpFragment extends Fragment {
             leadTypeAddLeadSp = new ArrayList<String>();
             leadTypeAddLeadSp.clear();
             leadTypeAddLeadSp.add("Lead Type");
-            ArrayAdapter<String> leadTypeDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, leadTypeAddLeadSp);
+            ArrayAdapter<String> leadTypeDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, leadTypeAddLeadSp);
             leadTypeDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             lTypeAddLeadSp_sp.setAdapter(leadTypeDataAdapter);
 
@@ -209,7 +209,7 @@ public class AddLeadSpFragment extends Fragment {
 
             lead_address  =addressAddLeadSp_et.getText().toString();
             lead_uid =userIdPref;
-            lead_leadtypeid = selectedLeadTypeId;
+            lead_leadtypeid = leadType_id;
             lead_company = clientCompanyNameAddLeadSp_et.getText().toString();
             lead_name = contactPersonAddLeadSp_et.getText().toString();
             lead_email = emailAddLeadSp_et.getText().toString();
@@ -228,15 +228,15 @@ public class AddLeadSpFragment extends Fragment {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("lead_address", lead_address));
-            params.add(new BasicNameValuePair("lead_uid", lead_uid));
-            params.add(new BasicNameValuePair("lead_leadtypeid", lead_leadtypeid));
+            params.add(new BasicNameValuePair("lead_uid", userIdPref));
+            params.add(new BasicNameValuePair("lead_leadtypeid", "1"));
             params.add(new BasicNameValuePair("add", "add"));
             params.add(new BasicNameValuePair("lead_company", lead_company));
             params.add(new BasicNameValuePair("lead_name", lead_name));
             params.add(new BasicNameValuePair("lead_email", lead_email));
             params.add(new BasicNameValuePair("lead_contact", lead_contact));
             params.add(new BasicNameValuePair("lead_website", lead_website));
-
+            params.add(new BasicNameValuePair("lead_comid", user_comidPref));
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
             JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);

@@ -146,4 +146,26 @@ public class VisitTaskSpBean {
     public ArrayList<Single_sp_all_Meetings> single_sp_all_meetings;
 
 
+    public static class Meeting_Count{
+        public String getTot_meetings() {
+            return tot_meetings;
+        }
+
+        public void setTot_meetings(String tot_meetings) {
+            this.tot_meetings = tot_meetings;
+        }
+
+        String tot_meetings;
+    }
+
+    public ArrayList<Meeting_Count> getMeeting_count() {
+        return meeting_count;
+    }
+
+    public void setMeeting_count(ArrayList<Meeting_Count> meeting_count) {
+        this.meeting_count = meeting_count;
+    }
+
+    public ArrayList<Meeting_Count> meeting_count;
+
 }

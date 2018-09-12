@@ -45,6 +45,7 @@ public class ViewVisitTaskSpAdapter  extends RecyclerView.Adapter<ViewVisitTaskS
         this.viewVisitTaskSpFragment = viewVisitTaskSpFragment;
     }
 
+
     @Override
     public ViewVisitTaskSpAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())

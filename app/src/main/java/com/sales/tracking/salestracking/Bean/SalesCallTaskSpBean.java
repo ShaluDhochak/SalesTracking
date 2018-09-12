@@ -144,5 +144,29 @@ public class SalesCallTaskSpBean {
     public ArrayList<Sp_Servicecalls_DD> sp_servicecalls_dd;
 
 
+    public static class Calls_Count{
+        public String getTot_calls() {
+            return tot_calls;
+        }
+
+        public void setTot_calls(String tot_calls) {
+            this.tot_calls = tot_calls;
+        }
+
+        String tot_calls;
+
+    }
+
+    public ArrayList<Calls_Count> getCalls_count() {
+        return calls_count;
+    }
+
+    public void setCalls_count(ArrayList<Calls_Count> calls_count) {
+        this.calls_count = calls_count;
+    }
+
+    public ArrayList<Calls_Count> calls_count;
+
+
 }
 

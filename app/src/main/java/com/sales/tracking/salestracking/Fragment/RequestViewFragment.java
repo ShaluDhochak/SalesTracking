@@ -293,13 +293,11 @@ public class RequestViewFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
-
                     if (userTypePref.equals("Sales Manager")) {
                         //  getAttendanceRecyclerView();
                     }else if (userTypePref.equals("Sales Executive")){
                         getSPRequestViewRecyclerView();
                     }
-
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();

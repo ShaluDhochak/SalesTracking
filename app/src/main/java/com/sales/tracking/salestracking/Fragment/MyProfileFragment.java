@@ -43,7 +43,6 @@ import butterknife.OnClick;
 
 import static android.widget.Toast.makeText;
 
-
 public class MyProfileFragment extends Fragment {
     View view;
 
@@ -81,8 +80,7 @@ public class MyProfileFragment extends Fragment {
     EditText oldChangePasswordProfile_et;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_profile, container, false);
         ButterKnife.bind(this, view);
         return view;

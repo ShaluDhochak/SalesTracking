@@ -29,10 +29,12 @@ import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
 import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
+import com.sales.tracking.salestracking.Fragment.CallsPendingNotificationFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.MyProfileFragment;
 import com.sales.tracking.salestracking.Fragment.RequestAddFragment;
 import com.sales.tracking.salestracking.Fragment.RequestViewFragment;
+import com.sales.tracking.salestracking.Fragment.TargetFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.UpdateSaleCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewCustomerFeedbackFragment;
@@ -42,6 +44,7 @@ import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.ViewVisitTaskSpFragment;
+import com.sales.tracking.salestracking.Fragment.VisitPendingNotificationFragment;
 import com.sales.tracking.salestracking.Fragment.VisitTaskUpdateSpFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.SessionManagement;
@@ -150,7 +153,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     }
 
-
     private void setDrawerFromActivity(){
         drawer_Open = getIntent().getStringExtra("drawer_Open");
     try {
@@ -183,9 +185,20 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         int id = item.getItemId();
 
         if (id == R.id.action_clients) {
+           // Intent notificationIntent = new Intent(this, NotificationActivity.class);
+           // startActivity(notificationIntent);
+            callPendingFragment();
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }else if (id == R.id.action_visit){
+            visitPendingFragment();
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }else if (id== R.id.action_target){
+            targetFragment();
+            drawer.closeDrawer(GravityCompat.START);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -717,6 +730,34 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         dtransaction.replace(R.id.fragment_Container, dfragment);
         dtransaction.commit();
     }
+
+    public void targetFragment(){
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        TargetFragment tfragment = new TargetFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, tfragment);
+        dtransaction.commit();
+    }
+
+    public void callPendingFragment(){
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        CallsPendingNotificationFragment cpfragment = new CallsPendingNotificationFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, cpfragment);
+        dtransaction.commit();
+    }
+
+    public void visitPendingFragment(){
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        VisitPendingNotificationFragment vpfragment = new VisitPendingNotificationFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, vpfragment);
+        dtransaction.commit();
+    }
+
 
     public void myProfileFragment() {
         navigationView.getMenu().getItem(0).setChecked(true);

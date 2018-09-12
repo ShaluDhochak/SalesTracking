@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.CallsPendingNotificationFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_viewSaleCallPending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <RelativeLayout
+        android:id="@+id/titleViewSaleCallPending_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/title_bg">
+
+        <TextView
+            android:id="@+id/titleViewSaleCallPending_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calls Pending"
+            android:textColor="@android:color/white"
+            android:textSize="17dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/countCallPending_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textStyle="bold"
+            android:text="0"
+            android:textSize="17sp"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/salesCallPendingHeader_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/viewSaleCallPending_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/viewSaleCallPendingDetails_cv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible"
+            android:layout_below="@+id/salesCallPendingHeader_rl"
+            >
+            <RelativeLayout
+                android:id="@+id/viewSaleCallPendingDetail_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/dateViewSaleCallPending_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:background="@color/active_bg"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/dateViewSaleCallPending_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/green_box_bg"
+                        android:layout_weight="1"
+                        >
+
+                        <TextView
+                            android:id="@+id/dateViewSaleCallPendingHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/white"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="2dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/dateViewSaleCallPending_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01 August, 2018"
+                            android:textColor="@android:color/white"
+                            android:textSize="14dp"
+                            android:layout_below="@+id/dateViewSaleCallPendingHeading_tv"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/clientNameViewSaleCallPendingDetail_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/green_box_bg"
+                        >
+                        <TextView
+                            android:id="@+id/clientNameViewSaleCallPendingHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Client Name"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/white"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="2dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/clientNameViewSaleCallPendingDetail_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shalu Dhochak"
+                            android:textColor="@android:color/white"
+                            android:textSize="14dp"
+                            android:layout_below="@+id/clientNameViewSaleCallPendingHeading_tv"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/editMinusViewSaleCallPending_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:background="@color/green_box_bg">
+
+                        <ImageView
+                            android:id="@+id/deleteViewSaleCallPendingDetail_iv"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/delete_white_icon"
+                            android:layout_marginRight="3dp"
+                            android:visibility="gone"
+                            />
+
+                        <ImageView
+                            android:id="@+id/editViewSaleCallPendingDetail_iv"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/edit_icon"
+                            android:layout_marginRight="3dp"
+                            android:visibility="gone"
+                            android:layout_toRightOf="@+id/deleteViewSaleCallPendingDetail_iv"
+                            />
+
+                        <ImageView
+                            android:id="@+id/minusViewSaleCallPendingDetail_iv"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/minus_white_icon"
+                            />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/timeViewSaleCallPendingDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dateViewSaleCallPending_ll"
+                    android:layout_weight="4.5"
+                    >
+
+                    <TextView
+                        android:id="@+id/timeViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/timeViewSaleCallPendingTask_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/timeViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowTimeViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/timeViewSaleCallPendingDetail_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/assignByViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowTimeViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    >
+
+                    <TextView
+                        android:id="@+id/assignByViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Assigned By"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/assignByViewSaleCallPending_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/assignByViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowAssignByViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/assignByViewSaleCallPending_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/purposeViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowAssignByViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    >
+
+                    <TextView
+                        android:id="@+id/purposeViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Purpose"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/purposeViewSaleCallPending_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/purposeViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowPurposeViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/purposeViewSaleCallPending_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    />
+                <RelativeLayout
+                    android:id="@+id/addressViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowPurposeViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    >
+
+                    <TextView
+                        android:id="@+id/addressViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/addressViewSaleCallPending_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addressViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowAddressViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/addressViewSaleCallPending_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/descriptionViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowAddressViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    >
+
+                    <TextView
+                        android:id="@+id/descriptionViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/descriptionViewSaleCallPending_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/descriptionViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowDescriptionViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/descriptionViewSaleCallPending_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/photoViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowDescriptionViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    >
+
+                    <TextView
+                        android:id="@+id/photoViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Photo"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <ImageView
+                        android:id="@+id/photoViewSaleCallPending_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/photoViewSaleCallPendingHeading_tv"
+                        android:src="@drawable/default_img"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowPhotoViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/photoViewSaleCallPending_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/statusViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowPhotoViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    android:visibility="visible"
+                    >
+
+                    <TextView
+                        android:id="@+id/statusViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/statusViewSaleCallPending_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/statusViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/separatorBelowStatusViewSaleCallPending"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/textcolor"
+                    android:layout_below="@+id/statusViewSaleCallPending_rl"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/followUpDateTimeViewSaleCallPending_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowStatusViewSaleCallPending"
+                    android:layout_weight="4.5"
+                    android:visibility="visible"
+                    >
+
+                    <TextView
+                        android:id="@+id/followUpDateTimeViewSaleCallPendingHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Followup Date"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/textcolor"
+                        />
+
+                    <TextView
+                        android:id="@+id/followUpDateTimeViewSaleCallPending_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/followUpDateTimeViewSaleCallPendingHeading_tv"
+                        android:textColor="@android:color/black"
+                        android:hint=""
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/saleCallPending_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/salesCallPendingHeader_rl"
+            android:visibility="gone">
+            <include
+                layout="@layout/sales_call_track_layout" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

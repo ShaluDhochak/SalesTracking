@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.RequestAddFragment">
 
@@ -80,6 +81,7 @@
                             android:layout_below="@+id/taskTypeAddRequestSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
@@ -122,6 +124,7 @@
                             android:layout_below="@+id/saleCallTaskRequestSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
+                            android:layout_marginLeft="5dp"
                             />
 
                     </RelativeLayout>
