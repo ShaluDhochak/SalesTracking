@@ -244,11 +244,22 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         if (!selectedVisitTask.equals("Visit Task")){
             if (commentUpdateVisitTaskSp_et.getText().toString().length()>0){
                 if (!selectTaskStatus.equals("Status")){
-                    new UpdateVisitTaskSp().execute();
+                    if(selectTaskStatus.equals("Followup")){
+                        if (dateUpdateVisitTaskSp_tv.getText().toString().length()>0){
+                           if (timeUpdateVisitTaskSp_tv.getText().toString().length()>0){
+                               new UpdateVisitTaskSp().execute();
+                           }else{
+                               Toast.makeText(getActivity(), "Please Enter Time", Toast.LENGTH_SHORT).show();
+                           }
+                        }else{
+                            Toast.makeText(getActivity(), "Please Enter Date", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        new UpdateVisitTaskSp().execute();
+                    }
                 }else{
                     Toast.makeText(getActivity(), "Please Select Status", Toast.LENGTH_SHORT).show();
                 }
-
             }else{
                 Toast.makeText(getActivity(), "Please Enter Comment", Toast.LENGTH_SHORT).show();
             }

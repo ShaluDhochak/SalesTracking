@@ -188,8 +188,8 @@ public class UpdateSaleCallTaskFragment extends Fragment {
     @OnClick(R.id.submitUpdateSaleTaskSp_btn)
     public void updateVisitTask(){
 
-        if (selectedSaleTask.equals("Sale Call Task")){
-            if (selectTaskStatus.equals("Status")){
+        if (!selectedSaleTask.equals("Sale Call Task")){
+            if (!selectTaskStatus.equals("Status")){
                if (commentUpdateSaleTaskSp_et.getText().toString().length()>0){
                    new UpdateSaleCallTaskSp().execute();
                }else{

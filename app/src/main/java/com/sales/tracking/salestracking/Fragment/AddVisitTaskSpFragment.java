@@ -115,7 +115,6 @@ public class AddVisitTaskSpFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
 
-
         selectClientName();
         selectPurpose();
     }
@@ -150,6 +149,8 @@ public class AddVisitTaskSpFragment extends Fragment {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 timeAddVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
+
+           //     timeAddVisitTaskSp_tv.setText(time);
             }
         }, hour, minute, true);//Yes 24 hour time
         timePickerDialog.show();
@@ -287,11 +288,9 @@ public class AddVisitTaskSpFragment extends Fragment {
             }else{
                 Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
             }
-
         }else{
             Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
         }
-
     }
     public class CreateNewVisitTask extends AsyncTask<String, JSONObject, JSONObject> {
         String visit_leadid, visit_purposeid, visit_assignedby, visit_time,visit_date;
@@ -303,7 +302,7 @@ public class AddVisitTaskSpFragment extends Fragment {
             visit_date = dateAddVisitTaskSp_tv.getText().toString();
             visit_time = timeAddVisitTaskSp_tv.getText().toString();
         //    visit_uid = selectAssignToId;
-            visit_assignedby = userIdPref;
+            //   visit_assignedby = userIdPref;
             visit_leadid = selectClientNameId;
             visit_purposeid= selectPurposeId;
 
@@ -322,8 +321,8 @@ public class AddVisitTaskSpFragment extends Fragment {
             params.add(new BasicNameValuePair("visit_address", visit_address));
             params.add(new BasicNameValuePair("visit_date", visit_date));
             params.add(new BasicNameValuePair("visit_time", visit_time));
-            params.add(new BasicNameValuePair("visit_uid", visit_assignedby));
-            params.add(new BasicNameValuePair("visit_assignedby", "17"));
+            params.add(new BasicNameValuePair("visit_uid", userIdPref));
+            params.add(new BasicNameValuePair("visit_assignedby", userIdPref));
             params.add(new BasicNameValuePair("visit_leadid", visit_leadid));
             params.add(new BasicNameValuePair("visit_purposeid", visit_purposeid));
             params.add(new BasicNameValuePair("sp_add", "sp_add"));

@@ -88,6 +88,12 @@ public class ViewVisitTaskSpFragment extends Fragment {
     @BindView(R.id.followUpDateTimeViewVisitSpTask_tv)
     TextView followUpDateTimeViewVisitSpTask_tv;
 
+    @BindView(R.id.followUpDateTimeViewVisitSpTask_rl)
+            RelativeLayout followUpDateTimeViewVisitSpTask_rl;
+
+    @BindView(R.id.separatorBelowStatusViewVisitSpTask)
+            View separatorBelowStatusViewVisitSpTask;
+
     ViewVisitTaskSpAdapter viewVisitTaskSpAdapter;
     ArrayList<VisitTaskSpBean.Single_sp_all_Meetings> spAttendanceList = new ArrayList<>();
 
@@ -175,6 +181,8 @@ public class ViewVisitTaskSpFragment extends Fragment {
 
         viewVisitSpTaskDetails_cv.setVisibility(View.VISIBLE);
         viewVisitSpTaskHeader_rl.setVisibility(View.GONE);
+        followUpDateTimeViewVisitSpTask_rl.setVisibility(View.GONE);
+        separatorBelowStatusViewVisitSpTask.setVisibility(View.GONE);
 
         String indate = bean.getVisit_datetime();
         String[] indate1 = indate.split( " ");
@@ -191,7 +199,16 @@ public class ViewVisitTaskSpFragment extends Fragment {
         purposeViewVisitSpTask_tv.setText(bean.getPurpose_name());
         statusViewVisitSpTask_tv.setText(bean.getVisit_status());
         addressViewVisitSpTask_tv.setText(bean.getVisit_address());
+        if (bean.getVisit_status().toString().equals("Followup")){
+            followUpDateTimeViewVisitSpTask_rl.setVisibility(View.VISIBLE);
+            separatorBelowStatusViewVisitSpTask.setVisibility(View.VISIBLE);
+        }else{
+            followUpDateTimeViewVisitSpTask_rl.setVisibility(View.GONE);
+            separatorBelowStatusViewVisitSpTask.setVisibility(View.GONE);
+        }
+
         followUpDateTimeViewVisitSpTask_tv.setText(followdate1[0] + " / " + convertIn12Hours(followdate1[1]));
+
     }
 
     private String convertIn12Hours(String time){
