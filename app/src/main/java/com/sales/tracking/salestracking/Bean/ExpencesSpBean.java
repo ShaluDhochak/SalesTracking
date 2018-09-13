@@ -144,5 +144,123 @@ public class ExpencesSpBean {
 
     public ArrayList<Salesperson_Expenses> salesperson_expenses;
 
+
+    public static class Manager_Expenses{
+        String expense_id,expense_compid,expense_uid,expense_amt,expense_mode,expense_images;
+        String expense_details;
+        String expense_date;
+        String expense_status;
+        String expense_cat;
+        String expcat_name;
+
+        public String getExpense_id() {
+            return expense_id;
+        }
+
+        public void setExpense_id(String expense_id) {
+            this.expense_id = expense_id;
+        }
+
+        public String getExpense_compid() {
+            return expense_compid;
+        }
+
+        public void setExpense_compid(String expense_compid) {
+            this.expense_compid = expense_compid;
+        }
+
+        public String getExpense_uid() {
+            return expense_uid;
+        }
+
+        public void setExpense_uid(String expense_uid) {
+            this.expense_uid = expense_uid;
+        }
+
+        public String getExpense_amt() {
+            return expense_amt;
+        }
+
+        public void setExpense_amt(String expense_amt) {
+            this.expense_amt = expense_amt;
+        }
+
+        public String getExpense_mode() {
+            return expense_mode;
+        }
+
+        public void setExpense_mode(String expense_mode) {
+            this.expense_mode = expense_mode;
+        }
+
+        public String getExpense_images() {
+            return expense_images;
+        }
+
+        public void setExpense_images(String expense_images) {
+            this.expense_images = expense_images;
+        }
+
+        public String getExpense_details() {
+            return expense_details;
+        }
+
+        public void setExpense_details(String expense_details) {
+            this.expense_details = expense_details;
+        }
+
+        public String getExpense_date() {
+            return expense_date;
+        }
+
+        public void setExpense_date(String expense_date) {
+            this.expense_date = expense_date;
+        }
+
+        public String getExpense_status() {
+            return expense_status;
+        }
+
+        public void setExpense_status(String expense_status) {
+            this.expense_status = expense_status;
+        }
+
+        public String getExpense_cat() {
+            return expense_cat;
+        }
+
+        public void setExpense_cat(String expense_cat) {
+            this.expense_cat = expense_cat;
+        }
+
+        public String getExpcat_name() {
+            return expcat_name;
+        }
+
+        public void setExpcat_name(String expcat_name) {
+            this.expcat_name = expcat_name;
+        }
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
+
+        String user_name;
+
+    }
+
+    public ArrayList<Manager_Expenses> manager_expenses;
+
+    public ArrayList<Manager_Expenses> getManager_expenses() {
+        return manager_expenses;
+    }
+
+    public void setManager_expenses(ArrayList<Manager_Expenses> manager_expenses) {
+        this.manager_expenses = manager_expenses;
+    }
 }
 

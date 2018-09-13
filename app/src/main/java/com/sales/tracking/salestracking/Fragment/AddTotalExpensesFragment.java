@@ -64,7 +64,7 @@ public class AddTotalExpensesFragment extends Fragment {
     View view;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref, userCompIdPref;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -126,9 +126,16 @@ public class AddTotalExpensesFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        userCompIdPref = sharedPref.getString("user_com_id", "");
 
-        selectCategory();
-        selectMode();
+        if (userTypePref.equals("Sales Manager")) {
+            selectCategory();
+            selectMode();
+        }else if (userTypePref.equals("Sales Executive")){
+            selectCategory();
+            selectMode();
+        }
+
     }
 
     @OnClick(R.id.submitAddExpensesSp_btn)
@@ -137,7 +144,8 @@ public class AddTotalExpensesFragment extends Fragment {
             if (!(amountAddExpensesSp_et.getText().toString().equals(""))) {
                 if (!selectMode.equals("Mode")) {
                     if (!(detailsAddExpensesSp_et.getText().toString().equals(""))){
-                        new addExpensesSp().execute();
+                          new addExpensesSp().execute();
+
                     }else{
                         Toast.makeText(getActivity(), "Please Enter Details", Toast.LENGTH_SHORT).show();
                     }
@@ -184,7 +192,7 @@ public class AddTotalExpensesFragment extends Fragment {
             params.add(new BasicNameValuePair("add_exp", "add_exp"));
             params.add(new BasicNameValuePair("expense_uid", expense_uid));
             params.add(new BasicNameValuePair("expense_details", expense_details));
-            params.add(new BasicNameValuePair("expense_compid", expense_compid));
+            params.add(new BasicNameValuePair("expense_compid", userCompIdPref));
             params.add(new BasicNameValuePair("expense_cat", expense_cat));
 
 
@@ -235,7 +243,7 @@ public class AddTotalExpensesFragment extends Fragment {
             if (Connectivity.isConnected(getActivity())) {
                 String Url = ApiLink.ROOT_URL + ApiLink.Expenses_SP;
                 Map<String, String> map = new HashMap<>();
-                map.put("expense_comid","1" );
+                map.put("expense_comid",userCompIdPref );
                 map.put("expcat_dropdown", "");
 
                 final GSONRequest<ExpencesSpBean> locationSpinnerGsonRequest = new GSONRequest<ExpencesSpBean>(
@@ -316,7 +324,6 @@ public class AddTotalExpensesFragment extends Fragment {
             selectModeId = "Online Transfer";
         }
     }
-
 
     @OnClick(R.id.chooseFromGalleryExpenses_tv)
     public void openGalleryExpenses(){

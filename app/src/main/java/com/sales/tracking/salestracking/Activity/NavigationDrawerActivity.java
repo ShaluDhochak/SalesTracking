@@ -266,6 +266,27 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageClient();
             navigationView.getMenu().getItem(21).setVisible(true);
             navigationView.getMenu().getItem(22).setVisible(true);
+        }else if(id == R.id.nav_view_expenses){                    //manager View Expenses
+            viewTotalExpensesFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
+
+            setDefaultManageTask();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(21).setVisible(true);
+            navigationView.getMenu().getItem(22).setVisible(true);
+        }else if (id==R.id.nav_add_expenses){                     //manager Add Expenses
+
+            addTotalExpensesFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
+
+            setDefaultManageTask();
+            setDefaultManageSalesPersonTarget();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(21).setVisible(true);
+            navigationView.getMenu().getItem(22).setVisible(true);
         }else if(id==R.id.nav_view_meeting_tasks){
             viewMeetingTaskFragment();
             drawer.closeDrawer(GravityCompat.START);

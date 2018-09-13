@@ -55,7 +55,7 @@ public class ViewTotalCollectionFragment extends Fragment {
     View view;
 
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref;
+    String userIdPref, userTypePref, userComidPref;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -99,6 +99,7 @@ public class ViewTotalCollectionFragment extends Fragment {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
+        userComidPref = sharedPref.getString("user_com_id", "");
 
         getTodaysTaskRecyclerView();
     }
@@ -183,6 +184,7 @@ public class ViewTotalCollectionFragment extends Fragment {
             Map<String, String> map = new HashMap<>();
             map.put("collection_uid", userIdPref);
             map.put("select", "");
+            // reporting_to
 
             GSONRequest<CollectionListBean> dashboardGsonRequest = new GSONRequest<CollectionListBean>(
                     Request.Method.POST,
