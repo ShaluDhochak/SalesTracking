@@ -89,10 +89,10 @@ public class ViewVisitTaskSpFragment extends Fragment {
     TextView followUpDateTimeViewVisitSpTask_tv;
 
     @BindView(R.id.followUpDateTimeViewVisitSpTask_rl)
-            RelativeLayout followUpDateTimeViewVisitSpTask_rl;
+    RelativeLayout followUpDateTimeViewVisitSpTask_rl;
 
     @BindView(R.id.separatorBelowStatusViewVisitSpTask)
-            View separatorBelowStatusViewVisitSpTask;
+    View separatorBelowStatusViewVisitSpTask;
 
     ViewVisitTaskSpAdapter viewVisitTaskSpAdapter;
     ArrayList<VisitTaskSpBean.Single_sp_all_Meetings> spAttendanceList = new ArrayList<>();

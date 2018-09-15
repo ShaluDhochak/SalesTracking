@@ -34,6 +34,8 @@ public interface ApiLink {
 
     String PROFILE_DETAILS = "profile.php";
 
+    String MANAGER_CLIENT = "manager_client.php";
 
+    String MANAGER_SALES_PERSON = "user.php";
 
 }

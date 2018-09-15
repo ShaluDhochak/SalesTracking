@@ -107,7 +107,11 @@ public class AddLeadSpFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
 
-        selectleadType();
+        if (userTypePref.equals("Sales Executive")) {
+            selectleadType();
+        }else if (userTypePref.equals("Sales Manager")){
+            selectleadType();
+        }
     }
 
     private void selectleadType(){
@@ -177,7 +181,12 @@ public class AddLeadSpFragment extends Fragment {
                         if (mobileAddLeadSp_et.getText().toString().length()>0 && mobileAddLeadSp_et.getText().toString().length()==10){
                             if (websiteAddLeadSp_et.getText().toString().length()>0){
                                 if (addressAddLeadSp_et.getText().toString().length()>0){
-                                    new addLeadSp().execute();
+                                    if (userTypePref.equals("Sales Executive")) {
+                                        new addLeadSp().execute();
+                                    }else if (userTypePref.equals("Sales Manager")){
+                                        new addClientSp().execute();
+                                    }
+
                                 }else{
                                     Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
                                 }
@@ -229,7 +238,7 @@ public class AddLeadSpFragment extends Fragment {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("lead_address", lead_address));
             params.add(new BasicNameValuePair("lead_uid", userIdPref));
-            params.add(new BasicNameValuePair("lead_leadtypeid", "1"));
+            params.add(new BasicNameValuePair("lead_leadtypeid", lead_leadtypeid));
             params.add(new BasicNameValuePair("add", "add"));
             params.add(new BasicNameValuePair("lead_company", lead_company));
             params.add(new BasicNameValuePair("lead_name", lead_name));
@@ -239,6 +248,8 @@ public class AddLeadSpFragment extends Fragment {
             params.add(new BasicNameValuePair("lead_comid", user_comidPref));
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
+
+            //manager_client.php
             JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
 
             try {
@@ -271,6 +282,81 @@ public class AddLeadSpFragment extends Fragment {
             }
         }
     }
+
+    public class addClientSp extends AsyncTask<String, JSONObject, JSONObject> {
+        String lead_address, lead_uid,lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            lead_address  =addressAddLeadSp_et.getText().toString();
+            lead_uid =userIdPref;
+            lead_leadtypeid = leadType_id;
+            lead_company = clientCompanyNameAddLeadSp_et.getText().toString();
+            lead_name = contactPersonAddLeadSp_et.getText().toString();
+            lead_email = emailAddLeadSp_et.getText().toString();
+            lead_contact = contactPersonAddLeadSp_et.getText().toString();
+            lead_website = websiteAddLeadSp_et.getText().toString();
+
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Adding Client...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("lead_address", lead_address));
+            params.add(new BasicNameValuePair("lead_uid", userIdPref));
+            params.add(new BasicNameValuePair("lead_leadtypeid", lead_leadtypeid));
+            params.add(new BasicNameValuePair("add", "add"));
+            params.add(new BasicNameValuePair("lead_company", lead_company));
+            params.add(new BasicNameValuePair("lead_name", lead_name));
+            params.add(new BasicNameValuePair("lead_email", lead_email));
+            params.add(new BasicNameValuePair("lead_contact", lead_contact));
+            params.add(new BasicNameValuePair("lead_website", lead_website));
+            params.add(new BasicNameValuePair("lead_comid", user_comidPref));
+            params.add(new BasicNameValuePair("lead_status", "Done"));
+
+            String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
+
+            //manager_client.php
+            JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
+
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+                String message = json.getString(TAG_MESSAGE);
+                if (success == 1 && message.equals("Lead Created Successfully")) {
+                    return json;
+                }
+                else {
+                    return null;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONObject response) {
+            try {
+                pDialog.dismiss();
+                if (!(response == null)) {
+                    makeText(getActivity(),"Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    clearAll();
+                }
+                else {
+                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
 
     private void clearAll(){
         lTypeAddLeadSp_sp.setSelection(0);
