@@ -1,6 +1,7 @@
 package com.sales.tracking.salestracking.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,12 +26,12 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
         TextView dateValueCollection_tv,salesPersonValueCollection_tv;
         ImageView deleteCollection_iv, plusCollection_iv;
 
-        CardView viewCollectionDetails_cv,collectionDetails_cv;
+        CardView collectionDetails_cv;
 
         MyViewHolder(View view) {
             super(view);
 
-            viewCollectionDetails_cv = (CardView) view.findViewById(R.id.viewCollectionDetails_cv);
+          //  viewCollectionDetails_cv = (CardView) view.findViewById(R.id.viewCollectionDetails_cv);
             collectionDetails_cv = (CardView) view.findViewById(R.id.collectionDetails_cv);
 
             dateValueCollection_tv = (TextView) view.findViewById(R.id.dateValueCollection_tv);
@@ -61,9 +62,21 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
         holder.salesPersonValueCollection_tv.setText(bean.getCollection_amount());
         holder.dateValueCollection_tv.setText(bean.getCollection_date());
 
-        holder.viewCollectionDetails_cv.setVisibility(View.GONE);
+       // holder.viewCollectionDetails_cv.setVisibility(View.GONE);
         holder.collectionDetails_cv.setVisibility(View.VISIBLE);
         holder.plusCollection_iv.setVisibility(View.GONE);
+        try{
+            if (!bean.getUser_name().equals("")){
+                holder.plusCollection_iv.setVisibility(View.VISIBLE);
+
+            }else{
+                holder.plusCollection_iv.setVisibility(View.GONE);
+
+            }
+
+        }catch (Exception e){
+
+        }
 
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +84,13 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
                 viewTotalCollectionFragment.getDeleteTotalCollection(tasksList.get(position));
             }
         });
+        holder.plusCollection_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewTotalCollectionFragment.showCollectionDetails(tasksList.get(position));
+            }
+        });
+
     }
 
     @Override

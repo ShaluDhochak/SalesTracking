@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -74,6 +77,25 @@ public class ViewTotalCollectionFragment extends Fragment {
     @BindView(R.id.submitAddTotalCollection_btn)
     Button submitAddTotalCollection_btn;
 
+    @BindView(R.id.addTotalCollectionBox_rl)
+    RelativeLayout addTotalCollectionBox_rl;
+
+    @BindView(R.id.nameViewLead_tv)
+    TextView nameViewLead_tv;
+
+    @BindView(R.id.totalCollectionViewCollection_tv)
+            TextView totalCollectionViewCollection_tv;
+
+    @BindView(R.id.dateViewCollection_tv)
+            TextView dateViewCollection_tv;
+    @BindView(R.id.viewCollectionDetails_cv)
+    CardView viewCollectionDetails_cv;
+
+    @BindView(R.id.salesViewCollectionHeader_rl)
+            RelativeLayout salesViewCollectionHeader_rl;
+
+
+
     String collection_iid, collection_uiid;
 
     ArrayList<CollectionListBean.Collections> spMeetingTodayList = new ArrayList<>();
@@ -89,7 +111,7 @@ public class ViewTotalCollectionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getTodaysTaskRecyclerView();
+       // getTodaysTaskRecyclerView();
         initialiseUI();
     }
 
@@ -101,7 +123,19 @@ public class ViewTotalCollectionFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
         userComidPref = sharedPref.getString("user_com_id", "");
 
-        getTodaysTaskRecyclerView();
+
+        if (userTypePref.equals("Sales Manager")) {
+            getTodaysTaskRecyclerView();
+            addTotalCollectionBox_rl.setVisibility(View.GONE);
+            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+        }else if (userTypePref.equals("Sales Executive")){
+            getTodaysTaskRecyclerView();
+            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+        }
+
     }
 
     @OnClick(R.id.submitAddTotalCollection_btn)
@@ -182,9 +216,13 @@ public class ViewTotalCollectionFragment extends Fragment {
 
             String Url = ApiLink.ROOT_URL + ApiLink.COLLECTION_SP;
             Map<String, String> map = new HashMap<>();
-            map.put("collection_uid", userIdPref);
-            map.put("select", "");
-            // reporting_to
+            if (userTypePref.equals("Sales Manager")) {
+                map.put("reporting_to", userIdPref);
+                map.put("select", "");
+            }else if (userTypePref.equals("Sales Executive")){
+                map.put("collection_uid", userIdPref);
+                map.put("select", "");
+            }
 
             GSONRequest<CollectionListBean> dashboardGsonRequest = new GSONRequest<CollectionListBean>(
                     Request.Method.POST,
@@ -284,6 +322,41 @@ public class ViewTotalCollectionFragment extends Fragment {
             } catch (Exception e) {
             }
         }
+    }
+
+    @OnClick(R.id.minusViewCollection_iv)
+    public void hideManagerDetails(){
+        if (userTypePref.equals("Sales Manager")) {
+            getTodaysTaskRecyclerView();
+            addTotalCollectionBox_rl.setVisibility(View.GONE);
+            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+        }else if (userTypePref.equals("Sales Executive")){
+            getTodaysTaskRecyclerView();
+            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+        }
+    }
+
+    public void showCollectionDetails(CollectionListBean.Collections bean){
+
+
+        if (userTypePref.equals("Sales Manager")) {
+           // getTodaysTaskRecyclerView();
+            addTotalCollectionBox_rl.setVisibility(View.GONE);
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
+            viewCollectionDetails_cv.setVisibility(View.VISIBLE);
+
+            nameViewLead_tv.setText(bean.getUser_name());
+            totalCollectionViewCollection_tv.setText(bean.getCollection_amount());
+            dateViewCollection_tv.setText(bean.getCollection_date());
+        }else if (userTypePref.equals("Sales Executive")){
+
+        }
+
+
+
     }
 
 
