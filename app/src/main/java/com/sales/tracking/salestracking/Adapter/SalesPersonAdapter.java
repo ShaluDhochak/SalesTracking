@@ -61,14 +61,14 @@ public class SalesPersonAdapter  extends RecyclerView.Adapter<SalesPersonAdapter
         holder.plusCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    viewSalesPersonDetailsFragment.getClientData(personList.get(position));
+               viewSalesPersonDetailsFragment.getClientData(personList.get(position));
             }
         });
 
         holder.deleteCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //    viewSalesPersonDetailsFragment.deleteClientData(personList.get(position));
+                viewSalesPersonDetailsFragment.deleteClientData(personList.get(position));
             }
         });
     }

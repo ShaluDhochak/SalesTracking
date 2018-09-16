@@ -178,24 +178,28 @@ public class AddLeadSpFragment extends Fragment {
             if (clientCompanyNameAddLeadSp_et.getText().toString().length()>0){
                 if (contactPersonAddLeadSp_et.getText().toString().length()>0){
                     if (emailAddLeadSp_et.getText().toString().length()>0){
-                        if (mobileAddLeadSp_et.getText().toString().length()>0 && mobileAddLeadSp_et.getText().toString().length()==10){
-                            if (websiteAddLeadSp_et.getText().toString().length()>0){
-                                if (addressAddLeadSp_et.getText().toString().length()>0){
-                                    if (userTypePref.equals("Sales Executive")) {
-                                        new addLeadSp().execute();
-                                    }else if (userTypePref.equals("Sales Manager")){
-                                        new addClientSp().execute();
-                                    }
+                        if (isEmailValid(emailAddLeadSp_et.getText().toString().trim())){
+                                if (mobileAddLeadSp_et.getText().toString().length() > 0 && mobileAddLeadSp_et.getText().toString().length() == 10) {
+                                    if (websiteAddLeadSp_et.getText().toString().length() > 0) {
+                                        if (addressAddLeadSp_et.getText().toString().length() > 0) {
+                                            if (userTypePref.equals("Sales Executive")) {
+                                                new addLeadSp().execute();
+                                            } else if (userTypePref.equals("Sales Manager")) {
+                                                new addClientSp().execute();
+                                            }
 
-                                }else{
-                                    Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity(), "Please Enter Website ", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(getActivity(), "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
                                 }
                             }else{
-                                Toast.makeText(getActivity(), "Please Enter Website ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            Toast.makeText(getActivity(), "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
-                        }
                     }else{
                         Toast.makeText(getActivity(), "Please Enter Email Id", Toast.LENGTH_SHORT).show();
                     }
@@ -357,6 +361,10 @@ public class AddLeadSpFragment extends Fragment {
         }
     }
 
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
     private void clearAll(){
         lTypeAddLeadSp_sp.setSelection(0);

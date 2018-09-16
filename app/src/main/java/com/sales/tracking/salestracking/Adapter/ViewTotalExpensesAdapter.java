@@ -26,12 +26,12 @@ public class ViewTotalExpensesAdapter  extends RecyclerView.Adapter<ViewTotalExp
         TextView dateValueCollection_tv,salesPersonValueCollection_tv, salesPersonCollectionHeading_tv;
         ImageView deleteCollection_iv, plusCollection_iv;
 
-        CardView viewCollectionDetails_cv,collectionDetails_cv;
-
+        CardView collectionDetails_cv;
+//viewCollectionDetails_cv,
         MyViewHolder(View view) {
             super(view);
 
-            viewCollectionDetails_cv = (CardView) view.findViewById(R.id.viewCollectionDetails_cv);
+         //   viewCollectionDetails_cv = (CardView) view.findViewById(R.id.viewCollectionDetails_cv);
             collectionDetails_cv = (CardView) view.findViewById(R.id.collectionDetails_cv);
 
             salesPersonCollectionHeading_tv = (TextView) view.findViewById(R.id.salesPersonCollectionHeading_tv);
@@ -68,7 +68,7 @@ public class ViewTotalExpensesAdapter  extends RecyclerView.Adapter<ViewTotalExp
         String[] date1 = date.split(" ");
         holder.dateValueCollection_tv.setText(date1[0]);
 
-        holder.viewCollectionDetails_cv.setVisibility(View.GONE);
+  //      holder.viewCollectionDetails_cv.setVisibility(View.GONE);
         holder.collectionDetails_cv.setVisibility(View.VISIBLE);
 
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {

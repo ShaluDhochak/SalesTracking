@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.ViewCollectionAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewTotalExpensesAdapter;
+import com.sales.tracking.salestracking.Adapter.ViewTotalExpensesManagerAdapter;
 import com.sales.tracking.salestracking.Bean.CollectionListBean;
 import com.sales.tracking.salestracking.Bean.ExpencesSpBean;
 import com.sales.tracking.salestracking.R;
@@ -84,6 +85,16 @@ public class ViewTotalExpensesFragment extends Fragment {
     @BindView(R.id.photoExpensesSpDetail_tv)
     ImageView photoExpensesSpDetail_tv;
 
+    //Manager account
+    @BindView(R.id.expenseByExpensesSpDetail_tv)
+    TextView expenseByExpensesSpDetail_tv;
+
+    @BindView(R.id.expensesByExpensesSpDetail_rl)
+    RelativeLayout expensesByExpensesSpDetail_rl;
+
+    @BindView(R.id.separatorBelowExpensebYExpensesSpDetail)
+    View separatorBelowExpensebYExpensesSpDetail;
+
     View view;
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, expenses_id, deleteExpenses_id;
@@ -95,6 +106,7 @@ public class ViewTotalExpensesFragment extends Fragment {
     ProgressDialog pDialog;
 
     ViewTotalExpensesAdapter viewTotalExpensesAdapter;
+    ViewTotalExpensesManagerAdapter viewTotalExpensesManagerAdapter;
 
     ArrayList<ExpencesSpBean.Salesperson_Expenses> spExpensesList = new ArrayList<>();
 
@@ -119,7 +131,16 @@ public class ViewTotalExpensesFragment extends Fragment {
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
 
-        getExpensesRecyclerView();
+     //   getExpensesRecyclerView();
+        if (userTypePref.equals("Sales Manager")) {
+            getExpensesManagerRecyclerView();
+            expensesByExpensesSpDetail_rl.setVisibility(View.VISIBLE);
+            separatorBelowExpensebYExpensesSpDetail.setVisibility(View.VISIBLE);
+        }else if (userTypePref.equals("Sales Executive")){
+            getExpensesRecyclerView();
+            expensesByExpensesSpDetail_rl.setVisibility(View.GONE);
+            separatorBelowExpensebYExpensesSpDetail.setVisibility(View.GONE);
+        }
         viewExpensesSpDetails_cv.setVisibility(View.GONE);
     }
 
@@ -186,9 +207,15 @@ public class ViewTotalExpensesFragment extends Fragment {
         viewExpensesSpDetails_cv.setVisibility(View.GONE);
         viewExpensesHeader_rl.setVisibility(View.VISIBLE);
 
-
-
-        getExpensesRecyclerView();
+        if (userTypePref.equals("Sales Manager")) {
+            getExpensesManagerRecyclerView();
+            expensesByExpensesSpDetail_rl.setVisibility(View.VISIBLE);
+            separatorBelowExpensebYExpensesSpDetail.setVisibility(View.VISIBLE);
+        }else if (userTypePref.equals("Sales Executive")){
+            getExpensesRecyclerView();
+            expensesByExpensesSpDetail_rl.setVisibility(View.GONE);
+            separatorBelowExpensebYExpensesSpDetail.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.minusViewExpensesSpDetail_iv)
@@ -196,7 +223,16 @@ public class ViewTotalExpensesFragment extends Fragment {
         viewExpensesSpDetails_cv.setVisibility(View.GONE);
         viewExpensesHeader_rl.setVisibility(View.VISIBLE);
 
-        getExpensesRecyclerView();
+       // getExpensesRecyclerView();
+        if (userTypePref.equals("Sales Manager")) {
+            getExpensesManagerRecyclerView();
+            expensesByExpensesSpDetail_rl.setVisibility(View.VISIBLE);
+            separatorBelowExpensebYExpensesSpDetail.setVisibility(View.VISIBLE);
+        }else if (userTypePref.equals("Sales Executive")){
+            getExpensesRecyclerView();
+            expensesByExpensesSpDetail_rl.setVisibility(View.GONE);
+            separatorBelowExpensebYExpensesSpDetail.setVisibility(View.GONE);
+        }
 
     }
 
@@ -254,8 +290,11 @@ public class ViewTotalExpensesFragment extends Fragment {
                 if (!(response == null)) {
                     makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
                    // clearAll();
-
-                    getExpensesRecyclerView();
+                    if (userTypePref.equals("Sales Manager")) {
+                        getExpensesManagerRecyclerView();
+                    }else if (userTypePref.equals("Sales Executive")){
+                        getExpensesRecyclerView();
+                    }
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
@@ -264,6 +303,64 @@ public class ViewTotalExpensesFragment extends Fragment {
             } catch (Exception e) {
             }
         }
+    }
+
+    private void getExpensesManagerRecyclerView() {
+        if (Connectivity.isConnected(getActivity())) {
+            String Url = ApiLink.ROOT_URL + ApiLink.Expenses_SP;
+            Map<String, String> map = new HashMap<>();
+            map.put("expense_uid", userIdPref);
+            map.put("select_mgr_exp", "");
+            GSONRequest<ExpencesSpBean> dashboardGsonRequest = new GSONRequest<ExpencesSpBean>(
+                    Request.Method.POST,
+                    Url,
+                    ExpencesSpBean.class, map,
+                    new com.android.volley.Response.Listener<ExpencesSpBean>() {
+                        @Override
+                        public void onResponse(ExpencesSpBean response) {
+                            try {
+                                if (response.getManager_expenses().size() > 0) {
+                                    // spExpensesList.clear();
+                                    // spExpensesList.addAll(response.get());
+                                    viewTotalExpensesManagerAdapter = new ViewTotalExpensesManagerAdapter(getActivity(), response.getManager_expenses(), ViewTotalExpensesFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    viewExpensesSp_rv.setLayoutManager(mLayoutManager);
+                                    viewExpensesSp_rv.setItemAnimator(new DefaultItemAnimator());
+                                    viewExpensesSp_rv.setAdapter(viewTotalExpensesManagerAdapter);
+                                }
+                            } catch (Exception e) {
+                                // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    public void getExpensesManagerData(ExpencesSpBean.Manager_Expenses bean) {
+        viewExpensesSpDetails_cv.setVisibility(View.VISIBLE);
+        viewExpensesHeader_rl.setVisibility(View.GONE);
+        String date = bean.getExpense_date();
+        String[] date1 = date.split(" ");
+        dateExpensesSpTask_tv.setText(date1[0]);
+        categoryExpensesSpDetail_tv.setText(bean.getExpcat_name());
+        amountExpensesSpDetail_tv.setText(bean.getExpense_amt());
+        modeExpensesSpDetail_tv.setText(bean.getExpense_mode());
+        detailsExpensesSpDetail_tv.setText(bean.getExpense_details());
+        expenseByExpensesSpDetail_tv.setText(bean.getUser_name());
+        //   photoExpensesSpDetail_tv.setText("");
+        getExpensesRecyclerView();
+    }
+
+    public void getExpensesManagerDeleteData(ExpencesSpBean.Manager_Expenses bean) {
+        expenses_id = bean.getExpense_id();
+        new deleteTotalCollectionSp().execute();
     }
 
 

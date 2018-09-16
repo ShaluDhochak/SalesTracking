@@ -23,13 +23,14 @@ public class ManagerClientAdapter  extends RecyclerView.Adapter<ManagerClientAda
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView cfClientCompanyName_tv;
-        ImageView plusCfClientCompanyName_iv,deleteCfClientCompanyName_iv;
+        ImageView plusCfClientCompanyName_iv,deleteCfClientCompanyName_iv, editCfClientCompanyName_iv;
 
         MyViewHolder(View view) {
             super(view);
 
             cfClientCompanyName_tv = (TextView) view.findViewById(R.id.cfClientCompanyName_tv);
 
+            editCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.editCfClientCompanyName_iv);
             deleteCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.deleteCfClientCompanyName_iv);
             plusCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.plusCfClientCompanyName_iv);
 
@@ -55,6 +56,13 @@ public class ManagerClientAdapter  extends RecyclerView.Adapter<ManagerClientAda
 
         holder.cfClientCompanyName_tv.setText(bean.getLead_company());
 
+        holder.editCfClientCompanyName_iv.setVisibility(View.VISIBLE);
+        holder.editCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewClientManagerFragment.getEditClientClientData(requestsList.get(position));
+            }
+        });
         holder.plusCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

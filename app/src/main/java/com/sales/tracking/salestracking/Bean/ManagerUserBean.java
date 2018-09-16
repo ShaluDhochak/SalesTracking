@@ -126,5 +126,52 @@ public class ManagerUserBean {
     }
 
     public ArrayList<Manager_Users> manager_users;
+
+    public static class Users_Count{
+        public String getTot_users() {
+            return tot_users;
+        }
+
+        public void setTot_users(String tot_users) {
+            this.tot_users = tot_users;
+        }
+
+        String tot_users;
+    }
+
+    public ArrayList<Users_Count> getUsers_count() {
+        return users_count;
+    }
+
+    public void setUsers_count(ArrayList<Users_Count> users_count) {
+        this.users_count = users_count;
+    }
+
+    public ArrayList<Users_Count> users_count;
+
+
+    public static class Package_Users_Count {
+        public String getPack_noofmemb() {
+            return pack_noofmemb;
+        }
+
+        public void setPack_noofmemb(String pack_noofmemb) {
+            this.pack_noofmemb = pack_noofmemb;
+        }
+
+        String pack_noofmemb;
+
+    }
+
+    public ArrayList<Package_Users_Count> getPackage_users_count() {
+        return package_users_count;
+    }
+
+    public void setPackage_users_count(ArrayList<Package_Users_Count> package_users_count) {
+        this.package_users_count = package_users_count;
+    }
+
+    public ArrayList<Package_Users_Count> package_users_count;
+
 }
 

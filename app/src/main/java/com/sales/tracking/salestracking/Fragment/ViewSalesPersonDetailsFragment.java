@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.SalesPersonAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewTotalExpensesAdapter;
 import com.sales.tracking.salestracking.Bean.ExpencesSpBean;
+import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.ManagerUserBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
@@ -31,12 +34,21 @@ import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.JSONParser;
 import com.sales.tracking.salestracking.Utility.Utilities;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.widget.Toast.makeText;
 
 
 public class ViewSalesPersonDetailsFragment extends Fragment {
@@ -55,6 +67,7 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
 
     @BindView(R.id.createdOnSalesPersonDetail_tv)
     TextView createdOnSalesPersonDetail_tv;
+
     @BindView(R.id.dojSalesPersonDetail_tv)
     TextView dojSalesPersonDetail_tv;
 
@@ -74,7 +87,7 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
 
     View view;
     SharedPreferences sharedPref;
-    String userIdPref, userTypePref, expenses_id, deleteExpenses_id;
+    String userIdPref, userTypePref, client_id, deleteExpenses_id;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -153,6 +166,98 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
 
 
     }
+
+    @OnClick(R.id.minusSalesPersonDetail_iv)
+    public void hideClientDetails(){
+        viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
+        viewSalesPersonDetails_cv.setVisibility(View.GONE);
+
+        if (userTypePref.equals("Sales Manager")){
+            getSalesPersonRecyclerView();
+        }
+
+    }
+
+    public void getClientData(ManagerUserBean.Manager_Users bean){
+        viewSalesPersonHeader_rl.setVisibility(View.GONE);
+        viewSalesPersonDetails_cv.setVisibility(View.VISIBLE);
+
+        updatedOnSalesPersonDetail_tv.setText(bean.getUpdate_dt());
+        createdOnSalesPersonDetail_tv.setText(bean.getCreated_dt());
+        dojSalesPersonDetail_tv.setText(bean.getUser_doj());
+        statusSalesPersonDetail_tv.setText(bean.getUser_status());
+        mobileSalesPersonDetail_tv.setText(bean.getUser_mobile());
+        emailSalesPersonDetails_tv.setText(bean.getUser_email());
+        nameSalesPersonDetails_tv.setText(bean.getUser_name());
+
+    }
+
+    public void deleteClientData(ManagerUserBean.Manager_Users bean){
+        viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
+        viewSalesPersonDetails_cv.setVisibility(View.GONE);
+
+        client_id = bean.getUser_id().toString();
+        new deleteClient().execute();
+
+    }
+
+    public class deleteClient extends AsyncTask<String, JSONObject, JSONObject> {
+        String user_id;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            user_id = client_id;
+
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Deleting Client...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("user_id", user_id));
+            params.add(new BasicNameValuePair("delete", "delete"));
+
+            String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_SALES_PERSON;
+            JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
+
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+                String message = json.getString(TAG_MESSAGE);
+                if (success == 1 && message.equals("Deleted Successfully")) {
+                    return json;
+                }
+                else {
+                    return null;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONObject response) {
+            try {
+                pDialog.dismiss();
+                if (!(response == null)) {
+                    makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    getSalesPersonRecyclerView();
+                }
+                else {
+                    makeText(getActivity(), "Not Deleted", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+
 
 
 }

@@ -23,19 +23,15 @@ public class ViewTotalExpensesManagerAdapter extends RecyclerView.Adapter<ViewTo
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView dateValueCollection_tv,salesPersonValueCollection_tv, salesPersonCollectionHeading_tv;
         ImageView deleteCollection_iv, plusCollection_iv;
-
-        CardView viewCollectionDetails_cv,collectionDetails_cv;
-
+        CardView viewCollectionDetails_cv;
+        CardView collectionDetails_cv;
         MyViewHolder(View view) {
             super(view);
-
-            viewCollectionDetails_cv = (CardView) view.findViewById(R.id.viewCollectionDetails_cv);
+         //   viewCollectionDetails_cv = (CardView) view.findViewById(R.id.viewCollectionDetails_cv);
             collectionDetails_cv = (CardView) view.findViewById(R.id.collectionDetails_cv);
-
             salesPersonCollectionHeading_tv = (TextView) view.findViewById(R.id.salesPersonCollectionHeading_tv);
             dateValueCollection_tv = (TextView) view.findViewById(R.id.dateValueCollection_tv);
             salesPersonValueCollection_tv = (TextView) view.findViewById(R.id.salesPersonValueCollection_tv);
-
             deleteCollection_iv = (ImageView) view.findViewById(R.id.deleteCollection_iv);
             plusCollection_iv = (ImageView) view.findViewById(R.id.plusCollection_iv);
         }
@@ -66,7 +62,7 @@ public class ViewTotalExpensesManagerAdapter extends RecyclerView.Adapter<ViewTo
         String[] date1 = date.split(" ");
         holder.dateValueCollection_tv.setText(date1[0]);
 
-        holder.viewCollectionDetails_cv.setVisibility(View.GONE);
+       // holder.viewCollectionDetails_cv.setVisibility(View.GONE);
         holder.collectionDetails_cv.setVisibility(View.VISIBLE);
 
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +75,7 @@ public class ViewTotalExpensesManagerAdapter extends RecyclerView.Adapter<ViewTo
         holder.plusCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewTotalExpensesFragment.getExpensesManagerData(tasksList.get(position));
+               viewTotalExpensesFragment.getExpensesManagerData(tasksList.get(position));
             }
         });
     }

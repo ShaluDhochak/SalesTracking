@@ -501,8 +501,6 @@ public class AddMeetingTaskFragment extends Fragment {
         }
     }
 
-
-
     public class CreateNewSalesCallTask extends AsyncTask<String, JSONObject, JSONObject> {
         String service_uid, service_person, service_contactno, service_leadid,service_assignedby;
 

@@ -235,13 +235,13 @@
                         android:layout_marginLeft="10dp"
                         />
 
-                    <RelativeLayout
-                        android:id="@+id/amountExpensesSpDetail_rl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowExpensebYExpensesSpDetail"
-                        android:layout_weight="4.5"
-                        >
+                <RelativeLayout
+                    android:id="@+id/amountExpensesSpDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/separatorBelowExpensebYExpensesSpDetail"
+                    android:layout_weight="4.5"
+                    >
 
                         <TextView
                             android:id="@+id/amountExpensesSpDetailHeading_tv"
