@@ -27,6 +27,7 @@ import com.sales.tracking.salestracking.Fragment.AddCustomerfeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.AddLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
 import com.sales.tracking.salestracking.Fragment.AddSalesPersonManagerFragment;
+import com.sales.tracking.salestracking.Fragment.AddTargetManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
@@ -44,6 +45,7 @@ import com.sales.tracking.salestracking.Fragment.ViewLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesPersonDetailsFragment;
+import com.sales.tracking.salestracking.Fragment.ViewTargetManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.ViewVisitTaskSpFragment;
@@ -315,6 +317,26 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultManageClient();
         }else if (id==R.id.nav_manage_sales_person_target)
         {
+            setDefaultExpenses();
+            setDefaultManageTask();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(18).setVisible(true);
+            navigationView.getMenu().getItem(19).setVisible(true);
+        }else if (id==R.id.nav_view_manage_sales_person_target){
+            viewTargetManagerFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
+            setDefaultExpenses();
+            setDefaultManageTask();
+            setDefaultManageSalesPerson();
+            setDefaultManageClient();
+            navigationView.getMenu().getItem(18).setVisible(true);
+            navigationView.getMenu().getItem(19).setVisible(true);
+        }else if (id==R.id.nav_add_manage_sales_person_target){
+            addTargetManagerFragment();
+            drawer.closeDrawer(GravityCompat.START);
+
             setDefaultExpenses();
             setDefaultManageTask();
             setDefaultManageSalesPerson();
@@ -846,6 +868,20 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         AddMeetingTaskFragment addfragment = new AddMeetingTaskFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, addfragment);
+        atransaction.commit();
+    }
+
+    public void viewTargetManagerFragment(){
+        ViewTargetManagerFragment targetfragment = new ViewTargetManagerFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, targetfragment);
+        atransaction.commit();
+    }
+
+    public void addTargetManagerFragment(){
+        AddTargetManagerFragment atfragment = new AddTargetManagerFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, atfragment);
         atransaction.commit();
     }
 

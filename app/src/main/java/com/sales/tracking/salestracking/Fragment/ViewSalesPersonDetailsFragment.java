@@ -124,8 +124,8 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     }
 
     public void getSalesPersonRecyclerView(){
-
-        if (Connectivity.isConnected(getActivity())) {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
 
                 String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_SALES_PERSON;
                 Map<String, String> map = new HashMap<>();
@@ -163,7 +163,8 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
                 dashboardGsonRequest.setShouldCache(false);
                 Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
             }
-
+        }catch (Exception e){
+        }
 
     }
 

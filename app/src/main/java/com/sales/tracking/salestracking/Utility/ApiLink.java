@@ -38,4 +38,6 @@ public interface ApiLink {
 
     String MANAGER_SALES_PERSON = "user.php";
 
+    String TARGET_MANAGER = "target.php";
+
 }

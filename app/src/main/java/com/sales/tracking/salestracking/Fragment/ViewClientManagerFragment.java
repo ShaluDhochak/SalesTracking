@@ -108,7 +108,7 @@ public class ViewClientManagerFragment extends Fragment {
 
     //Edit
     @BindView(R.id.submitEditLeadSp_btn)
-    Button submitEditLeadSp_btn;
+    TextView submitEditLeadSp_btn;
 
     @BindView(R.id.addressEditLeadSp_et)
     EditText addressEditLeadSp_et;
@@ -144,7 +144,7 @@ public class ViewClientManagerFragment extends Fragment {
     ManagerClientAdapter managerClientAdapter;
     ArrayList<ManagerBean.clients> clientList = new ArrayList<>();
 
-    String selectedLeadType, selectedLeadTypeId, leadType_id;
+    String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype;
 
     ArrayList<String> leadTypeAddLeadSp;
 
@@ -210,6 +210,9 @@ public class ViewClientManagerFragment extends Fragment {
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
 
+        titleViewLeadTask_tv.setText("View Client");
+
+
         clientCompanyNameLeadTask_tv.setText(bean.getLead_company());
         leadTypeViewLead_tv.setText(bean.getLeadtype_name());
         contactPersonLeadView_tv.setText(bean.getLead_name());
@@ -226,6 +229,8 @@ public class ViewClientManagerFragment extends Fragment {
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.VISIBLE);
 
+        titleViewLeadTask_tv.setText("Edit Client");
+
         lead_iid  =bean.getLead_id().toString();
 
         clientCompanyNameEditLeadSp_et.setText(bean.getLead_company());
@@ -235,7 +240,8 @@ public class ViewClientManagerFragment extends Fragment {
         mobileEditLeadSp_et.setText(bean.getLead_contact());
         websiteEditLeadSp_et.setText(bean.getLead_website());
         addressEditLeadSp_et.setText(bean.getLead_address());
-        selectleadType(String leadtype_default);
+        leadType_id = bean.getLeadtype_name().toString();
+        selectleadType();
 
     }
 
@@ -268,8 +274,8 @@ public class ViewClientManagerFragment extends Fragment {
                                 leadTypeAddLeadSp.add("Lead Type");
                                 for(int i=0;i<response.getLeadtype_dropdown().size();i++)
                                 {
-                                    leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
-                                    leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(),response.getLeadtype_dropdown().get(i).getLeadtype_name() );
+                                        leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
+                                        leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(), response.getLeadtype_dropdown().get(i).getLeadtype_name());
                                 }
                             }
                         },

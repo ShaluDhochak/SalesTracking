@@ -121,7 +121,6 @@ public class ViewTotalExpensesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getExpensesRecyclerView();
         initialiseUI();
     }
 

@@ -202,24 +202,36 @@ public class TaskMeetingBean {
         String lead_company;
     }
 
+    public static class Users_dd1{
+        String user_id;
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
+        }
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
+
+        String user_name;
+    }
+
+    public ArrayList<Users_dd1> getUsers_dd1() {
+        return users_dd1;
+    }
+
+    public void setUsers_dd1(ArrayList<Users_dd1> users_dd1) {
+        this.users_dd1 = users_dd1;
+    }
+
+    public ArrayList<Users_dd1> users_dd1;
 
 }
-
-/*
-
-m_all, visit_assignedby = 17, select
- "all_meetings_mgr": [
-        },
- */
-
-/*
-users, user_comid =1
- "users_dd": {
-        },
- */
-
-/*
-clients, lead_comid = 1
-    "clients_dd": [
-        },
- */
