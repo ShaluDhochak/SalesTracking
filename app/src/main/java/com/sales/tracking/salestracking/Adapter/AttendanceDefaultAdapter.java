@@ -9,15 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
-import com.sales.tracking.salestracking.Bean.ManagerReportBean;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceReportFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
-public class AttendanceReportManagerAddapter extends RecyclerView.Adapter<AttendanceReportManagerAddapter.MyViewHolder> {
-    private List<ManagerReportBean.Sp_Att_Advsearch> attendanceList;
+public class AttendanceDefaultAdapter extends RecyclerView.Adapter<AttendanceDefaultAdapter.MyViewHolder> {
+    private List<AttendanceManagerBean.Sp_Att_Und_Mgr> attendanceList;
     Context context;
     AttendanceReportFragment attendanceReportFragment;
 
@@ -38,22 +37,22 @@ public class AttendanceReportManagerAddapter extends RecyclerView.Adapter<Attend
         }
     }
 
-    public AttendanceReportManagerAddapter(Context context,List<ManagerReportBean.Sp_Att_Advsearch> attendanceList, AttendanceReportFragment attendanceReportFragment) {
+    public AttendanceDefaultAdapter(Context context,List<AttendanceManagerBean.Sp_Att_Und_Mgr> attendanceList, AttendanceReportFragment attendanceReportFragment) {
         this.attendanceList = attendanceList;
         this.context = context;
         this.attendanceReportFragment = attendanceReportFragment;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AttendanceDefaultAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.attendance_list_layout, parent, false);
-        return new MyViewHolder(itemView);
+        return new AttendanceDefaultAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        ManagerReportBean.Sp_Att_Advsearch bean = attendanceList.get(position);
+    public void onBindViewHolder(final AttendanceDefaultAdapter.MyViewHolder holder, final int position) {
+        AttendanceManagerBean.Sp_Att_Und_Mgr bean = attendanceList.get(position);
 
         String date = bean.getAtten_in_datetime();
         String[] date1 = date.split(" ");
@@ -64,7 +63,7 @@ public class AttendanceReportManagerAddapter extends RecyclerView.Adapter<Attend
         holder.plusAttendance_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attendanceReportFragment.getAttendanceData(attendanceList.get(position));
+                attendanceReportFragment.getAttendanceDefaultData(attendanceList.get(position));
             }
         });
 
@@ -76,5 +75,4 @@ public class AttendanceReportManagerAddapter extends RecyclerView.Adapter<Attend
     }
 
 }
-
 

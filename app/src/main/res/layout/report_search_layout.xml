@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:hint="To Date"
                     android:textColorHint="@android:color/black"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"

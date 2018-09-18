@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.AttendanceAddapter;
+import com.sales.tracking.salestracking.Adapter.AttendanceDefaultAdapter;
 import com.sales.tracking.salestracking.Adapter.AttendanceReportManagerAddapter;
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
 import com.sales.tracking.salestracking.Bean.ManagerReportBean;
@@ -123,6 +124,8 @@ public class AttendanceReportFragment extends Fragment {
     AttendanceReportManagerAddapter attendanceReportManagerAddapter;
     ArrayList<ManagerReportBean.Sp_Att_Advsearch> attendanceList = new ArrayList<>();
 
+    AttendanceDefaultAdapter attendanceDefaultAdapter;
+    ArrayList<AttendanceManagerBean.Sp_Att_Und_Mgr> attendance = new ArrayList<>();
 
 
     @Override
@@ -149,7 +152,7 @@ public class AttendanceReportFragment extends Fragment {
         viewAttendanceReportHeader_rl.setVisibility(View.GONE);
         viewAttendanceReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
-            //getTargetViewRecyclerView();
+            getAttendanceRecyclerView();
             selectAssignTo();
         }
 
@@ -275,7 +278,7 @@ public class AttendanceReportFragment extends Fragment {
 
     }
 
-    private void getAttendanceReportManagerRecyclerView(){
+    public void getAttendanceReportManagerRecyclerView(){
         if (Connectivity.isConnected(getActivity())) {
 
             String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
@@ -305,9 +308,9 @@ public class AttendanceReportFragment extends Fragment {
 
                                     attendanceReportManagerAddapter = new AttendanceReportManagerAddapter(getActivity(),response.getSp_att_advsearch(), AttendanceReportFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    attendanceDetail_rv.setLayoutManager(mLayoutManager);
-                                    attendanceDetail_rv.setItemAnimator(new DefaultItemAnimator());
-                                    attendanceDetail_rv.setAdapter(attendanceReportManagerAddapter);
+                                    viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
+                                    viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                    viewAttendanceReport_rv.setAdapter(attendanceReportManagerAddapter);
 
                                 }
                             }catch(Exception e){
@@ -326,25 +329,101 @@ public class AttendanceReportFragment extends Fragment {
         }
     }
 
+    public void getAttendanceDefaultData(AttendanceManagerBean.Sp_Att_Und_Mgr bean){
+        viewAttendanceReportHeader_rl.setVisibility(View.GONE);
+        viewAttendanceReport_cv.setVisibility(View.VISIBLE);
 
-    /*
-      params.add(new BasicNameValuePair("logged_manager_id", logged_manager_id));
-            params.add(new BasicNameValuePair("emp_id", emp_id));
-            params.add(new BasicNameValuePair("startdate", startdate));
-            params.add(new BasicNameValuePair("enddate", enddate));
-            params.add(new BasicNameValuePair("add", "add"));
+        String indate = bean.getAtten_in_datetime();
+        String[] indate1 = indate.split( " ");
 
+        String outDate = bean.getAtten_out_datetime();
+        String[] outDate1 = outDate.split(" ");
 
-
-
-     */
-
-
-    private void clearAll(){
-        targetTypeAddTargetDetail_sp.setSelection(0);
-        targetAssignedToAddTargetDetail_sp.setSelection(0);
-        callCountAddTargetDetail_et.setText("");
-        startDateAddTargetDetail_tv.setText("");
-        endDateAddTargetDetail_tv.setText("");
+        outtimeAttendanceReportDetail_tv.setText(convertIn12Hours(outDate1[1]));
+        intimeAttendanceReportDetail_tv.setText(convertIn12Hours(indate1[1]));
+        dateAttendanceReport_tv.setText(indate1[0]);
+        salesPersonAttendanceReportDetail_tv.setText(bean.getUser_name());
     }
+
+    public void getAttendanceData(ManagerReportBean.Sp_Att_Advsearch bean){
+        viewAttendanceReportHeader_rl.setVisibility(View.GONE);
+        viewAttendanceReport_cv.setVisibility(View.VISIBLE);
+
+        String indate = bean.getAtten_in_datetime();
+        String[] indate1 = indate.split( " ");
+
+        String outDate = bean.getAtten_out_datetime();
+        String[] outDate1 = outDate.split(" ");
+
+        outtimeAttendanceReportDetail_tv.setText(convertIn12Hours(outDate1[1]));
+        intimeAttendanceReportDetail_tv.setText(convertIn12Hours(indate1[1]));
+        dateAttendanceReport_tv.setText(indate1[0]);
+        salesPersonAttendanceReportDetail_tv.setText(bean.getUser_name());
+
+    }
+
+    private String convertIn12Hours(String time){
+
+        String timeToDisplay = "";
+        String[] timeArray = time.split(":");
+        Integer hours = Integer.parseInt(timeArray[0]);
+
+        if(hours > 12){
+            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+        }else{
+            timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
+        }
+
+        return timeToDisplay;
+    }
+
+    private void getAttendanceRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
+            Map<String, String> map = new HashMap<>();
+            map.put("select", "");
+            map.put("all", "");
+            map.put("reporting_to", userIdPref);
+
+            GSONRequest<AttendanceManagerBean> dashboardGsonRequest = new GSONRequest<AttendanceManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    AttendanceManagerBean.class, map,
+                    new com.android.volley.Response.Listener<AttendanceManagerBean>() {
+                        @Override
+                        public void onResponse(AttendanceManagerBean response) {
+                            try{
+                                if (response.getSp_att_und_mgr().size()>0){
+                                    viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
+                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
+                                    attendance.clear();
+                                    attendance.addAll(response.getSp_att_und_mgr());
+
+                                    attendanceDefaultAdapter = new AttendanceDefaultAdapter(getActivity(),response.getSp_att_und_mgr(), AttendanceReportFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
+                                    viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                    viewAttendanceReport_rv.setAdapter(attendanceDefaultAdapter);
+
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    //getAttendanceDefaultData
+
+
 }

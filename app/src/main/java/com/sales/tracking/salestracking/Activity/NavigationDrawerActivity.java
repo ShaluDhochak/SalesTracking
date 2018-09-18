@@ -31,6 +31,7 @@ import com.sales.tracking.salestracking.Fragment.AddTargetManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
+import com.sales.tracking.salestracking.Fragment.AttendanceReportFragment;
 import com.sales.tracking.salestracking.Fragment.CallsPendingNotificationFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.MyProfileFragment;
@@ -262,6 +263,32 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         else if (id ==R.id.nav_Reports_title)
         {
             setDefaultDrawer();
+        }else if (id ==R.id.nav_attendance){
+
+            viewAttendanceReport();
+            drawer.closeDrawer(GravityCompat.START);
+
+            setDefaultDrawer();
+
+
+        }else if (id== R.id.nav_all_visits){
+
+        }else if (id== R.id.nav_visits_done){
+
+        }
+        else if (id== R.id.nav_visits_pending){
+
+        }
+        else if (id== R.id.nav_all_calls){
+
+        }
+        else if (id== R.id.nav_calls_done){
+
+        }else if (id== R.id.nav_calls_pending){
+
+        }
+        else if (id== R.id.nav_calls_expenses){
+
         }
         else if (id == R.id.nav_expenses)
         {
@@ -292,6 +319,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }else if(id==R.id.nav_view_meeting_tasks){
             viewMeetingTaskFragment();
             drawer.closeDrawer(GravityCompat.START);
+
             setDefaultManageTask();
             setDefaultExpenses();
             setDefaultManageSalesPersonTarget();
@@ -995,5 +1023,12 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, aspFragment);
         atransaction.commit();
+    }
+
+    public void viewAttendanceReport(){
+        AttendanceReportFragment attendanceReportFragment = new AttendanceReportFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_Container, attendanceReportFragment);
+        fragmentTransaction.commit();
     }
 }
