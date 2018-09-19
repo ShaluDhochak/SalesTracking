@@ -30,8 +30,12 @@ import com.sales.tracking.salestracking.Fragment.AddSalesPersonManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddTargetManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
 import com.sales.tracking.salestracking.Fragment.AddVisitTaskSpFragment;
+import com.sales.tracking.salestracking.Fragment.AllCallReportFragment;
+import com.sales.tracking.salestracking.Fragment.AllVisitReportFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AttendanceReportFragment;
+import com.sales.tracking.salestracking.Fragment.CallDoneReportFragment;
+import com.sales.tracking.salestracking.Fragment.CallPendingReportFragment;
 import com.sales.tracking.salestracking.Fragment.CallsPendingNotificationFragment;
 import com.sales.tracking.salestracking.Fragment.DashboardFragment;
 import com.sales.tracking.salestracking.Fragment.MyProfileFragment;
@@ -42,8 +46,12 @@ import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.UpdateSaleCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewClientManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewCustomerFeedbackFragment;
+import com.sales.tracking.salestracking.Fragment.ViewDoneVisitReportFragment;
+import com.sales.tracking.salestracking.Fragment.ViewExpensesReportFragment;
 import com.sales.tracking.salestracking.Fragment.ViewLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
+import com.sales.tracking.salestracking.Fragment.ViewPendingVisitReportFragment;
+import com.sales.tracking.salestracking.Fragment.ViewReassignManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesPersonDetailsFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTargetManagerFragment;
@@ -122,6 +130,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().getItem(38).setActionView(R.layout.menu_layout);
         navigationView.getMenu().getItem(41).setActionView(R.layout.menu_layout);
         navigationView.getMenu().getItem(45).setActionView(R.layout.menu_layout);
+
+
 
         View hView =  navigationView.getHeaderView(0);
         nav_user = (TextView)hView.findViewById(R.id.usernameHeading_tv);
@@ -230,6 +240,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.manager_option, true);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+            navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
 
             setDefaultManageTask();
             setDefaultExpenses();
@@ -241,15 +252,35 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if (id == R.id.nav_reassignment_request)
         {
-            drawer.closeDrawer(GravityCompat.START);
+            getDefaultReassignManager();
+            drawer.openDrawer(GravityCompat.START);
         }
-        else if (id == R.id.nav_reports)
+        else if (id==R.id.nav_reassign_request_header)
+        {
+            setDefaultDrawer();
+        }
+        else if (id==R.id.nav_view_request)
+        {
+            getDefaultReassignManager();
+            drawer.closeDrawer(GravityCompat.START);
+
+            viewReassignRequestManager();
+        }
+        else if (id==R.id.nav_assign_request)
+        {
+            getDefaultReassignManager();
+            drawer.closeDrawer(GravityCompat.START);
+
+            assignReassignRequestManager();
+        }
+
+        else if (id == R.id.nav_reports)   //Manager Accpunt Report hEading
         {
             menu_rl.setVisibility(View.VISIBLE);
             reportHeading_rl.setVisibility(View.GONE);
-            navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
-            navigationView.getMenu().setGroupVisible(R.id.reports_option, true);
-            navigationView.getMenu().setGroupVisible(R.id.main_option, false);
+
+            setReportManagerDefault();
+
         }
         else if (id == R.id.nav_profile)
         {
@@ -263,32 +294,75 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         else if (id ==R.id.nav_Reports_title)
         {
             setDefaultDrawer();
-        }else if (id ==R.id.nav_attendance){
 
-            viewAttendanceReport();
+        }else if (id==R.id.nav_attendance){
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
+
+
+            viewAttendanceReportFragmnet();
             drawer.closeDrawer(GravityCompat.START);
 
-            setDefaultDrawer();
+        }else if (id==R.id.nav_all_visits){
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
 
-
-        }else if (id== R.id.nav_all_visits){
+            viewAllVisitReportFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
 
         }else if (id== R.id.nav_visits_done){
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
 
+            viewDoneVisitReportFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id== R.id.nav_visits_pending){
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
 
+            viewPendingVisitReportFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id== R.id.nav_all_calls){
 
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
+
+
+            viewAllCallReportFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id== R.id.nav_calls_done){
 
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
+
+            viewCallDoneReportFragment();
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id== R.id.nav_calls_pending){
 
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
+
+            viewCallPendingReportFragment();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id== R.id.nav_calls_expenses){
 
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
+
+            viewExpensesReportFragment();
+            drawer.closeDrawer(GravityCompat.START);
         }
         else if (id == R.id.nav_expenses)
         {
@@ -756,10 +830,28 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         return true;
     }
 
+    private void setReportManagerDefault(){
+        navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
+        navigationView.getMenu().setGroupVisible(R.id.reports_option, true);
+        navigationView.getMenu().setGroupVisible(R.id.main_option, false);
+        navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
+
+    }
+
+    private void getDefaultReassignManager(){
+        navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
+        navigationView.getMenu().setGroupVisible(R.id.main_option, false);
+        navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+        navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, true);
+
+    }
+
     private void setDefaultDrawer(){
         navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_option, true);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
+        navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
+
     }
 
     private void setDefaultVisitTaskSalesPerson(){
@@ -1025,10 +1117,77 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.commit();
     }
 
-    public void viewAttendanceReport(){
-        AttendanceReportFragment attendanceReportFragment = new AttendanceReportFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_Container, attendanceReportFragment);
-        fragmentTransaction.commit();
+    public void viewAttendanceReportFragmnet(){
+        AttendanceReportFragment arfragment = new AttendanceReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, arfragment);
+        atransaction.commit();
     }
+
+    public void viewAllVisitReportFragmnet() {
+        AllVisitReportFragment avfragment = new AllVisitReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, avfragment);
+        atransaction.commit();
+
+    }
+
+    public void viewDoneVisitReportFragmnet(){
+        ViewDoneVisitReportFragment vdfragment = new ViewDoneVisitReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vdfragment);
+        atransaction.commit();
+
+    }
+
+    public void viewPendingVisitReportFragmnet(){
+        ViewPendingVisitReportFragment vpfragment = new ViewPendingVisitReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, vpfragment);
+        atransaction.commit();
+
+    }
+
+    public void viewAllCallReportFragmnet(){
+        AllCallReportFragment alfragment = new AllCallReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, alfragment);
+        atransaction.commit();
+    }
+
+    public void viewCallDoneReportFragment(){
+        CallDoneReportFragment callDoneReportFragment = new CallDoneReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, callDoneReportFragment);
+        atransaction.commit();
+    }
+
+    public void viewCallPendingReportFragment(){
+        CallPendingReportFragment callPendingReportFragment = new CallPendingReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, callPendingReportFragment);
+        atransaction.commit();
+    }
+
+    public void viewExpensesReportFragment(){
+        ViewExpensesReportFragment viewExpensesReportFragment = new ViewExpensesReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, viewExpensesReportFragment);
+        atransaction.commit();
+    }
+
+    public void assignReassignRequestManager(){
+        ViewExpensesReportFragment viewExpensesReportFragment = new ViewExpensesReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, viewExpensesReportFragment);
+        atransaction.commit();
+    }
+
+    public void viewReassignRequestManager(){
+        ViewReassignManagerFragment viewReassignManagerFragment = new ViewReassignManagerFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, viewReassignManagerFragment);
+        atransaction.commit();
+    }
+
 }
