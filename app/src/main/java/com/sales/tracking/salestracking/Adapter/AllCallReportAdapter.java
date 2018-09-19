@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sales.tracking.salestracking.Bean.AllSalesCallReportBean;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
-import com.sales.tracking.salestracking.Bean.VisitTaskSpBean;
+import com.sales.tracking.salestracking.Fragment.AllCallReportFragment;
 import com.sales.tracking.salestracking.Fragment.CallsPendingNotificationFragment;
-import com.sales.tracking.salestracking.Fragment.VisitPendingNotificationFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
-public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter.MyViewHolder> {
-    private List<SalesCallTaskSpBean.Sp_All_Service_Calls> tasksList;
+public class AllCallReportAdapter  extends RecyclerView.Adapter<AllCallReportAdapter.MyViewHolder> {
+    private List<AllSalesCallReportBean.Sp_All_Calls> tasksList;
     Context context;
-    CallsPendingNotificationFragment viewVisitTaskSpFragment;
+    AllCallReportFragment allCallReportFragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView dateValueVisitTaskMeeting_tv,timeValueVisitTaskMeeting_tv, timeVisitTaskMeetingHeading_tv;
@@ -44,25 +44,28 @@ public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter
         }
     }
 
-    public CallPendingAdapter(Context context,List<SalesCallTaskSpBean.Sp_All_Service_Calls> tasksList, CallsPendingNotificationFragment viewVisitTaskSpFragment) {
+    public AllCallReportAdapter(Context context,List<AllSalesCallReportBean.Sp_All_Calls> tasksList, AllCallReportFragment allCallReportFragment) {
         this.tasksList = tasksList;
         this.context = context;
-        this.viewVisitTaskSpFragment = viewVisitTaskSpFragment;
+        this.allCallReportFragment = allCallReportFragment;
     }
 
+    public AllCallReportAdapter(Context context,List<AllSalesCallReportBean.Sp_All_Calls> tasksList) {
+        this.tasksList = tasksList;
+        this.context = context;
+    }
 
     @Override
-    public CallPendingAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AllCallReportAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.visit_taskmeeting_list, parent, false);
-        return new CallPendingAdapter.MyViewHolder(itemView);
+        return new AllCallReportAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final CallPendingAdapter.MyViewHolder holder, final int position) {
-        SalesCallTaskSpBean.Sp_All_Service_Calls bean = tasksList.get(position);
+    public void onBindViewHolder(final AllCallReportAdapter.MyViewHolder holder, final int position) {
+        AllSalesCallReportBean.Sp_All_Calls bean = tasksList.get(position);
 
-        if (bean.getService_status().equals("Pending")){
             holder.visitTaskMeetingDetails_cv.setVisibility(View.VISIBLE);
             holder.timeVisitTaskMeetingHeading_tv.setText("Client Name");
             String date = bean.getService_createddt();
@@ -78,12 +81,9 @@ public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter
             holder.plusVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewVisitTaskSpFragment.getViewVisitSpTask(tasksList.get(position));
+                    allCallReportFragment.getAllSalesCallData(tasksList.get(position));
                 }
             });
-        }else {
-            holder.visitTaskMeetingDetails_cv.setVisibility(View.GONE);
-        }
 
     }
 

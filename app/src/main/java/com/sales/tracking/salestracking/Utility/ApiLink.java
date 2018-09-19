@@ -40,4 +40,12 @@ public interface ApiLink {
 
     String TARGET_MANAGER = "target.php";
 
+    String VISIT_PENDING_REPORT = "rep_manager_visits.php";
+
+    String CALL_PENDING_REPORT = "rep_manager_calls.php";
+
+    String EXPENSES_REPORT="rep_manager_expenses.php";
+
+    String VIEW_REASSIGNED_REQUEST = "request_salesmgr.php";
+
 }

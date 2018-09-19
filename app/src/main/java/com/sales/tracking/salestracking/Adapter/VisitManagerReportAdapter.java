@@ -9,18 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
+import com.sales.tracking.salestracking.Bean.ManagerReportBean;
+import com.sales.tracking.salestracking.Bean.VisitReportManagerBean;
 import com.sales.tracking.salestracking.Bean.VisitTaskSpBean;
-import com.sales.tracking.salestracking.Fragment.CallsPendingNotificationFragment;
+import com.sales.tracking.salestracking.Fragment.AllVisitReportFragment;
 import com.sales.tracking.salestracking.Fragment.VisitPendingNotificationFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
-public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter.MyViewHolder> {
-    private List<SalesCallTaskSpBean.Sp_All_Service_Calls> tasksList;
+public class VisitManagerReportAdapter  extends RecyclerView.Adapter<VisitManagerReportAdapter.MyViewHolder> {
+    private List<VisitReportManagerBean.sp_all_visits> tasksList;
     Context context;
-    CallsPendingNotificationFragment viewVisitTaskSpFragment;
+    AllVisitReportFragment allVisitReportFragment;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView dateValueVisitTaskMeeting_tv,timeValueVisitTaskMeeting_tv, timeVisitTaskMeetingHeading_tv;
@@ -44,30 +45,33 @@ public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter
         }
     }
 
-    public CallPendingAdapter(Context context,List<SalesCallTaskSpBean.Sp_All_Service_Calls> tasksList, CallsPendingNotificationFragment viewVisitTaskSpFragment) {
+    public VisitManagerReportAdapter(Context context, List<VisitReportManagerBean.sp_all_visits> tasksList, AllVisitReportFragment allVisitReportFragment) {
         this.tasksList = tasksList;
         this.context = context;
-        this.viewVisitTaskSpFragment = viewVisitTaskSpFragment;
+        this.allVisitReportFragment = allVisitReportFragment;
     }
 
+    public VisitManagerReportAdapter(Context context,List<VisitReportManagerBean.sp_all_visits> tasksList) {
+        this.tasksList = tasksList;
+        this.context = context;
+    }
 
     @Override
-    public CallPendingAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VisitManagerReportAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.visit_taskmeeting_list, parent, false);
-        return new CallPendingAdapter.MyViewHolder(itemView);
+        return new VisitManagerReportAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final CallPendingAdapter.MyViewHolder holder, final int position) {
-        SalesCallTaskSpBean.Sp_All_Service_Calls bean = tasksList.get(position);
+    public void onBindViewHolder(final VisitManagerReportAdapter.MyViewHolder holder, final int position) {
+        VisitReportManagerBean.sp_all_visits bean = tasksList.get(position);
 
-        if (bean.getService_status().equals("Pending")){
             holder.visitTaskMeetingDetails_cv.setVisibility(View.VISIBLE);
             holder.timeVisitTaskMeetingHeading_tv.setText("Client Name");
-            String date = bean.getService_createddt();
+            String date = bean.getMeeting_dt();
             String[] date1 = date.split(" ");
-            holder.dateValueVisitTaskMeeting_tv.setText(date1[0]);
+            holder.dateValueVisitTaskMeeting_tv.setText(bean.getMeeting_dt());
 
             String time = date1[1];
             holder.timeValueVisitTaskMeeting_tv.setText(bean.getLead_company());
@@ -78,12 +82,12 @@ public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter
             holder.plusVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewVisitTaskSpFragment.getViewVisitSpTask(tasksList.get(position));
+                    allVisitReportFragment.getAllVisitData(tasksList.get(position));
                 }
             });
-        }else {
-            holder.visitTaskMeetingDetails_cv.setVisibility(View.GONE);
-        }
+
+
+
 
     }
 
@@ -93,6 +97,5 @@ public class CallPendingAdapter  extends RecyclerView.Adapter<CallPendingAdapter
     }
 
 }
-
 
 
