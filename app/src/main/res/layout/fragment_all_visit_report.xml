@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.AllVisitReportFragment">
+    <ScrollView
+        android:id="@+id/scrollView_VisitManagerReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/titleVisitManagerReport_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:id="@+id/titleVisitManagerReport_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Visit Report"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/VisitManagerReportSearch_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                >
+
+                <include
+                    layout="@layout/report_search_layout"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/viewVisitManagerReportHeader_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/VisitManagerReportSearch_rl"
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/viewVisitManagerReport_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/viewVisitManagerReport_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                android:layout_below="@+id/viewVisitManagerReportHeader_rl"
+                >
+                <RelativeLayout
+                    android:id="@+id/viewVisitManagerReport_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/dateVisitManagerReport_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="3"
+                        android:orientation="horizontal"
+                        android:background="@color/active_bg"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/dateVisitManagerReport_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_box_bg"
+                            android:layout_weight="1"
+                            >
+
+                            <TextView
+                                android:id="@+id/dateVisitManagerReportHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/dateVisitManagerReport_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="01 August, 2018"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/dateVisitManagerReportHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/clientNameVisitManagerReportDetail_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/green_box_bg"
+                            >
+                            <TextView
+                                android:id="@+id/clientNameVisitManagerReportHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Client Name"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/clientNameVisitManagerReportDetail_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shalu Dhochak"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/clientNameVisitManagerReportHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editMinusVisitManagerReport_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:background="@color/green_box_bg">
+
+                            <ImageView
+                                android:id="@+id/deleteVisitManagerReportDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/delete_white_icon"
+                                android:layout_marginRight="3dp"
+                                android:visibility="gone"
+                                />
+
+                            <ImageView
+                                android:id="@+id/editVisitManagerReportDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/edit_icon"
+                                android:layout_marginRight="3dp"
+                                android:visibility="gone"
+                                android:layout_toRightOf="@+id/deleteVisitManagerReportDetail_iv"
+                                />
+
+                            <ImageView
+                                android:id="@+id/minusVisitManagerReportDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/minus_white_icon"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/meetingtimeVisitManagerReportDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dateVisitManagerReport_ll"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/meetingtimeVisitManagerReportHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Meeting Time"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/meetingtimeVisitManagerReport_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/meetingtimeVisitManagerReportHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowMeetingtimeVisitManagerReportDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/meetingtimeVisitManagerReportDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/empnameVisitManagerReportDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowMeetingtimeVisitManagerReportDetail"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/empnameVisitManagerReportDetailHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Employee Name"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/empnameVisitManagerReportDetail_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/empnameVisitManagerReportDetailHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowEmpnameVisitManagerReportDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/empnameVisitManagerReportDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/locationVisitManagerReportDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowEmpnameVisitManagerReportDetail"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/locationVisitManagerReportHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loation"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/locationVisitManagerReportDetail_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/locationVisitManagerReportHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowLocationVisitManagerReportDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/locationVisitManagerReportDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/purposeVisitManagerReportDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowLocationVisitManagerReportDetail"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/purposeVisitManagerReportHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Purpose"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/purposeVisitManagerReportDetail_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/purposeVisitManagerReportHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowPurposeLocationVisitManagerReportDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/purposeVisitManagerReportDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/commentsVisitManagerReportDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowPurposeLocationVisitManagerReportDetail"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/commentsVisitManagerReportHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Comments"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/commentsVisitManagerReportDetail_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/commentsVisitManagerReportHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>
