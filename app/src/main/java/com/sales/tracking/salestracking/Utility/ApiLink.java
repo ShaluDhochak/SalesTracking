@@ -48,4 +48,6 @@ public interface ApiLink {
 
     String VIEW_REASSIGNED_REQUEST = "request_salesmgr.php";
 
+    String VISIT_REQUEST_NOTIFICATION = "managerheader.php";
+
 }

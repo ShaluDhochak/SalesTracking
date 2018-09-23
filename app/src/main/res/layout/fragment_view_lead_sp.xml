@@ -34,6 +34,21 @@
                     android:paddingLeft="20dp"
                     android:textStyle="bold"
                     />
+
+                <TextView
+                    android:id="@+id/titleViewLeadCountTask_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:visibility="gone"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:padding="10dp"
+                    />
             </RelativeLayout>
 
             <RelativeLayout

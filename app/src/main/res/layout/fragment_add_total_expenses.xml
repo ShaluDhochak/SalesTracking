@@ -290,12 +290,14 @@
 
                         <ImageView
                             android:id="@+id/photoAddExpensesSp_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_below="@+id/ClickPhotoExpenses_tv"
                             android:src="@drawable/default_img"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:scaleType="fitXY"
                             android:backgroundTint="@android:color/transparent"
                             />
 

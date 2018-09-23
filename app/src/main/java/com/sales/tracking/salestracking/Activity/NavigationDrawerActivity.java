@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.sales.tracking.salestracking.Fragment.AddCustomerfeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.AddLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.AddMeetingTaskFragment;
+import com.sales.tracking.salestracking.Fragment.AddReassignedManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddSalesPersonManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddTargetManagerFragment;
 import com.sales.tracking.salestracking.Fragment.AddTotalExpensesFragment;
@@ -45,6 +46,7 @@ import com.sales.tracking.salestracking.Fragment.TargetFragment;
 import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.UpdateSaleCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewClientManagerFragment;
+import com.sales.tracking.salestracking.Fragment.ViewClientNotificationManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewCustomerFeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.ViewDoneVisitReportFragment;
 import com.sales.tracking.salestracking.Fragment.ViewExpensesReportFragment;
@@ -52,6 +54,7 @@ import com.sales.tracking.salestracking.Fragment.ViewLeadSpFragment;
 import com.sales.tracking.salestracking.Fragment.ViewMeetingTaskManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewPendingVisitReportFragment;
 import com.sales.tracking.salestracking.Fragment.ViewReassignManagerFragment;
+import com.sales.tracking.salestracking.Fragment.ViewRequestNotificationFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewSalesPersonDetailsFragment;
 import com.sales.tracking.salestracking.Fragment.ViewTargetManagerFragment;
@@ -192,7 +195,12 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navigation_drawer, menu);
+
+        if (userTypePref.equals("Sales Executive")){
+            getMenuInflater().inflate(R.menu.navigation_drawer, menu);
+        }else if (userTypePref.equals("Sales Manager")){
+            getMenuInflater().inflate(R.menu.menu_manager_navigation, menu);
+        }
         return true;
     }
 
@@ -200,21 +208,37 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_clients) {
-           // Intent notificationIntent = new Intent(this, NotificationActivity.class);
-           // startActivity(notificationIntent);
-            callPendingFragment();
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
-        }else if (id == R.id.action_visit){
-            visitPendingFragment();
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
-        }else if (id== R.id.action_target){
-            targetFragment();
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
+        if (userTypePref.equals("Sales Executive")){
+            if (id == R.id.action_clients) {
+                // Intent notificationIntent = new Intent(this, NotificationActivity.class);
+                // startActivity(notificationIntent);
+                callPendingFragment();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }else if (id == R.id.action_visit){
+                visitPendingFragment();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }else if (id== R.id.action_target){
+                targetFragment();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        }else if (userTypePref.equals("Sales Manager")){
+            if (id==R.id.action_request_pending){
+                requestManagerNotificationFragment();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }else if (id ==R.id.action_view_manager_clients){
+                viewClientManagerNotificationFragment();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
         }
+
+
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -1177,9 +1201,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     }
 
     public void assignReassignRequestManager(){
-        ViewExpensesReportFragment viewExpensesReportFragment = new ViewExpensesReportFragment();
+        AddReassignedManagerFragment addReassignedManagerFragment = new AddReassignedManagerFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
-        atransaction.replace(R.id.fragment_Container, viewExpensesReportFragment);
+        atransaction.replace(R.id.fragment_Container, addReassignedManagerFragment);
         atransaction.commit();
     }
 
@@ -1188,6 +1212,22 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, viewReassignManagerFragment);
         atransaction.commit();
+    }
+
+    public void requestManagerNotificationFragment(){
+
+        ViewRequestNotificationFragment vrfragment = new ViewRequestNotificationFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, vrfragment);
+        dtransaction.commit();
+    }
+
+    public void viewClientManagerNotificationFragment(){
+
+        ViewClientNotificationManagerFragment vcnfragment = new ViewClientNotificationManagerFragment();
+        FragmentTransaction dtransaction = getSupportFragmentManager().beginTransaction();
+        dtransaction.replace(R.id.fragment_Container, vcnfragment);
+        dtransaction.commit();
     }
 
 }

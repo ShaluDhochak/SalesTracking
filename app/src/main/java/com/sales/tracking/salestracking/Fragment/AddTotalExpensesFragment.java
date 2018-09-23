@@ -9,15 +9,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +49,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,6 +116,8 @@ public class AddTotalExpensesFragment extends Fragment {
     @BindView(R.id.photoAddExpensesSp_iv)
     ImageView photoAddExpensesSp_iv;
 
+    Bitmap bitmap;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_total_expenses, container, false);
@@ -166,7 +175,7 @@ public class AddTotalExpensesFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            filetoUpload  ="";
+            filetoUpload  = getBase64(bitmap);
             expense_amt =amountAddExpensesSp_et.getText().toString();
             expense_cat = selectedCategoryId;
             expense_compid = "1";
@@ -330,27 +339,51 @@ public class AddTotalExpensesFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), SELECT_FILE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null){
-            Uri uri = data.getData();
+        if (requestCode == SELECT_FILE && resultCode == RESULT_OK && data != null && data.getData() != null){
             try{
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+//                photoAddExpensesSp_iv.setImageBitmap(bitmap);
+
+                Uri selectedImageUri = data.getData();
+                bitmap = getBitmapFromUri(selectedImageUri);
                 photoAddExpensesSp_iv.setImageBitmap(bitmap);
+
             }catch(Exception e){
 
             }
         }
 
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            photoAddExpensesSp_iv.setImageBitmap(photo);
+            bitmap = (Bitmap) data.getExtras().get("data");
+            photoAddExpensesSp_iv.setImageBitmap(bitmap);
         }
     }
+
+    private String getBase64(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        return encoded;
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getActivity().getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
+
 
     @OnClick(R.id.ClickPhotoExpenses_tv)
     public void clickViaCamera(){
