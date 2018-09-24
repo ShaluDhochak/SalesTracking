@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.AddSalesPersonManagerFragment">
 
@@ -172,6 +173,7 @@
                             android:layout_marginLeft="5dp"
                             android:backgroundTint="@android:color/transparent"
                             android:hint="Mobile No"
+                            android:inputType="phone"
                             android:textColor="@android:color/black" />
 
                     </RelativeLayout>

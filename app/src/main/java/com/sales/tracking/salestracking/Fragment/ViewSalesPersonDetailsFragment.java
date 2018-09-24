@@ -12,11 +12,14 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +87,28 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     @BindView(R.id.minusSalesPersonDetail_iv)
     ImageView minusSalesPersonDetail_iv;
 
+    //Edit
+
+    @BindView(R.id.okEditSalesPersonDetail_tv)
+            TextView okEditSalesPersonDetail_tv;
+
+    @BindView(R.id.mobileEditSalesPersonDetail_et)
+    EditText mobileEditSalesPersonDetail_et ;
+
+    @BindView(R.id.emailEditSalesPersonDetails_et)
+            EditText emailEditSalesPersonDetails_et;
+
+    @BindView(R.id.minusEditSalesPersonDetail_iv)
+    ImageView minusEditSalesPersonDetail_iv;
+
+    @BindView(R.id.nameEditSalesPersonDetails_et)
+            EditText nameEditSalesPersonDetails_et;
+
+    @BindView(R.id.statusEditSalesPersonDetail_sp)
+    Spinner statusEditSalesPersonDetail_sp;
+
+    @BindView(R.id.dojEditSalesPersonDetail_tv)
+            TextView dojEditSalesPersonDetail_tv;
 
     View view;
     SharedPreferences sharedPref;
@@ -193,6 +218,20 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
 
     }
 
+    public void getEditSalesPersonData(ManagerUserBean.Manager_Users bean){
+        viewSalesPersonHeader_rl.setVisibility(View.GONE);
+        viewSalesPersonDetails_cv.setVisibility(View.VISIBLE);
+
+        updatedOnSalesPersonDetail_tv.setText(bean.getUpdate_dt());
+        createdOnSalesPersonDetail_tv.setText(bean.getCreated_dt());
+        dojSalesPersonDetail_tv.setText(bean.getUser_doj());
+        statusSalesPersonDetail_tv.setText(bean.getUser_status());
+        mobileSalesPersonDetail_tv.setText(bean.getUser_mobile());
+        emailSalesPersonDetails_tv.setText(bean.getUser_email());
+        nameSalesPersonDetails_tv.setText(bean.getUser_name());
+
+    }
+
     public void deleteClientData(ManagerUserBean.Manager_Users bean){
         viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
         viewSalesPersonDetails_cv.setVisibility(View.GONE);
@@ -259,6 +298,8 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     }
 
 
+
+   // selectStatus();
 
 
 }

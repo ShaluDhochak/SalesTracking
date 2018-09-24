@@ -33,6 +33,7 @@ import com.sales.tracking.salestracking.Utility.Connectivity;
 import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.JSONParser;
 import com.sales.tracking.salestracking.Utility.Utilities;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -130,12 +131,12 @@ public class ViewTotalExpensesFragment extends Fragment {
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
 
-     //   getExpensesRecyclerView();
+        //   getExpensesRecyclerView();
         if (userTypePref.equals("Sales Manager")) {
             getExpensesManagerRecyclerView();
             expensesByExpensesSpDetail_rl.setVisibility(View.VISIBLE);
             separatorBelowExpensebYExpensesSpDetail.setVisibility(View.VISIBLE);
-        }else if (userTypePref.equals("Sales Executive")){
+        } else if (userTypePref.equals("Sales Executive")) {
             getExpensesRecyclerView();
             expensesByExpensesSpDetail_rl.setVisibility(View.GONE);
             separatorBelowExpensebYExpensesSpDetail.setVisibility(View.GONE);
@@ -171,7 +172,7 @@ public class ViewTotalExpensesFragment extends Fragment {
 
                                 }
                             } catch (Exception e) {
-                               // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -197,12 +198,12 @@ public class ViewTotalExpensesFragment extends Fragment {
         amountExpensesSpDetail_tv.setText(bean.getExpense_amt());
         modeExpensesSpDetail_tv.setText(bean.getExpense_mode());
         detailsExpensesSpDetail_tv.setText(bean.getExpense_details());
-     //   photoExpensesSpDetail_tv.setText("");
+        //   photoExpensesSpDetail_tv.setText("");
 
     }
 
     @OnClick(R.id.deleteViewExpensesSpDetail_iv)
-    public void deleteExpensesRowdetails(){
+    public void deleteExpensesRowdetails() {
         viewExpensesSpDetails_cv.setVisibility(View.GONE);
         viewExpensesHeader_rl.setVisibility(View.VISIBLE);
 
@@ -210,7 +211,7 @@ public class ViewTotalExpensesFragment extends Fragment {
             getExpensesManagerRecyclerView();
             expensesByExpensesSpDetail_rl.setVisibility(View.VISIBLE);
             separatorBelowExpensebYExpensesSpDetail.setVisibility(View.VISIBLE);
-        }else if (userTypePref.equals("Sales Executive")){
+        } else if (userTypePref.equals("Sales Executive")) {
             getExpensesRecyclerView();
             expensesByExpensesSpDetail_rl.setVisibility(View.GONE);
             separatorBelowExpensebYExpensesSpDetail.setVisibility(View.GONE);
@@ -218,16 +219,16 @@ public class ViewTotalExpensesFragment extends Fragment {
     }
 
     @OnClick(R.id.minusViewExpensesSpDetail_iv)
-    public void hideExpensesDetails(){
+    public void hideExpensesDetails() {
         viewExpensesSpDetails_cv.setVisibility(View.GONE);
         viewExpensesHeader_rl.setVisibility(View.VISIBLE);
 
-       // getExpensesRecyclerView();
+        // getExpensesRecyclerView();
         if (userTypePref.equals("Sales Manager")) {
             getExpensesManagerRecyclerView();
             expensesByExpensesSpDetail_rl.setVisibility(View.VISIBLE);
             separatorBelowExpensebYExpensesSpDetail.setVisibility(View.VISIBLE);
-        }else if (userTypePref.equals("Sales Executive")){
+        } else if (userTypePref.equals("Sales Executive")) {
             getExpensesRecyclerView();
             expensesByExpensesSpDetail_rl.setVisibility(View.GONE);
             separatorBelowExpensebYExpensesSpDetail.setVisibility(View.GONE);
@@ -243,6 +244,7 @@ public class ViewTotalExpensesFragment extends Fragment {
 
     public class deleteTotalCollectionSp extends AsyncTask<String, JSONObject, JSONObject> {
         String expense_uid, expense_id;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -273,8 +275,7 @@ public class ViewTotalExpensesFragment extends Fragment {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Deleted Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -287,15 +288,14 @@ public class ViewTotalExpensesFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
-                   // clearAll();
+                    makeText(getActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    // clearAll();
                     if (userTypePref.equals("Sales Manager")) {
                         getExpensesManagerRecyclerView();
-                    }else if (userTypePref.equals("Sales Executive")){
+                    } else if (userTypePref.equals("Sales Executive")) {
                         getExpensesRecyclerView();
                     }
-                }
-                else {
+                } else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -353,7 +353,14 @@ public class ViewTotalExpensesFragment extends Fragment {
         modeExpensesSpDetail_tv.setText(bean.getExpense_mode());
         detailsExpensesSpDetail_tv.setText(bean.getExpense_details());
         expenseByExpensesSpDetail_tv.setText(bean.getUser_name());
-        //   photoExpensesSpDetail_tv.setText("");
+        String imageUrl = "";
+        if (bean.getExpense_images().contains("../")) {
+            imageUrl = ApiLink.IMAGE_BASE_URL + bean.getExpense_images().replace("../", "");
+        } else {
+            imageUrl = ApiLink.IMAGE_BASE_URL + bean.getExpense_images();
+        }
+        Picasso.get().load(imageUrl).into(photoExpensesSpDetail_tv);
+        // photoExpensesSpDetail_tv.setText("");
         getExpensesRecyclerView();
     }
 

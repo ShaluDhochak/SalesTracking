@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/managerDashboard_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        android:layout_margin="10dp"
+        >
+        <RelativeLayout
+            android:id="@+id/managerdashboard_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/managerDashboardHeading_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/name_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    >
+                    <TextView
+                        android:id="@+id/nameDashboardHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/todayDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/todayDashboardManagerHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/weeklyDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/weeklyDashboardManagerHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weekly"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tillDateDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/tillDateHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Till Date"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/separatorBelowManagerDashboard_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/managerDashboardHeading_ll"
+                android:background="@color/textcolor"
+                android:layout_margin="5dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/meetingManagerDashboard_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_margin="5dp"
+                android:layout_below="@+id/separatorBelowManagerDashboard_view">
+
+                <RelativeLayout
+                    android:id="@+id/nameMeetingDashboard_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    >
+                    <TextView
+                        android:id="@+id/nameMeetingDashboardHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Meetings"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/todayMeetingDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/todayMeetingDashboardManager_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/weeklyMeetingDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/weeklyMeetingDashboardManager_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tillDateMeetingDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/tillDateMeeting_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/separatorBelowMeetingDashboard_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/meetingManagerDashboard_ll"
+                android:background="@color/textcolor"
+                android:layout_margin="5dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/callsManagerDashboard_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_margin="5dp"
+                android:layout_below="@+id/separatorBelowMeetingDashboard_view">
+
+                <RelativeLayout
+                    android:id="@+id/nameCallsDashboard_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    >
+                    <TextView
+                        android:id="@+id/nameCallsDashboardHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calls"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/todayCallsDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/todayCallsDashboardManager_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/weeklyCallsDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/weeklyCallsDashboardManager_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tillDateCallsDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/tillDateCalls_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/separatorBelowCallsDashboard_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/callsManagerDashboard_ll"
+                android:background="@color/textcolor"
+                android:layout_margin="5dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/leadsManagerDashboard_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_margin="5dp"
+                android:layout_below="@+id/separatorBelowCallsDashboard_view">
+
+                <RelativeLayout
+                    android:id="@+id/nameLeadsDashboard_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/nameLeadsDashboardHeading_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Leads"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/todayLeadsDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/todayLeadsDashboardManager_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/weeklyLeadsDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/weeklyLeadsDashboardManager_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tillDateLeadsDashboardManager_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/tillDateLeads_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/textcolor"
+                        android:textSize="12sp"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

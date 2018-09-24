@@ -52,6 +52,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -195,7 +196,7 @@ public class AddTotalExpensesFragment extends Fragment {
         protected JSONObject doInBackground(String... args) {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("filetoUpload", filetoUpload));
+            params.add(new BasicNameValuePair("fileToUpload", filetoUpload));
             params.add(new BasicNameValuePair("expense_mode", expense_mode));
             params.add(new BasicNameValuePair("expense_amt", expense_amt));
             params.add(new BasicNameValuePair("add_exp", "add_exp"));
@@ -347,8 +348,6 @@ public class AddTotalExpensesFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_FILE && resultCode == RESULT_OK && data != null && data.getData() != null){
             try{
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-//                photoAddExpensesSp_iv.setImageBitmap(bitmap);
 
                 Uri selectedImageUri = data.getData();
                 bitmap = getBitmapFromUri(selectedImageUri);
@@ -366,13 +365,20 @@ public class AddTotalExpensesFragment extends Fragment {
     }
 
     private String getBase64(Bitmap bitmap){
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        try {
 
-        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
 
-        return encoded;
+            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            return encoded;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "";
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {

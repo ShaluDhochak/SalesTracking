@@ -50,4 +50,5 @@ public interface ApiLink {
 
     String VISIT_REQUEST_NOTIFICATION = "managerheader.php";
 
+    String IMAGE_BASE_URL = "http://arizonamediaz.co.in/sales_tracking/ci/";
 }

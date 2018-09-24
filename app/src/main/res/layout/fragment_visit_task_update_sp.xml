@@ -164,15 +164,53 @@
                             android:textColor="@color/textcolor"
                             />
 
-                        <ImageView
-                            android:id="@+id/photoUpdateVisitTaskSp_iv"
+                        <TextView
+                            android:id="@+id/chooseFromGalleryExpenses_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Choose Photo"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_below="@+id/photoUpdateVisitTaskSpHeading_tv"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/orFromGalleryExpenses_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/photoUpdateVisitTaskSpHeading_tv"
+                            android:layout_toRightOf="@+id/chooseFromGalleryExpenses_tv"
+                            android:text="OR"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp"
+                            />
+                        <TextView
+                            android:id="@+id/ClickPhotoExpenses_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/photoUpdateVisitTaskSpHeading_tv"
+                            android:layout_toRightOf="@+id/orFromGalleryExpenses_tv"
+                            android:text="Take Photo"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/photoUpdateVisitTaskSp_iv"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_below="@+id/ClickPhotoExpenses_tv"
                             android:src="@drawable/default_img"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
+                            android:scaleType="fitXY"
                             />
 
                     </RelativeLayout>

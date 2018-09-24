@@ -226,7 +226,7 @@ public class AddSalesPersonManagerFragment extends Fragment {
 
     public class addSalesPersonManager extends AsyncTask<String, JSONObject, JSONObject> {
         String user_name, user_email, user_mobile, user_comid, user_pass, user_createdby, user_createdon, user_type, user_status;
-        String user_reporting_to, user_doj;
+        String user_reporting_to, user_doj, user_desiid;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -242,6 +242,8 @@ public class AddSalesPersonManagerFragment extends Fragment {
             user_status = selectStatusId;
             user_reporting_to = userIdPref;
             user_doj = dojAddSalesPersonDetail_tv.getText().toString();
+            user_desiid = "3";
+
 
             pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Adding Sales Person...");
@@ -266,6 +268,7 @@ public class AddSalesPersonManagerFragment extends Fragment {
             params.add(new BasicNameValuePair("user_status", user_status));
             params.add(new BasicNameValuePair("user_reporting_to", user_reporting_to));
             params.add(new BasicNameValuePair("user_doj", user_doj));
+            params.add(new BasicNameValuePair("user_desiid", "3"));
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.USER_LIST;
 
@@ -292,7 +295,7 @@ public class AddSalesPersonManagerFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Inserted Successfully", Toast.LENGTH_SHORT).show();
-                  //  clearAll();
+                   clearAll();
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
@@ -301,6 +304,16 @@ public class AddSalesPersonManagerFragment extends Fragment {
             } catch (Exception e) {
             }
         }
+    }
+
+    private void clearAll(){
+        nameAddSalesPersonDetails_et.setText("");
+        emailAddSalesPersonDetails_et.setText("");
+        mobileAddSalesPersonDetails_et.setText("");
+        passwordAddAddSalesPersonDetails_et.setText("");
+        statusAddSalesPersonDetail_sp.setSelection(0);
+        dojAddSalesPersonDetail_tv.setText("");
+
     }
 
     public void getAddSalesPersonPackageCount(){

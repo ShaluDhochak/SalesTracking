@@ -24,7 +24,7 @@ public class SalesPersonAdapter  extends RecyclerView.Adapter<SalesPersonAdapter
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView cfClientCompanyName_tv, cfClientCompanyNameHeading_tv;
-        ImageView plusCfClientCompanyName_iv,deleteCfClientCompanyName_iv;
+        ImageView plusCfClientCompanyName_iv,deleteCfClientCompanyName_iv, editCfClientCompanyName_iv;
 
         MyViewHolder(View view) {
             super(view);
@@ -34,6 +34,7 @@ public class SalesPersonAdapter  extends RecyclerView.Adapter<SalesPersonAdapter
 
             deleteCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.deleteCfClientCompanyName_iv);
             plusCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.plusCfClientCompanyName_iv);
+            editCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.editCfClientCompanyName_iv);
 
         }
     }
@@ -57,6 +58,12 @@ public class SalesPersonAdapter  extends RecyclerView.Adapter<SalesPersonAdapter
 
         holder.cfClientCompanyName_tv.setText(bean.getUser_name());
         holder.cfClientCompanyNameHeading_tv.setText("Name");
+
+        holder.editCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                viewSalesPersonDetailsFragment.getEditSalesPersonData(personList.get(position));
+            }
+        });
 
         holder.plusCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,7 +23,9 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
+import com.sales.tracking.salestracking.Adapter.DashboardManagerAdapter;
 import com.sales.tracking.salestracking.Adapter.TodaysTaskSalesPersonAdapter;
+import com.sales.tracking.salestracking.Bean.DashboardManagerBean;
 import com.sales.tracking.salestracking.Bean.DashboardSalesPersonBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
@@ -84,6 +86,7 @@ public class DashboardFragment extends Fragment {
 
     View view;
     TodaysTaskSalesPersonAdapter todaysTaskSalesPersonAdapter;
+    DashboardManagerAdapter dashboardManagerAdapter;
     SharedPreferences sharedPref;
     String userNamePref, userEmailPref, userTypePref, userIdPref;
 
@@ -118,6 +121,8 @@ public class DashboardFragment extends Fragment {
         }else if (userTypePref.equals("Sales Manager")){
             salesHeader_rl.setVisibility(View.GONE);
             dashboardDetail_rv.setVisibility(View.VISIBLE);
+
+            getDashboardManagerRecyclerView();
         }
 
     }
@@ -254,6 +259,45 @@ public class DashboardFragment extends Fragment {
                                 }
                             }catch(Exception e){
                            //     Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getDashboardManagerRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = "http://arizonamediaz.co.in/sales_tracking/api/manager_dashboard.php";
+            Map<String, String> map = new HashMap<>();
+            map.put("manager_id", userIdPref);
+
+            GSONRequest<DashboardManagerBean> dashboardGsonRequest = new GSONRequest<DashboardManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    DashboardManagerBean.class, map,
+                    new com.android.volley.Response.Listener<DashboardManagerBean>() {
+                        @Override
+                        public void onResponse(DashboardManagerBean response) {
+                            try{
+                                if (response.getDashboard_count().size()>0){
+
+                                    dashboardManagerAdapter = new DashboardManagerAdapter(getActivity(),response.getDashboard_count());
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    dashboardDetail_rv.setLayoutManager(mLayoutManager);
+                                    dashboardDetail_rv.setItemAnimator(new DefaultItemAnimator());
+                                    dashboardDetail_rv.setAdapter(dashboardManagerAdapter);
+
+                                }
+                            }catch(Exception e){
+                                //     Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
