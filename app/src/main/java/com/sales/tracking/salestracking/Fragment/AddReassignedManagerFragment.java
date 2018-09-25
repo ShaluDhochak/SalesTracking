@@ -137,9 +137,9 @@ public class AddReassignedManagerFragment extends Fragment {
         if (selectedTasktype.equals("Task type")) {
             selectedtaskTypeId = "Task type";
         }else if (selectedTasktype.equals("Sales Call")){
-            selectedtaskTypeId = "call";
+            selectedtaskTypeId = "Call";
         }else if (selectedTasktype.equals("Visit")){
-            selectedtaskTypeId = "visit";
+            selectedtaskTypeId = "Visit";
         }
         selectServiceTask(selectedtaskTypeId);
     }
@@ -150,10 +150,10 @@ public class AddReassignedManagerFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.VIEW_REASSIGNED_REQUEST;
                 Map<String, String> map = new HashMap<>();
                 try {
-                    if (selectedtaskTypeId.equals("call")) {
+                    if (selectedtaskTypeId.equals("Call")) {
                         map.put("service_assignedby", userIdPref);
                         map.put("sales_tasks_dropdown", "");
-                    } else if (selectedtaskTypeId.equals("visit")) {
+                    } else if (selectedtaskTypeId.equals("Visit")) {
                         map.put("visit_tasks_dropdown", "");
                         map.put("service_assignedby", userIdPref);
                     }
@@ -182,14 +182,14 @@ public class AddReassignedManagerFragment extends Fragment {
                                 salescall.clear();
 
                                 try {
-                                    if (selectedtaskTypeId.equals("call")) {
+                                    if (selectedtaskTypeId.equals("Call")) {
                                         salescall.add("Sale Call Task");
 
                                         for (int i = 0; i < response.getSales_tasks_dropdown().size(); i++) {
                                             salescall.add(response.getSales_tasks_dropdown().get(i).getLead_company() + " - " + response.getSales_tasks_dropdown().get(i).getService_person() + " - " + response.getSales_tasks_dropdown().get(i).getService_contactno());
                                             salesCallMap.put(response.getSales_tasks_dropdown().get(i).getService_id(), response.getSales_tasks_dropdown().get(i).getLead_company() + " - " + response.getSales_tasks_dropdown().get(i).getService_person() + " - " + response.getSales_tasks_dropdown().get(i).getService_contactno());
                                         }
-                                    } else if (selectedtaskTypeId.equals("visit")) {
+                                    } else if (selectedtaskTypeId.equals("Visit")) {
                                         salescall.add("Visit Task");
 
                                         for (int i = 0; i < response.getVisit_tasks_dropdown().size(); i++) {
@@ -214,9 +214,9 @@ public class AddReassignedManagerFragment extends Fragment {
 
             salescall = new ArrayList<String>();
             salescall.clear();
-            if (selectedtaskTypeId.equals("call")) {
+            if (selectedtaskTypeId.equals("Call")) {
                 salescall.add("Sale Call Task");
-            }else if (selectedtaskTypeId.equals("visit")) {
+            }else if (selectedtaskTypeId.equals("Visit")) {
                 salescall.add("Visit Task");
             }
 
@@ -349,7 +349,7 @@ public class AddReassignedManagerFragment extends Fragment {
             }
 
             update = "update";
-            request_uid = userIdPref;
+            request_uid = selectAssignTaskId;
             request_type = selectedtaskTypeId ;
 
             pDialog = new ProgressDialog(getActivity());
@@ -375,7 +375,7 @@ public class AddReassignedManagerFragment extends Fragment {
             try {
                 int success = json.getInt(TAG_SUCCESS);
                 String message = json.getString(TAG_MESSAGE);
-                if (success == 1 && message.equals("Added Successfully")) {
+                if (success == 1 && message.equals("Updated Successfully")) {
                     return json;
                 }
                 else {
@@ -391,7 +391,7 @@ public class AddReassignedManagerFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Added Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(getActivity(),"Updated Successfully", Toast.LENGTH_SHORT).show();
                     clearAll();
                 }
                 else {

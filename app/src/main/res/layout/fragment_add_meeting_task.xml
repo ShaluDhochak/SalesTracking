@@ -81,9 +81,7 @@
                         android:layout_below="@+id/tskTypeAddMeetingTaskHeading_tv"
                         android:textColor="@android:color/black"
                         android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         />
 
                 </RelativeLayout>
@@ -124,11 +122,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/assignToAddViewMeetingTaskHeading_tv"
+
                         android:textColor="@android:color/black"
                         android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         />
 
                 </RelativeLayout>
@@ -171,9 +168,7 @@
                         android:layout_below="@+id/clientAddMeetingTaskHeading_tv"
                         android:textColor="@android:color/black"
                         android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         />
 
                 </RelativeLayout>
@@ -308,9 +303,7 @@
                         android:layout_below="@+id/purposeAddMeetingTaskHeading_tv"
                         android:textColor="@android:color/black"
                         android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         />
 
                 </RelativeLayout>
@@ -352,11 +345,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/addressAddMeetingTaskHeading_tv"
                         android:textColor="@android:color/black"
-                        android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@android:color/transparent"
+                        android:textSize="14sp"
+                        android:hint="Address"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="@android:color/transparent"
                         />
 
                 </RelativeLayout>
@@ -399,11 +394,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/contactPersonNameAddMeetingTaskHeading_tv"
                         android:textColor="@android:color/black"
-                        android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:hint="Contact Person"
                         android:background="@android:color/transparent"
+                        android:textSize="14sp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="@android:color/transparent"
                         />
 
                 </RelativeLayout>
@@ -446,11 +443,14 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/phoneAddMeetingTaskHeading_tv"
                         android:textColor="@android:color/black"
-                        android:hint=""
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:hint="Phone No"
+                        android:layout_marginBottom="5dp"
                         android:background="@android:color/transparent"
+                        android:textSize="14sp"
+                        android:inputType="phone"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:backgroundTint="@android:color/transparent"
                         />
 
                 </RelativeLayout>

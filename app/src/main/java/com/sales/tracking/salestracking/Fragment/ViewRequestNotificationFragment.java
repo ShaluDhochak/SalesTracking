@@ -91,6 +91,7 @@ public class ViewRequestNotificationFragment extends Fragment {
     @BindView(R.id.viewAllRequestNotification_tv)
             TextView viewAllRequestNotification_tv;
 
+
    View view;
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, expenses_id, deleteExpenses_id;
@@ -137,8 +138,12 @@ public class ViewRequestNotificationFragment extends Fragment {
 
         }
         viewRequestNotificationDetails_cv.setVisibility(View.GONE);
+        viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
         viewRequestNotificationHeader_rl.setVisibility(View.GONE);
 
+       if (!titleViewRequestNotificationCount_tv.getText().toString().equals("0")){
+           viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
+       }
     }
 
 
@@ -260,6 +265,8 @@ public class ViewRequestNotificationFragment extends Fragment {
 
                                     titleViewRequestNotificationCount_tv.setText(response.getRequest_count().get(0).getTot_requests().toString());
 
+
+
                                 }
                             } catch (Exception e) {
                                 // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
@@ -295,8 +302,6 @@ public class ViewRequestNotificationFragment extends Fragment {
             getViewRequest();
 
             viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
-
-
             viewRequestNotificationHeader_rl.setVisibility(View.VISIBLE);
             viewRequestNotificationDetails_cv.setVisibility(View.GONE);
         }

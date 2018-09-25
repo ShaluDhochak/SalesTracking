@@ -1,5 +1,6 @@
 package com.sales.tracking.salestracking.Fragment;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +17,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -43,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +54,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 import static android.widget.Toast.makeText;
 
@@ -110,15 +115,21 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     @BindView(R.id.dojEditSalesPersonDetail_tv)
             TextView dojEditSalesPersonDetail_tv;
 
+    @BindView(R.id.editSalesPersonDetails_cv)
+            CardView editSalesPersonDetails_cv;
+
     View view;
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, client_id, deleteExpenses_id;
+
+    String selectStatus, selectStatusId;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 
     JSONParser jsonParser = new JSONParser();
     ProgressDialog pDialog;
+    DatePickerDialog datePickerDialog;
 
     SalesPersonAdapter salesPersonAdapter;
 
@@ -145,7 +156,11 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
 
         getSalesPersonRecyclerView();
+
+        selectStatus();
+
         viewSalesPersonDetails_cv.setVisibility(View.GONE);
+        editSalesPersonDetails_cv.setVisibility(View.GONE);
     }
 
     public void getSalesPersonRecyclerView(){
@@ -194,12 +209,13 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     }
 
     @OnClick(R.id.minusSalesPersonDetail_iv)
-    public void hideClientDetails(){
+    public void hideSalesPDetails(){
         viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
         viewSalesPersonDetails_cv.setVisibility(View.GONE);
-
+        editSalesPersonDetails_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")){
             getSalesPersonRecyclerView();
+
         }
 
     }
@@ -207,6 +223,7 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     public void getClientData(ManagerUserBean.Manager_Users bean){
         viewSalesPersonHeader_rl.setVisibility(View.GONE);
         viewSalesPersonDetails_cv.setVisibility(View.VISIBLE);
+        editSalesPersonDetails_cv.setVisibility(View.GONE);
 
         updatedOnSalesPersonDetail_tv.setText(bean.getUpdate_dt());
         createdOnSalesPersonDetail_tv.setText(bean.getCreated_dt());
@@ -220,21 +237,32 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
 
     public void getEditSalesPersonData(ManagerUserBean.Manager_Users bean){
         viewSalesPersonHeader_rl.setVisibility(View.GONE);
-        viewSalesPersonDetails_cv.setVisibility(View.VISIBLE);
+        viewSalesPersonDetails_cv.setVisibility(View.GONE);
+        editSalesPersonDetails_cv.setVisibility(View.VISIBLE);
 
-        updatedOnSalesPersonDetail_tv.setText(bean.getUpdate_dt());
-        createdOnSalesPersonDetail_tv.setText(bean.getCreated_dt());
-        dojSalesPersonDetail_tv.setText(bean.getUser_doj());
-        statusSalesPersonDetail_tv.setText(bean.getUser_status());
-        mobileSalesPersonDetail_tv.setText(bean.getUser_mobile());
-        emailSalesPersonDetails_tv.setText(bean.getUser_email());
-        nameSalesPersonDetails_tv.setText(bean.getUser_name());
+        dojEditSalesPersonDetail_tv.setText(bean.getUser_doj());
+        nameEditSalesPersonDetails_et.setText(bean.getUser_name());
+        emailEditSalesPersonDetails_et.setText(bean.getUser_email());
+        mobileEditSalesPersonDetail_et.setText(bean.getUser_mobile());
 
+        client_id = bean.getUser_id().toString();
+
+    }
+
+    @OnClick(R.id.minusEditSalesPersonDetail_iv)
+    public void hideSalesPersonDetails(){
+        viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
+        viewSalesPersonDetails_cv.setVisibility(View.GONE);
+        editSalesPersonDetails_cv.setVisibility(View.GONE);
+        if (userTypePref.equals("Sales Manager")){
+            getSalesPersonRecyclerView();
+        }
     }
 
     public void deleteClientData(ManagerUserBean.Manager_Users bean){
         viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
         viewSalesPersonDetails_cv.setVisibility(View.GONE);
+
 
         client_id = bean.getUser_id().toString();
         new deleteClient().execute();
@@ -298,8 +326,149 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     }
 
 
+    public class editSalesPerson extends AsyncTask<String, JSONObject, JSONObject> {
+        String user_id, user_doj, user_status, user_name, user_email, user_mobile;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
-   // selectStatus();
+            user_id = client_id;
 
+            user_doj = dojEditSalesPersonDetail_tv.getText().toString();
+            user_status = selectStatusId;
+            user_name = nameEditSalesPersonDetails_et.getText().toString();
+            user_email = emailEditSalesPersonDetails_et.getText().toString();
+            user_mobile = mobileEditSalesPersonDetail_et.getText().toString();
+
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Editing Sales Person...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("user_id", user_id));
+            params.add(new BasicNameValuePair("edit", "edit"));
+
+            params.add(new BasicNameValuePair("filter[user_name]", user_name));
+            params.add(new BasicNameValuePair("filter[user_email]", user_email));
+
+            params.add(new BasicNameValuePair("filter[user_mobile]", user_mobile));
+            params.add(new BasicNameValuePair("filter[user_status]", user_status));
+
+            params.add(new BasicNameValuePair("filter[user_doj]", user_doj));
+
+            String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_SALES_PERSON;
+            JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
+
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+                String message = json.getString(TAG_MESSAGE);
+                if (success == 1 && message.equals("Updated Successfully")) {
+                    return json;
+                }
+                else {
+                    return null;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONObject response) {
+            try {
+                pDialog.dismiss();
+                if (!(response == null)) {
+                    makeText(getActivity(),"Updated Successfully", Toast.LENGTH_SHORT).show();
+                    getSalesPersonRecyclerView();
+                }
+                else {
+                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    private void selectStatus() {
+
+        List<String> statusSpinner = new ArrayList<String>();
+        statusSpinner.add("Status");
+        statusSpinner.add("Active");
+        statusSpinner.add("Inactive");
+
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        statusEditSalesPersonDetail_sp.setAdapter(statusAdapter);
+    }
+
+    @OnItemSelected(R.id.statusEditSalesPersonDetail_sp)
+    public void statusSelected(Spinner spinner, int position){
+        selectStatus = spinner.getSelectedItem().toString();
+
+        if (selectStatus.equals("Status")) {
+            selectStatusId = "";
+        } else {
+            selectStatusId= selectStatus;
+        }
+    }
+
+    @OnClick(R.id.dojEditSalesPersonDetail_tv)
+    public void selectDOjDate(){
+        final Calendar calenderObj = Calendar.getInstance();
+        int mYear = calenderObj.get(Calendar.YEAR);
+        int mMonth = calenderObj.get(Calendar.MONTH);
+        int mDay = calenderObj.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        dojEditSalesPersonDetail_tv.setText(year + "-" + (monthOfYear + 1)+ "-" + dayOfMonth);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    @OnClick(R.id.okEditSalesPersonDetail_tv)
+    public void submitEditSalesPersonBtn() {
+        if (nameEditSalesPersonDetails_et.getText().toString().length() > 0) {
+            if (emailEditSalesPersonDetails_et.getText().toString().length() > 0) {
+                if (isEmailValid(emailEditSalesPersonDetails_et.getText().toString().trim())) {
+                    if (mobileEditSalesPersonDetail_et.getText().toString().length() > 0 && mobileEditSalesPersonDetail_et.getText().toString().length() == 10) {
+                        if (!(selectStatus.equals("Status"))) {
+                            if (dojEditSalesPersonDetail_tv.getText().toString().length() > 0) {
+                                new editSalesPerson().execute();
+
+                            } else {
+                                Toast.makeText(getActivity(), "Please Enter DOJ ", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Please Select Status", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Please Enter 10 Digits Mobile No", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Please Enter valid Email Id", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Please enter EmailId", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Please enter Name", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
 }

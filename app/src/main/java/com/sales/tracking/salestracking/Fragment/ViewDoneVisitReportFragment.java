@@ -331,7 +331,7 @@ public class ViewDoneVisitReportFragment extends Fragment {
                 Map<String, String> map = new HashMap<>();
                 map.put("select_done", "");
                 map.put("all", "");
-                map.put("reporting_to", "17");
+                map.put("reporting_to", userIdPref);
 
                 GSONRequest<VisitDoneReportManagerBean> dashboardGsonRequest = new GSONRequest<VisitDoneReportManagerBean>(
                         Request.Method.POST,
