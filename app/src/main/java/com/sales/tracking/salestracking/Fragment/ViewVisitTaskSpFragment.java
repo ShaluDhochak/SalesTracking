@@ -30,6 +30,7 @@ import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
 import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.Utilities;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -205,6 +206,12 @@ public class ViewVisitTaskSpFragment extends Fragment {
         }else{
             followUpDateTimeViewVisitSpTask_rl.setVisibility(View.GONE);
             separatorBelowStatusViewVisitSpTask.setVisibility(View.GONE);
+        }
+
+        if (!bean.getVisit_photo().equals("")){
+            Picasso.get().load(ApiLink.IMAGE_BASE_URL + bean.getVisit_photo()).into(photoViewVisitSpTask_iv);
+        }else{
+            photoViewVisitSpTask_iv.setImageDrawable(getResources().getDrawable(R.drawable.default_img));
         }
 
         followUpDateTimeViewVisitSpTask_tv.setText(followdate1[0] + " / " + convertIn12Hours(followdate1[1]));

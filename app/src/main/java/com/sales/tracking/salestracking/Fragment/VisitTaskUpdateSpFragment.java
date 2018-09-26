@@ -1,22 +1,32 @@
 package com.sales.tracking.salestracking.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +44,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.Bean.UpdateViewTaskSpBean;
-import com.sales.tracking.salestracking.Bean.VisitTaskSpBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
@@ -68,7 +76,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.widget.Toast.makeText;
 
 
-public class VisitTaskUpdateSpFragment extends Fragment {
+public class VisitTaskUpdateSpFragment extends Fragment{
 
     View view;
 
@@ -130,6 +138,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_visit_task_update_sp, container, false);
         ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -289,6 +298,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
 
     }
 
+
     public class UpdateVisitTaskSp extends AsyncTask<String, JSONObject, JSONObject> {
         String visit_id, visit_photo, visit_status, visit_time, visit_date;
         String visit_comment;
@@ -315,12 +325,12 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         protected JSONObject doInBackground(String... args) {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("filter[visit_photo]",getBase64(bitmap)));
             params.add(new BasicNameValuePair("filter[visit_comments]", visit_comment));
             params.add(new BasicNameValuePair("filter[followup_date]", visit_date));
             params.add(new BasicNameValuePair("filter[followup_time]", visit_time));
             params.add(new BasicNameValuePair("visit_id", visit_id));
             params.add(new BasicNameValuePair("filter[visit_status]", visit_status));
-            params.add(new BasicNameValuePair("filter[visit_photo]", visit_photo));
             params.add(new BasicNameValuePair("update", "update"));
 
 
@@ -426,6 +436,7 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             bitmap = (Bitmap) data.getExtras().get("data");
             photoUpdateVisitTaskSp_iv.setImageBitmap(bitmap);
         }
+
     }
 
     private String getBase64(Bitmap bitmap) {
@@ -474,6 +485,8 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             }
 
         }
+
     }
+
 
 }
