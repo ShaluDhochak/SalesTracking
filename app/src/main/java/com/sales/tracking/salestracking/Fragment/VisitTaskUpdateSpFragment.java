@@ -230,7 +230,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             setDefaultDateTimeVisibility();
         } else if (selectTaskStatus.equals("Pending")) {
             selectedTaskStatusId = "Pending";
-
             setDefaultDateTimeVisibility();
         } else if (selectTaskStatus.equals("Done")) {
             selectedTaskStatusId = "Done";
@@ -286,7 +285,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Please Select Visit Task", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public class UpdateVisitTaskSp extends AsyncTask<String, JSONObject, JSONObject> {
@@ -322,7 +320,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             params.add(new BasicNameValuePair("filter[visit_status]", visit_status));
             params.add(new BasicNameValuePair("filter[visit_photo]", visit_photo));
             params.add(new BasicNameValuePair("update", "update"));
-
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.VISIT_TASK_SPINNER;
             JSONObject json = jsonParser.makeHttpRequest(url_add_task, "POST", params);
@@ -418,7 +415,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
                 photoUpdateVisitTaskSp_iv.setImageBitmap(bitmap);
 
             } catch (Exception e) {
-
             }
         }
 
@@ -441,7 +437,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return "";
     }
 
@@ -453,7 +448,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
         parcelFileDescriptor.close();
         return image;
     }
-
 
     @OnClick(R.id.ClickPhotoExpenses_tv)
     public void clickViaCamera() {
@@ -472,7 +466,6 @@ public class VisitTaskUpdateSpFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
             }
-
         }
     }
 

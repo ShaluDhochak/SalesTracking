@@ -106,7 +106,6 @@ public class ViewCustomerFeedbackFragment extends Fragment {
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
         if (userTypePref.equals("Sales Manager")) {
-            //  getAttendanceRecyclerView();
         }else if (userTypePref.equals("Sales Executive")){
             getSPCustomerFeedbackRecyclerView();
         }

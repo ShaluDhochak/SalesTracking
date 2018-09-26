@@ -137,7 +137,6 @@ public class ViewClientManagerFragment extends Fragment {
     @BindView(R.id.minusEditLeadTypeDetail_iv)
     ImageView minusEditLeadTypeDetail_iv;
 
-
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 

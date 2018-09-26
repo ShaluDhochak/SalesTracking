@@ -290,15 +290,12 @@ public class ViewExpensesReportFragment extends Fragment {
                                 if (response.getSp_expenses().size()>0){
                                     viewExpensesReport_rl.setVisibility(View.VISIBLE);
 
-
                                     viewExpensesReportAdapter = new ViewExpensesReportAdapter(getActivity(),response.getSp_expenses(), ViewExpensesReportFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewExpensesReport_rv.setLayoutManager(mLayoutManager);
                                     viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewExpensesReport_rv.setAdapter(viewExpensesReportAdapter);
                                     viewExpensesReport_rv.setNestedScrollingEnabled(false);
-
-
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
@@ -343,7 +340,6 @@ public class ViewExpensesReportFragment extends Fragment {
                                         viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
                                         viewExpensesReport_rv.setAdapter(viewExpensesReportAdapter);
                                         viewExpensesReport_rv.setNestedScrollingEnabled(false);
-
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();

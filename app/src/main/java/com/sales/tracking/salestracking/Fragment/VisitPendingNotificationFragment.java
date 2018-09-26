@@ -68,8 +68,6 @@ public class VisitPendingNotificationFragment extends Fragment {
     @BindView(R.id.titleViewSaleCallPending_tv)
     TextView titleViewSaleCallPending_tv;
 
-
-
     @BindView(R.id.followUpDateTimeViewSaleCallPending_tv)
     TextView followUpDateTimeViewSaleCallPending_tv;
 

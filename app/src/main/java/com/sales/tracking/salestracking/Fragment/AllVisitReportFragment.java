@@ -148,9 +148,7 @@ public class AllVisitReportFragment extends Fragment {
         viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
         viewVisitManagerReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
-            //getTargetViewRecyclerView();
-
-            getDefaultVisitReportManagerRecyclerView();
+             getDefaultVisitReportManagerRecyclerView();
             selectAssignTo();
         }
 
@@ -336,7 +334,7 @@ public class AllVisitReportFragment extends Fragment {
                 Map<String, String> map = new HashMap<>();
                 map.put("select", "select");
                 map.put("all", "all");
-                map.put("reporting_to", "17");
+                map.put("reporting_to", userIdPref);
 
                 GSONRequest<VisitReportManagerBean> dashboardGsonRequest = new GSONRequest<VisitReportManagerBean>(
                         Request.Method.POST,

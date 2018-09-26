@@ -300,9 +300,8 @@ public class AddReassignedManagerFragment extends Fragment {
 
     @OnClick(R.id.submitAssignRequestp_btn)
     public void addRequest(){
-        new addReassignedManager().execute();
-      /*
-
+      //  new addReassignedManager().execute();
+        
         if (!selectedTasktype.equals("Task type")) {
             if (selectedTasktype.equals("Sales Call")){
               if (! selectSalesCall.equals("Sale Call Task") ){
@@ -328,7 +327,7 @@ public class AddReassignedManagerFragment extends Fragment {
         }else {
             Toast.makeText(getActivity(), "Please select Task Type", Toast.LENGTH_SHORT).show();
         }
-        */
+
     }
 
     public class addReassignedManager extends AsyncTask<String, JSONObject, JSONObject> {

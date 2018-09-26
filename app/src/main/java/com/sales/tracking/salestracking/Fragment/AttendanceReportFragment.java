@@ -363,7 +363,6 @@ public class AttendanceReportFragment extends Fragment {
     }
 
     private String convertIn12Hours(String time){
-
         String timeToDisplay = "";
         String[] timeArray = time.split(":");
         Integer hours = Integer.parseInt(timeArray[0]);
@@ -373,7 +372,6 @@ public class AttendanceReportFragment extends Fragment {
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }
-
         return timeToDisplay;
     }
 
@@ -422,8 +420,5 @@ public class AttendanceReportFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
     }
-
-    //getAttendanceDefaultData
-
 
 }

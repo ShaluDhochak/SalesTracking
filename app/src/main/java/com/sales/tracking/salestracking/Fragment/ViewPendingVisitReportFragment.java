@@ -140,8 +140,6 @@ public class ViewPendingVisitReportFragment extends Fragment {
         viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
         viewVisitManagerReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
-            //getTargetViewRecyclerView();
-
             getDefaultVisitReportManagerRecyclerView();
             selectAssignTo();
         }
@@ -152,8 +150,6 @@ public class ViewPendingVisitReportFragment extends Fragment {
     public void hideDetail(){
         viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
         viewVisitManagerReport_cv.setVisibility(View.GONE);
-
-
     }
 
     private void selectAssignTo(){
@@ -164,7 +160,6 @@ public class ViewPendingVisitReportFragment extends Fragment {
                 map.put("users_undermanager","" );
                 map.put("user_comid", user_comidPref);
                 map.put("user_reporting_to", userIdPref);
-
 
                 final GSONRequest<TaskMeetingBean> targetAssignToGsonRequest = new GSONRequest<TaskMeetingBean>(
                         Request.Method.POST,
@@ -293,15 +288,12 @@ public class ViewPendingVisitReportFragment extends Fragment {
                                 if (response.getSp_pending_visits().size()>0){
                                     viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
 
-
                                     visitPendingReportAdapter = new VisitPendingReportAdapter(getActivity(),response.getSp_pending_visits(), ViewPendingVisitReportFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewVisitManagerReport_rv.setLayoutManager(mLayoutManager);
                                     viewVisitManagerReport_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewVisitManagerReport_rv.setAdapter(visitPendingReportAdapter);
                                     viewVisitManagerReport_rv.setNestedScrollingEnabled(false);
-
-
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();

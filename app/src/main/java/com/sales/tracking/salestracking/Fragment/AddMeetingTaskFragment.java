@@ -551,7 +551,7 @@ public class AddMeetingTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Meeting Task Created Successfully", Toast.LENGTH_SHORT).show();
-                   // clearAll();
+                    clearAll();
                 }
                 else {
                     makeText(getActivity(), "Already Inserted ", Toast.LENGTH_SHORT).show();
@@ -617,7 +617,7 @@ public class AddMeetingTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Inserted Successfully", Toast.LENGTH_SHORT).show();
-                    // clearAll();
+                     clearAll();
                 }
                 else {
                     makeText(getActivity(), "Already Inserted ", Toast.LENGTH_SHORT).show();
@@ -629,15 +629,17 @@ public class AddMeetingTaskFragment extends Fragment {
     }
 
      private void clearAll() {
-      /*  leadFirstName_EditText.setText("");
-        leademail_EditText.setText("");
-        leadContactNo_EditText.setText("");
-        leadAddress_EditText.setText("");
-        locationSpinner.setSelection(0);
-        leadSourceSpinner.setSelection(0);
-        assignToSpinner.setSelection(0);
-        leadComment_EditText.setText("");
-        */
+
+         tskTypeAddMeetingTask_sp.setSelection(0);
+         assignToAddViewMeetingTask_sp.setSelection(0);
+         clientAddMeetingTask_sp.setSelection(0);
+         dateAddMeetingTask_tv.setText("");
+         timeAddMeetingTask_tv.setText("");
+         purposeAddMeetingTask_sp.setSelection(0);
+         addressAddMeetingTask_et.setText("");
+         contactPersonNameAddMeetingTask_et.setText("");
+         phoneNoAddMeetingTask_et.setText("");
+
     }
 
 

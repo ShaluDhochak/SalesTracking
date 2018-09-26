@@ -368,21 +368,20 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     @OnClick(R.id.editOkButtonVisitTaskMeetingDetail_tv)
     public void okEditBtn(){
 
-        /*
-              visit_address = addressEditViewMeetingTask_et.getText().toString();
+       if(!selectclientName.equals("Client Name")){
+           if(!selectAssignTo.equals("Assign To")){
+               if(!selectPurpose.equals("Purpose")){
+                   new CreateEditMeetingTask().execute();
+               }else{
+                   Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
+               }
+           }else{
+               Toast.makeText(getActivity(), "Please Select Assign To", Toast.LENGTH_SHORT).show();
+           }
+       }else{
+           Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
+       }
 
-            visit_date = dateEditViewMeetingTask_tv.getText().toString();
-            //visit_time = timeAddMeetingTask_tv.getText().toString();
-            visit_time = timeEditViewValueMeetingTaskDetail_et.getText().toString();
-            visit_uid = selectAssignToId;
-            visit_assignedby = userIdPref;
-            visit_leadid = selectClientNameId;
-            visit_purposeid= selectPurposeId;
-            visit_id = currentVisitIdEdit;
-         */
-
-        new CreateEditMeetingTask().execute();
-        //{"success":1,"message":"Meeting Task Created Successfully"}
     }
 
     private void selectAssignTo(){
@@ -532,7 +531,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
         purposesNameCompany = new ArrayList<String>();
         purposesNameCompany.clear();
-        purposesNameCompany.add("Purposes");
+        purposesNameCompany.add("Purpose");
         ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
         quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         purposeEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
@@ -563,19 +562,20 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         statusEditViewMeetingTask_sp.setAdapter(statusAdapter);
 
-        statusEditViewMeetingTask_sp .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                selectStatus = (String) parent.getItemAtPosition(position);
-                selectStatusId = String.valueOf(position);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
     }
+
+    @OnItemSelected(R.id.statusEditViewMeetingTask_sp)
+    public void statusSelected(Spinner spinner, int position) {
+        selectStatus = spinner.getSelectedItem().toString();
+        if (selectStatus.equals("Status")) {
+            selectStatusId = "";
+        }else if (selectStatus.equals("Pending")){
+            selectStatusId = selectStatus;
+        }else if (selectStatus.equals("Done")){
+            selectStatusId = selectStatus;
+        }
+    }
+
 
     public class CreateEditMeetingTask extends AsyncTask<String, JSONObject, JSONObject> {
         String visit_leadid, visit_purposeid, visit_assignedby, visit_time,visit_date;

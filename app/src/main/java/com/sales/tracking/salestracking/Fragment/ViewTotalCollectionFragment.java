@@ -345,9 +345,7 @@ public class ViewTotalCollectionFragment extends Fragment {
 
     public void showCollectionDetails(CollectionListBean.Collections bean){
 
-
         if (userTypePref.equals("Sales Manager")) {
-           // getTodaysTaskRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.GONE);
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.VISIBLE);
@@ -358,9 +356,6 @@ public class ViewTotalCollectionFragment extends Fragment {
         }else if (userTypePref.equals("Sales Executive")){
 
         }
-
-
-
     }
 
 

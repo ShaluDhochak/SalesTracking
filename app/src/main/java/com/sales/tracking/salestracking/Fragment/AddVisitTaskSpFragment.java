@@ -301,9 +301,7 @@ public class AddVisitTaskSpFragment extends Fragment {
             visit_address = addressAddVisitTaskSp_et.getText().toString();
             visit_date = dateAddVisitTaskSp_tv.getText().toString();
             visit_time = timeAddVisitTaskSp_tv.getText().toString();
-        //    visit_uid = selectAssignToId;
-            //   visit_assignedby = userIdPref;
-            visit_leadid = selectClientNameId;
+             visit_leadid = selectClientNameId;
             visit_purposeid= selectPurposeId;
 
             pDialog = new ProgressDialog(getActivity());
@@ -368,7 +366,5 @@ public class AddVisitTaskSpFragment extends Fragment {
         clientAddVisitTaskSp_sp.setSelection(0);
         purposeAddVisitTaskSp_sp.setSelection(0);
     }
-
-
 
 }

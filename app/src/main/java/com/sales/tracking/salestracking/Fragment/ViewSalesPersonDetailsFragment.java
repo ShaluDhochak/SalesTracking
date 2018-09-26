@@ -263,10 +263,8 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
         viewSalesPersonHeader_rl.setVisibility(View.VISIBLE);
         viewSalesPersonDetails_cv.setVisibility(View.GONE);
 
-
         client_id = bean.getUser_id().toString();
         new deleteClient().execute();
-
     }
 
     public class deleteClient extends AsyncTask<String, JSONObject, JSONObject> {
@@ -353,13 +351,10 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("user_id", user_id));
             params.add(new BasicNameValuePair("edit", "edit"));
-
             params.add(new BasicNameValuePair("filter[user_name]", user_name));
             params.add(new BasicNameValuePair("filter[user_email]", user_email));
-
             params.add(new BasicNameValuePair("filter[user_mobile]", user_mobile));
             params.add(new BasicNameValuePair("filter[user_status]", user_status));
-
             params.add(new BasicNameValuePair("filter[user_doj]", user_doj));
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_SALES_PERSON;

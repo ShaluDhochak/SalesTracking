@@ -179,7 +179,7 @@ public class AddTotalExpensesFragment extends Fragment {
             filetoUpload  = getBase64(bitmap);
             expense_amt =amountAddExpensesSp_et.getText().toString();
             expense_cat = selectedCategoryId;
-            expense_compid = "1";
+            expense_compid = userCompIdPref;
             expense_details = detailsAddExpensesSp_et.getText().toString();
             add_exp = "";
             expense_mode = selectModeId;
