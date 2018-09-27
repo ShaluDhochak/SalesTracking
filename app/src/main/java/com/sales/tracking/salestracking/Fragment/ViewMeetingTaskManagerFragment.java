@@ -45,6 +45,7 @@ import com.sales.tracking.salestracking.Utility.Connectivity;
 import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.JSONParser;
 import com.sales.tracking.salestracking.Utility.Utilities;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -80,7 +81,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     //View details
     @BindView(R.id.viewMeetingTaskeDetails_cv)    //cardView for View
-    CardView viewMeetingTaskeDetails_cv;
+            CardView viewMeetingTaskeDetails_cv;
 
     @BindView(R.id.timeValueMeetingTaskDetail_tv)
     TextView timeValueMeetingTaskDetail_tv;
@@ -111,10 +112,10 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     //Edit Detail
     @BindView(R.id.editViewMeetingTaskeDetails_cv)  //cardview for edit text
-    CardView editViewMeetingTaskeDetails_cv;
+            CardView editViewMeetingTaskeDetails_cv;
 
     @BindView(R.id.editOkButtonVisitTaskMeetingDetail_tv)   //submit button
-    TextView editOkButtonVisitTaskMeetingDetail_tv;
+            TextView editOkButtonVisitTaskMeetingDetail_tv;
 
     @BindView(R.id.clientNameEditMeetingTask_sp)
     Spinner clientNameEditMeetingTask_sp;
@@ -139,6 +140,9 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     @BindView(R.id.timeEditViewValueMeetingTaskDetail_et)
     TextView timeEditViewValueMeetingTaskDetail_et;
+
+    @BindView(R.id.photoViewMeetingTask_iv)
+    ImageView photoViewMeetingTask_iv;
 
     String selectStatus, selectStatusId, selectPurpose, selectPurposeId, selectclientName, selectClientNameId, selectAssignTo, selectAssignToId;
     String currentuserName, currentVisitIdEdit, currentPurposeName;
@@ -182,7 +186,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         getVisitTaskMeetingRecyclerView();
     }
 
-    private void initialiseUI(){
+    private void initialiseUI() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
@@ -196,7 +200,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
     }
 
-    private void getVisitTaskMeetingRecyclerView(){
+    private void getVisitTaskMeetingRecyclerView() {
         if (Connectivity.isConnected(getActivity())) {
 
             String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
@@ -212,20 +216,20 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                     new com.android.volley.Response.Listener<TaskMeetingBean>() {
                         @Override
                         public void onResponse(TaskMeetingBean response) {
-                            try{
-                                if (response.getAll_meetings_mgr().size()>0){
+                            try {
+                                if (response.getAll_meetings_mgr().size() > 0) {
                                     // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
                                     spAttendanceList.clear();
                                     spAttendanceList.addAll(response.getAll_meetings_mgr());
 
-                                    visitTaskMeetingAdapter = new VisitTaskMeetingAdapter(getActivity(),response.getAll_meetings_mgr(), ViewMeetingTaskManagerFragment.this);
+                                    visitTaskMeetingAdapter = new VisitTaskMeetingAdapter(getActivity(), response.getAll_meetings_mgr(), ViewMeetingTaskManagerFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewMeetingTaskManager_rv.setLayoutManager(mLayoutManager);
                                     viewMeetingTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewMeetingTaskManager_rv.setAdapter(visitTaskMeetingAdapter);
 
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
@@ -242,7 +246,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     }
 
     @OnClick(R.id.minusVisitTaskMeetingDetail_iv)
-    public void hideDetails(){
+    public void hideDetails() {
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
@@ -252,13 +256,13 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    public void getViewMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean){
+    public void getViewMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean) {
         viewMeetingTaskeDetails_cv.setVisibility(View.VISIBLE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.GONE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
 
         String indate = bean.getVisit_datetime();
-        String[] indate1 = indate.split( " ");
+        String[] indate1 = indate.split(" ");
 
         dateViewMeetingTask_tv.setText(indate1[0]);
         timeValueMeetingTaskDetail_tv.setText(indate1[1]);
@@ -270,10 +274,14 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         addressViewMeetingTask_tv.setText(bean.getVisit_address());
         statusViewMeetingTask_tv.setText(bean.getVisit_status());
 
-
+        if (!bean.getVisit_photo().equals("")) {
+            Picasso.get().load(ApiLink.IMAGE_BASE_URL + bean.getVisit_photo()).into(photoViewMeetingTask_iv);
+        } else {
+            photoViewMeetingTask_iv.setImageDrawable(getResources().getDrawable(R.drawable.default_img));
+        }
     }
 
-    public void getDeleteMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean){
+    public void getDeleteMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean) {
 
         currentVisitIdEdit = bean.getVisit_id().toString();
         new CreateDeleteMeetingTask().execute();
@@ -283,13 +291,13 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
 
-       // if (userTypePref.equals("Sales Manager")) {
-       //     getVisitTaskMeetingRecyclerView();
-       // }
+        // if (userTypePref.equals("Sales Manager")) {
+        //     getVisitTaskMeetingRecyclerView();
+        // }
     }
 
     @OnClick(R.id.minusEditViewVisitTaskMeetingDetail_iv)
-    public void hideEditDetails(){
+    public void hideEditDetails() {
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
@@ -300,7 +308,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     }
 
     @OnClick(R.id.editEditViewVisitTaskMeetingDetail_iv)
-    public void showEditDetails(){
+    public void showEditDetails() {
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
@@ -310,7 +318,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    public void getEditViewMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean){
+    public void getEditViewMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean) {
 
         currentuserName = bean.getUser_name().toString();
         currentVisitIdEdit = bean.getVisit_id().toString();
@@ -324,7 +332,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         editViewMeetingTaskeDetails_cv.setVisibility(View.VISIBLE);
 
         String indate = bean.getVisit_datetime();
-        String[] indate1 = indate.split( " ");
+        String[] indate1 = indate.split(" ");
 
         dateEditViewMeetingTask_tv.setText(indate1[0]);
         timeEditViewValueMeetingTaskDetail_et.setText(indate1[1]);
@@ -333,7 +341,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     }
 
     @OnClick(R.id.dateEditViewMeetingTask_tv)
-    public void selectDate(){
+    public void selectDate() {
         final Calendar calenderObj = Calendar.getInstance();
         int mYear = calenderObj.get(Calendar.YEAR);
         int mMonth = calenderObj.get(Calendar.MONTH);
@@ -344,14 +352,14 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        dateEditViewMeetingTask_tv.setText(year + "-" + (monthOfYear + 1)+ "-" + dayOfMonth);
+                        dateEditViewMeetingTask_tv.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
 
     @OnClick(R.id.timeEditViewValueMeetingTaskDetail_et)
-    public void selectTime(){
+    public void selectTime() {
         final String time;
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -361,74 +369,73 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeEditViewValueMeetingTaskDetail_et.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
+                timeEditViewValueMeetingTaskDetail_et.setText(selectedHour % 12 + ":" + selectedMinute + ((selectedHour >= 12) ? " PM" : " AM"));
             }
         }, hour, minute, true);//Yes 24 hour time
         timePickerDialog.show();
     }
 
     @OnClick(R.id.editOkButtonVisitTaskMeetingDetail_tv)
-    public void okEditBtn(){
+    public void okEditBtn() {
 
-       if(!selectclientName.equals("Client Name")){
-           if(!selectAssignTo.equals("Assign To")){
-               if(!selectPurpose.equals("Purpose")){
-                   new CreateEditMeetingTask().execute();
-               }else{
-                   Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
-               }
-           }else{
-               Toast.makeText(getActivity(), "Please Select Assign To", Toast.LENGTH_SHORT).show();
-           }
-       }else{
-           Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
-       }
-
-    }
-
-    private void selectAssignTo(){
-        try{
-        if (Connectivity.isConnected(getActivity())) {
-            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
-            Map<String, String> map = new HashMap<>();
-            map.put("users","" );
-            map.put("user_comid", user_comidPref);
-
-            final GSONRequest<TaskMeetingBean> locationSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
-                    Request.Method.POST,
-                    Url,
-                    TaskMeetingBean.class,map,
-                    new com.android.volley.Response.Listener<TaskMeetingBean>() {
-                        @Override
-                        public void onResponse(TaskMeetingBean response) {
-                            assignToUser.clear();
-                            assignToUser.add("Assign To");
-                            for(int i=0;i<response.getUsers_dd().size();i++)
-                            {
-                                assignToUser.add(response.getUsers_dd().get(i).getUser_name());
-                                assignToUserMap.put(response.getUsers_dd().get(i).getUser_id(), response.getUsers_dd().get(i).getUser_name());
-                            }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Utilities.serverError(getActivity());
-                        }
-                    });
-            locationSpinnerGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(locationSpinnerGsonRequest);
+        if (!selectclientName.equals("Client Name")) {
+            if (!selectAssignTo.equals("Assign To")) {
+                if (!selectPurpose.equals("Purpose")) {
+                    new CreateEditMeetingTask().execute();
+                } else {
+                    Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Please Select Assign To", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
         }
-        assignToUser = new ArrayList<String>();
-        assignToUser.clear();
-        assignToUser.add("Assign To");
-        ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
-        quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        assignToEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
-
-    }catch (Exception e){
 
     }
+
+    private void selectAssignTo() {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("users", "");
+                map.put("user_comid", user_comidPref);
+
+                final GSONRequest<TaskMeetingBean> locationSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class, map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                assignToUser.clear();
+                                assignToUser.add("Assign To");
+                                for (int i = 0; i < response.getUsers_dd().size(); i++) {
+                                    assignToUser.add(response.getUsers_dd().get(i).getUser_name());
+                                    assignToUserMap.put(response.getUsers_dd().get(i).getUser_id(), response.getUsers_dd().get(i).getUser_name());
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Utilities.serverError(getActivity());
+                            }
+                        });
+                locationSpinnerGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(locationSpinnerGsonRequest);
+            }
+            assignToUser = new ArrayList<String>();
+            assignToUser.clear();
+            assignToUser.add("Assign To");
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
+            quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            assignToEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
+
+        } catch (Exception e) {
+
+        }
     }
 
     @OnItemSelected(R.id.assignToEditViewMeetingTask_sp)
@@ -443,7 +450,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    private void selectClientName(){
+    private void selectClientName() {
         try {
             if (Connectivity.isConnected(getActivity())) {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
@@ -482,7 +489,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             clientNameEditMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -499,47 +506,46 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    private void selectPurpose(){
-        try{
-        if (Connectivity.isConnected(getActivity())) {
-            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
-            Map<String, String> map = new HashMap<>();
-            map.put("purposes", "");
+    private void selectPurpose() {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("purposes", "");
 
-            final GSONRequest<PurposeBean> clientSpinnerGsonRequest = new GSONRequest<PurposeBean>(
-                    Request.Method.POST,
-                    Url,
-                    PurposeBean.class,map,
-                    new com.android.volley.Response.Listener<PurposeBean>() {
-                        @Override
-                        public void onResponse(PurposeBean response) {
-                            purposesNameCompany.clear();
-                            purposesNameCompany.add("Purpose");
-                            for(int i=0;i<response.getPurpose_dd().size();i++)
-                            {
-                                purposesNameCompany.add(response.getPurpose_dd().get(i).getPurpose_name());
-                                purposeNameMap.put(response.getPurpose_dd().get(i).getPurpose_id(), response.getPurpose_dd().get(i).getPurpose_name());
+                final GSONRequest<PurposeBean> clientSpinnerGsonRequest = new GSONRequest<PurposeBean>(
+                        Request.Method.POST,
+                        Url,
+                        PurposeBean.class, map,
+                        new com.android.volley.Response.Listener<PurposeBean>() {
+                            @Override
+                            public void onResponse(PurposeBean response) {
+                                purposesNameCompany.clear();
+                                purposesNameCompany.add("Purpose");
+                                for (int i = 0; i < response.getPurpose_dd().size(); i++) {
+                                    purposesNameCompany.add(response.getPurpose_dd().get(i).getPurpose_name());
+                                    purposeNameMap.put(response.getPurpose_dd().get(i).getPurpose_id(), response.getPurpose_dd().get(i).getPurpose_name());
+                                }
                             }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Utilities.serverError(getActivity());
-                        }
-                    });
-            clientSpinnerGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(clientSpinnerGsonRequest);
-        }
-        purposesNameCompany = new ArrayList<String>();
-        purposesNameCompany.clear();
-        purposesNameCompany.add("Purpose");
-        ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
-        quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        purposeEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Utilities.serverError(getActivity());
+                            }
+                        });
+                clientSpinnerGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(clientSpinnerGsonRequest);
+            }
+            purposesNameCompany = new ArrayList<String>();
+            purposesNameCompany.clear();
+            purposesNameCompany.add("Purpose");
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
+            quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            purposeEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
-    }catch (Exception e){
-    }
+        } catch (Exception e) {
+        }
     }
 
     @OnItemSelected(R.id.purposeEditViewMeetingTask_sp)
@@ -554,13 +560,13 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    private void selectStatus(){
+    private void selectStatus() {
         List<String> statusSpinner = new ArrayList<String>();
         statusSpinner.add("Status");
         statusSpinner.add("Pending");
         statusSpinner.add("Done");
 
-        ArrayAdapter<String> statusAdapter= new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         statusEditViewMeetingTask_sp.setAdapter(statusAdapter);
 
@@ -571,17 +577,18 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         selectStatus = spinner.getSelectedItem().toString();
         if (selectStatus.equals("Status")) {
             selectStatusId = "";
-        }else if (selectStatus.equals("Pending")){
+        } else if (selectStatus.equals("Pending")) {
             selectStatusId = selectStatus;
-        }else if (selectStatus.equals("Done")){
+        } else if (selectStatus.equals("Done")) {
             selectStatusId = selectStatus;
         }
     }
 
 
     public class CreateEditMeetingTask extends AsyncTask<String, JSONObject, JSONObject> {
-        String visit_leadid, visit_purposeid, visit_assignedby, visit_time,visit_date;
+        String visit_leadid, visit_purposeid, visit_assignedby, visit_time, visit_date;
         String visit_uid, visit_address, visit_id;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -593,7 +600,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             visit_uid = selectAssignToId;
             visit_assignedby = userIdPref;
             visit_leadid = selectClientNameId;
-            visit_purposeid= selectPurposeId;
+            visit_purposeid = selectPurposeId;
             visit_id = currentVisitIdEdit;
 
             pDialog = new ProgressDialog(getActivity());
@@ -624,8 +631,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Meeting Task Updated Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -638,10 +644,9 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Meeting Task Updated Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(getActivity(), "Meeting Task Updated Successfully", Toast.LENGTH_SHORT).show();
                     // clearAll();
-                }
-                else {
+                } else {
                     makeText(getActivity(), "Oops! An error occured", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -650,8 +655,9 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    public class CreateDeleteMeetingTask extends AsyncTask<String, JSONObject, JSONObject>{
-        String  visit_id;
+    public class CreateDeleteMeetingTask extends AsyncTask<String, JSONObject, JSONObject> {
+        String visit_id;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -680,8 +686,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Meeting Task Deleted Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -694,11 +699,10 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Meeting Task Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(getActivity(), "Meeting Task Deleted Successfully", Toast.LENGTH_SHORT).show();
                     getVisitTaskMeetingRecyclerView();
                     // clearAll();
-                }
-                else {
+                } else {
                     makeText(getActivity(), "Oops! An error occured", Toast.LENGTH_SHORT).show();
                     return;
                 }

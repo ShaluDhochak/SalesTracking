@@ -111,7 +111,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     Handler handler = new Handler();
 
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 900000;
 
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
@@ -146,7 +146,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
         session = new SessionManagement(getApplicationContext());
 
-        locationTracking();
+        if (userTypePref.equals("Sales Executive")) {
+            locationTracking();
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -1229,15 +1231,19 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        if (userTypePref.equals("Sales Executive")) {
+            mGoogleApiClient.connect();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        isPlayServicesAvailable(this);
-        startUpdatesHandler();
+        if (userTypePref.equals("Sales Executive")) {
+            isPlayServicesAvailable(this);
+            startUpdatesHandler();
+        }
     }
 
     @Override
@@ -1395,8 +1401,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        mGoogleApiClient.disconnect();
+        if (userTypePref.equals("Sales Executive")) {
+            mGoogleApiClient.disconnect();
+        }
 
     }
 }

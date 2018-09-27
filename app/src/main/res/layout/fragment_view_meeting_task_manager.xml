@@ -439,13 +439,14 @@
 
                         <ImageView
                             android:id="@+id/photoViewMeetingTask_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_below="@+id/photoViewMeetingTaskHeading_tv"
                             android:src="@drawable/default_img"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
+                            android:scaleType="fitXY"
                             />
 
                     </RelativeLayout>
@@ -874,56 +875,11 @@
                     </RelativeLayout>
 
                     <View
-                        android:id="@+id/separatorBelowDescriptionEditViewMeetingTask"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/textcolor"
-                        android:layout_below="@+id/descriptionEditViewMeetingTask_rl"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:visibility="visible"
-                        />
-
-                    <RelativeLayout
-                        android:id="@+id/photoEditViewMeetingTask_rl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/separatorBelowDescriptionEditViewMeetingTask"
-                        android:layout_weight="4.5"
-                        >
-
-                        <TextView
-                            android:id="@+id/photoEditViewMeetingTaskHeading_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Photo"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
-                            android:textSize="12dp"
-                            android:textColor="@color/textcolor"
-                            />
-
-                        <ImageView
-                            android:id="@+id/photoEditViewMeetingTask_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/photoEditViewMeetingTaskHeading_tv"
-                            android:src="@drawable/default_img"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="10dp"
-                            />
-
-                    </RelativeLayout>
-
-                    <View
                         android:id="@+id/separatorBelowPhotoEditViewMeetingTask"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/textcolor"
-                        android:layout_below="@+id/photoEditViewMeetingTask_rl"
+                        android:layout_below="@+id/descriptionEditViewMeetingTask_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:visibility="gone"
