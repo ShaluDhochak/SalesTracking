@@ -119,7 +119,6 @@ public class ViewDoneVisitReportFragment extends Fragment {
 
     VisitDoneManagerReportAdapter visitDoneManagerReportAdapter;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,8 +142,6 @@ public class ViewDoneVisitReportFragment extends Fragment {
         viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
         viewVisitManagerReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
-            //getTargetViewRecyclerView();
-
             getDefaultVisitDoneReportManagerRecyclerView();
             selectAssignTo();
         }
@@ -296,7 +293,6 @@ public class ViewDoneVisitReportFragment extends Fragment {
                                 if (response.getSp_done_visits().size()>0){
                                     viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
 
-
                                     visitDoneManagerReportAdapter = new VisitDoneManagerReportAdapter(getActivity(),response.getSp_done_visits(), ViewDoneVisitReportFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewVisitManagerReport_rv.setLayoutManager(mLayoutManager);
@@ -304,11 +300,10 @@ public class ViewDoneVisitReportFragment extends Fragment {
                                     viewVisitManagerReport_rv.setAdapter(visitDoneManagerReportAdapter);
                                     viewVisitManagerReport_rv.setNestedScrollingEnabled(false);
 
-
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -331,7 +326,7 @@ public class ViewDoneVisitReportFragment extends Fragment {
                 Map<String, String> map = new HashMap<>();
                 map.put("select_done", "");
                 map.put("all", "");
-                map.put("reporting_to", "17");
+                map.put("reporting_to", userIdPref);
 
                 GSONRequest<VisitDoneReportManagerBean> dashboardGsonRequest = new GSONRequest<VisitDoneReportManagerBean>(
                         Request.Method.POST,
@@ -354,7 +349,7 @@ public class ViewDoneVisitReportFragment extends Fragment {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                //    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },

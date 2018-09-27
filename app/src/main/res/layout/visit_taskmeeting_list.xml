@@ -97,20 +97,22 @@
                 android:gravity="right|center_vertical"
 
                 >
-                <ImageView
-                    android:id="@+id/deleteVisitTaskMeeting_iv"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/delete"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/editVisitTaskMeeting_iv"
-                    />
+
 
                 <ImageView
                     android:id="@+id/editVisitTaskMeeting_iv"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/edit"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/deleteVisitTaskMeeting_iv"
+                    />
+
+                <ImageView
+                    android:id="@+id/deleteVisitTaskMeeting_iv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/delete"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/plusVisitTaskMeeting_iv"
                     />

@@ -91,6 +91,7 @@ public class ViewRequestNotificationFragment extends Fragment {
     @BindView(R.id.viewAllRequestNotification_tv)
             TextView viewAllRequestNotification_tv;
 
+
    View view;
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, expenses_id, deleteExpenses_id;
@@ -128,27 +129,26 @@ public class ViewRequestNotificationFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
 
         viewRequestNotificationViewAll_cv.setVisibility(View.VISIBLE);
-        //   getExpensesRecyclerView();
         if (userTypePref.equals("Sales Manager")) {
-          //  getViewRequest();
             getViewcOUNTRequest();
             getViewRequestCountDetails();
             viewRequestNotificationRecycler_rl.setVisibility(View.VISIBLE);// for request visit date request by
-
         }
         viewRequestNotificationDetails_cv.setVisibility(View.GONE);
+        viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
         viewRequestNotificationHeader_rl.setVisibility(View.GONE);
 
+       if (!titleViewRequestNotificationCount_tv.getText().toString().equals("0")){
+           viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
+       }
     }
 
 
 
 
     public void getViewRequestNotificationData(VieqRequestReassignedBean.Mgr_sp_requests bean) {
-
         viewRequestNotificationDetails_cv.setVisibility(View.VISIBLE);
         viewRequestNotificationHeader_rl.setVisibility(View.GONE);
-
 
         statusViewRequestNotification_tv.setText(bean.getRequest_status());
         commentViewRequestNotification_tv.setText(bean.getRequest_comments());
@@ -156,7 +156,6 @@ public class ViewRequestNotificationFragment extends Fragment {
         typeViewRequestNotification_tv.setText(bean.getRequest_type());
         dateViewRequestNotification_tv.setText(bean.getRequest_dt());
         requestedByViewRequestNotification_tv.setText(bean.getUser_name());
-
 
     }
 
@@ -257,13 +256,10 @@ public class ViewRequestNotificationFragment extends Fragment {
                         public void onResponse(RequestCountBean response) {
                             try {
                                 if (response.getRequest_count().size() > 0) {
-
                                     titleViewRequestNotificationCount_tv.setText(response.getRequest_count().get(0).getTot_requests().toString());
-
                                 }
                             } catch (Exception e) {
-                                // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
-                            }
+                              }
                         }
                     },
                     new com.android.volley.Response.ErrorListener() {
@@ -286,7 +282,6 @@ public class ViewRequestNotificationFragment extends Fragment {
 
         viewRequestNotificationHeader_rl.setVisibility(View.VISIBLE);
         viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
-
     }
 
     @OnClick(R.id.viewAllRequestNotification_tv)
@@ -295,13 +290,9 @@ public class ViewRequestNotificationFragment extends Fragment {
             getViewRequest();
 
             viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
-
-
             viewRequestNotificationHeader_rl.setVisibility(View.VISIBLE);
             viewRequestNotificationDetails_cv.setVisibility(View.GONE);
         }
     }
-
-
 
 }

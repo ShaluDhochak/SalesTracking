@@ -72,8 +72,6 @@ public class CallsPendingNotificationFragment extends Fragment {
     @BindView(R.id.titleViewSaleCallPending_tv)
     TextView titleViewSaleCallPending_tv;
 
-
-
     @BindView(R.id.followUpDateTimeViewSaleCallPending_tv)
     TextView followUpDateTimeViewSaleCallPending_tv;
 
@@ -163,14 +161,12 @@ public class CallsPendingNotificationFragment extends Fragment {
         viewSaleCallPendingDetails_cv.setVisibility(View.GONE);
         salesCallPendingHeader_rl.setVisibility(View.VISIBLE);
 
-
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
 
         if (userTypePref.equals("Sales Manager")) {
-            //  getVisitTaskMeetingRecyclerView();
             assignByViewSaleCallPendingHeading_tv.setText("Assigned To");
         }else if (userTypePref.equals("Sales Executive")){
             assignByViewSaleCallPendingHeading_tv.setText("Assigned By");
@@ -200,7 +196,6 @@ public class CallsPendingNotificationFragment extends Fragment {
                                 if (response.getSp_all_service_calls().size()>0){
                                     for (int i = 0; i<response.getSp_all_service_calls().size(); i++) {
                                         if (response.getSp_all_service_calls().get(i).getService_status().equals("Pending")) {
-                                            // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
                                             spAttendanceList.clear();
                                             spAttendanceList.addAll(response.getSp_all_service_calls());
 
@@ -271,7 +266,6 @@ public class CallsPendingNotificationFragment extends Fragment {
         salesCallPendingHeader_rl.setVisibility(View.VISIBLE);
         saleCallPending_rl.setVisibility(View.GONE);
 
-
         if (userTypePref.equals("Sales Executive")) {
             getviewVisitTaskSpRecyclerView();
         }
@@ -283,12 +277,11 @@ public class CallsPendingNotificationFragment extends Fragment {
         viewSaleCallPendingDetails_cv.setVisibility(View.GONE);
         salesCallPendingHeader_rl.setVisibility(View.GONE);
 
-
         String date = bean.getService_createddt();
         String[] date1 = date.split(" ");
         dateViewSaleCallTask_tv.setText(date1[0]);
         cnameValueSaleCallTaskDetail_tv.setText(bean.getLead_company());
-        //   dateViewSaleCallTask_tv.setText(bean.getService_createddt());
+
         contactNameSaleCallTask_tv.setText(bean.getService_person());
         phoneSaleCallTask_tv.setText(bean.getService_contactno());
         assignToByViewSaleCallTaskHeading_tv.setText("Assign By");
@@ -296,25 +289,7 @@ public class CallsPendingNotificationFragment extends Fragment {
         commentsViewSaleCallTask_tv.setText(bean.getService_comments());
         statusViewSaleCallTask_tv.setText(bean.getService_status());
 
-
     }
-
-    private String convertIn12Hours(String time){
-
-        String timeToDisplay = "";
-        String[] timeArray = time.split(":");
-        Integer hours = Integer.parseInt(timeArray[0]);
-
-        if(hours > 12){
-            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
-        }else{
-            timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
-        }
-
-        return timeToDisplay;
-    }
-
-
 
 
 }

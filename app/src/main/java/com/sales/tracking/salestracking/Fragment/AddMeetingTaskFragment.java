@@ -2,6 +2,7 @@ package com.sales.tracking.salestracking.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,6 +41,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -137,6 +140,7 @@ public class AddMeetingTaskFragment extends Fragment {
     Map<String, String> assignToUserMap = new HashMap<>();
 
     DatePickerDialog datePickerDialog;
+    TimePickerDialog timePickerDialog;
     ProgressDialog pDialog;
 
     SharedPreferences sharedPref;
@@ -193,19 +197,79 @@ public class AddMeetingTaskFragment extends Fragment {
 
     @OnClick(R.id.timeAddMeetingTask_tv)
     public void selectTime(){
+        final String time;
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss a");
+        time = simpleDateFormat.format(mcurrentTime.getTime());
+        timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                timeAddMeetingTask_tv.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
 
+                //     timeAddVisitTaskSp_tv.setText(time);
+            }
+        }, hour, minute, true);//Yes 24 hour time
+        timePickerDialog.show();
     }
+
+
 
     @OnClick(R.id.submitAddMeetingTask_btn)
     public void submitAddMeetingTaskBtn(){
-        new CreateNewMeetingTask().execute();
+
+        if (!selectAssignTo.equals("Assign To")){
+            if (!selectclientName.equals("Client Name")){
+                if(dateAddMeetingTask_tv.getText().length()>0){
+                    if (timeAddMeetingTask_tv.getText().length()>0){
+                        if (selectPurpose.equals("Purpose")){
+                            if (addressAddMeetingTask_et.getText().length()>0){
+                                new CreateNewMeetingTask().execute();
+                            }else{
+                                Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(getActivity(), "Please Select Time First", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Please Select Date First", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity(), "Please Select Task Assign To", Toast.LENGTH_SHORT).show();
+        }
 
         //{"success":1,"message":"Meeting Task Created Successfully"}
     }
 
     @OnClick(R.id.submitAddSalesCallTask_btn)
     public void setSubmitAddSalesCallTask_btn(){
-       new CreateNewSalesCallTask().execute();
+
+        if (!selectAssignTo.equals("Assign To")){
+            if (!selectclientName.equals("Client Name")){
+                if (contactPersonNameAddMeetingTask_et.getText().length()>0) {
+                    if (phoneNoAddMeetingTask_et.getText().length()>0){
+
+                        new CreateNewSalesCallTask().execute();
+                    }else{
+                        Toast.makeText(getActivity(), "Please Enter Phone No", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Please enter Contact Person", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity(), "Please Select Task Assign To", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void selectAssignTo(){
@@ -244,7 +308,7 @@ public class AddMeetingTaskFragment extends Fragment {
             assignToUser = new ArrayList<String>();
             assignToUser.clear();
             assignToUser.add("Assign To");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, assignToUser);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             assignToAddViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -299,7 +363,7 @@ public class AddMeetingTaskFragment extends Fragment {
             clientNameCompany = new ArrayList<String>();
             clientNameCompany.clear();
             clientNameCompany.add("Client Name");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, clientNameCompany);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, clientNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             clientAddMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -355,7 +419,7 @@ public class AddMeetingTaskFragment extends Fragment {
             purposesNameCompany = new ArrayList<String>();
             purposesNameCompany.clear();
             purposesNameCompany.add("Purposes");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, purposesNameCompany);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             purposeAddMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -382,7 +446,7 @@ public class AddMeetingTaskFragment extends Fragment {
             taskTypeSpinner.add("Meeting");
             taskTypeSpinner.add("Sales Call");
 
-            ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, taskTypeSpinner);
+            ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, taskTypeSpinner);
             statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             tskTypeAddMeetingTask_sp.setAdapter(statusAdapter);
     }
@@ -426,8 +490,6 @@ public class AddMeetingTaskFragment extends Fragment {
                 separatorBelowDateAddMeetingTask.setVisibility(GONE);
 
             }
-
-
     }
 
     public class CreateNewMeetingTask extends AsyncTask<String, JSONObject, JSONObject> {
@@ -439,8 +501,7 @@ public class AddMeetingTaskFragment extends Fragment {
             visit_address = addressAddMeetingTask_et.getText().toString();
 
             visit_date = dateAddMeetingTask_tv.getText().toString();
-            //visit_time = timeAddMeetingTask_tv.getText().toString();
-            visit_time = "20:00:00";
+            visit_time = timeAddMeetingTask_tv.getText().toString();
             visit_uid = selectAssignToId;
             visit_assignedby = userIdPref;
             visit_leadid = selectClientNameId;
@@ -490,7 +551,7 @@ public class AddMeetingTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Meeting Task Created Successfully", Toast.LENGTH_SHORT).show();
-                   // clearAll();
+                    clearAll();
                 }
                 else {
                     makeText(getActivity(), "Already Inserted ", Toast.LENGTH_SHORT).show();
@@ -556,7 +617,7 @@ public class AddMeetingTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Inserted Successfully", Toast.LENGTH_SHORT).show();
-                    // clearAll();
+                     clearAll();
                 }
                 else {
                     makeText(getActivity(), "Already Inserted ", Toast.LENGTH_SHORT).show();
@@ -568,15 +629,17 @@ public class AddMeetingTaskFragment extends Fragment {
     }
 
      private void clearAll() {
-      /*  leadFirstName_EditText.setText("");
-        leademail_EditText.setText("");
-        leadContactNo_EditText.setText("");
-        leadAddress_EditText.setText("");
-        locationSpinner.setSelection(0);
-        leadSourceSpinner.setSelection(0);
-        assignToSpinner.setSelection(0);
-        leadComment_EditText.setText("");
-        */
+
+         tskTypeAddMeetingTask_sp.setSelection(0);
+         assignToAddViewMeetingTask_sp.setSelection(0);
+         clientAddMeetingTask_sp.setSelection(0);
+         dateAddMeetingTask_tv.setText("");
+         timeAddMeetingTask_tv.setText("");
+         purposeAddMeetingTask_sp.setSelection(0);
+         addressAddMeetingTask_et.setText("");
+         contactPersonNameAddMeetingTask_et.setText("");
+         phoneNoAddMeetingTask_et.setText("");
+
     }
 
 

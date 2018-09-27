@@ -38,8 +38,7 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
     ImageView drawerIcon_iv;
 
     private GoogleMap mMap;
-    //private MarkerOptions options = new MarkerOptions();
-    //private ArrayList<LatLng> latLngs = new ArrayList<>();
+
     List<Marker> markersList = new ArrayList<>();
     List<String> latposition= new ArrayList<>();
 

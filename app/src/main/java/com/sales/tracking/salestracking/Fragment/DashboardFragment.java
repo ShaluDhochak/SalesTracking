@@ -258,7 +258,7 @@ public class DashboardFragment extends Fragment {
 
                                 }
                             }catch(Exception e){
-                           //     Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     },

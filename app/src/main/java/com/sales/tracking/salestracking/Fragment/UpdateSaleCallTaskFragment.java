@@ -157,7 +157,6 @@ public class UpdateSaleCallTaskFragment extends Fragment {
     }
 
     private void selectSaleStatus() {
-
         List<String> statusSpinner = new ArrayList<String>();
         statusSpinner.add("Status");
         statusSpinner.add("Pending");
@@ -210,9 +209,7 @@ public class UpdateSaleCallTaskFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             service_comment = commentUpdateSaleTaskSp_et.getText().toString();
-
             service_status = selectedTaskStatusId;
-
             service_id= selectedService_id;
 
             pDialog = new ProgressDialog(getActivity());
@@ -270,7 +267,6 @@ public class UpdateSaleCallTaskFragment extends Fragment {
         statusUpdateSaleTaskSp_sp.setSelection(0);
         commentUpdateSaleTaskSp_et.setText("");
         vtaskUpdateSaleTaskSp_sp.setSelection(0);
-
     }
 
 }

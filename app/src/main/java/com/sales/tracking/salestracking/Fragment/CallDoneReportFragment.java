@@ -300,7 +300,6 @@ public class CallDoneReportFragment extends Fragment {
                                 if (response.getSp_done_calls().size()>0){
                                     saleCallReportHeader_rl.setVisibility(View.VISIBLE);
 
-
                                     callDoneReportAdapter = new CallDoneReportAdapter(getActivity(),response.getSp_done_calls(), CallDoneReportFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewSaleCallReport_rv.setLayoutManager(mLayoutManager);

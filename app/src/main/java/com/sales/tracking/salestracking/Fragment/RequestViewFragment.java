@@ -81,10 +81,8 @@ public class RequestViewFragment extends Fragment {
     @BindView(R.id.dateViewRequestTask_tv)
     TextView dateViewRequestTask_tv;
 
-
     @BindView(R.id.deleteRequestTaskDetail_iv)
     ImageView deleteRequestTaskDetail_iv;
-
 
     @BindView(R.id.minusRequestTaskDetail_iv)
     ImageView minusRequestTaskDetail_iv;

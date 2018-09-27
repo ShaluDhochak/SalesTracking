@@ -147,9 +147,7 @@ public class CallPendingReportFragment extends Fragment {
         saleCallReportHeader_rl.setVisibility(View.VISIBLE);
         viewSaleCallReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
-            //getTargetViewRecyclerView();
-
-            getDefaultVisitDoneReportManagerRecyclerView();
+             getDefaultVisitDoneReportManagerRecyclerView();
             selectAssignTo();
         }
 
@@ -159,7 +157,6 @@ public class CallPendingReportFragment extends Fragment {
     public void hideDetail(){
         saleCallReportHeader_rl.setVisibility(View.VISIBLE);
         viewSaleCallReport_cv.setVisibility(View.GONE);
-
 
     }
 

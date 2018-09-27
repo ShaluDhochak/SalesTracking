@@ -189,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/leadTypeViewLeadHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint=""
+                            android:hint="Lead Type"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
@@ -590,11 +590,11 @@
 
                             <TextView
                                 android:id="@+id/submitEditLeadSp_btn"
-                                android:layout_width="50dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
                                 android:text="OK"
-                                android:textSize="17sp"
-                                android:gravity="center"
+                                android:textSize="14sp"
                                 android:layout_toLeftOf="@+id/minusEditLeadTypeDetail_iv"
                                 android:textColor="@android:color/white"
                                 />
@@ -604,7 +604,6 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_centerVertical="true"
                                 android:src="@drawable/minus_white_icon"
                                 />
 

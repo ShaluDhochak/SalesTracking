@@ -94,6 +94,9 @@ public class ViewTotalCollectionFragment extends Fragment {
     @BindView(R.id.salesViewCollectionHeader_rl)
             RelativeLayout salesViewCollectionHeader_rl;
 
+    @BindView(R.id.titleViewCollection_tv)
+            TextView titleViewCollection_tv;
+
 
 
     String collection_iid, collection_uiid;
@@ -125,6 +128,7 @@ public class ViewTotalCollectionFragment extends Fragment {
 
 
         if (userTypePref.equals("Sales Manager")) {
+            titleViewCollection_tv.setText("View Collection");
             getTodaysTaskRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.GONE);
             salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
@@ -341,9 +345,7 @@ public class ViewTotalCollectionFragment extends Fragment {
 
     public void showCollectionDetails(CollectionListBean.Collections bean){
 
-
         if (userTypePref.equals("Sales Manager")) {
-           // getTodaysTaskRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.GONE);
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.VISIBLE);
@@ -354,9 +356,6 @@ public class ViewTotalCollectionFragment extends Fragment {
         }else if (userTypePref.equals("Sales Executive")){
 
         }
-
-
-
     }
 
 

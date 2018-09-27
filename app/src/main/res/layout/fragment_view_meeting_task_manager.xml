@@ -306,7 +306,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/purposeViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
-                            android:hint=""
+                            android:hint="Purpose"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
@@ -643,10 +643,8 @@
                                 android:layout_height="20dp"
                                 android:layout_centerVertical="true"
                                 android:src="@drawable/minus_white_icon"
-
                                 android:layout_toRightOf="@+id/editOkButtonVisitTaskMeetingDetail_tv"
                                 />
-
 
                         </RelativeLayout>
 
@@ -668,6 +666,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
@@ -679,8 +678,8 @@
                             android:layout_below="@+id/clientNameEditMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
-                            android:layout_marginRight="10dp"
-                            android:layout_marginLeft="1dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
                             />
 
                     </RelativeLayout>
@@ -711,6 +710,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
@@ -722,8 +722,8 @@
                             android:layout_below="@+id/assignToEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
-                            android:layout_marginRight="10dp"
-                            android:layout_marginLeft="1dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
                             />
 
                     </RelativeLayout>
@@ -754,6 +754,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
@@ -765,8 +766,9 @@
                             android:layout_below="@+id/purposeEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint=""
-                            android:layout_marginLeft="1dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+
 
                             />
 
@@ -798,7 +800,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
@@ -811,10 +813,12 @@
                             android:textColor="@android:color/black"
                             android:hint="Pune"
                             android:textColorHint="@android:color/black"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@android:color/transparent"
+                            android:textSize="14sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:backgroundTint="@android:color/transparent"
                             />
 
                     </RelativeLayout>
@@ -846,7 +850,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="2dp"
                             android:textSize="12dp"
                             android:textColor="@color/textcolor"
                             />
@@ -858,11 +862,13 @@
                             android:layout_below="@+id/descriptionEditViewMeetingTaskHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint="Description here"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:textColorHint="@android:color/black"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@android:color/transparent"
+                            android:textSize="14sp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:backgroundTint="@android:color/transparent"
                             />
 
                     </RelativeLayout>

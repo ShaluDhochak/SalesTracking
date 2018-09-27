@@ -368,8 +368,20 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     @OnClick(R.id.editOkButtonVisitTaskMeetingDetail_tv)
     public void okEditBtn(){
 
-        new CreateEditMeetingTask().execute();
-        //{"success":1,"message":"Meeting Task Created Successfully"}
+       if(!selectclientName.equals("Client Name")){
+           if(!selectAssignTo.equals("Assign To")){
+               if(!selectPurpose.equals("Purpose")){
+                   new CreateEditMeetingTask().execute();
+               }else{
+                   Toast.makeText(getActivity(), "Please Select Purpose", Toast.LENGTH_SHORT).show();
+               }
+           }else{
+               Toast.makeText(getActivity(), "Please Select Assign To", Toast.LENGTH_SHORT).show();
+           }
+       }else{
+           Toast.makeText(getActivity(), "Please Select Client Name", Toast.LENGTH_SHORT).show();
+       }
+
     }
 
     private void selectAssignTo(){
@@ -408,7 +420,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         assignToUser = new ArrayList<String>();
         assignToUser.clear();
         assignToUser.add("Assign To");
-        ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, assignToUser);
+        ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
         quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         assignToEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -428,7 +440,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             }
         }
     }
-
 
     private void selectClientName(){
         try {
@@ -465,7 +476,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             clientNameCompany = new ArrayList<String>();
             clientNameCompany.clear();
             clientNameCompany.add("Client Name");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, clientNameCompany);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, clientNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             clientNameEditMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -485,7 +496,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             }
         }
     }
-
 
     private void selectPurpose(){
         try{
@@ -521,8 +531,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
         purposesNameCompany = new ArrayList<String>();
         purposesNameCompany.clear();
-        purposesNameCompany.add("Purposes");
-        ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, purposesNameCompany);
+        purposesNameCompany.add("Purpose");
+        ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
         quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         purposeEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -548,23 +558,24 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         statusSpinner.add("Pending");
         statusSpinner.add("Done");
 
-        ArrayAdapter<String> statusAdapter= new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, statusSpinner);
+        ArrayAdapter<String> statusAdapter= new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         statusEditViewMeetingTask_sp.setAdapter(statusAdapter);
 
-        statusEditViewMeetingTask_sp .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                selectStatus = (String) parent.getItemAtPosition(position);
-                selectStatusId = String.valueOf(position);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
     }
+
+    @OnItemSelected(R.id.statusEditViewMeetingTask_sp)
+    public void statusSelected(Spinner spinner, int position) {
+        selectStatus = spinner.getSelectedItem().toString();
+        if (selectStatus.equals("Status")) {
+            selectStatusId = "";
+        }else if (selectStatus.equals("Pending")){
+            selectStatusId = selectStatus;
+        }else if (selectStatus.equals("Done")){
+            selectStatusId = selectStatus;
+        }
+    }
+
 
     public class CreateEditMeetingTask extends AsyncTask<String, JSONObject, JSONObject> {
         String visit_leadid, visit_purposeid, visit_assignedby, visit_time,visit_date;

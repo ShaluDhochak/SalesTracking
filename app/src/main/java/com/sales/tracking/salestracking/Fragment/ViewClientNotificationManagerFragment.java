@@ -145,9 +145,7 @@ public class ViewClientNotificationManagerFragment extends Fragment {
     ImageView minusEditLeadTypeDetail_iv;
 
     @BindView(R.id.titleViewLeadCountTask_tv)
-            TextView titleViewLeadCountTask_tv;
-
-
+    TextView titleViewLeadCountTask_tv;
 
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
@@ -197,7 +195,6 @@ public class ViewClientNotificationManagerFragment extends Fragment {
             getManagerClientViewRecyclerView();
             getcount();
         }
-
     }
 
     @OnClick(R.id.minusLeadTypeDetail_iv)
@@ -225,7 +222,6 @@ public class ViewClientNotificationManagerFragment extends Fragment {
         editLeadSpDetails_cv.setVisibility(View.GONE);
 
         titleViewLeadTask_tv.setText("View Client");
-
 
         clientCompanyNameLeadTask_tv.setText(bean.getLead_company());
         leadTypeViewLead_tv.setText(bean.getLeadtype_name());

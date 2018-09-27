@@ -137,7 +137,6 @@ public class ViewClientManagerFragment extends Fragment {
     @BindView(R.id.minusEditLeadTypeDetail_iv)
     ImageView minusEditLeadTypeDetail_iv;
 
-
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 
@@ -211,7 +210,6 @@ public class ViewClientManagerFragment extends Fragment {
         editLeadSpDetails_cv.setVisibility(View.GONE);
 
         titleViewLeadTask_tv.setText("View Client");
-
 
         clientCompanyNameLeadTask_tv.setText(bean.getLead_company());
         leadTypeViewLead_tv.setText(bean.getLeadtype_name());
@@ -313,7 +311,7 @@ public class ViewClientManagerFragment extends Fragment {
     }
 
     @OnClick(R.id.submitEditLeadSp_btn)
-    public void submitAddLead(){
+    public void submitEditLead(){
 
         if (!selectedLeadType.equals("Lead Type")) {
             if (clientCompanyNameEditLeadSp_et.getText().toString().length()>0){
@@ -422,7 +420,7 @@ public class ViewClientManagerFragment extends Fragment {
             lead_company = clientCompanyNameEditLeadSp_et.getText().toString();
             lead_name = contactPersonEditLeadSp_et.getText().toString();
             lead_email = emailEditLeadSp_et.getText().toString();
-            lead_contact = contactPersonEditLeadSp_et.getText().toString();
+            lead_contact = mobileEditLeadSp_et.getText().toString();
             lead_website = websiteEditLeadSp_et.getText().toString();
 
             pDialog = new ProgressDialog(getActivity());
@@ -445,7 +443,7 @@ public class ViewClientManagerFragment extends Fragment {
             params.add(new BasicNameValuePair("filter[lead_email]", lead_email));
             params.add(new BasicNameValuePair("filter[lead_contact]", lead_contact));
             params.add(new BasicNameValuePair("filter[lead_website]", lead_website));
-            params.add(new BasicNameValuePair("filter[lead_comid]", user_comidPref));
+           // params.add(new BasicNameValuePair("filter[lead_comid]", user_comidPref));
             params.add(new BasicNameValuePair("filter[lead_status]", "Done"));
             params.add(new BasicNameValuePair("lead_id", lead_iid));
 
@@ -457,7 +455,7 @@ public class ViewClientManagerFragment extends Fragment {
             try {
                 int success = json.getInt(TAG_SUCCESS);
                 String message = json.getString(TAG_MESSAGE);
-                if (success == 1 && message.equals("Lead Created Successfully")) {
+                if (success == 1 && message.equals("Lead Updated Successfully")) {
                     return json;
                 }
                 else {
@@ -473,8 +471,8 @@ public class ViewClientManagerFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Lead Created Successfully", Toast.LENGTH_SHORT).show();
-                  //  clearAll();
+                    makeText(getActivity(),"Lead Updated Successfully", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();

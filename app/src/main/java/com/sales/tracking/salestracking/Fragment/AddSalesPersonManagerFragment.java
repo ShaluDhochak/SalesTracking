@@ -385,8 +385,6 @@ public class AddSalesPersonManagerFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
 
-
     }
-
 
 }

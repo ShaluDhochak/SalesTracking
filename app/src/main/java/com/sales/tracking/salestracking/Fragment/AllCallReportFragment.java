@@ -148,8 +148,6 @@ public class AllCallReportFragment extends Fragment {
         saleCallReportHeader_rl.setVisibility(View.VISIBLE);
         viewSaleCallReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
-            //getTargetViewRecyclerView();
-
             getDefaultVisitDoneReportManagerRecyclerView();
             selectAssignTo();
         }

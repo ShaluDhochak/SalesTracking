@@ -73,7 +73,6 @@ public class ViewReassignManagerFragment extends Fragment {
     @BindView(R.id.viewReasignedRequestHeader_rl)
     RelativeLayout viewReasignedRequestHeader_rl;
 
-
     View view;
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, expenses_id, deleteExpenses_id;
@@ -108,7 +107,6 @@ public class ViewReassignManagerFragment extends Fragment {
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
 
-        //   getExpensesRecyclerView();
         if (userTypePref.equals("Sales Manager")) {
             getViewRequest();
         }
@@ -153,10 +151,8 @@ public class ViewReassignManagerFragment extends Fragment {
                                     viewReasignedRequest_rv.setLayoutManager(mLayoutManager);
                                     viewReasignedRequest_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewReasignedRequest_rv.setAdapter(viewReassignedRequestAdapter);
-
                                 }
                             } catch (Exception e) {
-                                // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -179,7 +175,5 @@ public class ViewReassignManagerFragment extends Fragment {
         viewReasignedRequestHeader_rl.setVisibility(View.VISIBLE);
 
     }
-
-
 
     }
