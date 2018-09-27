@@ -278,7 +278,7 @@ public class MyProfileFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Password changed successfully", Toast.LENGTH_SHORT).show();
-
+                    clearAll();
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
@@ -289,5 +289,10 @@ public class MyProfileFragment extends Fragment {
         }
     }
 
+    private void clearAll(){
+        newChangePasswordProfile_et.setText("");
+        oldChangePasswordProfile_et.setText("");
+        confirmChangePasswordProfile_et.setText("");
+    }
 
 }
