@@ -269,6 +269,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         descriptionViewMeetingTask_tv.setText(bean.getVisit_comments());
         addressViewMeetingTask_tv.setText(bean.getVisit_address());
         statusViewMeetingTask_tv.setText(bean.getVisit_status());
+
+
     }
 
     public void getDeleteMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean){

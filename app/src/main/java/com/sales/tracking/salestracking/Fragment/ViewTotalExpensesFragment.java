@@ -198,6 +198,15 @@ public class ViewTotalExpensesFragment extends Fragment {
         amountExpensesSpDetail_tv.setText(bean.getExpense_amt());
         modeExpensesSpDetail_tv.setText(bean.getExpense_mode());
         detailsExpensesSpDetail_tv.setText(bean.getExpense_details());
+
+        String imageUrl = "";
+        if (bean.getExpense_images().contains("../")) {
+            imageUrl = ApiLink.IMAGE_BASE_URL + bean.getExpense_images().replace("../", "");
+        } else {
+            imageUrl = ApiLink.IMAGE_BASE_URL + bean.getExpense_images();
+        }
+        Picasso.get().load(imageUrl).into(photoExpensesSpDetail_tv);
+        // photoExpensesSpDetail_tv.setText("");
         //   photoExpensesSpDetail_tv.setText("");
 
     }
@@ -361,7 +370,7 @@ public class ViewTotalExpensesFragment extends Fragment {
         }
         Picasso.get().load(imageUrl).into(photoExpensesSpDetail_tv);
         // photoExpensesSpDetail_tv.setText("");
-        getExpensesRecyclerView();
+    //    getExpensesRecyclerView();
     }
 
     public void getExpensesManagerDeleteData(ExpencesSpBean.Manager_Expenses bean) {

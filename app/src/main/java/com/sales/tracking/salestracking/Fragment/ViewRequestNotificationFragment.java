@@ -135,11 +135,11 @@ public class ViewRequestNotificationFragment extends Fragment {
             viewRequestNotificationRecycler_rl.setVisibility(View.VISIBLE);// for request visit date request by
         }
         viewRequestNotificationDetails_cv.setVisibility(View.GONE);
-        viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
+       // viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
         viewRequestNotificationHeader_rl.setVisibility(View.GONE);
 
        if (!titleViewRequestNotificationCount_tv.getText().toString().equals("0")){
-           viewRequestNotificationViewAll_cv.setVisibility(View.GONE);
+           viewRequestNotificationViewAll_cv.setVisibility(View.VISIBLE);
        }
     }
 
@@ -256,6 +256,7 @@ public class ViewRequestNotificationFragment extends Fragment {
                         public void onResponse(RequestCountBean response) {
                             try {
                                 if (response.getRequest_count().size() > 0) {
+                                        viewRequestNotificationViewAll_cv.setVisibility(View.VISIBLE);
                                     titleViewRequestNotificationCount_tv.setText(response.getRequest_count().get(0).getTot_requests().toString());
                                 }
                             } catch (Exception e) {

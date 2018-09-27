@@ -24,7 +24,7 @@ public class LeadSpAdapter  extends RecyclerView.Adapter<LeadSpAdapter.MyViewHol
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView cfClientCompanyName_tv;
-        ImageView plusCfClientCompanyName_iv,deleteCfClientCompanyName_iv;
+        ImageView plusCfClientCompanyName_iv,deleteCfClientCompanyName_iv, editCfClientCompanyName_iv;
 
         MyViewHolder(View view) {
             super(view);
@@ -33,6 +33,7 @@ public class LeadSpAdapter  extends RecyclerView.Adapter<LeadSpAdapter.MyViewHol
 
             deleteCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.deleteCfClientCompanyName_iv);
             plusCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.plusCfClientCompanyName_iv);
+            editCfClientCompanyName_iv = (ImageView) view.findViewById(R.id.editCfClientCompanyName_iv);
 
         }
     }
@@ -55,6 +56,8 @@ public class LeadSpAdapter  extends RecyclerView.Adapter<LeadSpAdapter.MyViewHol
         LeadSpBean.Leads bean = requestsList.get(position);
 
         holder.cfClientCompanyName_tv.setText(bean.getLead_company());
+
+        holder.editCfClientCompanyName_iv.setVisibility(View.GONE);
 
         holder.plusCfClientCompanyName_iv.setOnClickListener(new View.OnClickListener() {
             @Override

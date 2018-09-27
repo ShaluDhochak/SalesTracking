@@ -58,7 +58,10 @@ public class DashboardManagerAdapter extends RecyclerView.Adapter<DashboardManag
     public void onBindViewHolder(final DashboardManagerAdapter.MyViewHolder holder, final int position) {
         final DashboardManagerBean.Dashboard_Count bean = tasksList.get(position);
 
-        holder.nameDashboardHeading_tv.setText(bean.getUser_name());
+        String name = bean.getUser_name();
+        String[] fname1 = name.split( " ");
+
+        holder.nameDashboardHeading_tv.setText(fname1[0]);
         holder.todayMeetingDashboardManager_tv.setText(bean.getMeetings_today());
         holder.weeklyMeetingDashboardManager_tv.setText(bean.getMeetings_week());
         holder.tillDateMeeting_tv.setText(bean.getMeetings_till_date());

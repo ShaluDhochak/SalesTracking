@@ -100,6 +100,9 @@ public class ViewLeadSpFragment extends Fragment {
     @BindView(R.id.createdByLeadViewTask_tv)
     TextView createdByLeadViewTask_tv;
 
+    @BindView(R.id.editLeadSpDetails_cv)
+            CardView editLeadSpDetails_cv;
+
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 
@@ -135,6 +138,7 @@ public class ViewLeadSpFragment extends Fragment {
         createdByLeadViewTask_rl.setVisibility(View.GONE);
         separatorBelowCreatedByLeadView.setVisibility(View.GONE);
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
+        editLeadSpDetails_cv.setVisibility(View.GONE);
 
        if (userTypePref.equals("Sales Executive")){
             getSPLeadViewRecyclerView();

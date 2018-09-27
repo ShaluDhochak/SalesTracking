@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.1"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="0dp"
+                    android:layout_marginLeft="5dp"
                     >
                     <TextView
                         android:id="@+id/weeklyMeetingDashboardManager_tv"
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="0dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     >
                     <TextView
