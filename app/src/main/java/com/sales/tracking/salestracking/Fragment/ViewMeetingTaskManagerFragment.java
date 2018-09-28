@@ -185,6 +185,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_view_meeting_task_manager, container, false);
         ButterKnife.bind(this, view);
+        initialiseUI();
         return view;
     }
 

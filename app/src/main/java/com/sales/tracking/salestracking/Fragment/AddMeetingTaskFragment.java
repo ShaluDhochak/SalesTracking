@@ -155,6 +155,7 @@ public class AddMeetingTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_meeting_task, container, false);
         ButterKnife.bind(this, view);
+        initialiseUI();
         return view;
     }
 

@@ -52,7 +52,9 @@ public class ViewReassignedRequestNotificationCountAdapter  extends RecyclerView
 
         holder.visitStatusRequestNotification_tv.setText( "Reassign " + bean.getRequest_type());
 
-        holder.visitStatusDateRequestNotification_tv.setText(bean.getRequest_createddt());
+        String date = bean.getRequest_createddt();
+        String[] date1 = date.split(" ");
+        holder.visitStatusDateRequestNotification_tv.setText(date1[0]);
         holder.requestByStatusRequestNotification_tv.setText("Request by " + bean.getUser_name());
 
     }

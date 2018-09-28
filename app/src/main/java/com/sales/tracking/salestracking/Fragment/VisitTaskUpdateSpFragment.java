@@ -185,7 +185,7 @@ public class VisitTaskUpdateSpFragment extends Fragment{
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Utilities.serverError(getActivity());
+                               Utilities.serverError(getActivity());
                             }
                         });
                 locationSpinnerGsonRequest.setShouldCache(false);

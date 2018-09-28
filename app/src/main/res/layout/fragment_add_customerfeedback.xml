@@ -125,6 +125,7 @@
                             android:layout_below="@+id/commentsAddCfSpHeading_tv"
                             android:textColor="@android:color/black"
                             android:hint="Comments"
+                            android:textColorHint="@android:color/black"
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"

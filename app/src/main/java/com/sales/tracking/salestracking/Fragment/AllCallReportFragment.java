@@ -143,7 +143,7 @@ public class AllCallReportFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
 
-        titleViewSaleCallReport_tv.setText("View All Report");
+        titleViewSaleCallReport_tv.setText("View All Call Report");
 
         saleCallReportHeader_rl.setVisibility(View.VISIBLE);
         viewSaleCallReport_cv.setVisibility(View.GONE);

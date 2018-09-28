@@ -78,6 +78,7 @@ public class AddCustomerfeedbackFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_customerfeedback, container, false);
         ButterKnife.bind(this, view);
+        initialiseUI();
         return view;
     }
 

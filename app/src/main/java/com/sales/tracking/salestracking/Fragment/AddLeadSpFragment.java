@@ -96,6 +96,7 @@ public class AddLeadSpFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_lead_sp, container, false);
         ButterKnife.bind(this, view);
+        initialiseUI();
         return view;
     }
 
