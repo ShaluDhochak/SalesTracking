@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,28 +96,28 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     //Edit
 
     @BindView(R.id.okEditSalesPersonDetail_tv)
-            TextView okEditSalesPersonDetail_tv;
+    Button okEditSalesPersonDetail_tv;
 
     @BindView(R.id.mobileEditSalesPersonDetail_et)
     EditText mobileEditSalesPersonDetail_et ;
 
     @BindView(R.id.emailEditSalesPersonDetails_et)
-            EditText emailEditSalesPersonDetails_et;
+    EditText emailEditSalesPersonDetails_et;
 
     @BindView(R.id.minusEditSalesPersonDetail_iv)
     ImageView minusEditSalesPersonDetail_iv;
 
     @BindView(R.id.nameEditSalesPersonDetails_et)
-            EditText nameEditSalesPersonDetails_et;
+    EditText nameEditSalesPersonDetails_et;
 
     @BindView(R.id.statusEditSalesPersonDetail_sp)
     Spinner statusEditSalesPersonDetail_sp;
 
     @BindView(R.id.dojEditSalesPersonDetail_tv)
-            TextView dojEditSalesPersonDetail_tv;
+    TextView dojEditSalesPersonDetail_tv;
 
     @BindView(R.id.editSalesPersonDetails_cv)
-            CardView editSalesPersonDetails_cv;
+    CardView editSalesPersonDetails_cv;
 
     View view;
     SharedPreferences sharedPref;
@@ -132,6 +133,9 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
     DatePickerDialog datePickerDialog;
 
     SalesPersonAdapter salesPersonAdapter;
+
+    int selectedStatus;
+    String statusType_id;
 
     ArrayList<ManagerUserBean.Manager_Users> userlist = new ArrayList<>();
 
@@ -157,7 +161,7 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
 
         getSalesPersonRecyclerView();
 
-        selectStatus();
+     //   selectStatus();
 
         viewSalesPersonDetails_cv.setVisibility(View.GONE);
         editSalesPersonDetails_cv.setVisibility(View.GONE);
@@ -215,7 +219,6 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
         editSalesPersonDetails_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")){
             getSalesPersonRecyclerView();
-
         }
 
     }
@@ -245,8 +248,11 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
         emailEditSalesPersonDetails_et.setText(bean.getUser_email());
         mobileEditSalesPersonDetail_et.setText(bean.getUser_mobile());
 
+        statusType_id = bean.getUser_status().toString();
+
         client_id = bean.getUser_id().toString();
 
+        selectStatus();
     }
 
     @OnClick(R.id.minusEditSalesPersonDetail_iv)
@@ -383,7 +389,7 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
                     getSalesPersonRecyclerView();
                 }
                 else {
-                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
+                    makeText(getActivity(), "Not Updated!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             } catch (Exception e) {
@@ -401,7 +407,14 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
         ArrayAdapter<String> statusAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, statusSpinner);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         statusEditSalesPersonDetail_sp.setAdapter(statusAdapter);
-    }
+        if (statusType_id.equals("Active")){
+            statusEditSalesPersonDetail_sp.setSelection(1);
+        }else if (statusType_id.equals("Inactive")){
+            statusEditSalesPersonDetail_sp.setSelection(2);
+        }
+
+}
+
 
     @OnItemSelected(R.id.statusEditSalesPersonDetail_sp)
     public void statusSelected(Spinner spinner, int position){

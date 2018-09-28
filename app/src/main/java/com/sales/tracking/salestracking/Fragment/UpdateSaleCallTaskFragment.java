@@ -114,12 +114,17 @@ public class UpdateSaleCallTaskFragment extends Fragment {
                         new com.android.volley.Response.Listener<SalesCallTaskSpBean>() {
                             @Override
                             public void onResponse(SalesCallTaskSpBean response) {
-                                saleTaskUpdateVisitSp.clear();
-                                saleTaskUpdateVisitSp.add("Sale Call Task");
-                                for(int i=0;i<response.getSp_servicecalls_dd().size();i++)
-                                {
-                                    saleTaskUpdateVisitSp.add(response.getSp_servicecalls_dd().get(i).getLead_company() + " - "+ response.getSp_servicecalls_dd().get(i).getService_person() + " - "+ response.getSp_servicecalls_dd().get(i).getService_contactno());
-                                    saleTaskMap.put(response.getSp_servicecalls_dd().get(i).getService_id(), response.getSp_servicecalls_dd().get(i).getLead_company() + " - "+ response.getSp_servicecalls_dd().get(i).getService_person() + " - "+ response.getSp_servicecalls_dd().get(i).getService_contactno());
+                                try {
+                                    saleTaskUpdateVisitSp.clear();
+                                    saleTaskUpdateVisitSp.add("Sale Call Task");
+                                    if (response.getSp_servicecalls_dd().size() > 0) {
+                                        for (int i = 0; i < response.getSp_servicecalls_dd().size(); i++) {
+                                            saleTaskUpdateVisitSp.add(response.getSp_servicecalls_dd().get(i).getLead_company() + " - " + response.getSp_servicecalls_dd().get(i).getService_person() + " - " + response.getSp_servicecalls_dd().get(i).getService_contactno());
+                                            saleTaskMap.put(response.getSp_servicecalls_dd().get(i).getService_id(), response.getSp_servicecalls_dd().get(i).getLead_company() + " - " + response.getSp_servicecalls_dd().get(i).getService_person() + " - " + response.getSp_servicecalls_dd().get(i).getService_contactno());
+                                        }
+                                    }
+                                }catch(Exception e){
+
                                 }
                             }
                         },

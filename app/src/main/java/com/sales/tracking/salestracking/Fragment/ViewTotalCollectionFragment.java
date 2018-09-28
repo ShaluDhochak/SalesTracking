@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,16 +89,37 @@ public class ViewTotalCollectionFragment extends Fragment {
 
     @BindView(R.id.dateViewCollection_tv)
             TextView dateViewCollection_tv;
+
     @BindView(R.id.viewCollectionDetails_cv)
     CardView viewCollectionDetails_cv;
 
+    @BindView(R.id.salesViewCollectionManagerHeader_rl)
+    RelativeLayout salesViewCollectionManagerHeader_rl;
+
+    @BindView(R.id.viewTotalManagerCollection_rv)
+    RecyclerView viewTotalManagerCollection_rv;
+
     @BindView(R.id.salesViewCollectionHeader_rl)
-            RelativeLayout salesViewCollectionHeader_rl;
+    RelativeLayout salesViewCollectionHeader_rl;
 
     @BindView(R.id.titleViewCollection_tv)
-            TextView titleViewCollection_tv;
+    TextView titleViewCollection_tv;
 
+    //manager Account
+    @BindView(R.id.viewCollectionManagerDetails_cv)
+    CardView viewCollectionManagerDetails_cv;
 
+    @BindView(R.id.nameViewManagerLead_tv)
+    TextView nameViewManagerLead_tv;
+
+    @BindView(R.id.totalCollectionManagerViewCollection_tv)
+    TextView totalCollectionManagerViewCollection_tv;
+
+    @BindView(R.id.dateViewManagerCollection_tv)
+    TextView dateViewManagerCollection_tv;
+
+    @BindView(R.id.minusManagerViewCollection_iv)
+    ImageView minusManagerViewCollection_iv;
 
     String collection_iid, collection_uiid;
 
@@ -129,15 +151,19 @@ public class ViewTotalCollectionFragment extends Fragment {
 
         if (userTypePref.equals("Sales Manager")) {
             titleViewCollection_tv.setText("View Collection");
-            getTodaysTaskRecyclerView();
+            getTodaysTaskManagerRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.GONE);
-            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }else if (userTypePref.equals("Sales Executive")){
             getTodaysTaskRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
             salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }
 
     }
@@ -199,8 +225,12 @@ public class ViewTotalCollectionFragment extends Fragment {
                 if (!(response == null)) {
                     makeText(getActivity(),"Added Successfully", Toast.LENGTH_SHORT).show();
                     clearAll();
-
-                    getTodaysTaskRecyclerView();
+                    if (userTypePref.equals("Sales Manager")) {
+                        titleViewCollection_tv.setText("View Collection");
+                        getTodaysTaskManagerRecyclerView();
+                    }else if (userTypePref.equals("Sales Executive")){
+                        getTodaysTaskRecyclerView();
+                    }
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
@@ -220,13 +250,16 @@ public class ViewTotalCollectionFragment extends Fragment {
 
             String Url = ApiLink.ROOT_URL + ApiLink.COLLECTION_SP;
             Map<String, String> map = new HashMap<>();
-            if (userTypePref.equals("Sales Manager")) {
+          /*  if (userTypePref.equals("Sales Manager")) {
                 map.put("reporting_to", userIdPref);
                 map.put("select", "");
             }else if (userTypePref.equals("Sales Executive")){
                 map.put("collection_uid", userIdPref);
                 map.put("select", "");
             }
+            */
+            map.put("collection_uid", userIdPref);
+            map.put("select", "");
 
             GSONRequest<CollectionListBean> dashboardGsonRequest = new GSONRequest<CollectionListBean>(
                     Request.Method.POST,
@@ -262,11 +295,68 @@ public class ViewTotalCollectionFragment extends Fragment {
         }
     }
 
+    private void getTodaysTaskManagerRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.COLLECTION_SP;
+            Map<String, String> map = new HashMap<>();
+            map.put("reporting_to", userIdPref);
+            map.put("select", "");
+
+           /* if (userTypePref.equals("Sales Manager")) {
+                map.put("reporting_to", userIdPref);
+                map.put("select", "");
+            }else if (userTypePref.equals("Sales Executive")){
+                map.put("collection_uid", userIdPref);
+                map.put("select", "");
+            }
+            */
+
+            GSONRequest<CollectionListBean> dashboardGsonRequest = new GSONRequest<CollectionListBean>(
+                    Request.Method.POST,
+                    Url,
+                    CollectionListBean.class, map,
+                    new com.android.volley.Response.Listener<CollectionListBean>() {
+                        @Override
+                        public void onResponse(CollectionListBean response) {
+                            try{
+                                if (response.getCollections().size()>0){
+                                    spMeetingTodayList.clear();
+                                    spMeetingTodayList.addAll(response.getCollections());
+
+                                    viewCollectionAdapter = new ViewCollectionAdapter(getActivity(),response.getCollections(), ViewTotalCollectionFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    viewTotalManagerCollection_rv.setLayoutManager(mLayoutManager);
+                                    viewTotalManagerCollection_rv.setItemAnimator(new DefaultItemAnimator());
+                                    viewTotalManagerCollection_rv.setAdapter(viewCollectionAdapter);
+
+                                }
+                            }catch(Exception e){
+                                Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+
     public void getDeleteTotalCollection(CollectionListBean.Collections bean) {
 
         collection_iid = bean.getCollection_id().toString();
         new deleteTotalCollectionSp().execute();
-        getTodaysTaskRecyclerView();
+        if (userTypePref.equals("Sales Manager")) {
+            titleViewCollection_tv.setText("View Collection");
+            getTodaysTaskManagerRecyclerView();
+        }else if (userTypePref.equals("Sales Executive")){
+            getTodaysTaskRecyclerView();
+        }
     }
 
     public class deleteTotalCollectionSp extends AsyncTask<String, JSONObject, JSONObject> {
@@ -317,7 +407,12 @@ public class ViewTotalCollectionFragment extends Fragment {
                 if (!(response == null)) {
                     makeText(getActivity(),"Deleted Successfully", Toast.LENGTH_SHORT).show();
                     clearAll();
-                    getTodaysTaskRecyclerView();
+                    if (userTypePref.equals("Sales Manager")) {
+                        titleViewCollection_tv.setText("View Collection");
+                        getTodaysTaskManagerRecyclerView();
+                    }else if (userTypePref.equals("Sales Executive")){
+                        getTodaysTaskRecyclerView();
+                    }
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
@@ -331,30 +426,60 @@ public class ViewTotalCollectionFragment extends Fragment {
     @OnClick(R.id.minusViewCollection_iv)
     public void hideManagerDetails(){
         if (userTypePref.equals("Sales Manager")) {
-            getTodaysTaskRecyclerView();
+            titleViewCollection_tv.setText("View Collection");
+            getTodaysTaskManagerRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.GONE);
-            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }else if (userTypePref.equals("Sales Executive")){
             getTodaysTaskRecyclerView();
+
             addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
             salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.minusManagerViewCollection_iv)
+    public void hideManager1Details(){
+        if (userTypePref.equals("Sales Manager")) {
+            titleViewCollection_tv.setText("View Collection");
+            getTodaysTaskManagerRecyclerView();
+            addTotalCollectionBox_rl.setVisibility(View.GONE);
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }
     }
 
     public void showCollectionDetails(CollectionListBean.Collections bean){
 
         if (userTypePref.equals("Sales Manager")) {
+            titleViewCollection_tv.setText("View Collection");
             addTotalCollectionBox_rl.setVisibility(View.GONE);
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
+            viewCollectionManagerDetails_cv.setVisibility(View.VISIBLE);
+
+            nameViewManagerLead_tv.setText(bean.getUser_name());
+            totalCollectionManagerViewCollection_tv.setText(bean.getCollection_amount());
+            dateViewManagerCollection_tv.setText(bean.getCollection_date());
+        }else if (userTypePref.equals("Sales Executive")){
+            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.VISIBLE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
 
             nameViewLead_tv.setText(bean.getUser_name());
             totalCollectionViewCollection_tv.setText(bean.getCollection_amount());
             dateViewCollection_tv.setText(bean.getCollection_date());
-        }else if (userTypePref.equals("Sales Executive")){
-
         }
     }
 

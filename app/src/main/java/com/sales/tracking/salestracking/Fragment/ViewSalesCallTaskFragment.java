@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -118,7 +119,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
     TextView timeEditViewValueSalesCallManagerDetail_et;
 
     @BindView(R.id.editOkButtonSalesCallManagerDetail_tv)
-    TextView editOkButtonSalesCallManagerDetail_tv;
+    Button editOkButtonSalesCallManagerDetail_tv;
 
     @BindView(R.id.minusEditViewSalesCallManagerDetail_iv)
     ImageView minusEditViewSalesCallManagerDetail_iv;
@@ -143,6 +144,10 @@ public class ViewSalesCallTaskFragment extends Fragment {
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+
+    String client_id, assignedTo_id;
+    int editClient, editAssignedTo;
+
 
     JSONParser jsonParser = new JSONParser();
 
@@ -332,6 +337,10 @@ public class ViewSalesCallTaskFragment extends Fragment {
         String[] date1 = date.split(" ");
         dateEditViewSalesCallManager_tv.setText(date1[0]);
         timeEditViewValueSalesCallManagerDetail_et.setText(convertIn12Hours(date1[1]));
+
+        client_id = bean.getLead_company().toString();
+        assignedTo_id = bean.getUser_name().toString();
+
         selectClientName();
         selectAssignTo();
         serviceId = bean.getService_id();
@@ -519,6 +528,11 @@ public class ViewSalesCallTaskFragment extends Fragment {
                                 {
                                     assignToUser.add(response.getUsers_dd().get(i).getUser_name());
                                     assignToUserMap.put(response.getUsers_dd().get(i).getUser_id(), response.getUsers_dd().get(i).getUser_name());
+                                    String myString = assignedTo_id; //the value you want the position for
+                                    if (myString.equals(response.getUsers_dd().get(i).getUser_name())) {
+                                        editAssignedTo = i + 1;
+                                        assignToEditViewSalesCallManager_sp.setSelection(editAssignedTo);
+                                    }
                                 }
                             }
                         },
@@ -574,6 +588,11 @@ public class ViewSalesCallTaskFragment extends Fragment {
                                 for (int i = 0; i < response.getClients_dd().size(); i++) {
                                     clientNameCompany.add(response.getClients_dd().get(i).getLead_company());
                                     clientNameMap.put(response.getClients_dd().get(i).getLead_id(), response.getClients_dd().get(i).getLead_company());
+                                    String myString = client_id; //the value you want the position for
+                                    if (myString.equals(response.getClients_dd().get(i).getLead_company())) {
+                                        editClient = i + 1;
+                                        clientNameEditSalesCallManager_sp.setSelection(editClient);
+                                    }
                                 }
                             }
                         },

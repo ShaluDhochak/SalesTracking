@@ -108,7 +108,7 @@ public class ViewClientManagerFragment extends Fragment {
 
     //Edit
     @BindView(R.id.submitEditLeadSp_btn)
-    TextView submitEditLeadSp_btn;
+    Button submitEditLeadSp_btn;
 
     @BindView(R.id.addressEditLeadSp_et)
     EditText addressEditLeadSp_et;
@@ -154,6 +154,8 @@ public class ViewClientManagerFragment extends Fragment {
 
     JSONParser jsonParser = new JSONParser();
     ProgressDialog pDialog;
+
+    int selectedLead;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -270,10 +272,16 @@ public class ViewClientManagerFragment extends Fragment {
                             public void onResponse(LeadSpBean response) {
                                 leadTypeAddLeadSp.clear();
                                 leadTypeAddLeadSp.add("Lead Type");
+
                                 for(int i=0;i<response.getLeadtype_dropdown().size();i++)
                                 {
                                         leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
                                         leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(), response.getLeadtype_dropdown().get(i).getLeadtype_name());
+                                        String myString = leadType_id; //the value you want the position for
+                                        if (myString.equals(response.getLeadtype_dropdown().get(i).getLeadtype_name())) {
+                                            selectedLead = i + 1;
+                                            lTypeEditLeadSp_sp.setSelection(selectedLead);
+                                        }
                                 }
                             }
                         },
@@ -289,9 +297,12 @@ public class ViewClientManagerFragment extends Fragment {
             leadTypeAddLeadSp = new ArrayList<String>();
             leadTypeAddLeadSp.clear();
             leadTypeAddLeadSp.add("Lead Type");
+
             ArrayAdapter<String> leadTypeDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, leadTypeAddLeadSp);
             leadTypeDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             lTypeEditLeadSp_sp.setAdapter(leadTypeDataAdapter);
+
+
 
         }catch (Exception e){
         }
@@ -300,6 +311,8 @@ public class ViewClientManagerFragment extends Fragment {
     @OnItemSelected(R.id.lTypeEditLeadSp_sp)
     public void visitTaskAddSelected(Spinner spinner, int position) {
         selectedLeadType = spinner.getSelectedItem().toString();
+
+
         for (Map.Entry<String, String> e : leadTypeMap.entrySet()) {
             Object key = e.getKey();
             Object value = e.getValue();

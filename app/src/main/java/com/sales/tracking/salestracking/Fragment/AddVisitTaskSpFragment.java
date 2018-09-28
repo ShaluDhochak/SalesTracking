@@ -246,7 +246,7 @@ public class AddVisitTaskSpFragment extends Fragment {
             }
             purposesNameCompany = new ArrayList<String>();
             purposesNameCompany.clear();
-            purposesNameCompany.add("Purposes");
+            purposesNameCompany.add("Purpose");
             ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             purposeAddVisitTaskSp_sp.setAdapter(quotationLocationDataAdapter);
@@ -270,7 +270,7 @@ public class AddVisitTaskSpFragment extends Fragment {
     @OnClick(R.id.submitAddVisitTaskSp_btn)
     public void submitAddVisitTaskSp_btn(){
         if (!selectclientName.equals("Client Name")){
-            if (!selectPurpose.equals("Purposes")){
+            if (!selectPurpose.equals("Purpose")){
                 if (addressAddVisitTaskSp_et.getText().toString().length()>0){
                     if (dateAddVisitTaskSp_tv.getText().toString().length()>0){
                         if (timeAddVisitTaskSp_tv.getText().toString().length()>0){

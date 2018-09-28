@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -112,10 +113,10 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     //Edit Detail
     @BindView(R.id.editViewMeetingTaskeDetails_cv)  //cardview for edit text
-            CardView editViewMeetingTaskeDetails_cv;
+    CardView editViewMeetingTaskeDetails_cv;
 
     @BindView(R.id.editOkButtonVisitTaskMeetingDetail_tv)   //submit button
-            TextView editOkButtonVisitTaskMeetingDetail_tv;
+    Button editOkButtonVisitTaskMeetingDetail_tv;
 
     @BindView(R.id.clientNameEditMeetingTask_sp)
     Spinner clientNameEditMeetingTask_sp;
@@ -137,6 +138,12 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     @BindView(R.id.dateEditViewMeetingTask_tv)
     TextView dateEditViewMeetingTask_tv;
+
+    @BindView(R.id.descriptionEditViewMeetingTask_rl)
+    RelativeLayout descriptionEditViewMeetingTask_rl;
+
+    @BindView(R.id.separatorBelowAddressEditViewMeetingTask)
+    View separatorBelowAddressEditViewMeetingTask;
 
     @BindView(R.id.timeEditViewValueMeetingTaskDetail_et)
     TextView timeEditViewValueMeetingTaskDetail_et;
@@ -161,6 +168,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref;
+    String client_id, purpose_id, assignedTo_id;
+    int editClient, purposeEdit, editAssignedTo;
 
     ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
@@ -265,7 +274,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         String[] indate1 = indate.split(" ");
 
         dateViewMeetingTask_tv.setText(indate1[0]);
-        timeValueMeetingTaskDetail_tv.setText(indate1[1]);
+        timeValueMeetingTaskDetail_tv.setText(convertIn12Hours(indate1[1]));
 
         assignToViewMeetingTask_tv.setText(bean.getUser_name());
         clientNameMeetingTask_tv.setText(bean.getLead_company());
@@ -307,7 +316,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.editEditViewVisitTaskMeetingDetail_iv)
+  /*  @OnClick(R.id.editEditViewVisitTaskMeetingDetail_iv)
     public void showEditDetails() {
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
@@ -317,11 +326,16 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             getVisitTaskMeetingRecyclerView();
         }
     }
+*/
 
     public void getEditViewMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean) {
 
         currentuserName = bean.getUser_name().toString();
         currentVisitIdEdit = bean.getVisit_id().toString();
+
+        client_id = bean.getLead_company().toString();
+        purpose_id = bean.getPurpose_name().toString();
+        assignedTo_id = bean.getUser_name().toString();
         selectStatus();
         selectAssignTo();
         selectClientName();
@@ -330,14 +344,16 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.GONE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.VISIBLE);
+        descriptionEditViewMeetingTask_rl.setVisibility(View.GONE);
+        separatorBelowAddressEditViewMeetingTask.setVisibility(View.GONE);
 
         String indate = bean.getVisit_datetime();
         String[] indate1 = indate.split(" ");
 
         dateEditViewMeetingTask_tv.setText(indate1[0]);
-        timeEditViewValueMeetingTaskDetail_et.setText(indate1[1]);
+        timeEditViewValueMeetingTaskDetail_et.setText(convertIn12Hours(indate1[1]));
+        addressEditViewMeetingTask_et.setText(bean.getVisit_address());
 
-        descriptionEditViewMeetingTask_et.setText(bean.getVisit_comments());
     }
 
     @OnClick(R.id.dateEditViewMeetingTask_tv)
@@ -414,6 +430,11 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                                 for (int i = 0; i < response.getUsers_dd().size(); i++) {
                                     assignToUser.add(response.getUsers_dd().get(i).getUser_name());
                                     assignToUserMap.put(response.getUsers_dd().get(i).getUser_id(), response.getUsers_dd().get(i).getUser_name());
+                                    String myString = assignedTo_id; //the value you want the position for
+                                    if (myString.equals(response.getUsers_dd().get(i).getUser_name())) {
+                                        editAssignedTo = i + 1;
+                                        assignToEditViewMeetingTask_sp.setSelection(editAssignedTo);
+                                    }
                                 }
                             }
                         },
@@ -434,7 +455,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             assignToEditViewMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
 
         } catch (Exception e) {
-
         }
     }
 
@@ -470,6 +490,11 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                                 for (int i = 0; i < response.getClients_dd().size(); i++) {
                                     clientNameCompany.add(response.getClients_dd().get(i).getLead_company());
                                     clientNameMap.put(response.getClients_dd().get(i).getLead_id(), response.getClients_dd().get(i).getLead_company());
+                                    String myString = client_id; //the value you want the position for
+                                    if (myString.equals(response.getClients_dd().get(i).getLead_company())) {
+                                        editClient = i + 1;
+                                        clientNameEditMeetingTask_sp.setSelection(editClient);
+                                    }
                                 }
                             }
                         },
@@ -488,9 +513,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, clientNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             clientNameEditMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
-
         } catch (Exception e) {
-
         }
     }
 
@@ -525,6 +548,11 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                                 for (int i = 0; i < response.getPurpose_dd().size(); i++) {
                                     purposesNameCompany.add(response.getPurpose_dd().get(i).getPurpose_name());
                                     purposeNameMap.put(response.getPurpose_dd().get(i).getPurpose_id(), response.getPurpose_dd().get(i).getPurpose_name());
+                                    String myString = purpose_id; //the value you want the position for
+                                    if (myString.equals(response.getPurpose_dd().get(i).getPurpose_name())) {
+                                        purposeEdit = i + 1;
+                                        purposeEditViewMeetingTask_sp.setSelection(purposeEdit);
+                                    }
                                 }
                             }
                         },
@@ -584,7 +612,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
-
     public class CreateEditMeetingTask extends AsyncTask<String, JSONObject, JSONObject> {
         String visit_leadid, visit_purposeid, visit_assignedby, visit_time, visit_date;
         String visit_uid, visit_address, visit_id;
@@ -620,6 +647,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             params.add(new BasicNameValuePair("filter[visit_time]", visit_time));
             params.add(new BasicNameValuePair("filter[visit_uid]", visit_uid));
             params.add(new BasicNameValuePair("filter[visit_purposeid]", visit_purposeid));
+            params.add(new BasicNameValuePair("filter[visit_leadid]", visit_leadid));
             params.add(new BasicNameValuePair("edit", "edit"));
             params.add(new BasicNameValuePair("visit_id", visit_id));
 
@@ -647,7 +675,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                     makeText(getActivity(), "Meeting Task Updated Successfully", Toast.LENGTH_SHORT).show();
                     // clearAll();
                 } else {
-                    makeText(getActivity(), "Oops! An error occured", Toast.LENGTH_SHORT).show();
+                    makeText(getActivity(), "Already Inserted!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             } catch (Exception e) {
@@ -711,5 +739,20 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         }
     }
 
+
+    private String convertIn12Hours(String time){
+
+        String timeToDisplay = "";
+        String[] timeArray = time.split(":");
+        Integer hours = Integer.parseInt(timeArray[0]);
+
+        if(hours > 12){
+            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+        }else{
+            timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
+        }
+
+        return timeToDisplay;
+    }
 
 }

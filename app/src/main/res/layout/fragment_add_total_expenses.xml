@@ -126,6 +126,7 @@
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
                             android:inputType="number"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 
@@ -217,6 +218,7 @@
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 
@@ -257,7 +259,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Choose Photo"
-                            android:textColor="@color/textcolor"
+                            android:textColor="@android:color/black"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
@@ -272,7 +274,7 @@
                             android:layout_below="@+id/photoAddExpensesSpHeading_tv"
                             android:layout_toRightOf="@+id/chooseFromGalleryExpenses_tv"
                             android:text="OR"
-                            android:textColor="@color/textcolor"
+                            android:textColor="@android:color/black"
                             android:layout_margin="10dp"
                             />
                         <TextView
@@ -282,7 +284,7 @@
                             android:layout_below="@+id/photoAddExpensesSpHeading_tv"
                             android:layout_toRightOf="@+id/orFromGalleryExpenses_tv"
                             android:text="Take Photo"
-                            android:textColor="@color/textcolor"
+                            android:textColor="@android:color/black"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"

@@ -88,7 +88,7 @@ public class AddSalesPersonManagerFragment extends Fragment {
     @BindView(R.id.submitAddSalesPersonManager_btn)
     Button submitAddSalesPersonManager_btn;
 
-    String package_users_count , users_count ;
+    String package_users_count = "", users_count = "" ;
 
     DatePickerDialog datePickerDialog;
     ProgressDialog pDialog;
@@ -127,20 +127,11 @@ public class AddSalesPersonManagerFragment extends Fragment {
         getAddSalesPersonPackageCount();
         getAddSalesPersonUserCount();
 
-      /*
-       if(package_users_count.compareTo(users_count) > 0){
-            selectStatus();
-            addSalesPersonDetails_cv.setVisibility(View.VISIBLE);
-            addSalesPersonMessage_cv.setVisibility(View.GONE);
-        }else{
-            addSalesPersonMessage_cv.setVisibility(View.VISIBLE);
-            addSalesPersonDetails_cv.setVisibility(View.GONE);
-        }
-*/
-        selectStatus();
+
+      /*  selectStatus();
         addSalesPersonDetails_cv.setVisibility(View.VISIBLE);
         addSalesPersonMessage_cv.setVisibility(View.GONE);
-
+*/
 
     }
 
@@ -383,6 +374,20 @@ public class AddSalesPersonManagerFragment extends Fragment {
                     });
             dashboardGsonRequest.setShouldCache(false);
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+
+        try {
+            if (package_users_count.compareTo(users_count) > 0) {
+                selectStatus();
+                addSalesPersonDetails_cv.setVisibility(View.VISIBLE);
+                addSalesPersonMessage_cv.setVisibility(View.GONE);
+            } else {
+                addSalesPersonMessage_cv.setVisibility(View.VISIBLE);
+                addSalesPersonDetails_cv.setVisibility(View.GONE);
+            }
+
+        }catch (Exception e){
+
         }
 
     }

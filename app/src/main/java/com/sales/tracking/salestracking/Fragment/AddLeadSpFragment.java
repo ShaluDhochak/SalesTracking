@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -87,6 +88,9 @@ public class AddLeadSpFragment extends Fragment {
     @BindView(R.id.submitAddLeadSp_btn)
     Button submitAddLeadSp_btn;
 
+    @BindView(R.id.titleAddLeadSp_tv)
+    TextView titleAddLeadSp_tv;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,8 +112,10 @@ public class AddLeadSpFragment extends Fragment {
         user_comidPref = sharedPref.getString("user_com_id", "");
 
         if (userTypePref.equals("Sales Executive")) {
+            titleAddLeadSp_tv.setText("Add Lead");
             selectleadType();
         }else if (userTypePref.equals("Sales Manager")){
+            titleAddLeadSp_tv.setText("Add Client");
             selectleadType();
         }
     }
@@ -226,7 +232,7 @@ public class AddLeadSpFragment extends Fragment {
             lead_company = clientCompanyNameAddLeadSp_et.getText().toString();
             lead_name = contactPersonAddLeadSp_et.getText().toString();
             lead_email = emailAddLeadSp_et.getText().toString();
-            lead_contact = contactPersonAddLeadSp_et.getText().toString();
+            lead_contact = mobileAddLeadSp_et.getText().toString();
             lead_website = websiteAddLeadSp_et.getText().toString();
 
             pDialog = new ProgressDialog(getActivity());
@@ -299,7 +305,7 @@ public class AddLeadSpFragment extends Fragment {
             lead_company = clientCompanyNameAddLeadSp_et.getText().toString();
             lead_name = contactPersonAddLeadSp_et.getText().toString();
             lead_email = emailAddLeadSp_et.getText().toString();
-            lead_contact = contactPersonAddLeadSp_et.getText().toString();
+            lead_contact = mobileAddLeadSp_et.getText().toString();
             lead_website = websiteAddLeadSp_et.getText().toString();
 
             pDialog = new ProgressDialog(getActivity());

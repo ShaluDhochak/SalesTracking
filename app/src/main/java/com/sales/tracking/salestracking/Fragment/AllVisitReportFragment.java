@@ -158,8 +158,6 @@ public class AllVisitReportFragment extends Fragment {
     public void hideDetail(){
         viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
         viewVisitManagerReport_cv.setVisibility(View.GONE);
-
-
     }
 
     private void selectAssignTo(){
@@ -325,7 +323,6 @@ public class AllVisitReportFragment extends Fragment {
         }
     }
 
-
     private void getDefaultVisitReportManagerRecyclerView(){
         try {
             if (Connectivity.isConnected(getActivity())) {
@@ -373,7 +370,6 @@ public class AllVisitReportFragment extends Fragment {
             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     public void getAllVisitData(VisitReportManagerBean.sp_all_visits bean){
         viewVisitManagerReportHeader_rl.setVisibility(View.GONE);

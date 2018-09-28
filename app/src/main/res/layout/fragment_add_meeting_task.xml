@@ -215,6 +215,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
+                        android:textColorHint="@android:color/black"
                         />
 
                 </RelativeLayout>
@@ -260,6 +261,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
+                        android:textColorHint="@android:color/black"
                         />
 
                 </RelativeLayout>
@@ -351,6 +353,7 @@
                         android:hint="Address"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="10dp"
+                        android:textColorHint="@android:color/black"
                         android:backgroundTint="@android:color/transparent"
                         />
 
@@ -400,6 +403,7 @@
                         android:textSize="14sp"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="10dp"
+                        android:textColorHint="@android:color/black"
                         android:backgroundTint="@android:color/transparent"
                         />
 
@@ -450,6 +454,7 @@
                         android:inputType="phone"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="10dp"
+                        android:textColorHint="@android:color/black"
                         android:backgroundTint="@android:color/transparent"
                         />
 

@@ -125,6 +125,7 @@
                             android:textColor="@android:color/black"
                             android:hint="name"
                             android:textSize="14sp"
+                            android:textColorHint="@android:color/black"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
                             android:backgroundTint="@android:color/transparent"
@@ -173,6 +174,7 @@
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 
@@ -220,6 +222,7 @@
                             android:inputType="textEmailAddress"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 
@@ -268,6 +271,7 @@
                             android:inputType="phone"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 
@@ -314,6 +318,7 @@
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 
@@ -359,6 +364,7 @@
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 

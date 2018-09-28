@@ -532,73 +532,36 @@
                         >
 
                         <RelativeLayout
-                            android:id="@+id/dateEditViewMeetingTask_rl"
+                            android:id="@+id/HeadingeditViewMeetingTask_rl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/green_box_bg"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             >
 
                             <TextView
-                                android:id="@+id/datEditViewMeetingTaskHeading_tv"
+                                android:id="@+id/HeadingEditViewMeetingTaskHeading_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Date"
-                                android:textSize="12sp"
+                                android:text="Edit Meeting Task"
+                                android:textSize="17sp"
                                 android:textColor="@android:color/white"
                                 android:paddingTop="10dp"
                                 android:paddingRight="10dp"
                                 android:paddingLeft="10dp"
                                 android:paddingBottom="2dp"
+                                android:layout_centerVertical="true"
                                 />
 
                             <TextView
-                                android:id="@+id/dateEditViewMeetingTask_tv"
+                                android:id="@+id/editHeadingViewMeetingTask_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="01 August, 2018"
+                                android:text=""
                                 android:textColor="@android:color/white"
-                                android:textSize="14dp"
-                                android:layout_below="@+id/datEditViewMeetingTaskHeading_tv"
-                                android:paddingLeft="10dp"
-                                android:paddingBottom="10dp"
-                                android:paddingRight="10dp"
+                                android:layout_below="@+id/HeadingEditViewMeetingTaskHeading_tv"
                                 />
 
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/timeEditViewMeetingTaskDetail_rl"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@color/green_box_bg"
-                            >
-                            <TextView
-                                android:id="@+id/timeEditViewMeetingTaskDetailHeading_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Time"
-                                android:textSize="12sp"
-                                android:textColor="@android:color/white"
-                                android:paddingTop="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingLeft="10dp"
-                                android:paddingBottom="2dp"
-                                />
-
-                            <TextView
-                                android:id="@+id/timeEditViewValueMeetingTaskDetail_et"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="6:oo pm"
-                                android:textColor="@android:color/white"
-                                android:textSize="14dp"
-                                android:layout_below="@+id/timeEditViewMeetingTaskDetailHeading_tv"
-                                android:paddingLeft="10dp"
-                                android:paddingBottom="10dp"
-                                android:paddingRight="10dp"
-                                />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -606,7 +569,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="center|right"
                             android:background="@color/green_box_bg">
 
                             <ImageView
@@ -628,10 +591,11 @@
                                 android:layout_toRightOf="@+id/deletEditVieweVisitTaskMeetingDetail_iv"
                                 />
                             <TextView
-                                android:id="@+id/editOkButtonVisitTaskMeetingDetail_tv"
+                                android:id="@+id/okButtonVisitTaskMeetingDetail_tv"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
                                 android:text="OK"
+                                android:visibility="gone"
                                 android:textSize="17sp"
                                 android:gravity="center"
                                 android:layout_centerVertical="true"
@@ -642,9 +606,8 @@
                                 android:id="@+id/minusEditViewVisitTaskMeetingDetail_iv"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_centerVertical="true"
                                 android:src="@drawable/minus_white_icon"
-                                android:layout_toRightOf="@+id/editOkButtonVisitTaskMeetingDetail_tv"
+                               android:layout_marginRight="10dp"
                                 />
 
                         </RelativeLayout>
@@ -652,10 +615,101 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:id="@+id/clientNameEditMeetingTaskDetail_rl"
+                        android:id="@+id/dateEditViewMeetingTask_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/dateEditViewMeetingTask_ll"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/datEditViewMeetingTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date"
+                            android:textSize="12sp"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/dateEditViewMeetingTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01 August, 2018"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp"
+                            android:layout_below="@+id/datEditViewMeetingTaskHeading_tv"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowDateEditMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/dateEditViewMeetingTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/timeEditViewMeetingTaskDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowDateEditMeetingTask"
+                        android:layout_weight="4.5"
+                        >
+                        <TextView
+                            android:id="@+id/timeEditViewMeetingTaskDetailHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Time"
+                            android:textSize="12sp"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/timeEditViewValueMeetingTaskDetail_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6:oo pm"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp"
+                            android:layout_below="@+id/timeEditViewMeetingTaskDetailHeading_tv"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowTimeEditMeetingTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/timeEditViewMeetingTaskDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/clientNameEditMeetingTaskDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowTimeEditMeetingTask"
                         android:layout_weight="4.5"
                         >
 
@@ -839,6 +893,7 @@
                         android:id="@+id/descriptionEditViewMeetingTask_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_below="@+id/separatorBelowAddressEditViewMeetingTask"
                         android:layout_weight="4.5"
                         >
@@ -921,6 +976,15 @@
 
                     </RelativeLayout>
 
+                    <Button
+                        android:id="@+id/editOkButtonVisitTaskMeetingDetail_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Update"
+                        android:layout_below="@+id/statusEditViewMeetingTask_rl"
+                        android:background="@color/active_bg"
+                        android:textColor="@android:color/white"
+                        />
 
                 </RelativeLayout>
 

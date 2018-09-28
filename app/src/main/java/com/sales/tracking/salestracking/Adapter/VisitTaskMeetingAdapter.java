@@ -58,7 +58,7 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
         holder.dateValueVisitTaskMeeting_tv.setText(date1[0]);
 
         String time = date1[1];
-        holder.timeValueVisitTaskMeeting_tv.setText(time);
+        holder.timeValueVisitTaskMeeting_tv.setText(convertIn12Hours(time));
 
         holder.editVisitTaskMeeting_iv.setVisibility(View.VISIBLE);
 
@@ -68,7 +68,6 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
                 viewMeetingTaskManagerFragment.getViewMeetingTask(tasksList.get(position));
             }
         });
-
 
         holder.deleteVisitTaskMeeting_iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +83,21 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
 
             }
         });
+    }
+
+    private String convertIn12Hours(String time){
+
+        String timeToDisplay = "";
+        String[] timeArray = time.split(":");
+        Integer hours = Integer.parseInt(timeArray[0]);
+
+        if(hours > 12){
+            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+        }else{
+            timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
+        }
+
+        return timeToDisplay;
     }
 
     @Override

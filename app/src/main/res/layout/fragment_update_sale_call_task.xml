@@ -171,6 +171,7 @@
                             android:textSize="14sp"
                             android:layout_marginRight="5dp"
                             android:layout_marginLeft="5dp"
+                            android:textColorHint="@android:color/black"
                             android:backgroundTint="@android:color/transparent"
                             />
 

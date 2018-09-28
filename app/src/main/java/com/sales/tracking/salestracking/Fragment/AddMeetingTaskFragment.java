@@ -223,7 +223,7 @@ public class AddMeetingTaskFragment extends Fragment {
             if (!selectclientName.equals("Client Name")){
                 if(dateAddMeetingTask_tv.getText().length()>0){
                     if (timeAddMeetingTask_tv.getText().length()>0){
-                        if (selectPurpose.equals("Purpose")){
+                        if (!selectPurpose.equals("Purpose")){
                             if (addressAddMeetingTask_et.getText().length()>0){
                                 new CreateNewMeetingTask().execute();
                             }else{
@@ -418,7 +418,7 @@ public class AddMeetingTaskFragment extends Fragment {
             }
             purposesNameCompany = new ArrayList<String>();
             purposesNameCompany.clear();
-            purposesNameCompany.add("Purposes");
+            purposesNameCompany.add("Purpose");
             ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, purposesNameCompany);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             purposeAddMeetingTask_sp.setAdapter(quotationLocationDataAdapter);
@@ -512,7 +512,7 @@ public class AddMeetingTaskFragment extends Fragment {
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
-            pDialog.dismiss();
+
         }
 
         @Override
@@ -580,7 +580,6 @@ public class AddMeetingTaskFragment extends Fragment {
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
-            pDialog.dismiss();
         }
 
         @Override
@@ -639,9 +638,6 @@ public class AddMeetingTaskFragment extends Fragment {
          addressAddMeetingTask_et.setText("");
          contactPersonNameAddMeetingTask_et.setText("");
          phoneNoAddMeetingTask_et.setText("");
-
     }
-
-
 
 }

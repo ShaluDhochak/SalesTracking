@@ -439,42 +439,37 @@
                         android:background="@color/active_bg"
                         >
 
+
                         <RelativeLayout
-                            android:id="@+id/nameEditSalesPersonDetails_rl"
+                            android:id="@+id/headingNameEditSalesPerson_rl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/green_box_bg"
-                            android:layout_weight="3"
-                            >
+                            android:layout_below="@+id/separatorBelowLTypeEditLeadSp"
+                            android:layout_weight="3">
 
                             <TextView
-                                android:id="@+id/nameEditSalesPersonDetailsHeading_tv"
+                                android:id="@+id/headingNameEditSalesPersonHeading_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sales Person"
-                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Edit Sales Person"
                                 android:textColor="@android:color/white"
-                                android:paddingTop="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingLeft="10dp"
-                                android:paddingBottom="2dp"
-                                />
+                                android:textSize="17dp" />
 
-                            <EditText
-                                android:id="@+id/nameEditSalesPersonDetails_et"
+                            <TextView
+                                android:id="@+id/heading2NameEditSalesPersonHeading_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:hint="abc"
-                                android:textColorHint="@android:color/white"
+                                android:layout_below="@+id/headingNameEditSalesPersonHeading_tv"
+                                android:text=""
                                 android:textColor="@android:color/white"
-                                android:textSize="14sp"
-                                android:layout_below="@+id/nameEditSalesPersonDetailsHeading_tv"
-                                android:layout_marginRight="5dp"
-                                android:layout_marginLeft="5dp"
-                                android:backgroundTint="@android:color/transparent"
-                                />
+                                android:textSize="12dp" />
 
                         </RelativeLayout>
+
 
                         <RelativeLayout
                             android:id="@+id/editEditSalesPersonDetail_rl"
@@ -485,11 +480,11 @@
                             android:background="@color/green_box_bg">
 
                             <TextView
-                                android:id="@+id/okEditSalesPersonDetail_tv"
+                                android:id="@+id/okditSalesPersonDetail_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
-                                android:text="OK"
+                                android:text=""
                                 android:textSize="14sp"
 
                                 android:textColor="@android:color/white"
@@ -509,10 +504,57 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:id="@+id/emailEditSalesPersonDetails_rl"
+                        android:id="@+id/nameEditSalesPersonDetails_rl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/nameEditSalesPersonDetailsHeader__ll"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/nameEditSalesPersonDetailsHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sales Person"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <EditText
+                            android:id="@+id/nameEditSalesPersonDetails_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="abc"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/nameEditSalesPersonDetailsHeading_tv"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:textColor="@android:color/black"
+
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowNameEditSalesPerson"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/nameEditSalesPersonDetails_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/emailEditSalesPersonDetails_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowNameEditSalesPerson"
                         android:layout_weight="4.5"
                         >
 
@@ -679,6 +721,16 @@
                             />
 
                     </RelativeLayout>
+
+
+                    <Button
+                        android:id="@+id/okEditSalesPersonDetail_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dojEditSalesPersonDetail_rl"
+                        android:background="@color/active_bg"
+                        android:text="Update"
+                        android:textColor="@android:color/white" />
 
                 </RelativeLayout>
 

@@ -199,7 +199,12 @@ public class ViewTargetManagerFragment extends Fragment {
         targetDurationDetail_tv.setText(bean.getTarget_startdate() + " to "+ bean.getTarget_enddate());
         targetTargetDetail_tv.setText(bean.getTarget_no());
         typeTargetDetail_tv.setText(bean.getTarget_type());
-        dateTargetTask_tv.setText(bean.getTarget_createdon());
+
+        String date = bean.getTarget_createdon();
+        String[] date1 = date.split(" ");
+
+        dateTargetTask_tv.setText(date1[0]);
+
         salesPersonTargetDetail_tv.setText(bean.getUser_name());
 
     }
