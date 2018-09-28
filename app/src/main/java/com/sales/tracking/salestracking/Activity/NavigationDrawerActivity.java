@@ -111,7 +111,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     Handler handler = new Handler();
 
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 900000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
 
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;

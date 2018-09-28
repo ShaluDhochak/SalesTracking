@@ -40,7 +40,7 @@ public class LocationTracker {
                 map.put("update_live_location", "");
                 map.put("user_id", userId);
                 map.put("user_type", userType);
-                map.put("user_latitude",latitude);
+                map.put("user_lattitude",latitude);
                 map.put("user_longitude",longitude);
 
                 GSONRequest<LocationTrackerBean> locationTrackRequest = new GSONRequest<LocationTrackerBean>(
