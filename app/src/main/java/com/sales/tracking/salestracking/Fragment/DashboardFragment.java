@@ -123,6 +123,11 @@ public class DashboardFragment extends Fragment {
             dashboardDetail_rv.setVisibility(View.VISIBLE);
 
             getDashboardManagerRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            salesHeader_rl.setVisibility(View.GONE);
+            dashboardDetail_rv.setVisibility(View.VISIBLE);
+
+            getDashboardManagerHeadRecyclerView();
         }
 
     }
@@ -275,9 +280,49 @@ public class DashboardFragment extends Fragment {
     private void getDashboardManagerRecyclerView(){
         if (Connectivity.isConnected(getActivity())) {
 
-            String Url = "http://arizonamediaz.co.in/sales_tracking/api/manager_dashboard.php";
+            String Url  =ApiLink.ROOT_URL + ApiLink.DASHBOARD_MANAGER;
+            //String Url = "http://arizonamediaz.co.in/sales_tracking/api/manager_dashboard.php";
             Map<String, String> map = new HashMap<>();
             map.put("manager_id", userIdPref);
+
+            GSONRequest<DashboardManagerBean> dashboardGsonRequest = new GSONRequest<DashboardManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    DashboardManagerBean.class, map,
+                    new com.android.volley.Response.Listener<DashboardManagerBean>() {
+                        @Override
+                        public void onResponse(DashboardManagerBean response) {
+                            try{
+                                if (response.getDashboard_count().size()>0){
+
+                                    dashboardManagerAdapter = new DashboardManagerAdapter(getActivity(),response.getDashboard_count());
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    dashboardDetail_rv.setLayoutManager(mLayoutManager);
+                                    dashboardDetail_rv.setItemAnimator(new DefaultItemAnimator());
+                                    dashboardDetail_rv.setAdapter(dashboardManagerAdapter);
+
+                                }
+                            }catch(Exception e){
+                                //     Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getDashboardManagerHeadRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url =ApiLink.ROOT_URL + ApiLink.DASHBOARD_MANAGERHEAD;
+            Map<String, String> map = new HashMap<>();
+            map.put("managerhead_id", userIdPref);
 
             GSONRequest<DashboardManagerBean> dashboardGsonRequest = new GSONRequest<DashboardManagerBean>(
                     Request.Method.POST,

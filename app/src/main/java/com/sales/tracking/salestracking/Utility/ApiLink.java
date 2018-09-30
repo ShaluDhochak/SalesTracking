@@ -10,6 +10,8 @@ public interface ApiLink {
 
     //Dashboard Sales Exceutive
     String Dashboard_SalesPerson = "task_meeting.php";
+    String DASHBOARD_MANAGER = "manager_dashboard.php";
+    String DASHBOARD_MANAGERHEAD = "managerhead_dashboard.php";
 
     String Attendance_Manager = "sp_attendance.php";
 
