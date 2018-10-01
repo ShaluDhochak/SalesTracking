@@ -28,6 +28,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.LeadSpAdapter;
 import com.sales.tracking.salestracking.Adapter.ManagerClientAdapter;
+import com.sales.tracking.salestracking.Adapter.ManagerClientManagerHeadAdapter;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.ManagerBean;
 import com.sales.tracking.salestracking.R;
@@ -143,6 +144,8 @@ public class ViewClientManagerFragment extends Fragment {
     ManagerClientAdapter managerClientAdapter;
     ArrayList<ManagerBean.clients> clientList = new ArrayList<>();
 
+    ManagerClientManagerHeadAdapter managerClientManagerHeadAdapter;
+
     String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype;
 
     ArrayList<String> leadTypeAddLeadSp;
@@ -180,9 +183,12 @@ public class ViewClientManagerFragment extends Fragment {
         editLeadSpDetails_cv.setVisibility(View.GONE);
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
 
+        titleViewLeadTask_tv.setText("View Client");
+
         if (userTypePref.equals("Sales Manager")) {
-            titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getManagerHeadClientViewRecyclerView();
         }
 
     }
@@ -194,6 +200,8 @@ public class ViewClientManagerFragment extends Fragment {
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
         if (userTypePref.equals("Sales Manager")) {
             getManagerClientViewRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getManagerHeadClientViewRecyclerView();
         }
     }
 
@@ -521,6 +529,7 @@ public class ViewClientManagerFragment extends Fragment {
                                     leadTask_rv.setLayoutManager(mLayoutManager);
                                     leadTask_rv.setItemAnimator(new DefaultItemAnimator());
                                     leadTask_rv.setAdapter(managerClientAdapter);
+                                    leadTask_rv.setNestedScrollingEnabled(false);
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
@@ -536,5 +545,50 @@ public class ViewClientManagerFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
     }
+
+    private void getManagerHeadClientViewRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("managerhead_id", userIdPref);
+
+                GSONRequest<ManagerBean> dashboardGsonRequest = new GSONRequest<ManagerBean>(
+                        Request.Method.POST,
+                        Url,
+                        ManagerBean.class, map,
+                        new com.android.volley.Response.Listener<ManagerBean>() {
+                            @Override
+                            public void onResponse(ManagerBean response) {
+                                try {
+                                    if (response.getClients().size() > 0) {
+
+                                        managerClientManagerHeadAdapter = new ManagerClientManagerHeadAdapter(getActivity(), response.getClients(), ViewClientManagerFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        leadTask_rv.setLayoutManager(mLayoutManager);
+                                        leadTask_rv.setItemAnimator(new DefaultItemAnimator());
+                                        leadTask_rv.setAdapter(managerClientManagerHeadAdapter);
+                                        leadTask_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
+
+        }
+    }
+
 
 }

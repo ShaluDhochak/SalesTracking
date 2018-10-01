@@ -283,7 +283,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/commentsViewSaleCallTaskHeading_tv"
                     android:textColor="@android:color/black"
-                    android:hint=""
+                    android:hint="NA"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"

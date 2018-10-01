@@ -28,6 +28,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.ViewSaleCallTaskAdater;
 import com.sales.tracking.salestracking.Adapter.ViewSaleCallTaskManagerAdater;
+import com.sales.tracking.salestracking.Adapter.ViewSaleCallTaskManagerHeadAdater;
 import com.sales.tracking.salestracking.Adapter.VisitTaskMeetingAdapter;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskManagerBean;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
@@ -130,6 +131,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
 
     ViewSaleCallTaskAdater viewSaleCallTaskAdater;
     ViewSaleCallTaskManagerAdater viewSaleCallTaskManagerAdater;
+    ViewSaleCallTaskManagerHeadAdater viewSaleCallTaskManagerHeadAdater;
 
     ArrayList<SalesCallTaskSpBean.Sp_All_Service_Calls> spAttendanceList = new ArrayList<>();
 
@@ -177,6 +179,9 @@ public class ViewSalesCallTaskFragment extends Fragment {
         }else if (userTypePref.equals("Sales Executive")){
             assignToByViewSaleCallTaskHeading_tv.setText("Assigned By");
             getSaleCallVisitSpRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getSaleCallVisitManagerHeadRecyclerView();
+            assignToByViewSaleCallTaskHeading_tv.setText("Assigned To");
         }
 
         viewSaleCallTaskDetails_cv.setVisibility(View.GONE);
@@ -285,6 +290,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
                                     viewSaleCallTask_rv.setLayoutManager(mLayoutManager);
                                     viewSaleCallTask_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewSaleCallTask_rv.setAdapter(viewSaleCallTaskManagerAdater);
+                                    viewSaleCallTask_rv.setNestedScrollingEnabled(false);
 
                                 }
                             }catch(Exception e){
@@ -303,6 +309,54 @@ public class ViewSalesCallTaskFragment extends Fragment {
         }
     }
 
+
+    private void getSaleCallVisitManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String Url = ApiLink.ROOT_URL + ApiLink.TASK_SERVICECALL;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("mh_all", "");
+                map.put("managerhead_id", userIdPref);
+
+                GSONRequest<SalesCallTaskManagerBean> dashboardGsonRequest = new GSONRequest<SalesCallTaskManagerBean>(
+                        Request.Method.POST,
+                        Url,
+                        SalesCallTaskManagerBean.class, map,
+                        new com.android.volley.Response.Listener<SalesCallTaskManagerBean>() {
+                            @Override
+                            public void onResponse(SalesCallTaskManagerBean response) {
+                                try {
+                                    if (response.getAll_service_calls_mgr().size() > 0) {
+
+                                        viewSaleCallTaskManagerHeadAdater = new ViewSaleCallTaskManagerHeadAdater(getActivity(), response.getAll_service_calls_mgr(), ViewSalesCallTaskFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewSaleCallTask_rv.setLayoutManager(mLayoutManager);
+                                        viewSaleCallTask_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewSaleCallTask_rv.setAdapter(viewSaleCallTaskManagerHeadAdater);
+                                        viewSaleCallTask_rv.setNestedScrollingEnabled(false);
+
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    //        Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
     //SalesCallTaskManagerBean
 
     @OnClick(R.id.minusVisitSaleCallTaskDetail_iv)
@@ -317,6 +371,9 @@ public class ViewSalesCallTaskFragment extends Fragment {
         }else if (userTypePref.equals("Sales Executive")){
             assignToByViewSaleCallTaskHeading_tv.setText("Assigned By");
             getSaleCallVisitSpRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getSaleCallVisitManagerHeadRecyclerView();
+            assignToByViewSaleCallTaskHeading_tv.setText("Assigned To");
         }
     }
 
@@ -359,6 +416,9 @@ public class ViewSalesCallTaskFragment extends Fragment {
         }else if (userTypePref.equals("Sales Executive")){
             assignToByViewSaleCallTaskHeading_tv.setText("Assigned By");
             getSaleCallVisitSpRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getSaleCallVisitManagerHeadRecyclerView();
+            assignToByViewSaleCallTaskHeading_tv.setText("Assigned To");
         }
     }
 
@@ -496,6 +556,9 @@ public class ViewSalesCallTaskFragment extends Fragment {
                     }else if (userTypePref.equals("Sales Executive")){
                         assignToByViewSaleCallTaskHeading_tv.setText("Assigned By");
                         getSaleCallVisitSpRecyclerView();
+                    }else if (userTypePref.equals("Manager Head")){
+                        getSaleCallVisitManagerHeadRecyclerView();
+                        assignToByViewSaleCallTaskHeading_tv.setText("Assigned To");
                     }
                 }
                 else {

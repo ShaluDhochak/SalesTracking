@@ -8,12 +8,13 @@ public interface ApiLink {
     //Dashboard
     String USER_LIST = "user.php";
 
-    //Dashboard Sales Exceutive
+    //Dashboard Sales Executive
     String Dashboard_SalesPerson = "task_meeting.php";
     String DASHBOARD_MANAGER = "manager_dashboard.php";
     String DASHBOARD_MANAGERHEAD = "managerhead_dashboard.php";
 
     String Attendance_Manager = "sp_attendance.php";
+    String ATTENDANCE_MANAGER_HEAD = "mgr_head_sp_attendance.php";
 
     String TASK_SERVICECALL = "task_servicecall.php";
 
@@ -55,4 +56,7 @@ public interface ApiLink {
     String IMAGE_BASE_URL = "http://arizonamediaz.co.in/sales_tracking/ci/";
 
     String TRACK_SALES_PERSON = "track_sp.php";
+    String TRACK_MANAGER_HEAD = "managerhead_track_sp.php";
+
+
 }

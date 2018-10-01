@@ -16,6 +16,7 @@ public class ManagerBean {
         String lead_status;
         String user_name;
 
+
         public String getLead_id() {
             return lead_id;
         }

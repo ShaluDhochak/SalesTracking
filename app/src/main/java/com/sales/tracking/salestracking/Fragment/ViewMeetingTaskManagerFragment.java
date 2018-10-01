@@ -37,6 +37,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sales.tracking.salestracking.Adapter.AttendanceAddapter;
 import com.sales.tracking.salestracking.Adapter.VisitTaskMeetingAdapter;
+import com.sales.tracking.salestracking.Adapter.VisitTaskMeetingManagerHeadAdapter;
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
 import com.sales.tracking.salestracking.Bean.PurposeBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
@@ -178,6 +179,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
 
     VisitTaskMeetingAdapter visitTaskMeetingAdapter;
+
+    VisitTaskMeetingManagerHeadAdapter visitTaskMeetingManagerHeadAdapter;
     ArrayList<TaskMeetingBean.All_Meetings_Mgr> spAttendanceList = new ArrayList<>();
 
 
@@ -204,6 +207,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
         if (userTypePref.equals("Sales Manager")) {
             getVisitTaskMeetingRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getVisitTaskManagerHeadMeetingRecyclerView();
         }
 
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
@@ -211,47 +216,98 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     }
 
     private void getVisitTaskMeetingRecyclerView() {
-        if (Connectivity.isConnected(getActivity())) {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
 
-            String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
-            Map<String, String> map = new HashMap<>();
-            map.put("select", "");
-            map.put("m_all", "");
-            map.put("visit_assignedby", userIdPref);
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("m_all", "");
+                map.put("visit_assignedby", userIdPref);
 
-            GSONRequest<TaskMeetingBean> dashboardGsonRequest = new GSONRequest<TaskMeetingBean>(
-                    Request.Method.POST,
-                    Url,
-                    TaskMeetingBean.class, map,
-                    new com.android.volley.Response.Listener<TaskMeetingBean>() {
-                        @Override
-                        public void onResponse(TaskMeetingBean response) {
-                            try {
-                                if (response.getAll_meetings_mgr().size() > 0) {
-                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
-                                    spAttendanceList.clear();
-                                    spAttendanceList.addAll(response.getAll_meetings_mgr());
+                GSONRequest<TaskMeetingBean> dashboardGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class, map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                try {
+                                    if (response.getAll_meetings_mgr().size() > 0) {
+                                        // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
+                                        spAttendanceList.clear();
+                                        spAttendanceList.addAll(response.getAll_meetings_mgr());
 
-                                    visitTaskMeetingAdapter = new VisitTaskMeetingAdapter(getActivity(), response.getAll_meetings_mgr(), ViewMeetingTaskManagerFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    viewMeetingTaskManager_rv.setLayoutManager(mLayoutManager);
-                                    viewMeetingTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
-                                    viewMeetingTaskManager_rv.setAdapter(visitTaskMeetingAdapter);
+                                        visitTaskMeetingAdapter = new VisitTaskMeetingAdapter(getActivity(), response.getAll_meetings_mgr(), ViewMeetingTaskManagerFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewMeetingTaskManager_rv.setLayoutManager(mLayoutManager);
+                                        viewMeetingTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewMeetingTaskManager_rv.setAdapter(visitTaskMeetingAdapter);
+                                        viewMeetingTaskManager_rv.setNestedScrollingEnabled(false);
 
+
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                  //  Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-            dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
+
+        }
+    }
+
+    private void getVisitTaskManagerHeadMeetingRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("mh_all", "");
+                map.put("managerhead_id", userIdPref);
+
+                GSONRequest<TaskMeetingBean> dashboardGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class, map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                try {
+                                    if (response.getAll_meetings_mgr().size() > 0) {
+
+                                        visitTaskMeetingManagerHeadAdapter = new VisitTaskMeetingManagerHeadAdapter(getActivity(), response.getAll_meetings_mgr(), ViewMeetingTaskManagerFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewMeetingTaskManager_rv.setLayoutManager(mLayoutManager);
+                                        viewMeetingTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewMeetingTaskManager_rv.setAdapter(visitTaskMeetingManagerHeadAdapter);
+                                        viewMeetingTaskManager_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    //  Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
         }
     }
 
@@ -263,6 +319,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
         if (userTypePref.equals("Sales Manager")) {
             getVisitTaskMeetingRecyclerView();
+        }if (userTypePref.equals("Manager Head")){
+            getVisitTaskManagerHeadMeetingRecyclerView();
         }
     }
 
@@ -296,14 +354,15 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         currentVisitIdEdit = bean.getVisit_id().toString();
         new CreateDeleteMeetingTask().execute();
 
-        getVisitTaskMeetingRecyclerView();
+       // getVisitTaskMeetingRecyclerView();
+         if (userTypePref.equals("Sales Manager")) {
+             getVisitTaskMeetingRecyclerView();
+         }else if (userTypePref.equals("Manager Head")){
+             getVisitTaskManagerHeadMeetingRecyclerView();
+         }
         viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
         salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
         editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
-
-        // if (userTypePref.equals("Sales Manager")) {
-        //     getVisitTaskMeetingRecyclerView();
-        // }
     }
 
     @OnClick(R.id.minusEditViewVisitTaskMeetingDetail_iv)
@@ -314,20 +373,10 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
 
         if (userTypePref.equals("Sales Manager")) {
             getVisitTaskMeetingRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getVisitTaskManagerHeadMeetingRecyclerView();
         }
     }
-
-  /*  @OnClick(R.id.editEditViewVisitTaskMeetingDetail_iv)
-    public void showEditDetails() {
-        viewMeetingTaskeDetails_cv.setVisibility(View.GONE);
-        salesViewMeetingTaskHeader_rl.setVisibility(View.VISIBLE);
-        editViewMeetingTaskeDetails_cv.setVisibility(View.GONE);
-
-        if (userTypePref.equals("Sales Manager")) {
-            getVisitTaskMeetingRecyclerView();
-        }
-    }
-*/
 
     public void getEditViewMeetingTask(TaskMeetingBean.All_Meetings_Mgr bean) {
 
@@ -729,8 +778,11 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(), "Meeting Task Deleted Successfully", Toast.LENGTH_SHORT).show();
-                    getVisitTaskMeetingRecyclerView();
-                    // clearAll();
+                    if (userTypePref.equals("Sales Manager")) {
+                        getVisitTaskMeetingRecyclerView();
+                    }else if (userTypePref.equals("Manager Head")){
+                        getVisitTaskManagerHeadMeetingRecyclerView();
+                    }
                 } else {
                     makeText(getActivity(), "Oops! An error occured", Toast.LENGTH_SHORT).show();
                     return;
@@ -739,7 +791,6 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
             }
         }
     }
-
 
     private String convertIn12Hours(String time){
 

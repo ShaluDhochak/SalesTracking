@@ -124,14 +124,11 @@ public class AddSalesPersonManagerFragment extends Fragment {
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
 
+        addSalesPersonMessage_cv.setVisibility(GONE);
+        addSalesPersonDetails_cv.setVisibility(View.GONE);
+
         getAddSalesPersonPackageCount();
         getAddSalesPersonUserCount();
-
-
-      /*  selectStatus();
-        addSalesPersonDetails_cv.setVisibility(View.VISIBLE);
-        addSalesPersonMessage_cv.setVisibility(View.GONE);
-*/
 
     }
 
@@ -325,7 +322,8 @@ public class AddSalesPersonManagerFragment extends Fragment {
                         public void onResponse(ManagerUserBean response) {
                             try {
                                 if (response.getPackage_users_count().size() > 0) {
-                                    package_users_count = response.getPackage_users_count().get(0).getPack_noofmemb().toString();
+                                    package_users_count = response.getPackage_users_count().get(0).getPack_noofmemb();
+                                    getDefaultValues();
                                 }
                             } catch (Exception e) {
                             }
@@ -339,7 +337,6 @@ public class AddSalesPersonManagerFragment extends Fragment {
             dashboardGsonRequest.setShouldCache(false);
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
-
 
     }
 
@@ -362,9 +359,11 @@ public class AddSalesPersonManagerFragment extends Fragment {
                             try {
                                 if (response.getUsers_count().size() > 0) {
                                     users_count = response.getUsers_count().get(0).getTot_users().toString();
+                                    getDefaultValues();
                                 }
                             } catch (Exception e) {
                             }
+
                         }
                     },
                     new com.android.volley.Response.ErrorListener() {
@@ -376,18 +375,24 @@ public class AddSalesPersonManagerFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
 
+    }
+
+    private void getDefaultValues(){
         try {
-            if (package_users_count.compareTo(users_count) > 0) {
+            if (Integer.parseInt(package_users_count) > Integer.parseInt(users_count)) {
+                //    package_users_count.compareTo(users_count) > 0) {
+
+                //if (package_users_count.compareTo(users_count) > 0) {
                 selectStatus();
                 addSalesPersonDetails_cv.setVisibility(View.VISIBLE);
                 addSalesPersonMessage_cv.setVisibility(View.GONE);
             } else {
+                selectStatus();
                 addSalesPersonMessage_cv.setVisibility(View.VISIBLE);
                 addSalesPersonDetails_cv.setVisibility(View.GONE);
             }
-
-        }catch (Exception e){
-
+        }catch(Exception e) {
+        //    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }

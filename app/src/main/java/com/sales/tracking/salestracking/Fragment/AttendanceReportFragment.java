@@ -29,8 +29,10 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.AttendanceAddapter;
 import com.sales.tracking.salestracking.Adapter.AttendanceDefaultAdapter;
+import com.sales.tracking.salestracking.Adapter.AttendanceDefaultMgrHeadAdapter;
 import com.sales.tracking.salestracking.Adapter.AttendanceReportManagerAddapter;
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
+import com.sales.tracking.salestracking.Bean.AttendanceReportMgrHeadBean;
 import com.sales.tracking.salestracking.Bean.ManagerReportBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.R;
@@ -127,6 +129,8 @@ public class AttendanceReportFragment extends Fragment {
     AttendanceDefaultAdapter attendanceDefaultAdapter;
     ArrayList<AttendanceManagerBean.Sp_Att_Und_Mgr> attendance = new ArrayList<>();
 
+    AttendanceDefaultMgrHeadAdapter attendanceDefaultMgrHeadAdapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,8 +158,10 @@ public class AttendanceReportFragment extends Fragment {
         if (userTypePref.equals("Sales Manager")) {
             getAttendanceRecyclerView();
             selectAssignTo();
+        }else if (userTypePref.equals("Manager Head")){
+            getAttendanceManagerHeadRecyclerView();
+            selectAssignTo();
         }
-
     }
 
     @OnClick(R.id.minusViewAttendanceReportDetail_iv)
@@ -163,6 +169,13 @@ public class AttendanceReportFragment extends Fragment {
         viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
         viewAttendanceReport_cv.setVisibility(View.GONE);
 
+        if (userTypePref.equals("Sales Manager")) {
+            getAttendanceRecyclerView();
+            selectAssignTo();
+        }else if (userTypePref.equals("Manager Head")){
+            getAttendanceManagerHeadRecyclerView();
+            selectAssignTo();
+        }
 
     }
 
@@ -265,7 +278,15 @@ public class AttendanceReportFragment extends Fragment {
             if (!selectAssignTo.equals("Assign To")) {
                      if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))){
                         if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
-                            getAttendanceReportManagerRecyclerView();
+
+                            if (userTypePref.equals("Sales Manager")) {
+                                getAttendanceReportManagerRecyclerView();
+
+                            }else if (userTypePref.equals("Manager Head")){
+                                getAttendanceReportManagerHeadRecyclerView();
+
+                            }
+
                         }else{
                             Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
                         }
@@ -279,53 +300,109 @@ public class AttendanceReportFragment extends Fragment {
     }
 
     public void getAttendanceReportManagerRecyclerView(){
-        if (Connectivity.isConnected(getActivity())) {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
 
-            String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
-            String tod = todateAdvanceSearchReport_tv.getText().toString();
+                String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
+                String tod = todateAdvanceSearchReport_tv.getText().toString();
 
-            String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
-            Map<String, String> map = new HashMap<>();
-            map.put("logged_manager_id", userIdPref);
-            map.put("add", "");
-            map.put("emp_id", selectAssignToId);
-            map.put("startdate", fromd);
-            map.put("enddate", tod);
+                String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
+                Map<String, String> map = new HashMap<>();
+                map.put("logged_manager_id", userIdPref);
+                map.put("add", "");
+                map.put("emp_id", selectAssignToId);
+                map.put("startdate", fromd);
+                map.put("enddate", tod);
 
-            GSONRequest<ManagerReportBean> dashboardGsonRequest = new GSONRequest<ManagerReportBean>(
-                    Request.Method.POST,
-                    Url,
-                    ManagerReportBean.class, map,
-                    new com.android.volley.Response.Listener<ManagerReportBean>() {
-                        @Override
-                        public void onResponse(ManagerReportBean response) {
-                            try{
-                                if (response.getSp_att_advsearch().size()>0){
-                                    viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
-                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
-                                    attendanceList.clear();
-                                    attendanceList.addAll(response.getSp_att_advsearch());
+                GSONRequest<ManagerReportBean> dashboardGsonRequest = new GSONRequest<ManagerReportBean>(
+                        Request.Method.POST,
+                        Url,
+                        ManagerReportBean.class, map,
+                        new com.android.volley.Response.Listener<ManagerReportBean>() {
+                            @Override
+                            public void onResponse(ManagerReportBean response) {
+                                try {
+                                    if (response.getSp_att_advsearch().size() > 0) {
+                                        viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
+                                        // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
+                                        attendanceList.clear();
+                                        attendanceList.addAll(response.getSp_att_advsearch());
 
-                                    attendanceReportManagerAddapter = new AttendanceReportManagerAddapter(getActivity(),response.getSp_att_advsearch(), AttendanceReportFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
-                                    viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
-                                    viewAttendanceReport_rv.setAdapter(attendanceReportManagerAddapter);
-
+                                        attendanceReportManagerAddapter = new AttendanceReportManagerAddapter(getActivity(), response.getSp_att_advsearch(), AttendanceReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
+                                        viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewAttendanceReport_rv.setAdapter(attendanceReportManagerAddapter);
+                                        viewAttendanceReport_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
-                            }catch(Exception e){
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-            dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    public void getAttendanceReportManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
+                String tod = todateAdvanceSearchReport_tv.getText().toString();
+
+                String Url = ApiLink.ROOT_URL + ApiLink.ATTENDANCE_MANAGER_HEAD;
+                Map<String, String> map = new HashMap<>();
+                map.put("logged_head_manager_id", userIdPref);
+                map.put("add", "");
+                map.put("emp_id", selectAssignToId);
+                map.put("startdate", fromd);
+                map.put("enddate", tod);
+
+                GSONRequest<AttendanceReportMgrHeadBean> dashboardGsonRequest = new GSONRequest<AttendanceReportMgrHeadBean>(
+                        Request.Method.POST,
+                        Url,
+                        AttendanceReportMgrHeadBean.class, map,
+                        new com.android.volley.Response.Listener<AttendanceReportMgrHeadBean>() {
+                            @Override
+                            public void onResponse(AttendanceReportMgrHeadBean response) {
+                                try {
+                                    if (response.getAttendance_report().size() > 0) {
+                                        viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
+
+                                        attendanceDefaultMgrHeadAdapter = new AttendanceDefaultMgrHeadAdapter(getActivity(), response.getAttendance_report(), AttendanceReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
+                                        viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewAttendanceReport_rv.setAdapter(attendanceDefaultMgrHeadAdapter);
+                                        viewAttendanceReport_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -362,6 +439,22 @@ public class AttendanceReportFragment extends Fragment {
 
     }
 
+    public void getAttendanceDefaultMgrHeadData(AttendanceReportMgrHeadBean.Attendance_report bean){
+        viewAttendanceReportHeader_rl.setVisibility(View.GONE);
+        viewAttendanceReport_cv.setVisibility(View.VISIBLE);
+
+        String indate = bean.getAtten_in_datetime();
+        String[] indate1 = indate.split( " ");
+
+        String outDate = bean.getAtten_out_datetime();
+        String[] outDate1 = outDate.split(" ");
+
+        outtimeAttendanceReportDetail_tv.setText(convertIn12Hours(outDate1[1]));
+        intimeAttendanceReportDetail_tv.setText(convertIn12Hours(indate1[1]));
+        dateAttendanceReport_tv.setText(indate1[0]);
+        salesPersonAttendanceReportDetail_tv.setText(bean.getUser_name());
+    }
+
     private String convertIn12Hours(String time){
         String timeToDisplay = "";
         String[] timeArray = time.split(":");
@@ -376,48 +469,99 @@ public class AttendanceReportFragment extends Fragment {
     }
 
     private void getAttendanceRecyclerView(){
-        if (Connectivity.isConnected(getActivity())) {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
 
-            String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
-            Map<String, String> map = new HashMap<>();
-            map.put("select", "");
-            map.put("all", "");
-            map.put("reporting_to", userIdPref);
+                String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("all", "");
+                map.put("reporting_to", userIdPref);
 
-            GSONRequest<AttendanceManagerBean> dashboardGsonRequest = new GSONRequest<AttendanceManagerBean>(
-                    Request.Method.POST,
-                    Url,
-                    AttendanceManagerBean.class, map,
-                    new com.android.volley.Response.Listener<AttendanceManagerBean>() {
-                        @Override
-                        public void onResponse(AttendanceManagerBean response) {
-                            try{
-                                if (response.getSp_att_und_mgr().size()>0){
-                                    viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
-                                    // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
-                                    attendance.clear();
-                                    attendance.addAll(response.getSp_att_und_mgr());
+                GSONRequest<AttendanceManagerBean> dashboardGsonRequest = new GSONRequest<AttendanceManagerBean>(
+                        Request.Method.POST,
+                        Url,
+                        AttendanceManagerBean.class, map,
+                        new com.android.volley.Response.Listener<AttendanceManagerBean>() {
+                            @Override
+                            public void onResponse(AttendanceManagerBean response) {
+                                try {
+                                    if (response.getSp_att_und_mgr().size() > 0) {
+                                        viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
+                                        // for (int i = 0; i<=response.getSp_att_und_mgr().size();i++){
+                                        attendance.clear();
+                                        attendance.addAll(response.getSp_att_und_mgr());
 
-                                    attendanceDefaultAdapter = new AttendanceDefaultAdapter(getActivity(),response.getSp_att_und_mgr(), AttendanceReportFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
-                                    viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
-                                    viewAttendanceReport_rv.setAdapter(attendanceDefaultAdapter);
-
+                                        attendanceDefaultAdapter = new AttendanceDefaultAdapter(getActivity(), response.getSp_att_und_mgr(), AttendanceReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
+                                        viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewAttendanceReport_rv.setAdapter(attendanceDefaultAdapter);
+                                        viewAttendanceReport_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
-                            }catch(Exception e){
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-            dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
+
+        }
+    }
+
+    private void getAttendanceManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String Url = ApiLink.ROOT_URL + ApiLink.ATTENDANCE_MANAGER_HEAD;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("all", "");
+                map.put("user_reporting_to", userIdPref);
+
+                GSONRequest<AttendanceReportMgrHeadBean> dashboardGsonRequest = new GSONRequest<AttendanceReportMgrHeadBean>(
+                        Request.Method.POST,
+                        Url,
+                        AttendanceReportMgrHeadBean.class, map,
+                        new com.android.volley.Response.Listener<AttendanceReportMgrHeadBean>() {
+                            @Override
+                            public void onResponse(AttendanceReportMgrHeadBean response) {
+                                try {
+                                    if (response.getAttendance_report().size() > 0) {
+                                        viewAttendanceReportHeader_rl.setVisibility(View.VISIBLE);
+
+                                        attendanceDefaultMgrHeadAdapter = new AttendanceDefaultMgrHeadAdapter(getActivity(), response.getAttendance_report(), AttendanceReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewAttendanceReport_rv.setLayoutManager(mLayoutManager);
+                                        viewAttendanceReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewAttendanceReport_rv.setAdapter(attendanceDefaultMgrHeadAdapter);
+                                        viewAttendanceReport_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
+
         }
     }
 

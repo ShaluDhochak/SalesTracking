@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.AttendanceAddapter;
+import com.sales.tracking.salestracking.Adapter.ManagerHeadAttendanceAdapter;
 import com.sales.tracking.salestracking.Adapter.SpAttendanceAdapter;
 import com.sales.tracking.salestracking.Adapter.TodaysTaskSalesPersonAdapter;
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
@@ -81,7 +82,7 @@ public class AttendanceManagerFragment extends Fragment {
     ArrayList<AttendanceManagerBean.Sp_Att_Und_Mgr> attendanceList = new ArrayList<>();
     SpAttendanceAdapter spAttendanceAddapter;
     ArrayList<AttendanceManagerBean.Single_sp_att> spAttendanceList = new ArrayList<>();
-
+    ManagerHeadAttendanceAdapter managerHeadAttendanceAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,6 +105,8 @@ public class AttendanceManagerFragment extends Fragment {
             getAttendanceRecyclerView();
         }else if (userTypePref.equals("Sales Executive")){
             getSPAttendanceRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getManagerHeadRecyclerView();
         }
 
         viewAttendanceDetails_cv.setVisibility(View.GONE);
@@ -117,6 +120,8 @@ public class AttendanceManagerFragment extends Fragment {
             getAttendanceRecyclerView();
         }else if (userTypePref.equals("Sales Executive")){
             getSPAttendanceRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getManagerHeadRecyclerView();
         }
     }
 
@@ -166,6 +171,27 @@ public class AttendanceManagerFragment extends Fragment {
 
     }
 
+    public void getManagerheadAttendanceData(AttendanceManagerBean.Sp_att_und_mgrhead bean){
+        viewAttendanceDetails_cv.setVisibility(View.VISIBLE);
+        attendanceDetail_rv.setVisibility(View.GONE);
+
+        String indate = bean.getAtten_in_datetime();
+        String[] indate1 = indate.split( " ");
+
+        String outDate = bean.getAtten_out_datetime();
+        String[] outDate1 = outDate.split(" ");
+
+        dateViewAttendance_tv.setText(indate1[0]);
+        salesPersonValueAttendanceDetail_tv.setText(bean.getUser_name());
+        inTimeAttendance_tv.setText(convertIn12Hours(indate1[1]));
+
+        inLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_in_latitude()),Double.parseDouble(bean.getAtten_in_longitude())));
+        //   inLocationAttendance_tv.setText(bean.getAtten_in_latitude());
+        outTimeAttendance_tv.setText(convertIn12Hours(outDate1[1]));
+        outLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_out_latitude()),Double.parseDouble(bean.getAtten_out_longitude())));
+
+    }
+
     private void getAttendanceRecyclerView(){
         if (Connectivity.isConnected(getActivity())) {
 
@@ -197,7 +223,7 @@ public class AttendanceManagerFragment extends Fragment {
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -254,7 +280,48 @@ public class AttendanceManagerFragment extends Fragment {
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                           //     Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getManagerHeadRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.Attendance_Manager;
+            Map<String, String> map = new HashMap<>();
+            map.put("select", "");
+            map.put("all", "");
+            map.put("user_reporting_to", userIdPref);
+
+            GSONRequest<AttendanceManagerBean> dashboardGsonRequest = new GSONRequest<AttendanceManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    AttendanceManagerBean.class, map,
+                    new com.android.volley.Response.Listener<AttendanceManagerBean>() {
+                        @Override
+                        public void onResponse(AttendanceManagerBean response) {
+                            try{
+                                if (response.getSp_att_und_mgrhead().size()>0){
+
+                                    managerHeadAttendanceAdapter = new ManagerHeadAttendanceAdapter(getActivity(),response.getSp_att_und_mgrhead(), AttendanceManagerFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    attendanceDetail_rv.setLayoutManager(mLayoutManager);
+                                    attendanceDetail_rv.setItemAnimator(new DefaultItemAnimator());
+                                    attendanceDetail_rv.setAdapter(managerHeadAttendanceAdapter);
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                          //      Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },

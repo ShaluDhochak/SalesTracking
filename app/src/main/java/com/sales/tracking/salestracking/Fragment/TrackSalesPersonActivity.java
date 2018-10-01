@@ -70,6 +70,17 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
 
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
+        if (userType.equals("Sales Manager")){
+            getManager();
+        }else if (userType.equals("Manager Head")){
+            getManagerHead();
+        }
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setMinZoomPreference(1);
+    }
+
+    public void getManager(){
         String Url = ApiLink.ROOT_URL + ApiLink.TRACK_SALES_PERSON;
         Map<String, String> map = new HashMap<>();
         map.put("get_live_location", "");
@@ -102,9 +113,41 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
                 });
         locationTrackRequest.setShouldCache(false);
         Utilities.getRequestQueue(this).add(locationTrackRequest);
+    }
 
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMinZoomPreference(1);
+    private void getManagerHead(){
+        String Url = ApiLink.ROOT_URL + ApiLink.TRACK_MANAGER_HEAD;
+        Map<String, String> map = new HashMap<>();
+        map.put("get_live_location", "");
+        map.put("managerhead_id", userId);
+        map.put("user_type", "");
+
+        GSONRequest<SalesPersonTrackerBean> locationTrackRequest = new GSONRequest<>(
+                Request.Method.POST,
+                Url,
+                SalesPersonTrackerBean.class, map,
+                new com.android.volley.Response.Listener<SalesPersonTrackerBean>() {
+                    @Override
+                    public void onResponse(SalesPersonTrackerBean response) {
+                        try {
+
+                            if (response.getSales_person_tracking().size() > 0) {
+                                setMarker(response.getSales_person_tracking());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(TrackSalesPersonActivity.this, "Api response Problem", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("Error :", error.getMessage());
+                    }
+                });
+        locationTrackRequest.setShouldCache(false);
+        Utilities.getRequestQueue(this).add(locationTrackRequest);
     }
 
     private void setMarker(List<SalesPersonTrackerBean.SalesTracker> salesTrackerList){
@@ -120,6 +163,8 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
                     .icon(BitmapDescriptorFactory.defaultMarker( BitmapDescriptorFactory.HUE_BLUE));
             InfoWindowData infoWindowData = new InfoWindowData();
             infoWindowData.setName(salesTracker.getUser_name());
+            infoWindowData.setAddress(salesTracker.getUser_type());
+            infoWindowData.setContact(salesTracker.getUser_name());
 
             final Marker marker = mMap.addMarker(markerOptions);
             marker.setTag(infoWindowData);

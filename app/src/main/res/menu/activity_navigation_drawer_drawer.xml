@@ -282,6 +282,89 @@
             android:title="Assign Request" />
     </group>
 
+    <group
+        android:id="@+id/main_head_option"
+        android:checkableBehavior="single"
+        android:visible="true">
+        <item
+            android:id="@+id/nav_dashboard_head"
+            android:icon="@drawable/dashboard_icon"
+            android:title="Dashboard"
+            />
+        <item
+            android:id="@+id/nav_track_sales_person_head"
+            android:icon="@drawable/sales_track_icon"
+            android:title="Track Sales Person" />
+        <item
+            android:id="@+id/nav_manager_head"
+            android:icon="@drawable/manage_icon"
+            android:title="Manager" />
+        <item
+            android:id="@+id/nav_reports_head"
+            android:icon="@drawable/reports"
+            android:title="Reports" />
+
+    </group>
+
+    <group
+        android:id="@+id/managerhead_option"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/nav_managerhead_title"
+            android:icon="@drawable/arrow_left"
+            android:title="Manager"
+            />
+        <item
+            android:id="@+id/nav_workinghours_attendance_managerhead"
+            android:title="Working Hours/Attendance" />
+        <item
+            android:id="@+id/nav_view_tasks_managerhead"
+            android:title="View Tasks" />
+        <item
+            android:id="@+id/nav_view_meeting_tasks_managerhead"
+            android:title="View Meeting Tasks"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_view_salescalls_tasks_managerhead"
+            android:title="View Service Calls Tasks"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/nav_view_client_managerhead"
+            android:title="View Client"
+            />
+
+        <item
+            android:id="@+id/nav_view_users_managerhead"
+            android:title="View Users"
+            />
+
+    </group>
+
+    <group
+        android:id="@+id/managerhead_report_option"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/nav_reports_managerhead_title"
+            android:icon="@drawable/arrow_left"
+            android:title="Reports"
+            />
+        <item
+            android:id="@+id/nav_attendance_managerhead"
+            android:title="Attendance" />
+        <item
+            android:id="@+id/nav_visits_managerhead"
+            android:title="Visits" />
+        <item
+            android:id="@+id/nav_expenses_managerhead"
+            android:title="Expenses"
+            android:visible="false"/>
+
+
+    </group>
+
 
     <item android:id="@+id/nav_profile1"
         android:icon="@drawable/user_icon"
