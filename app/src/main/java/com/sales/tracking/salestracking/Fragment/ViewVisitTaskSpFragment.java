@@ -151,6 +151,7 @@ public class ViewVisitTaskSpFragment extends Fragment {
                                     viewVisitSpTaskManager_rv.setLayoutManager(mLayoutManager);
                                     viewVisitSpTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewVisitSpTaskManager_rv.setAdapter(viewVisitTaskSpAdapter);
+                                    viewVisitSpTaskManager_rv.setNestedScrollingEnabled(false);
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
@@ -225,7 +226,8 @@ public class ViewVisitTaskSpFragment extends Fragment {
         Integer hours = Integer.parseInt(timeArray[0]);
 
         if(hours > 12){
-            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+            Integer diff = (24-hours);
+            timeToDisplay = (12 - diff) + ":" +  timeArray[1] + " PM";
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }

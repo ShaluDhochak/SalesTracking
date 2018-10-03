@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.CustomerFeedbackBean;
 import com.sales.tracking.salestracking.Bean.ExpencesSpBean;
 import com.sales.tracking.salestracking.R;
@@ -160,6 +161,7 @@ public class AddCustomerfeedbackFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Added Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewCustomerFeedbackFragmnet();
                     clearAll();
                 }
                 else {

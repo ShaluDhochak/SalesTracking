@@ -151,6 +151,7 @@ public class ViewReassignManagerFragment extends Fragment {
                                     viewReasignedRequest_rv.setLayoutManager(mLayoutManager);
                                     viewReasignedRequest_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewReasignedRequest_rv.setAdapter(viewReassignedRequestAdapter);
+                                    viewReasignedRequest_rv.setNestedScrollingEnabled(false);
                                 }
                             } catch (Exception e) {
                             }

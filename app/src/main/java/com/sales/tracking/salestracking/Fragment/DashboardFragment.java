@@ -300,6 +300,7 @@ public class DashboardFragment extends Fragment {
                                     dashboardDetail_rv.setLayoutManager(mLayoutManager);
                                     dashboardDetail_rv.setItemAnimator(new DefaultItemAnimator());
                                     dashboardDetail_rv.setAdapter(dashboardManagerAdapter);
+                                    dashboardManagerAdapter.notifyDataSetChanged();
 
                                 }
                             }catch(Exception e){
@@ -339,6 +340,7 @@ public class DashboardFragment extends Fragment {
                                     dashboardDetail_rv.setLayoutManager(mLayoutManager);
                                     dashboardDetail_rv.setItemAnimator(new DefaultItemAnimator());
                                     dashboardDetail_rv.setAdapter(dashboardManagerAdapter);
+                                    dashboardDetail_rv.setNestedScrollingEnabled(false);
 
                                 }
                             }catch(Exception e){
@@ -378,7 +380,8 @@ public class DashboardFragment extends Fragment {
         Integer hours = Integer.parseInt(timeArray[0]);
 
         if(hours > 12){
-            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+            Integer diff = (24-hours);
+            timeToDisplay = (12 - diff) + ":" +  timeArray[1] + " PM";
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }

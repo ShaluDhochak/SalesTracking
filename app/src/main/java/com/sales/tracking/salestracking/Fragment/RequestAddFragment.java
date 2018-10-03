@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.google.android.gms.dynamic.IFragmentWrapper;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.RequestSpBean;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
 import com.sales.tracking.salestracking.R;
@@ -279,6 +280,7 @@ public class RequestAddFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Inserted Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewRequestTaskSpFragment();
                     clearAll();
                 }
                 else {
@@ -295,6 +297,5 @@ public class RequestAddFragment extends Fragment {
         commentAddRequestSp_et.setText("");
         saleCallTaskRequestSp_sp.setSelection(0);
     }
-
 
 }

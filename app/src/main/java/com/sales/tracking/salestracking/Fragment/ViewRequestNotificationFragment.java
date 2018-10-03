@@ -182,6 +182,7 @@ public class ViewRequestNotificationFragment extends Fragment {
                                     viewRequestNotification_rv.setLayoutManager(mLayoutManager);
                                     viewRequestNotification_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewRequestNotification_rv.setAdapter(viewRequestNotificationDetailsAdapter);
+                                    viewRequestNotification_rv.setNestedScrollingEnabled(false);
 
                                 }
                             } catch (Exception e) {
@@ -222,7 +223,7 @@ public class ViewRequestNotificationFragment extends Fragment {
                                     viewRequestNotificationRecycler_rv.setLayoutManager(mLayoutManager);
                                     viewRequestNotificationRecycler_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewRequestNotificationRecycler_rv.setAdapter(viewReassignedRequestNotificationCountAdapter);
-
+                                    viewRequestNotificationRecycler_rv.setNestedScrollingEnabled(false);
                                 }
                             } catch (Exception e) {
                                 // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();

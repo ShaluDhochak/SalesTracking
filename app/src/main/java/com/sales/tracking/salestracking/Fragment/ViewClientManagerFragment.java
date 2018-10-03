@@ -530,7 +530,7 @@ public class ViewClientManagerFragment extends Fragment {
                                     leadTask_rv.setItemAnimator(new DefaultItemAnimator());
                                     leadTask_rv.setAdapter(managerClientAdapter);
                                     leadTask_rv.setNestedScrollingEnabled(false);
-                                }
+                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
                             }

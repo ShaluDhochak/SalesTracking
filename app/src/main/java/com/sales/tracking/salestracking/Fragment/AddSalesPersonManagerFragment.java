@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Adapter.SalesPersonAdapter;
 import com.sales.tracking.salestracking.Bean.ManagerUserBean;
 import com.sales.tracking.salestracking.R;
@@ -283,7 +284,9 @@ public class AddSalesPersonManagerFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Inserted Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewSalesPersonManagerFragment();
                    clearAll();
+
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();

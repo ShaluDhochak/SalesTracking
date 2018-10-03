@@ -158,6 +158,7 @@ public class ViewTargetManagerFragment extends Fragment {
                                     viewTarget_rv.setLayoutManager(mLayoutManager);
                                     viewTarget_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewTarget_rv.setAdapter(targetViewAdapter);
+                                    viewTarget_rv.setNestedScrollingEnabled(false);
 
                                 }
                             } catch (Exception e) {

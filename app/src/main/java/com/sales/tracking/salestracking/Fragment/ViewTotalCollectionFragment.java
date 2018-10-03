@@ -278,6 +278,7 @@ public class ViewTotalCollectionFragment extends Fragment {
                                     viewTotalCollection_rv.setLayoutManager(mLayoutManager);
                                     viewTotalCollection_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewTotalCollection_rv.setAdapter(viewCollectionAdapter);
+                                    viewTotalCollection_rv.setNestedScrollingEnabled(false);
 
                                 }
                             }catch(Exception e){
@@ -329,6 +330,7 @@ public class ViewTotalCollectionFragment extends Fragment {
                                     viewTotalManagerCollection_rv.setLayoutManager(mLayoutManager);
                                     viewTotalManagerCollection_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewTotalManagerCollection_rv.setAdapter(viewCollectionAdapter);
+                                    viewTotalManagerCollection_rv.setNestedScrollingEnabled(false);
 
                                 }
                             }catch(Exception e){

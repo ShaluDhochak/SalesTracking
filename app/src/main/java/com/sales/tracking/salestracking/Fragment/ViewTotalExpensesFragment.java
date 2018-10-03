@@ -169,6 +169,7 @@ public class ViewTotalExpensesFragment extends Fragment {
                                     viewExpensesSp_rv.setLayoutManager(mLayoutManager);
                                     viewExpensesSp_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewExpensesSp_rv.setAdapter(viewTotalExpensesAdapter);
+                                    viewExpensesSp_rv.setNestedScrollingEnabled(false);
 
                                 }
                             } catch (Exception e) {
@@ -335,6 +336,7 @@ public class ViewTotalExpensesFragment extends Fragment {
                                     viewExpensesSp_rv.setLayoutManager(mLayoutManager);
                                     viewExpensesSp_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewExpensesSp_rv.setAdapter(viewTotalExpensesManagerAdapter);
+                                    viewExpensesSp_rv.setNestedScrollingEnabled(false);
                                 }
                             } catch (Exception e) {
                                 // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();

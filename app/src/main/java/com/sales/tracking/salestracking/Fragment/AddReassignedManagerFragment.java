@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.RequestSpBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.R;
@@ -391,6 +392,7 @@ public class AddReassignedManagerFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Updated Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewReassignRequestManager();
                     clearAll();
                 }
                 else {

@@ -520,6 +520,7 @@ public class ViewClientNotificationManagerFragment extends Fragment {
                                     leadTask_rv.setLayoutManager(mLayoutManager);
                                     leadTask_rv.setItemAnimator(new DefaultItemAnimator());
                                     leadTask_rv.setAdapter(viewRequestNotificationDetailsManagerAdapter);
+                                    leadTask_rv.setNestedScrollingEnabled(false);
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();

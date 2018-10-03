@@ -16,7 +16,12 @@ public class SalesPersonTrackerBean {
     }
 
     public static class SalesTracker{
-        String user_id,user_name,user_type,user_lattitude,user_longitude;
+
+        String user_id;
+        String user_name;
+        String user_mobile;
+        String user_type;
+        String user_lattitude;
 
         public String getUser_id() {
             return user_id;
@@ -32,6 +37,14 @@ public class SalesPersonTrackerBean {
 
         public void setUser_name(String user_name) {
             this.user_name = user_name;
+        }
+
+        public String getUser_mobile() {
+            return user_mobile;
+        }
+
+        public void setUser_mobile(String user_mobile) {
+            this.user_mobile = user_mobile;
         }
 
         public String getUser_type() {
@@ -57,5 +70,9 @@ public class SalesPersonTrackerBean {
         public void setUser_longitude(String user_longitude) {
             this.user_longitude = user_longitude;
         }
+
+        String user_longitude;
+
+
     }
 }

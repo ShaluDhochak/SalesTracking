@@ -44,6 +44,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.UpdateViewTaskSpBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
@@ -138,14 +139,14 @@ public class VisitTaskUpdateSpFragment extends Fragment{
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_visit_task_update_sp, container, false);
         ButterKnife.bind(this, view);
-
+        initialiseUI();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initialiseUI();
+
     }
 
     private void initialiseUI() {
@@ -353,6 +354,7 @@ public class VisitTaskUpdateSpFragment extends Fragment{
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewVisitTaskSpFragment();
                     clearAll();
                 } else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
@@ -471,11 +473,11 @@ public class VisitTaskUpdateSpFragment extends Fragment{
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Camera Permission Granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             } else {
-                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Camera Permission Denied", Toast.LENGTH_LONG).show();
             }
         }
 

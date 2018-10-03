@@ -234,7 +234,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
     }
 
-
     private void startLocationTracking() {
         final LocationTracker locationTrackerThread = new LocationTracker(NavigationDrawerActivity.this, String.valueOf(latitude), String.valueOf(longitude));
         locationTrackerThread.trackSalesPersonAPI();
@@ -1229,7 +1228,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         atransaction.commit();
     }
 
-    private void viewCustomerFeedbackFragmnet() {
+    public void viewCustomerFeedbackFragmnet() {
         ViewCustomerFeedbackFragment vcffragment = new ViewCustomerFeedbackFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, vcffragment);
@@ -1439,7 +1438,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         return true;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

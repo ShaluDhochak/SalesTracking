@@ -296,6 +296,7 @@ public class ViewExpensesReportFragment extends Fragment {
                                     viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewExpensesReport_rv.setAdapter(viewExpensesReportAdapter);
                                     viewExpensesReport_rv.setNestedScrollingEnabled(false);
+
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();

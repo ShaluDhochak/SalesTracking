@@ -158,6 +158,7 @@ public class ViewCustomerFeedbackFragment extends Fragment {
                                     customerFeedback_rv.setLayoutManager(mLayoutManager);
                                     customerFeedback_rv.setItemAnimator(new DefaultItemAnimator());
                                     customerFeedback_rv.setAdapter(customerAdapter);
+                                    customerFeedback_rv.setNestedScrollingEnabled(false);
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();

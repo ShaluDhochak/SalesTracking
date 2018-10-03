@@ -193,6 +193,7 @@ public class ViewSalesPersonDetailsFragment extends Fragment {
                                         viewSalesPerson_rv.setLayoutManager(mLayoutManager);
                                         viewSalesPerson_rv.setItemAnimator(new DefaultItemAnimator());
                                         viewSalesPerson_rv.setAdapter(salesPersonAdapter);
+                                        viewSalesPerson_rv.setNestedScrollingEnabled(false);
                                     }
                                 } catch (Exception e) {
                                     // Toast.makeText(getActivity(), "Something went wrong..", Toast.LENGTH_SHORT).show();

@@ -164,7 +164,7 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
             InfoWindowData infoWindowData = new InfoWindowData();
             infoWindowData.setName(salesTracker.getUser_name());
             infoWindowData.setAddress(salesTracker.getUser_type());
-            infoWindowData.setContact(salesTracker.getUser_name());
+            infoWindowData.setContact(salesTracker.getUser_mobile());
 
             final Marker marker = mMap.addMarker(markerOptions);
             marker.setTag(infoWindowData);

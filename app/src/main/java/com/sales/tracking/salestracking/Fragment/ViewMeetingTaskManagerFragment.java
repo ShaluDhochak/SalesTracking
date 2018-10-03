@@ -292,6 +292,7 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
                                         viewMeetingTaskManager_rv.setItemAnimator(new DefaultItemAnimator());
                                         viewMeetingTaskManager_rv.setAdapter(visitTaskMeetingManagerHeadAdapter);
                                         viewMeetingTaskManager_rv.setNestedScrollingEnabled(false);
+
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -799,7 +800,8 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         Integer hours = Integer.parseInt(timeArray[0]);
 
         if(hours > 12){
-            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+            Integer diff = (24-hours);
+            timeToDisplay = (12 - diff) + ":" +  timeArray[1] + " PM";
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }

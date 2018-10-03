@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.ExpencesSpBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.R;
@@ -90,6 +91,9 @@ public class AddTargetManagerFragment extends Fragment {
     @BindView(R.id.submitAddTargetDetail_btn)
     Button submitAddTargetDetail_btn;
 
+    @BindView(R.id.callCountAddTargetDetailHeading_tv)
+    TextView callCountAddTargetDetailHeading_tv;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -105,6 +109,8 @@ public class AddTargetManagerFragment extends Fragment {
     }
 
     private void initialiseUI(){
+
+        callCountAddTargetDetailHeading_tv.setText("No. of Call/Visit");
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
@@ -285,6 +291,7 @@ public class AddTargetManagerFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Added Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewTargetManagerFragment();
                     clearAll();
                 }
                 else {

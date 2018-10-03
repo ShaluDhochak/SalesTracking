@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
 import com.sales.tracking.salestracking.R;
@@ -283,6 +284,7 @@ public class AddLeadSpFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewLeadSpFragment();
                     clearAll();
                 }
                 else {
@@ -357,6 +359,7 @@ public class AddLeadSpFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewClientManagerFragment();
                     clearAll();
                 }
                 else {

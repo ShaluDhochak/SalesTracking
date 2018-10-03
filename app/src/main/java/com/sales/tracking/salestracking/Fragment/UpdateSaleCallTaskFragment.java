@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
 import com.sales.tracking.salestracking.Bean.UpdateViewTaskSpBean;
 import com.sales.tracking.salestracking.R;
@@ -257,6 +258,7 @@ public class UpdateSaleCallTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Updated Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewSaleCallTaskFragment();
                     clearAll();
                 }
                 else {
