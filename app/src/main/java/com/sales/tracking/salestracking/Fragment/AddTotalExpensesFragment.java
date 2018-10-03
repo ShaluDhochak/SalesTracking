@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
 import com.sales.tracking.salestracking.Bean.ExpencesSpBean;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.R;
@@ -123,13 +124,8 @@ public class AddTotalExpensesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_total_expenses, container, false);
         ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         initialiseUI();
+        return view;
     }
 
     private void initialiseUI(){
@@ -229,6 +225,7 @@ public class AddTotalExpensesFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Added Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity)getActivity()).viewTotalExpensesFragmnet();
                     clearAll();
                 }
                 else {
