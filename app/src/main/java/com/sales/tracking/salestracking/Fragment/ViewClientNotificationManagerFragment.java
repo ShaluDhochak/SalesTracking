@@ -29,6 +29,7 @@ import com.sales.tracking.salestracking.Adapter.ManagerClientAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewReassignedRequestNotificationCountAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsManagerAdapter;
+import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsManagerHeadAdapter;
 import com.sales.tracking.salestracking.Bean.ClientNotificationManagerBean;
 import com.sales.tracking.salestracking.Bean.ExpencesSpBean;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
@@ -151,6 +152,7 @@ public class ViewClientNotificationManagerFragment extends Fragment {
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 
     ViewRequestNotificationDetailsManagerAdapter viewRequestNotificationDetailsManagerAdapter;
+    ViewRequestNotificationDetailsManagerHeadAdapter viewRequestNotificationDetailsManagerHeadAdapter;
     ArrayList<ManagerBean.clients> clientList = new ArrayList<>();
 
     String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype;
@@ -194,6 +196,10 @@ public class ViewClientNotificationManagerFragment extends Fragment {
             titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
             getcount();
+        }else if (userTypePref.equals("Manager Head")) {
+            titleViewLeadTask_tv.setText("View Client");
+            getManagerHeadClientViewRecyclerView();
+            getMgrHeadcount();
         }
     }
 
@@ -203,7 +209,13 @@ public class ViewClientNotificationManagerFragment extends Fragment {
         editLeadSpDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
         if (userTypePref.equals("Sales Manager")) {
+            titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
+            getcount();
+        }else if (userTypePref.equals("Manager Head")) {
+            titleViewLeadTask_tv.setText("View Client");
+            getManagerHeadClientViewRecyclerView();
+            getMgrHeadcount();
         }
     }
 
@@ -537,6 +549,50 @@ public class ViewClientNotificationManagerFragment extends Fragment {
         }
     }
 
+
+    private void getManagerHeadClientViewRecyclerView(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
+            Map<String, String> map = new HashMap<>();
+            map.put("select", "");
+            map.put("manager_id", userIdPref);
+
+            GSONRequest<ManagerBean> dashboardGsonRequest = new GSONRequest<ManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    ManagerBean.class, map,
+                    new com.android.volley.Response.Listener<ManagerBean>() {
+                        @Override
+                        public void onResponse(ManagerBean response) {
+                            try{
+                                if (response.getClients().size()>0){
+                                    clientList.clear();
+                                    clientList.addAll(response.getClients());
+
+                                    viewRequestNotificationDetailsManagerHeadAdapter = new ViewRequestNotificationDetailsManagerHeadAdapter(getActivity(),response.getClients(), ViewClientNotificationManagerFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    leadTask_rv.setLayoutManager(mLayoutManager);
+                                    leadTask_rv.setItemAnimator(new DefaultItemAnimator());
+                                    leadTask_rv.setAdapter(viewRequestNotificationDetailsManagerHeadAdapter);
+                                    leadTask_rv.setNestedScrollingEnabled(false);
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
+
     private void getcount(){
         if (Connectivity.isConnected(getActivity())) {
 
@@ -570,5 +626,40 @@ public class ViewClientNotificationManagerFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
     }
+
+    private void getMgrHeadcount(){
+        if (Connectivity.isConnected(getActivity())) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.CALL_MANAGER_HEAD_NOTIFICATION;
+            Map<String, String> map = new HashMap<>();
+            map.put("count_clients", "");
+            map.put("user_id", userIdPref);
+
+            GSONRequest<ClientNotificationManagerBean> dashboardGsonRequest = new GSONRequest<ClientNotificationManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    ClientNotificationManagerBean.class, map,
+                    new com.android.volley.Response.Listener<ClientNotificationManagerBean>() {
+                        @Override
+                        public void onResponse(ClientNotificationManagerBean response) {
+                            try{
+                                if (response.getClients_count().size()>0){
+                                    titleViewLeadCountTask_tv.setText(response.getClients_count().get(0).getTot_leads().toString());
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+        }
+    }
+
 
 }

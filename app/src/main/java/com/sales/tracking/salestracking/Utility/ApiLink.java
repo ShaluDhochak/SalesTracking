@@ -44,10 +44,13 @@ public interface ApiLink {
     String TARGET_MANAGER = "target.php";
 
     String VISIT_PENDING_REPORT = "rep_manager_visits.php";
+    String VISIT_MANAGER_HEAD_REPORT = "rep_manager_head_visits.php";
 
     String CALL_PENDING_REPORT = "rep_manager_calls.php";
+    String CALL_MANAGER_HEAD_NOTIFICATION = "managerheadheader.php";
 
     String EXPENSES_REPORT="rep_manager_expenses.php";
+    String EXPENSES_MGR_HEAD_REPORT = "rep_manager_head_expenses.php";
 
     String VIEW_REASSIGNED_REQUEST = "request_salesmgr.php";
 

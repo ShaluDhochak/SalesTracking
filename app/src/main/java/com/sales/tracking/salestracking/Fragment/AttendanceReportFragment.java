@@ -389,7 +389,7 @@ public class AttendanceReportFragment extends Fragment {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
@@ -552,7 +552,7 @@ public class AttendanceReportFragment extends Fragment {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },

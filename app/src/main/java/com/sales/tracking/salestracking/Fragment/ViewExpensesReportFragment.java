@@ -27,7 +27,9 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.CallDoneReportAdapter;
+import com.sales.tracking.salestracking.Adapter.ViewExpensesMgrHeadReportAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewExpensesReportAdapter;
+import com.sales.tracking.salestracking.Bean.AllExpensesMgrheadBean;
 import com.sales.tracking.salestracking.Bean.CallDoneReportBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.Bean.ViewExpensesReportBean;
@@ -116,7 +118,7 @@ public class ViewExpensesReportFragment extends Fragment {
     JSONParser jsonParser = new JSONParser();
 
     ViewExpensesReportAdapter viewExpensesReportAdapter;
-
+    ViewExpensesMgrHeadReportAdapter viewExpensesMgrHeadReportAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -143,6 +145,9 @@ public class ViewExpensesReportFragment extends Fragment {
         if (userTypePref.equals("Sales Manager")) {
             getDefaultExpensesReportManagerRecyclerView();
             selectAssignTo();
+        }else if (userTypePref.equals("Manager Head")){
+            getDefaultExpensesReportManagerHeadRecyclerView();
+            selectAssignToMgrHead();
         }
 
     }
@@ -191,6 +196,52 @@ public class ViewExpensesReportFragment extends Fragment {
             assignToUser = new ArrayList<String>();
             assignToUser.clear();
             assignToUser.add("Assign To");
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
+            quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            employeeAdvanceSearchReport_sp.setAdapter(quotationLocationDataAdapter);
+
+        }catch (Exception e){
+        }
+    }
+
+    private void selectAssignToMgrHead(){
+        try{
+            if (Connectivity.isConnected(getActivity())) {
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("users_undermanager","" );
+                map.put("user_comid", user_comidPref);
+                map.put("user_reporting_to", userIdPref);
+
+
+                final GSONRequest<TaskMeetingBean> targetAssignToGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class,map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                assignToUser.clear();
+                                assignToUser.add("Employee Name");
+                                for(int i=0;i<response.getUsers_dd1().size();i++)
+                                {
+                                    assignToUser.add(response.getUsers_dd1().get(i).getUser_name());
+                                    assignToUserMap.put(response.getUsers_dd1().get(i).getUser_id(), response.getUsers_dd1().get(i).getUser_name());
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Utilities.serverError(getActivity());
+                            }
+                        });
+                targetAssignToGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(targetAssignToGsonRequest);
+            }
+            assignToUser = new ArrayList<String>();
+            assignToUser.clear();
+            assignToUser.add("Employee Name");
             ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             employeeAdvanceSearchReport_sp.setAdapter(quotationLocationDataAdapter);
@@ -249,68 +300,190 @@ public class ViewExpensesReportFragment extends Fragment {
 
     @OnClick(R.id.submitAdvanceSearchReport_btn)
     public void submitAdvanceSearch(){
-        if (!selectAssignTo.equals("Assign To")) {
-            if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))){
-                if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
-                    getAllExpensesReportManagerRecyclerView();
-                }else{
-                    Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
+        if (userTypePref.equals("Sales Manager")) {
+
+            if (!selectAssignTo.equals("Assign To")) {
+                if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))) {
+                    if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
+                        getAllExpensesReportManagerRecyclerView();
+
+                    } else {
+                        Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Select Assigned To", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(getActivity(), "Please Select Assigned To", Toast.LENGTH_SHORT).show();
+        }else if (userTypePref.equals("Manager Head")) {
+            if (!selectAssignTo.equals("Employee Name")) {
+                if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))) {
+                    if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
+                        getAllExpensesReportManagerHeadRecyclerView();
+
+                    } else {
+                        Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Please Select Employee Name", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
 
     private void getAllExpensesReportManagerRecyclerView(){
-        if (Connectivity.isConnected(getActivity())) {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
 
-            String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
-            String tod = todateAdvanceSearchReport_tv.getText().toString();
+                String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
+                String tod = todateAdvanceSearchReport_tv.getText().toString();
 
-            String Url = ApiLink.ROOT_URL + ApiLink.EXPENSES_REPORT;
-            Map<String, String> map = new HashMap<>();
-            map.put("logged_manager_id", userIdPref);
-            map.put("add", "");
-            map.put("emp_id", selectAssignToId);
-            map.put("startdate", fromd);
-            map.put("enddate", tod);
+                String Url = ApiLink.ROOT_URL + ApiLink.EXPENSES_REPORT;
+                Map<String, String> map = new HashMap<>();
+                map.put("logged_manager_id", userIdPref);
+                map.put("add", "");
+                map.put("emp_id", selectAssignToId);
+                map.put("startdate", fromd);
+                map.put("enddate", tod);
 
-            GSONRequest<ViewExpensesReportBean> dashboardGsonRequest = new GSONRequest<ViewExpensesReportBean>(
-                    Request.Method.POST,
-                    Url,
-                    ViewExpensesReportBean.class, map,
-                    new com.android.volley.Response.Listener<ViewExpensesReportBean>() {
-                        @Override
-                        public void onResponse(ViewExpensesReportBean response) {
-                            try{
-                                if (response.getSp_expenses().size()>0){
-                                    viewExpensesReport_rl.setVisibility(View.VISIBLE);
+                GSONRequest<ViewExpensesReportBean> dashboardGsonRequest = new GSONRequest<ViewExpensesReportBean>(
+                        Request.Method.POST,
+                        Url,
+                        ViewExpensesReportBean.class, map,
+                        new com.android.volley.Response.Listener<ViewExpensesReportBean>() {
+                            @Override
+                            public void onResponse(ViewExpensesReportBean response) {
+                                try {
+                                    if (response.getSp_expenses().size() > 0) {
+                                        viewExpensesReport_rl.setVisibility(View.VISIBLE);
 
-                                    viewExpensesReportAdapter = new ViewExpensesReportAdapter(getActivity(),response.getSp_expenses(), ViewExpensesReportFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    viewExpensesReport_rv.setLayoutManager(mLayoutManager);
-                                    viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
-                                    viewExpensesReport_rv.setAdapter(viewExpensesReportAdapter);
-                                    viewExpensesReport_rv.setNestedScrollingEnabled(false);
+                                        viewExpensesReportAdapter = new ViewExpensesReportAdapter(getActivity(), response.getSp_expenses(), ViewExpensesReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewExpensesReport_rv.setLayoutManager(mLayoutManager);
+                                        viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewExpensesReport_rv.setAdapter(viewExpensesReportAdapter);
+                                        viewExpensesReport_rv.setNestedScrollingEnabled(false);
 
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    //   Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
-                            }catch(Exception e){
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-            dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    private void getAllExpensesReportManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
+                String tod = todateAdvanceSearchReport_tv.getText().toString();
+
+                String Url = ApiLink.ROOT_URL + ApiLink.EXPENSES_MGR_HEAD_REPORT;
+                Map<String, String> map = new HashMap<>();
+                map.put("logged_head_manager_id", userIdPref);
+                map.put("add", "");
+                map.put("emp_id", selectAssignToId);
+                map.put("startdate", fromd);
+                map.put("enddate", tod);
+
+                GSONRequest<AllExpensesMgrheadBean> dashboardGsonRequest = new GSONRequest<AllExpensesMgrheadBean>(
+                        Request.Method.POST,
+                        Url,
+                        AllExpensesMgrheadBean.class, map,
+                        new com.android.volley.Response.Listener<AllExpensesMgrheadBean>() {
+                            @Override
+                            public void onResponse(AllExpensesMgrheadBean response) {
+                                try {
+                                    if (response.getExpenses_report().size() > 0) {
+                                        viewExpensesReport_rl.setVisibility(View.VISIBLE);
+
+                                        viewExpensesMgrHeadReportAdapter = new ViewExpensesMgrHeadReportAdapter(getActivity(), response.getExpenses_report(), ViewExpensesReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewExpensesReport_rv.setLayoutManager(mLayoutManager);
+                                        viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewExpensesReport_rv.setAdapter(viewExpensesMgrHeadReportAdapter);
+                                        viewExpensesReport_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    // Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    private void getDefaultExpensesReportManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String Url = ApiLink.ROOT_URL + ApiLink.EXPENSES_MGR_HEAD_REPORT;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "");
+                map.put("all", "");
+                map.put("user_reporting_to", userIdPref);
+
+                GSONRequest<AllExpensesMgrheadBean> dashboardGsonRequest = new GSONRequest<AllExpensesMgrheadBean>(
+                        Request.Method.POST,
+                        Url,
+                        AllExpensesMgrheadBean.class, map,
+                        new com.android.volley.Response.Listener<AllExpensesMgrheadBean>() {
+                            @Override
+                            public void onResponse(AllExpensesMgrheadBean response) {
+                                try {
+                                    if (response.getExpenses_report().size() > 0) {
+                                        viewExpensesReport_rl.setVisibility(View.VISIBLE);
+
+                                        viewExpensesMgrHeadReportAdapter = new ViewExpensesMgrHeadReportAdapter(getActivity(), response.getExpenses_report(), ViewExpensesReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewExpensesReport_rv.setLayoutManager(mLayoutManager);
+                                        viewExpensesReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewExpensesReport_rv.setAdapter(viewExpensesMgrHeadReportAdapter);
+                                        viewExpensesReport_rv.setNestedScrollingEnabled(false);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                   // Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
+           // Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -344,7 +517,7 @@ public class ViewExpensesReportFragment extends Fragment {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                //    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
@@ -357,7 +530,7 @@ public class ViewExpensesReportFragment extends Fragment {
                 Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
             }
         }catch(Exception e){
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -373,6 +546,21 @@ public class ViewExpensesReportFragment extends Fragment {
         categoryExpensesReport_tv.setText(bean.getExpcat_name());
 
         dateExpensesReport_tv.setText(bean.getExpense_date());
+    }
+
+    public void getExpensesMgrHeadReportData(AllExpensesMgrheadBean.Expenses_Report bean){
+        viewExpensesReport_rl.setVisibility(View.GONE);
+        viewExpensesReportDetails_cv.setVisibility(View.VISIBLE);
+
+        statusExpensesReport_tv.setText(bean.getExpense_status());
+        detailsExpensesReport_tv.setText(bean.getExpense_details());
+        modeExpensesReport_tv.setText(bean.getExpense_mode());
+        expenseByExpensesReport_tv.setText(bean.getUser_name());
+        amountExpensesReport_tv.setText(bean.getExpense_amt());
+        categoryExpensesReport_tv.setText(bean.getExpcat_name());
+
+        dateExpensesReport_tv.setText(bean.getExpense_date());
+
     }
 
 }

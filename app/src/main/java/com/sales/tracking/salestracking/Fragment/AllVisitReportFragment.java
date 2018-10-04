@@ -31,8 +31,10 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.AttendanceDefaultAdapter;
 import com.sales.tracking.salestracking.Adapter.AttendanceReportManagerAddapter;
+import com.sales.tracking.salestracking.Adapter.VisitManagerHeadReportAdapter;
 import com.sales.tracking.salestracking.Adapter.VisitManagerReportAdapter;
 import com.sales.tracking.salestracking.Adapter.VisitPendingAdapter;
+import com.sales.tracking.salestracking.Bean.AllVisitReportMgrHeadBean;
 import com.sales.tracking.salestracking.Bean.AttendanceManagerBean;
 import com.sales.tracking.salestracking.Bean.ManagerReportBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
@@ -124,6 +126,7 @@ public class AllVisitReportFragment extends Fragment {
     JSONParser jsonParser = new JSONParser();
 
     VisitManagerReportAdapter visitManagerReportAdapter;
+    VisitManagerHeadReportAdapter visitManagerHeadReportAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,6 +152,9 @@ public class AllVisitReportFragment extends Fragment {
         viewVisitManagerReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
              getDefaultVisitReportManagerRecyclerView();
+            selectAssignTo();
+        }else if (userTypePref.equals("Manager Head")){
+            getDefaultVisitReportManagerHeadRecyclerView();
             selectAssignTo();
         }
 
@@ -259,7 +265,11 @@ public class AllVisitReportFragment extends Fragment {
         if (!selectAssignTo.equals("Assign To")) {
             if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))){
                 if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
-                    getAllVisitReportManagerRecyclerView();
+                    if (userTypePref.equals("Sales Manager")) {
+                        getAllVisitReportManagerRecyclerView();
+                    }else if (userTypePref.equals("Manager Head")){
+                        getAllVisitReportManagerHeadRecyclerView();
+                    }
                 }else{
                     Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
                 }
@@ -273,53 +283,110 @@ public class AllVisitReportFragment extends Fragment {
     }
 
     private void getAllVisitReportManagerRecyclerView(){
-        if (Connectivity.isConnected(getActivity())) {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
 
-            String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
-            String tod = todateAdvanceSearchReport_tv.getText().toString();
+                String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
+                String tod = todateAdvanceSearchReport_tv.getText().toString();
 
-            String Url = ApiLink.ROOT_URL + ApiLink.VISIT_PENDING_REPORT;
-            Map<String, String> map = new HashMap<>();
-            map.put("logged_manager_id", userIdPref);
-            map.put("add", "");
-            map.put("emp_id", selectAssignToId);
-            map.put("startdate", fromd);
-            map.put("enddate", tod);
+                String Url = ApiLink.ROOT_URL + ApiLink.VISIT_PENDING_REPORT;
+                Map<String, String> map = new HashMap<>();
+                map.put("logged_manager_id", userIdPref);
+                map.put("add", "");
+                map.put("emp_id", selectAssignToId);
+                map.put("startdate", fromd);
+                map.put("enddate", tod);
 
-            GSONRequest<VisitReportManagerBean> dashboardGsonRequest = new GSONRequest<VisitReportManagerBean>(
-                    Request.Method.POST,
-                    Url,
-                    VisitReportManagerBean.class, map,
-                    new com.android.volley.Response.Listener<VisitReportManagerBean>() {
-                        @Override
-                        public void onResponse(VisitReportManagerBean response) {
-                            try{
-                                if (response.getSp_all_visits().size()>0){
-                                    viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
-
-
-                                   visitManagerReportAdapter = new VisitManagerReportAdapter(getActivity(),response.getSp_all_visits(), AllVisitReportFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                    viewVisitManagerReport_rv.setLayoutManager(mLayoutManager);
-                                    viewVisitManagerReport_rv.setItemAnimator(new DefaultItemAnimator());
-                                    viewVisitManagerReport_rv.setAdapter(visitManagerReportAdapter);
-                                    viewVisitManagerReport_rv.setNestedScrollingEnabled(false);
+                GSONRequest<VisitReportManagerBean> dashboardGsonRequest = new GSONRequest<VisitReportManagerBean>(
+                        Request.Method.POST,
+                        Url,
+                        VisitReportManagerBean.class, map,
+                        new com.android.volley.Response.Listener<VisitReportManagerBean>() {
+                            @Override
+                            public void onResponse(VisitReportManagerBean response) {
+                                try {
+                                    if (response.getSp_all_visits().size() > 0) {
+                                        viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
 
 
+                                        visitManagerReportAdapter = new VisitManagerReportAdapter(getActivity(), response.getSp_all_visits(), AllVisitReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewVisitManagerReport_rv.setLayoutManager(mLayoutManager);
+                                        viewVisitManagerReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewVisitManagerReport_rv.setAdapter(visitManagerReportAdapter);
+                                        viewVisitManagerReport_rv.setNestedScrollingEnabled(false);
+
+
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
-                            }catch(Exception e){
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    },
-                    new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    });
-            dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    private void getAllVisitReportManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
+                String tod = todateAdvanceSearchReport_tv.getText().toString();
+
+                String Url = ApiLink.ROOT_URL + ApiLink.VISIT_MANAGER_HEAD_REPORT;
+                Map<String, String> map = new HashMap<>();
+                map.put("logged_head_manager_id", userIdPref);
+                map.put("add", "");
+                map.put("emp_id", selectAssignToId);
+                map.put("startdate", fromd);
+                map.put("enddate", tod);
+
+                GSONRequest<AllVisitReportMgrHeadBean> dashboardGsonRequest = new GSONRequest<AllVisitReportMgrHeadBean>(
+                        Request.Method.POST,
+                        Url,
+                        AllVisitReportMgrHeadBean.class, map,
+                        new com.android.volley.Response.Listener<AllVisitReportMgrHeadBean>() {
+                            @Override
+                            public void onResponse(AllVisitReportMgrHeadBean response) {
+                                try {
+                                    if (response.getVisits_report().size() > 0) {
+                                        viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
+
+                                        visitManagerHeadReportAdapter = new VisitManagerHeadReportAdapter(getActivity(), response.getVisits_report(), AllVisitReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewVisitManagerReport_rv.setLayoutManager(mLayoutManager);
+                                        viewVisitManagerReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewVisitManagerReport_rv.setAdapter(visitManagerHeadReportAdapter);
+                                        viewVisitManagerReport_rv.setNestedScrollingEnabled(false);
+
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    //  Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -371,7 +438,69 @@ public class AllVisitReportFragment extends Fragment {
         }
     }
 
+    private void getDefaultVisitReportManagerHeadRecyclerView(){
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+
+                String Url = ApiLink.ROOT_URL + ApiLink.VISIT_MANAGER_HEAD_REPORT;
+                Map<String, String> map = new HashMap<>();
+                map.put("select", "select");
+                map.put("all", "all");
+                map.put("user_reporting_to", userIdPref);
+
+                GSONRequest<AllVisitReportMgrHeadBean> dashboardGsonRequest = new GSONRequest<AllVisitReportMgrHeadBean>(
+                        Request.Method.POST,
+                        Url,
+                        AllVisitReportMgrHeadBean.class, map,
+                        new com.android.volley.Response.Listener<AllVisitReportMgrHeadBean>() {
+                            @Override
+                            public void onResponse(AllVisitReportMgrHeadBean response) {
+                                try {
+                                    if (response.getVisits_report().size() > 0) {
+                                        viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
+
+                                        visitManagerHeadReportAdapter = new VisitManagerHeadReportAdapter(getActivity(), response.getVisits_report(), AllVisitReportFragment.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        viewVisitManagerReport_rv.setLayoutManager(mLayoutManager);
+                                        viewVisitManagerReport_rv.setItemAnimator(new DefaultItemAnimator());
+                                        viewVisitManagerReport_rv.setAdapter(visitManagerHeadReportAdapter);
+                                        viewVisitManagerReport_rv.setNestedScrollingEnabled(false);
+
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                //    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        });
+                dashboardGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            }
+        }catch(Exception e){
+            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void getAllVisitData(VisitReportManagerBean.sp_all_visits bean){
+        viewVisitManagerReportHeader_rl.setVisibility(View.GONE);
+        viewVisitManagerReport_cv.setVisibility(View.VISIBLE);
+
+        meetingtimeVisitManagerReport_tv.setText(convertIn12Hours(bean.getMeeting_time()));
+        commentsVisitManagerReportDetail_tv.setText(bean.getVisit_comments());
+        purposeVisitManagerReportDetail_tv.setText(bean.getPurpose_name());
+        locationVisitManagerReportDetail_tv.setText(bean.getVisit_address());
+        empnameVisitManagerReportDetail_tv.setText(bean.getUser_name());
+        dateVisitManagerReport_tv.setText(bean.getMeeting_dt());
+        clientNameVisitManagerReportDetail_tv.setText(bean.getLead_company());
+
+    }
+
+    public void getAllVisitMgrHead(AllVisitReportMgrHeadBean.Visits_Report bean){
         viewVisitManagerReportHeader_rl.setVisibility(View.GONE);
         viewVisitManagerReport_cv.setVisibility(View.VISIBLE);
 

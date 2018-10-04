@@ -306,7 +306,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             }
         }else if (userTypePref.equals("Manager Head")){
             if (id==R.id.action_view_managerhead_clients){
-                requestManagerNotificationFragment();
+                viewClientManagerNotificationFragment();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -881,6 +881,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
         else if (id==R.id.nav_reports_head){
             setDefaultManagerHeadReportDrawer();
+
+
         }else if (id==R.id.nav_reports_managerhead_title){
 
             navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
@@ -888,8 +890,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
             navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
-            navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
-            navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, true);
+            navigationView.getMenu().setGroupVisible(R.id.main_head_option, true);
+            navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
             navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, false);
 
@@ -899,8 +901,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             drawer.closeDrawer(GravityCompat.START);
         }else if (id==R.id.nav_visits_managerhead){
 
+            viewAllVisitReportFragmnet();
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id==R.id.nav_expenses_managerhead){
-
+            viewExpensesReportFragment();
+            drawer.closeDrawer(GravityCompat.START);
         }else if (id==R.id.nav_view_users_managerhead){
             setDefaultManagerViewTasksDrawer();
 
@@ -997,6 +1002,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().getItem(67).setVisible(false);
         navigationView.getMenu().getItem(68).setVisible(false);
     }
+
 
     private void setDefaultVisitTaskSalesPerson() {
         navigationView.getMenu().getItem(29).setVisible(false);
