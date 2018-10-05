@@ -155,7 +155,7 @@ public class AllVisitReportFragment extends Fragment {
             selectAssignTo();
         }else if (userTypePref.equals("Manager Head")){
             getDefaultVisitReportManagerHeadRecyclerView();
-            selectAssignTo();
+            selectAssignToMgrHead();
         }
 
     }
@@ -164,6 +164,14 @@ public class AllVisitReportFragment extends Fragment {
     public void hideDetail(){
         viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
         viewVisitManagerReport_cv.setVisibility(View.GONE);
+
+        if (userTypePref.equals("Sales Manager")) {
+            getDefaultVisitReportManagerRecyclerView();
+            selectAssignTo();
+        }else if (userTypePref.equals("Manager Head")){
+            getDefaultVisitReportManagerHeadRecyclerView();
+            selectAssignToMgrHead();
+        }
     }
 
     private void selectAssignTo(){
@@ -204,6 +212,50 @@ public class AllVisitReportFragment extends Fragment {
             assignToUser = new ArrayList<String>();
             assignToUser.clear();
             assignToUser.add("Assign To");
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
+            quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            employeeAdvanceSearchReport_sp.setAdapter(quotationLocationDataAdapter);
+
+        }catch (Exception e){
+        }
+    }
+
+    private void selectAssignToMgrHead(){
+        try{
+            if (Connectivity.isConnected(getActivity())) {
+                String Url = ApiLink.ROOT_URL + ApiLink.CALL_MANAGER_HEAD_NOTIFICATION;
+                Map<String, String> map = new HashMap<>();
+                map.put("get_users","" );
+                map.put("managerhead_id", userIdPref);
+
+                final GSONRequest<TaskMeetingBean> targetAssignToGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class,map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                assignToUser.clear();
+                                assignToUser.add("Employee Name");
+                                for(int i=0;i<response.getUsers_dd1().size();i++)
+                                {
+                                    assignToUser.add(response.getUsers_dd1().get(i).getUser_name());
+                                    assignToUserMap.put(response.getUsers_dd1().get(i).getUser_id(), response.getUsers_dd1().get(i).getUser_name());
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Utilities.serverError(getActivity());
+                            }
+                        });
+                targetAssignToGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(targetAssignToGsonRequest);
+            }
+            assignToUser = new ArrayList<String>();
+            assignToUser.clear();
+            assignToUser.add("Employee Name");
             ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             employeeAdvanceSearchReport_sp.setAdapter(quotationLocationDataAdapter);
@@ -262,22 +314,38 @@ public class AllVisitReportFragment extends Fragment {
 
     @OnClick(R.id.submitAdvanceSearchReport_btn)
     public void submitAdvanceSearch(){
-        if (!selectAssignTo.equals("Assign To")) {
-            if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))){
-                if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
-                    if (userTypePref.equals("Sales Manager")) {
-                        getAllVisitReportManagerRecyclerView();
-                    }else if (userTypePref.equals("Manager Head")){
-                        getAllVisitReportManagerHeadRecyclerView();
+
+        if (userTypePref.equals("Sales Manager")) {
+
+            if (!selectAssignTo.equals("Assign To")) {
+                if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))){
+                    if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
+                            getAllVisitReportManagerRecyclerView();
+                    }else{
+                        Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
                 }
             }else{
-                Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please Select Assigned To", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(getActivity(), "Please Select Assigned To", Toast.LENGTH_SHORT).show();
+
+        }else if (userTypePref.equals("Manager Head")) {
+            if (!selectAssignTo.equals("Employee Name")) {
+                if (!(fromdateAdvanceSearchReportDetail_tv.getText().toString().equals(""))) {
+                    if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
+                        getAllVisitReportManagerHeadRecyclerView();
+
+                    } else {
+                        Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Please Select Employee Name", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }

@@ -156,6 +156,13 @@ public class ViewExpensesReportFragment extends Fragment {
     public void hideDetail(){
         viewExpensesReport_rl.setVisibility(View.VISIBLE);
         viewExpensesReportDetails_cv.setVisibility(View.GONE);
+        if (userTypePref.equals("Sales Manager")) {
+            getDefaultExpensesReportManagerRecyclerView();
+            selectAssignTo();
+        }else if (userTypePref.equals("Manager Head")){
+            getDefaultExpensesReportManagerHeadRecyclerView();
+            selectAssignToMgrHead();
+        }
     }
 
     private void selectAssignTo(){
@@ -207,11 +214,10 @@ public class ViewExpensesReportFragment extends Fragment {
     private void selectAssignToMgrHead(){
         try{
             if (Connectivity.isConnected(getActivity())) {
-                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                String Url = ApiLink.ROOT_URL + ApiLink.CALL_MANAGER_HEAD_NOTIFICATION;
                 Map<String, String> map = new HashMap<>();
-                map.put("users_undermanager","" );
-                map.put("user_comid", user_comidPref);
-                map.put("user_reporting_to", userIdPref);
+                map.put("get_users","" );
+                map.put("managerhead_id", userIdPref);
 
 
                 final GSONRequest<TaskMeetingBean> targetAssignToGsonRequest = new GSONRequest<TaskMeetingBean>(
