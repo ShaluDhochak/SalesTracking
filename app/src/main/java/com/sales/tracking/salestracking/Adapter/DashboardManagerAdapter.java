@@ -1,12 +1,15 @@
 package com.sales.tracking.salestracking.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sales.tracking.salestracking.Activity.CallDashboardCountActivity;
+import com.sales.tracking.salestracking.Activity.VisitDashboardCountActivity;
 import com.sales.tracking.salestracking.Bean.DashboardManagerBean;
 import com.sales.tracking.salestracking.R;
 
@@ -22,9 +25,15 @@ public class DashboardManagerAdapter extends RecyclerView.Adapter<DashboardManag
         TextView todayLeadsDashboardManager_tv,weeklyLeadsDashboardManager_tv,tillDateLeads_tv;
         TextView nameDashboardHeading_tv;
 
+        TextView nameMeetingDashboardHeading_tv,nameCallsDashboardHeading_tv,nameLeadsDashboardHeading_tv;
+
 
         MyViewHolder(View view) {
             super(view);
+
+            nameMeetingDashboardHeading_tv = (TextView) view.findViewById(R.id.nameMeetingDashboardHeading_tv);
+            nameCallsDashboardHeading_tv = (TextView) view.findViewById(R.id.nameCallsDashboardHeading_tv);
+            nameLeadsDashboardHeading_tv = (TextView) view.findViewById(R.id.nameLeadsDashboardHeading_tv);
 
             nameDashboardHeading_tv = (TextView) view.findViewById(R.id.nameDashboardHeading_tv);
             todayMeetingDashboardManager_tv = (TextView) view.findViewById(R.id.todayMeetingDashboardManager_tv);
@@ -73,6 +82,43 @@ public class DashboardManagerAdapter extends RecyclerView.Adapter<DashboardManag
         holder.todayLeadsDashboardManager_tv.setText(bean.getLeads_today());
         holder.weeklyLeadsDashboardManager_tv.setText(bean.getLeads_week());
         holder.tillDateLeads_tv.setText(bean.getLeads_till_date());
+
+        holder.nameMeetingDashboardHeading_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VisitDashboardCountActivity.class);
+                intent.putExtra("position",position);
+                intent.putExtra("heading", "New Leads");
+                intent.putExtra("bean", tasksList.get(position));
+                //  intent.putParcelableArrayListExtra("arrayList", );
+                context.startActivity(intent);
+            }
+        });
+
+                holder.nameCallsDashboardHeading_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, CallDashboardCountActivity.class);
+                        intent.putExtra("position",position);
+                        intent.putExtra("heading", "New Leads");
+                        intent.putExtra("bean", tasksList.get(position));
+                        //  intent.putParcelableArrayListExtra("arrayList", );
+                        context.startActivity(intent);
+                    }
+                });
+
+                        holder.nameLeadsDashboardHeading_tv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(context, VisitDashboardCountActivity.class);
+                                intent.putExtra("position",position);
+                                intent.putExtra("heading", "New Leads");
+                                intent.putExtra("bean", tasksList.get(position));
+                                //  intent.putParcelableArrayListExtra("arrayList", );
+                                context.startActivity(intent);
+                            }
+                        });
+
 
     }
 

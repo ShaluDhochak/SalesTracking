@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="@drawable/screen_bg_navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.AllVisitReportFragment">
-   <include
-       layout="@layout/visit_layout"/>
+    tools:context=".Fragment.SpVisitDashboardFragment">
+
+
+    <include
+        layout="@layout/visit_layout"/>
 
 </FrameLayout>

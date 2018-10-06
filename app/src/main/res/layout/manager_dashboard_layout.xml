@@ -48,10 +48,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/textcolor"
                         android:textSize="14sp"
                         android:padding="2dp"
                         android:maxLines="2"
+
                         android:layout_toRightOf="@+id/nameDashboard_iv"
                         />
 

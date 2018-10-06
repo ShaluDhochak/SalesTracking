@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.CallDashboardCountActivity">
+
+    <RelativeLayout
+        android:id="@+id/headerCallDashboard_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <include
+            layout="@layout/header_layout"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/callDashboardDetail_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerCallDashboard_rl"
+        >
+        <include
+            layout="@layout/all_call_report_layout"/>
+    </RelativeLayout>
+
+</RelativeLayout>

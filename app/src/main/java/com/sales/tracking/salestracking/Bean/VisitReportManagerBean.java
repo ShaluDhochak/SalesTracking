@@ -4,6 +4,25 @@ import java.util.ArrayList;
 
 public class VisitReportManagerBean {
 
+
+    /*
+     "sp_done_visits": [
+        {
+            "visit_code": "",
+            "meeting_dt": "03 October 2018",
+            "meeting_time": "16:19:00",
+            "user_name": "shalu dhochak",
+            "designation": "Sales Executive",
+            "purpose_name": "Informal Meeting",
+            "visit_address": "Vashi",
+            "visit_comments": "tested",
+            "visit_status": "Done",
+            "lead_company": "arizona",
+            "lead_name": "sonatan",
+            "lead_contact": "7219243619"
+        }
+    ]
+     */
     public static class sp_all_visits{
         String visit_code,meeting_dt,meeting_time,user_name,designation,purpose_name,visit_address,visit_comments;
         String lead_company;

@@ -1,20 +1,17 @@
-package com.sales.tracking.salestracking.Fragment;
+package com.sales.tracking.salestracking.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,12 +23,16 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.sales.tracking.salestracking.Adapter.AllCallReportAdapter;
+import com.sales.tracking.salestracking.Adapter.CallDoneDashboardReportAdapter;
 import com.sales.tracking.salestracking.Adapter.CallDoneReportAdapter;
-import com.sales.tracking.salestracking.Bean.AllSalesCallReportBean;
+import com.sales.tracking.salestracking.Adapter.VisitManagerDashboardReportAdapter;
+import com.sales.tracking.salestracking.Adapter.VisitManagerHeadReportAdapter;
+import com.sales.tracking.salestracking.Adapter.VisitManagerReportAdapter;
 import com.sales.tracking.salestracking.Bean.CallDashboardCountBean;
 import com.sales.tracking.salestracking.Bean.CallDoneReportBean;
+import com.sales.tracking.salestracking.Bean.DashboardManagerBean;
 import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
+import com.sales.tracking.salestracking.Fragment.CallDoneReportFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
@@ -49,8 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
-
-public class CallDoneReportFragment extends Fragment {
+public class CallDashboardCountActivity extends AppCompatActivity {
 
     View view;
 
@@ -71,9 +71,11 @@ public class CallDoneReportFragment extends Fragment {
     JSONParser jsonParser = new JSONParser();
 
     CallDoneReportAdapter callDoneReportAdapter;
+    CallDoneDashboardReportAdapter callDoneDashboardReportAdapter;
 
     @BindView(R.id.statusViewSaleCallReport_tv)
     TextView statusViewSaleCallReport_tv;
+
 
     @BindView(R.id.commentsViewSaleCallReport_tv)
     TextView commentsViewSaleCallReport_tv;
@@ -121,14 +123,21 @@ public class CallDoneReportFragment extends Fragment {
     @BindView(R.id.titleViewSaleCallReport_tv)
     TextView titleViewSaleCallReport_tv;
 
+    @BindView(R.id.drawerIcon_iv)
+            ImageView drawerIcon_iv;
+
+
+    DashboardManagerBean.Dashboard_Count bean;
+    String emp_id, process_id;
+    int position;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_all_call_report, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_call_dashboard_count);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -137,19 +146,22 @@ public class CallDoneReportFragment extends Fragment {
         initialiseUI();
     }
 
-    private void initialiseUI() {
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    private void initialiseUI(){
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(CallDashboardCountActivity.this);
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
 
-        titleViewSaleCallReport_tv.setText("View Call Done Report");
+        bean = CallDashboardCountActivity.this.getIntent().getParcelableExtra("bean");
+        position = CallDashboardCountActivity.this.getIntent().getIntExtra("position", 0);
+        emp_id = bean.getUser_id();
+
+        titleViewSaleCallReport_tv.setText("View Call");
 
         saleCallReportHeader_rl.setVisibility(View.VISIBLE);
         viewSaleCallReport_cv.setVisibility(View.GONE);
         if (userTypePref.equals("Sales Manager")) {
             //getTargetViewRecyclerView();
-
             getDefaultVisitDoneReportManagerRecyclerView();
             selectAssignTo();
         }
@@ -166,7 +178,7 @@ public class CallDoneReportFragment extends Fragment {
 
     private void selectAssignTo(){
         try{
-            if (Connectivity.isConnected(getActivity())) {
+            if (Connectivity.isConnected(CallDashboardCountActivity.this)) {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
                 Map<String, String> map = new HashMap<>();
                 map.put("users_undermanager","" );
@@ -193,16 +205,16 @@ public class CallDoneReportFragment extends Fragment {
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Utilities.serverError(getActivity());
+                                Utilities.serverError(CallDashboardCountActivity.this);
                             }
                         });
                 targetAssignToGsonRequest.setShouldCache(false);
-                Utilities.getRequestQueue(getActivity()).add(targetAssignToGsonRequest);
+                Utilities.getRequestQueue(CallDashboardCountActivity.this).add(targetAssignToGsonRequest);
             }
             assignToUser = new ArrayList<String>();
             assignToUser.clear();
             assignToUser.add("Assign To");
-            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(CallDashboardCountActivity.this, R.layout.spinner_textview, assignToUser);
             quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             employeeAdvanceSearchReport_sp.setAdapter(quotationLocationDataAdapter);
 
@@ -229,7 +241,7 @@ public class CallDoneReportFragment extends Fragment {
         int mMonth = calenderObj.get(Calendar.MONTH);
         int mDay = calenderObj.get(Calendar.DAY_OF_MONTH);
 
-        datePickerDialog = new DatePickerDialog(getActivity(),
+        datePickerDialog = new DatePickerDialog(CallDashboardCountActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year,
@@ -247,7 +259,7 @@ public class CallDoneReportFragment extends Fragment {
         int mMonth = calenderObj.get(Calendar.MONTH);
         int mDay = calenderObj.get(Calendar.DAY_OF_MONTH);
 
-        datePickerDialog = new DatePickerDialog(getActivity(),
+        datePickerDialog = new DatePickerDialog(CallDashboardCountActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year,
@@ -265,19 +277,19 @@ public class CallDoneReportFragment extends Fragment {
                 if (!(todateAdvanceSearchReport_tv.getText().toString().equals(""))) {
                     getAllSalesCallReportManagerRecyclerView();
                 }else{
-                    Toast.makeText(getActivity(), "Please Select End Date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CallDashboardCountActivity.this, "Please Select End Date", Toast.LENGTH_SHORT).show();
                 }
             }else{
-                Toast.makeText(getActivity(), "Please Select Start Date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CallDashboardCountActivity.this, "Please Select Start Date", Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(getActivity(), "Please Select Assigned To", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CallDashboardCountActivity.this, "Please Select Assigned To", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void getAllSalesCallReportManagerRecyclerView(){
-        if (Connectivity.isConnected(getActivity())) {
+        if (Connectivity.isConnected(CallDashboardCountActivity.this)) {
 
             String fromd = fromdateAdvanceSearchReportDetail_tv.getText().toString();
             String tod = todateAdvanceSearchReport_tv.getText().toString();
@@ -290,74 +302,75 @@ public class CallDoneReportFragment extends Fragment {
             map.put("startdate", fromd);
             map.put("enddate", tod);
 
-            GSONRequest<CallDoneReportBean> dashboardGsonRequest = new GSONRequest<CallDoneReportBean>(
+            GSONRequest<CallDashboardCountBean> dashboardGsonRequest = new GSONRequest<CallDashboardCountBean>(
                     Request.Method.POST,
                     Url,
-                    CallDoneReportBean.class, map,
-                    new com.android.volley.Response.Listener<CallDoneReportBean>() {
+                    CallDashboardCountBean.class, map,
+                    new com.android.volley.Response.Listener<CallDashboardCountBean>() {
                         @Override
-                        public void onResponse(CallDoneReportBean response) {
+                        public void onResponse(CallDashboardCountBean response) {
                             try{
+
                                 if (response.getSp_done_calls().size()>0){
                                     saleCallReportHeader_rl.setVisibility(View.VISIBLE);
 
-                                    callDoneReportAdapter = new CallDoneReportAdapter(getActivity(),response.getSp_done_calls(), CallDoneReportFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    callDoneDashboardReportAdapter = new CallDoneDashboardReportAdapter(CallDashboardCountActivity.this,response.getSp_done_calls());
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CallDashboardCountActivity.this, LinearLayoutManager.VERTICAL, false);
                                     viewSaleCallReport_rv.setLayoutManager(mLayoutManager);
                                     viewSaleCallReport_rv.setItemAnimator(new DefaultItemAnimator());
-                                    viewSaleCallReport_rv.setAdapter(callDoneReportAdapter);
+                                    viewSaleCallReport_rv.setAdapter(callDoneDashboardReportAdapter);
                                     viewSaleCallReport_rv.setNestedScrollingEnabled(false);
-
 
                                 }
                             }catch(Exception e){
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CallDashboardCountActivity.this, "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
                     new com.android.volley.Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            saleCallReportHeader_rl.setVisibility(View.GONE);
                         }
                     });
             dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            Utilities.getRequestQueue(CallDashboardCountActivity.this).add(dashboardGsonRequest);
         }
     }
 
     private void getDefaultVisitDoneReportManagerRecyclerView(){
         try {
-            if (Connectivity.isConnected(getActivity())) {
+            if (Connectivity.isConnected(CallDashboardCountActivity.this)) {
 
                 String Url = ApiLink.ROOT_URL + ApiLink.CALL_PENDING_REPORT;
                 Map<String, String> map = new HashMap<>();
-                map.put("select", "");
-                map.put("m_done", "");
-                map.put("service_assignedby", userIdPref);
+                map.put("add_done", "");
+                map.put("emp_id",emp_id);
+                map.put("logged_manager_id", userIdPref);
 
-                GSONRequest<CallDoneReportBean> dashboardGsonRequest = new GSONRequest<CallDoneReportBean>(
+                GSONRequest<CallDashboardCountBean> dashboardGsonRequest = new GSONRequest<CallDashboardCountBean>(
                         Request.Method.POST,
                         Url,
-                        CallDoneReportBean.class, map,
-                        new com.android.volley.Response.Listener<CallDoneReportBean>() {
+                        CallDashboardCountBean.class, map,
+                        new com.android.volley.Response.Listener<CallDashboardCountBean>() {
                             @Override
-                            public void onResponse(CallDoneReportBean response) {
+                            public void onResponse(CallDashboardCountBean response) {
                                 try {
                                     if (response.getSp_done_calls().size() > 0) {
                                         saleCallReportHeader_rl.setVisibility(View.VISIBLE);
 
-                                        callDoneReportAdapter = new CallDoneReportAdapter(getActivity(), response.getSp_done_calls(), CallDoneReportFragment.this);
-                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                        callDoneDashboardReportAdapter = new CallDoneDashboardReportAdapter(CallDashboardCountActivity.this, response.getSp_done_calls());
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CallDashboardCountActivity.this, LinearLayoutManager.VERTICAL, false);
                                         viewSaleCallReport_rv.setLayoutManager(mLayoutManager);
                                         viewSaleCallReport_rv.setItemAnimator(new DefaultItemAnimator());
-                                        viewSaleCallReport_rv.setAdapter(callDoneReportAdapter);
+                                        viewSaleCallReport_rv.setAdapter(callDoneDashboardReportAdapter);
                                         viewSaleCallReport_rv.setNestedScrollingEnabled(false);
 
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CallDashboardCountActivity.this, "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
@@ -367,14 +380,15 @@ public class CallDoneReportFragment extends Fragment {
                             }
                         });
                 dashboardGsonRequest.setShouldCache(false);
-                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+                Utilities.getRequestQueue(CallDashboardCountActivity.this).add(dashboardGsonRequest);
             }
         }catch(Exception e){
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CallDashboardCountActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void getAllCallDoneData(CallDoneReportBean.Sp_Done_Calls bean){
+
+    public void getAllCallDoneData(CallDashboardCountBean.Sp_Done_Calls bean){
         saleCallReportHeader_rl.setVisibility(View.GONE);
         viewSaleCallReport_cv.setVisibility(View.VISIBLE);
 
@@ -388,7 +402,17 @@ public class CallDoneReportFragment extends Fragment {
         String date = bean.getService_createddt();
         String[] date1 = date.split(" ");
         dateViewSaleCallReport_tv.setText(date1[0]);
+
     }
 
-}
 
+    @OnClick(R.id.drawerIcon_iv)
+    public void drawerIconDashboard(){
+        Intent backIntent  =new Intent(CallDashboardCountActivity.this, NavigationDrawerActivity.class);
+        backIntent.putExtra("drawer_Open", "open_track_sales" );
+        startActivity(backIntent);
+
+    }
+
+
+}

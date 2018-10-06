@@ -1,13 +1,27 @@
 package com.sales.tracking.salestracking.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class DashboardManagerBean {
-    public static class Dashboard_Count{
+public class DashboardManagerBean implements Parcelable {
+    public static class Dashboard_Count implements Parcelable {
         String user_name,meetings_today,meetings_week,meetings_till_date,calls_today,calls_week;
         String calls_till_date;
         String leads_today;
         String leads_week;
+        String leads_till_date;
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
+        }
+
+        String user_id;
 
         public String getUser_name() {
             return user_name;
@@ -89,8 +103,56 @@ public class DashboardManagerBean {
             this.leads_till_date = leads_till_date;
         }
 
-        String leads_till_date;
 
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.user_name);
+            dest.writeString(this.meetings_today);
+            dest.writeString(this.meetings_week);
+            dest.writeString(this.meetings_till_date);
+            dest.writeString(this.calls_today);
+            dest.writeString(this.calls_week);
+            dest.writeString(this.calls_till_date);
+            dest.writeString(this.leads_today);
+            dest.writeString(this.leads_week);
+            dest.writeString(this.leads_till_date);
+            dest.writeString(this.user_id);
+        }
+
+        public Dashboard_Count() {
+        }
+
+        protected Dashboard_Count(Parcel in) {
+            this.user_name = in.readString();
+            this.meetings_today = in.readString();
+            this.meetings_week = in.readString();
+            this.meetings_till_date = in.readString();
+            this.calls_today = in.readString();
+            this.calls_week = in.readString();
+            this.calls_till_date = in.readString();
+            this.leads_today = in.readString();
+            this.leads_week = in.readString();
+            this.leads_till_date = in.readString();
+            this.user_id = in.readString();
+        }
+
+        public static final Parcelable.Creator<Dashboard_Count> CREATOR = new Parcelable.Creator<Dashboard_Count>() {
+            @Override
+            public Dashboard_Count createFromParcel(Parcel source) {
+                return new Dashboard_Count(source);
+            }
+
+            @Override
+            public Dashboard_Count[] newArray(int size) {
+                return new Dashboard_Count[size];
+            }
+        };
     }
 
     public ArrayList<Dashboard_Count> getDashboard_count() {
@@ -103,4 +165,32 @@ public class DashboardManagerBean {
 
     public ArrayList<Dashboard_Count> dashboard_count;
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.dashboard_count);
+    }
+
+    public DashboardManagerBean() {
+    }
+
+    protected DashboardManagerBean(Parcel in) {
+        this.dashboard_count = in.createTypedArrayList(Dashboard_Count.CREATOR);
+    }
+
+    public static final Parcelable.Creator<DashboardManagerBean> CREATOR = new Parcelable.Creator<DashboardManagerBean>() {
+        @Override
+        public DashboardManagerBean createFromParcel(Parcel source) {
+            return new DashboardManagerBean(source);
+        }
+
+        @Override
+        public DashboardManagerBean[] newArray(int size) {
+            return new DashboardManagerBean[size];
+        }
+    };
 }
