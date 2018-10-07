@@ -1,22 +1,18 @@
-package com.sales.tracking.salestracking.Fragment;
+package com.sales.tracking.salestracking.Activity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,11 +22,14 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.sales.tracking.salestracking.Adapter.LeadSpAdapter;
-import com.sales.tracking.salestracking.Adapter.ManagerClientAdapter;
-import com.sales.tracking.salestracking.Adapter.ManagerClientManagerHeadAdapter;
+import com.sales.tracking.salestracking.Adapter.CallDoneDashboardReportAdapter;
+import com.sales.tracking.salestracking.Adapter.CallDoneReportAdapter;
+import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsManagerAdapter;
+import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsManagerHeadAdapter;
+import com.sales.tracking.salestracking.Bean.ClientNotificationManagerBean;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.ManagerBean;
+import com.sales.tracking.salestracking.Fragment.ViewClientNotificationManagerFragment;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
@@ -55,8 +54,8 @@ import butterknife.OnItemSelected;
 
 import static android.widget.Toast.makeText;
 
-public class ViewClientManagerFragment extends Fragment {
-    View view;
+public class ClientDashboardCountActivity extends AppCompatActivity {
+
 
     @BindView(R.id.titleViewLeadTask_tv)
     TextView titleViewLeadTask_tv;
@@ -108,7 +107,7 @@ public class ViewClientManagerFragment extends Fragment {
 
     //Edit
     @BindView(R.id.submitEditLeadSp_btn)
-    Button submitEditLeadSp_btn;
+    TextView submitEditLeadSp_btn;
 
     @BindView(R.id.addressEditLeadSp_et)
     EditText addressEditLeadSp_et;
@@ -137,13 +136,15 @@ public class ViewClientManagerFragment extends Fragment {
     @BindView(R.id.minusEditLeadTypeDetail_iv)
     ImageView minusEditLeadTypeDetail_iv;
 
+    @BindView(R.id.titleViewLeadCountTask_tv)
+    TextView titleViewLeadCountTask_tv;
+
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 
-    ManagerClientAdapter managerClientAdapter;
+    ViewRequestNotificationDetailsManagerAdapter viewRequestNotificationDetailsManagerAdapter;
+    ViewRequestNotificationDetailsManagerHeadAdapter viewRequestNotificationDetailsManagerHeadAdapter;
     ArrayList<ManagerBean.clients> clientList = new ArrayList<>();
-
-    ManagerClientManagerHeadAdapter managerClientManagerHeadAdapter;
 
     String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype;
 
@@ -157,14 +158,14 @@ public class ViewClientManagerFragment extends Fragment {
     JSONParser jsonParser = new JSONParser();
     ProgressDialog pDialog;
 
-    int selectedLead;
+    @BindView(R.id.drawerIcon_iv)
+    ImageView drawerIcon_iv;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_view_lead_sp, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_client_dashboard_count);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -174,7 +175,7 @@ public class ViewClientManagerFragment extends Fragment {
     }
 
     private void initialiseUI(){
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(ClientDashboardCountActivity.this);
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
         user_comidPref = sharedPref.getString("user_com_id", "");
@@ -182,14 +183,17 @@ public class ViewClientManagerFragment extends Fragment {
         editLeadSpDetails_cv.setVisibility(View.GONE);
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
 
-        titleViewLeadTask_tv.setText("View Client");
+        titleViewLeadCountTask_tv.setVisibility(View.VISIBLE);
 
         if (userTypePref.equals("Sales Manager")) {
+            titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
-        }else if (userTypePref.equals("Manager Head")){
+            getcount();
+        }else if (userTypePref.equals("Manager Head")) {
+            titleViewLeadTask_tv.setText("View Client");
             getManagerHeadClientViewRecyclerView();
+            getMgrHeadcount();
         }
-
     }
 
     @OnClick(R.id.minusLeadTypeDetail_iv)
@@ -198,13 +202,17 @@ public class ViewClientManagerFragment extends Fragment {
         editLeadSpDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
         if (userTypePref.equals("Sales Manager")) {
+            titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
-        }else if (userTypePref.equals("Manager Head")){
+            getcount();
+        }else if (userTypePref.equals("Manager Head")) {
+            titleViewLeadTask_tv.setText("View Client");
             getManagerHeadClientViewRecyclerView();
+            getMgrHeadcount();
         }
     }
 
-    public void deleteClientData(ManagerBean.clients bean){
+    public void deleteClientNotifiData(ManagerBean.clients bean){
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
@@ -213,7 +221,7 @@ public class ViewClientManagerFragment extends Fragment {
         new deleteManagerClientSp().execute();
     }
 
-    public void getClientData(ManagerBean.clients bean){
+    public void getClientNotifiData(ManagerBean.clients bean){
         viewLeadTaskDetails_cv.setVisibility(View.VISIBLE);
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
@@ -231,7 +239,7 @@ public class ViewClientManagerFragment extends Fragment {
         statusLeadViewTask_tv.setText(bean.getLead_status());
     }
 
-    public void getEditClientClientData(ManagerBean.clients bean){
+    public void getEditClientNotifiData(ManagerBean.clients bean){
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.VISIBLE);
@@ -241,7 +249,7 @@ public class ViewClientManagerFragment extends Fragment {
         lead_iid  =bean.getLead_id().toString();
 
         clientCompanyNameEditLeadSp_et.setText(bean.getLead_company());
-       // lTypeEditLeadSp_sp.setText(bean.getLeadtype_name());
+        // lTypeEditLeadSp_sp.setText(bean.getLeadtype_name());
         contactPersonEditLeadSp_et.setText(bean.getLead_name());
         emailEditLeadSp_et.setText(bean.getLead_email());
         mobileEditLeadSp_et.setText(bean.getLead_contact());
@@ -264,7 +272,7 @@ public class ViewClientManagerFragment extends Fragment {
 
     private void selectleadType(){
         try{
-            if (Connectivity.isConnected(getActivity())) {
+            if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
                 String Url = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
                 Map<String, String> map = new HashMap<>();
                 map.put("leadtype_dropdown","" );
@@ -279,33 +287,26 @@ public class ViewClientManagerFragment extends Fragment {
                             public void onResponse(LeadSpBean response) {
                                 leadTypeAddLeadSp.clear();
                                 leadTypeAddLeadSp.add("Lead Type");
-
                                 for(int i=0;i<response.getLeadtype_dropdown().size();i++)
                                 {
-                                        leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
-                                        leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(), response.getLeadtype_dropdown().get(i).getLeadtype_name());
-                                        String myString = leadType_id; //the value you want the position for
-                                        if (myString.equals(response.getLeadtype_dropdown().get(i).getLeadtype_name())) {
-                                            selectedLead = i + 1;
-                                            lTypeEditLeadSp_sp.setSelection(selectedLead);
-                                        }
+                                    leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
+                                    leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(), response.getLeadtype_dropdown().get(i).getLeadtype_name());
                                 }
                             }
                         },
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Utilities.serverError(getActivity());
+                                Utilities.serverError(ClientDashboardCountActivity.this);
                             }
                         });
                 leadTypeGsonRequest.setShouldCache(false);
-                Utilities.getRequestQueue(getActivity()).add(leadTypeGsonRequest);
+                Utilities.getRequestQueue(ClientDashboardCountActivity.this).add(leadTypeGsonRequest);
             }
             leadTypeAddLeadSp = new ArrayList<String>();
             leadTypeAddLeadSp.clear();
             leadTypeAddLeadSp.add("Lead Type");
-
-            ArrayAdapter<String> leadTypeDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, leadTypeAddLeadSp);
+            ArrayAdapter<String> leadTypeDataAdapter = new ArrayAdapter<String>(ClientDashboardCountActivity.this, R.layout.spinner_textview, leadTypeAddLeadSp);
             leadTypeDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             lTypeEditLeadSp_sp.setAdapter(leadTypeDataAdapter);
 
@@ -316,7 +317,6 @@ public class ViewClientManagerFragment extends Fragment {
     @OnItemSelected(R.id.lTypeEditLeadSp_sp)
     public void visitTaskAddSelected(Spinner spinner, int position) {
         selectedLeadType = spinner.getSelectedItem().toString();
-
         for (Map.Entry<String, String> e : leadTypeMap.entrySet()) {
             Object key = e.getKey();
             Object value = e.getValue();
@@ -328,7 +328,7 @@ public class ViewClientManagerFragment extends Fragment {
     }
 
     @OnClick(R.id.submitEditLeadSp_btn)
-    public void submitEditLead(){
+    public void submitAddLead(){
 
         if (!selectedLeadType.equals("Lead Type")) {
             if (clientCompanyNameEditLeadSp_et.getText().toString().length()>0){
@@ -338,30 +338,30 @@ public class ViewClientManagerFragment extends Fragment {
                             if (mobileEditLeadSp_et.getText().toString().length() > 0 && mobileEditLeadSp_et.getText().toString().length() == 10) {
                                 if (websiteEditLeadSp_et.getText().toString().length() > 0) {
                                     if (addressEditLeadSp_et.getText().toString().length() > 0) {
-                                           new editManagerClientSp().execute();
+                                        new editManagerClientSp().execute();
                                     } else {
-                                        Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ClientDashboardCountActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(getActivity(), "Please Enter Website ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ClientDashboardCountActivity.this, "Please Enter Website ", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(getActivity(), "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ClientDashboardCountActivity.this, "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
                             }
                         }else{
-                            Toast.makeText(getActivity(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ClientDashboardCountActivity.this, "InValid Email Address.", Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(getActivity(), "Please Enter Email Id", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ClientDashboardCountActivity.this, "Please Enter Email Id", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Toast.makeText(getActivity(), "Please Enter Contact Person", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClientDashboardCountActivity.this, "Please Enter Contact Person", Toast.LENGTH_SHORT).show();
                 }
             }else {
-                Toast.makeText(getActivity(), "Please enter Client Company Name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClientDashboardCountActivity.this, "Please enter Client Company Name", Toast.LENGTH_SHORT).show();
             }
         }else {
-            Toast.makeText(getActivity(), "Please select Lead Type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ClientDashboardCountActivity.this, "Please select Lead Type", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -377,7 +377,7 @@ public class ViewClientManagerFragment extends Fragment {
 
             lead_id = lead_iid;
 
-            pDialog = new ProgressDialog(getActivity());
+            pDialog = new ProgressDialog(ClientDashboardCountActivity.this);
             pDialog.setMessage("Deleting Lead...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -413,11 +413,11 @@ public class ViewClientManagerFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Lead Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(ClientDashboardCountActivity.this,"Lead Deleted Successfully", Toast.LENGTH_SHORT).show();
                     getManagerClientViewRecyclerView();
                 }
                 else {
-                    makeText(getActivity(), "Not Deleted", Toast.LENGTH_SHORT).show();
+                    makeText(ClientDashboardCountActivity.this, "Not Deleted", Toast.LENGTH_SHORT).show();
                     return;
                 }
             } catch (Exception e) {
@@ -437,10 +437,10 @@ public class ViewClientManagerFragment extends Fragment {
             lead_company = clientCompanyNameEditLeadSp_et.getText().toString();
             lead_name = contactPersonEditLeadSp_et.getText().toString();
             lead_email = emailEditLeadSp_et.getText().toString();
-            lead_contact = mobileEditLeadSp_et.getText().toString();
+            lead_contact = contactPersonEditLeadSp_et.getText().toString();
             lead_website = websiteEditLeadSp_et.getText().toString();
 
-            pDialog = new ProgressDialog(getActivity());
+            pDialog = new ProgressDialog(ClientDashboardCountActivity.this);
             pDialog.setMessage("Editing Client...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -460,7 +460,7 @@ public class ViewClientManagerFragment extends Fragment {
             params.add(new BasicNameValuePair("filter[lead_email]", lead_email));
             params.add(new BasicNameValuePair("filter[lead_contact]", lead_contact));
             params.add(new BasicNameValuePair("filter[lead_website]", lead_website));
-           // params.add(new BasicNameValuePair("filter[lead_comid]", user_comidPref));
+            params.add(new BasicNameValuePair("filter[lead_comid]", user_comidPref));
             params.add(new BasicNameValuePair("filter[lead_status]", "Done"));
             params.add(new BasicNameValuePair("lead_id", lead_iid));
 
@@ -472,7 +472,7 @@ public class ViewClientManagerFragment extends Fragment {
             try {
                 int success = json.getInt(TAG_SUCCESS);
                 String message = json.getString(TAG_MESSAGE);
-                if (success == 1 && message.equals("Lead Updated Successfully")) {
+                if (success == 1 && message.equals("Lead Created Successfully")) {
                     return json;
                 }
                 else {
@@ -488,10 +488,11 @@ public class ViewClientManagerFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Lead Updated Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(ClientDashboardCountActivity.this,"Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    //  clearAll();
                 }
                 else {
-                    makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
+                    makeText(ClientDashboardCountActivity.this, "Not Updated", Toast.LENGTH_SHORT).show();
                     return;
                 }
             } catch (Exception e) {
@@ -500,7 +501,7 @@ public class ViewClientManagerFragment extends Fragment {
     }
 
     private void getManagerClientViewRecyclerView(){
-        if (Connectivity.isConnected(getActivity())) {
+        if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
 
             String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
             Map<String, String> map = new HashMap<>();
@@ -516,16 +517,16 @@ public class ViewClientManagerFragment extends Fragment {
                         public void onResponse(ManagerBean response) {
                             try{
                                 if (response.getClients().size()>0){
-                                      clientList.clear();
-                                      clientList.addAll(response.getClients());
+                                    clientList.clear();
+                                    clientList.addAll(response.getClients());
 
-                                    managerClientAdapter = new ManagerClientAdapter(getActivity(),response.getClients(), ViewClientManagerFragment.this);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    viewRequestNotificationDetailsManagerAdapter = new ViewRequestNotificationDetailsManagerAdapter(ClientDashboardCountActivity.this,response.getClients(), ViewClientNotificationManagerFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ClientDashboardCountActivity.this, LinearLayoutManager.VERTICAL, false);
                                     leadTask_rv.setLayoutManager(mLayoutManager);
                                     leadTask_rv.setItemAnimator(new DefaultItemAnimator());
-                                    leadTask_rv.setAdapter(managerClientAdapter);
+                                    leadTask_rv.setAdapter(viewRequestNotificationDetailsManagerAdapter);
                                     leadTask_rv.setNestedScrollingEnabled(false);
-                                 }
+                                }
                             }catch(Exception e){
                                 e.printStackTrace();
                             }
@@ -537,53 +538,118 @@ public class ViewClientManagerFragment extends Fragment {
                         }
                     });
             dashboardGsonRequest.setShouldCache(false);
-            Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
+            Utilities.getRequestQueue(ClientDashboardCountActivity.this).add(dashboardGsonRequest);
         }
     }
 
     private void getManagerHeadClientViewRecyclerView(){
-        try {
-            if (Connectivity.isConnected(getActivity())) {
+        if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
 
-                String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
-                Map<String, String> map = new HashMap<>();
-                map.put("select", "");
-                map.put("managerhead_id", userIdPref);
+            String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
+            Map<String, String> map = new HashMap<>();
+            map.put("select", "");
+            map.put("manager_id", userIdPref);
 
-                GSONRequest<ManagerBean> dashboardGsonRequest = new GSONRequest<ManagerBean>(
-                        Request.Method.POST,
-                        Url,
-                        ManagerBean.class, map,
-                        new com.android.volley.Response.Listener<ManagerBean>() {
-                            @Override
-                            public void onResponse(ManagerBean response) {
-                                try {
-                                    if (response.getClients().size() > 0) {
+            GSONRequest<ManagerBean> dashboardGsonRequest = new GSONRequest<ManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    ManagerBean.class, map,
+                    new com.android.volley.Response.Listener<ManagerBean>() {
+                        @Override
+                        public void onResponse(ManagerBean response) {
+                            try{
+                                if (response.getClients().size()>0){
+                                    clientList.clear();
+                                    clientList.addAll(response.getClients());
 
-                                        managerClientManagerHeadAdapter = new ManagerClientManagerHeadAdapter(getActivity(), response.getClients(), ViewClientManagerFragment.this);
-                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                                        leadTask_rv.setLayoutManager(mLayoutManager);
-                                        leadTask_rv.setItemAnimator(new DefaultItemAnimator());
-                                        leadTask_rv.setAdapter(managerClientManagerHeadAdapter);
-                                        leadTask_rv.setNestedScrollingEnabled(false);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                    viewRequestNotificationDetailsManagerHeadAdapter = new ViewRequestNotificationDetailsManagerHeadAdapter(ClientDashboardCountActivity.this,response.getClients(), ViewClientNotificationManagerFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ClientDashboardCountActivity.this, LinearLayoutManager.VERTICAL, false);
+                                    leadTask_rv.setLayoutManager(mLayoutManager);
+                                    leadTask_rv.setItemAnimator(new DefaultItemAnimator());
+                                    leadTask_rv.setAdapter(viewRequestNotificationDetailsManagerHeadAdapter);
+                                    leadTask_rv.setNestedScrollingEnabled(false);
                                 }
+                            }catch(Exception e){
+                                e.printStackTrace();
                             }
-                        },
-                        new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                            }
-                        });
-                dashboardGsonRequest.setShouldCache(false);
-                Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
-            }
-        }catch(Exception e){
-
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(ClientDashboardCountActivity.this).add(dashboardGsonRequest);
         }
     }
 
+    private void getcount(){
+        if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.VISIT_REQUEST_NOTIFICATION;
+            Map<String, String> map = new HashMap<>();
+            map.put("count_clients", "");
+            map.put("user_id", userIdPref);
+
+            GSONRequest<ClientNotificationManagerBean> dashboardGsonRequest = new GSONRequest<ClientNotificationManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    ClientNotificationManagerBean.class, map,
+                    new com.android.volley.Response.Listener<ClientNotificationManagerBean>() {
+                        @Override
+                        public void onResponse(ClientNotificationManagerBean response) {
+                            try{
+                                if (response.getClients_count().size()>0){
+                                    titleViewLeadCountTask_tv.setText(response.getClients_count().get(0).getTot_leads().toString());
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(ClientDashboardCountActivity.this).add(dashboardGsonRequest);
+        }
+    }
+
+    private void getMgrHeadcount(){
+        if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.CALL_MANAGER_HEAD_NOTIFICATION;
+            Map<String, String> map = new HashMap<>();
+            map.put("count_clients", "");
+            map.put("user_id", userIdPref);
+
+            GSONRequest<ClientNotificationManagerBean> dashboardGsonRequest = new GSONRequest<ClientNotificationManagerBean>(
+                    Request.Method.POST,
+                    Url,
+                    ClientNotificationManagerBean.class, map,
+                    new com.android.volley.Response.Listener<ClientNotificationManagerBean>() {
+                        @Override
+                        public void onResponse(ClientNotificationManagerBean response) {
+                            try{
+                                if (response.getClients_count().size()>0){
+                                    titleViewLeadCountTask_tv.setText(response.getClients_count().get(0).getTot_leads().toString());
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            dashboardGsonRequest.setShouldCache(false);
+            Utilities.getRequestQueue(ClientDashboardCountActivity.this).add(dashboardGsonRequest);
+        }
+    }
 
 }

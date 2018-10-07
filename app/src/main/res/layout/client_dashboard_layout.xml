@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView_viewLeadTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/titleViewLeadtask_rl"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/title_bg">
+
+                <TextView
+                    android:id="@+id/titleViewLeadTask_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Leads"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/titleViewLeadCountTask_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:visibility="gone"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:padding="10dp"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/leadTaskHeader_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/leadTask_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/viewLeadTaskDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"
+                android:layout_below="@+id/leadTaskHeader_rl"
+                >
+                <RelativeLayout
+                    android:id="@+id/viewRequestTaskDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/clientCompanyNameLeadHeader__ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="4"
+                        android:orientation="horizontal"
+                        android:background="@color/active_bg"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/clientCompanyNameLeadTask_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/green_box_bg"
+                            android:layout_weight="3"
+                            >
+
+                            <TextView
+                                android:id="@+id/clientCompanyNameLeadHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Client Company Name"
+                                android:textSize="12sp"
+                                android:textColor="@android:color/white"
+                                android:paddingTop="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="2dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/clientCompanyNameLeadTask_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="abc Company"
+                                android:textColorHint="@android:color/white"
+                                android:textColor="@android:color/white"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/clientCompanyNameLeadHeading_tv"
+                                android:paddingLeft="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editMinusLeadTypeDetail_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right|center"
+                            android:background="@color/green_box_bg">
+
+                            <ImageView
+                                android:id="@+id/deleteLeadTypeDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
+                                android:visibility="gone"
+                                android:src="@drawable/delete_white_icon"
+                                android:layout_toLeftOf="@+id/minusLeadTypeDetail_iv"
+                                />
+
+                            <ImageView
+                                android:id="@+id/minusLeadTypeDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/minus_white_icon"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/leadTypeViewLeadDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/clientCompanyNameLeadHeader__ll"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/leadTypeViewLeadHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lead Type"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/leadTypeViewLead_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/leadTypeViewLeadHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint="Lead Type"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowLeadTypeViewLead"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/leadTypeViewLeadDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/contactPersonLeadViewDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowLeadTypeViewLead"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/contactPersonLeadViewHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Contact Person"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/contactPersonLeadView_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/contactPersonLeadViewHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowContactPersonLeadView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/contactPersonLeadViewDetail_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/emailLeadViewTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowContactPersonLeadView"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/emailLeadViewTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/emailLeadViewTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/emailLeadViewTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowEmailLeadView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/emailLeadViewTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/mobileLeadViewTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowEmailLeadView"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/mobileLeadViewTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mobile"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/mobileLeadViewTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/mobileLeadViewTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowMobileLeadView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/mobileLeadViewTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/websiteLeadViewTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowMobileLeadView"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/websiteLeadViewTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Website"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/websiteLeadViewTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/websiteLeadViewTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowWebsiteLeadView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/websiteLeadViewTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/addressLeadViewTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowWebsiteLeadView"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/addressLeadViewTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/addressLeadViewTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/addressLeadViewTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowAddressLeadView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/addressLeadViewTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/createdByLeadViewTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowAddressLeadView"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/createdByLeadViewTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Created By"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/createdByLeadViewTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/createdByLeadViewTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowCreatedByLeadView"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/textcolor"
+                        android:layout_below="@+id/createdByLeadViewTask_rl"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/statusLeadViewTask_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowCreatedByLeadView"
+                        android:layout_weight="4.5"
+                        >
+
+                        <TextView
+                            android:id="@+id/statusLeadViewTaskHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="12dp"
+                            android:textColor="@color/textcolor"
+                            />
+
+                        <TextView
+                            android:id="@+id/statusLeadViewTask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/statusLeadViewTaskHeading_tv"
+                            android:textColor="@android:color/black"
+                            android:hint=""
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/editLeadSpDetails_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"
+                android:layout_below="@+id/viewLeadTaskDetails_cv"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/editLeadSpDetail_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/lTypeEditLeadSpDetailHeader__ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/active_bg"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <RelativeLayout
+                            android:id="@+id/headingNameEditLeadSp_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/separatorBelowLTypeEditLeadSp"
+                            android:layout_weight="2.5">
+
+                            <TextView
+                                android:id="@+id/headingNameEditLeadSpHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Edit"
+                                android:textColor="@android:color/white"
+                                android:textSize="17dp" />
+
+                            <TextView
+                                android:id="@+id/heading2NameEditLeadSpHeading_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/headingNameEditLeadSpHeading_tv"
+                                android:text=""
+                                android:textColor="@android:color/white"
+                                android:textSize="12dp" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editMinusEditLeadTypeDetail_rl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5"
+                            android:background="@color/green_box_bg"
+                            android:gravity="center|right">
+
+
+                            <ImageView
+                                android:id="@+id/minusEditLeadTypeDetail_iv"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/minus_white_icon" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/clientCompanyNameEditLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lTypeEditLeadSpDetailHeader__ll"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/clientCompanyNameEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Client Company Name"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/clientCompanyNameEditLeadSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/clientCompanyNameEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Contact Person"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowClientCompanyNameEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/clientCompanyNameEditLeadSp_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/lTypeEditLeadSpDetail_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowClientCompanyNameEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/lTypeEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Lead Type"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <Spinner
+                            android:id="@+id/lTypeEditLeadSp_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lTypeEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:hint=""
+                            android:textColor="@android:color/black" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowlTypeNameEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/lTypeEditLeadSpDetail_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/contactPersonEditLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowlTypeNameEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/contactPersonEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Contact Person"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/contactPersonEditLeadSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/contactPersonEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Contact Person"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowContactPersonEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/contactPersonEditLeadSp_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/emailEditLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowContactPersonEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/emailEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Email"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/emailEditLeadSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/emailEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Email"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+
+                    <View
+                        android:id="@+id/separatorBelowEmailEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/emailEditLeadSp_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/mobileEditLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowEmailEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/mobileEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Mobile"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/mobileEditLeadSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/mobileEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Mobile"
+                            android:inputType="phone"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowMobileEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/mobileEditLeadSp_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/websiteEditLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowMobileEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/websiteEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Website"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/websiteEditLeadSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/websiteEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Website"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/separatorBelowWebsiteEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/websiteEditLeadSp_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/addressEditLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowWebsiteEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/addressEditLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Address"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/addressEditLeadSp_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/addressEditLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:hint="Address"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@android:color/black"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/submitEditLeadSp_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addressEditLeadSp_rl"
+                        android:background="@color/active_bg"
+                        android:text="Update"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

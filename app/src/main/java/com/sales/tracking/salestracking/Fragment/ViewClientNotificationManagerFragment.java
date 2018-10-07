@@ -549,7 +549,6 @@ public class ViewClientNotificationManagerFragment extends Fragment {
         }
     }
 
-
     private void getManagerHeadClientViewRecyclerView(){
         if (Connectivity.isConnected(getActivity())) {
 
@@ -591,7 +590,6 @@ public class ViewClientNotificationManagerFragment extends Fragment {
             Utilities.getRequestQueue(getActivity()).add(dashboardGsonRequest);
         }
     }
-
 
     private void getcount(){
         if (Connectivity.isConnected(getActivity())) {

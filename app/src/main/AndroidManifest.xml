@@ -47,7 +47,8 @@
             android:label="@string/title_activity_track_sales_person" />
         <activity android:name=".Activity.NotificationActivity" />
         <activity android:name=".Activity.VisitDashboardCountActivity" />
-        <activity android:name=".Activity.CallDashboardCountActivity"></activity>
+        <activity android:name=".Activity.CallDashboardCountActivity" />
+        <activity android:name=".Activity.ClientDashboardCountActivity"></activity>
     </application>
 
 </manifest>
