@@ -2,6 +2,7 @@ package com.sales.tracking.salestracking.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -24,8 +25,10 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Adapter.CallDoneDashboardReportAdapter;
 import com.sales.tracking.salestracking.Adapter.CallDoneReportAdapter;
+import com.sales.tracking.salestracking.Adapter.ViewClientDashboardManagerAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsManagerAdapter;
 import com.sales.tracking.salestracking.Adapter.ViewRequestNotificationDetailsManagerHeadAdapter;
+import com.sales.tracking.salestracking.Bean.ClientDashboardBean;
 import com.sales.tracking.salestracking.Bean.ClientNotificationManagerBean;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.ManagerBean;
@@ -142,9 +145,12 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 
+    ViewClientDashboardManagerAdapter viewClientDashboardManagerAdapter;
+
     ViewRequestNotificationDetailsManagerAdapter viewRequestNotificationDetailsManagerAdapter;
     ViewRequestNotificationDetailsManagerHeadAdapter viewRequestNotificationDetailsManagerHeadAdapter;
-    ArrayList<ManagerBean.clients> clientList = new ArrayList<>();
+
+    ArrayList<ClientDashboardBean.Clients> clientList = new ArrayList<>();
 
     String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype;
 
@@ -174,7 +180,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         initialiseUI();
     }
 
-    private void initialiseUI(){
+    private void initialiseUI() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(ClientDashboardCountActivity.this);
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
@@ -183,13 +189,13 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         editLeadSpDetails_cv.setVisibility(View.GONE);
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
 
-        titleViewLeadCountTask_tv.setVisibility(View.VISIBLE);
+        titleViewLeadCountTask_tv.setVisibility(View.GONE);
 
         if (userTypePref.equals("Sales Manager")) {
             titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
             getcount();
-        }else if (userTypePref.equals("Manager Head")) {
+        } else if (userTypePref.equals("Manager Head")) {
             titleViewLeadTask_tv.setText("View Client");
             getManagerHeadClientViewRecyclerView();
             getMgrHeadcount();
@@ -197,7 +203,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.minusLeadTypeDetail_iv)
-    public void hideLeadDetails(){
+    public void hideLeadDetails() {
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
@@ -205,14 +211,14 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
             titleViewLeadTask_tv.setText("View Client");
             getManagerClientViewRecyclerView();
             getcount();
-        }else if (userTypePref.equals("Manager Head")) {
+        } else if (userTypePref.equals("Manager Head")) {
             titleViewLeadTask_tv.setText("View Client");
             getManagerHeadClientViewRecyclerView();
             getMgrHeadcount();
         }
     }
 
-    public void deleteClientNotifiData(ManagerBean.clients bean){
+    public void deleteClientNotifiData(ClientDashboardBean.Clients bean) {
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
@@ -221,7 +227,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         new deleteManagerClientSp().execute();
     }
 
-    public void getClientNotifiData(ManagerBean.clients bean){
+    public void getClientNotifiData(ClientDashboardBean.Clients bean) {
         viewLeadTaskDetails_cv.setVisibility(View.VISIBLE);
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
@@ -239,14 +245,14 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         statusLeadViewTask_tv.setText(bean.getLead_status());
     }
 
-    public void getEditClientNotifiData(ManagerBean.clients bean){
+    public void getEditClientNotifiData(ClientDashboardBean.Clients bean) {
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.VISIBLE);
 
         titleViewLeadTask_tv.setText("Edit Client");
 
-        lead_iid  =bean.getLead_id().toString();
+        lead_iid = bean.getLead_id().toString();
 
         clientCompanyNameEditLeadSp_et.setText(bean.getLead_company());
         // lTypeEditLeadSp_sp.setText(bean.getLeadtype_name());
@@ -261,7 +267,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.minusEditLeadTypeDetail_iv)
-    public void hideEdit(){
+    public void hideEdit() {
         viewLeadTaskDetails_cv.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
         leadTaskHeader_rl.setVisibility(View.VISIBLE);
@@ -270,25 +276,24 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         }
     }
 
-    private void selectleadType(){
-        try{
+    private void selectleadType() {
+        try {
             if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
                 String Url = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
                 Map<String, String> map = new HashMap<>();
-                map.put("leadtype_dropdown","" );
+                map.put("leadtype_dropdown", "");
                 map.put("lead_comid", user_comidPref);
 
                 final GSONRequest<LeadSpBean> leadTypeGsonRequest = new GSONRequest<LeadSpBean>(
                         Request.Method.POST,
                         Url,
-                        LeadSpBean.class,map,
+                        LeadSpBean.class, map,
                         new com.android.volley.Response.Listener<LeadSpBean>() {
                             @Override
                             public void onResponse(LeadSpBean response) {
                                 leadTypeAddLeadSp.clear();
                                 leadTypeAddLeadSp.add("Lead Type");
-                                for(int i=0;i<response.getLeadtype_dropdown().size();i++)
-                                {
+                                for (int i = 0; i < response.getLeadtype_dropdown().size(); i++) {
                                     leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
                                     leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(), response.getLeadtype_dropdown().get(i).getLeadtype_name());
                                 }
@@ -310,7 +315,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
             leadTypeDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             lTypeEditLeadSp_sp.setAdapter(leadTypeDataAdapter);
 
-        }catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
@@ -322,19 +327,19 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
             Object value = e.getValue();
             if (value.equals(selectedLeadType)) {
                 selectedLeadTypeId = (String) key;
-                leadType_id= (String) key;
+                leadType_id = (String) key;
             }
         }
     }
 
     @OnClick(R.id.submitEditLeadSp_btn)
-    public void submitAddLead(){
+    public void submitAddLead() {
 
         if (!selectedLeadType.equals("Lead Type")) {
-            if (clientCompanyNameEditLeadSp_et.getText().toString().length()>0){
-                if (contactPersonEditLeadSp_et.getText().toString().length()>0){
-                    if (emailEditLeadSp_et.getText().toString().length()>0){
-                        if (isEmailValid(emailEditLeadSp_et.getText().toString().trim())){
+            if (clientCompanyNameEditLeadSp_et.getText().toString().length() > 0) {
+                if (contactPersonEditLeadSp_et.getText().toString().length() > 0) {
+                    if (emailEditLeadSp_et.getText().toString().length() > 0) {
+                        if (isEmailValid(emailEditLeadSp_et.getText().toString().trim())) {
                             if (mobileEditLeadSp_et.getText().toString().length() > 0 && mobileEditLeadSp_et.getText().toString().length() == 10) {
                                 if (websiteEditLeadSp_et.getText().toString().length() > 0) {
                                     if (addressEditLeadSp_et.getText().toString().length() > 0) {
@@ -348,19 +353,19 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(ClientDashboardCountActivity.this, "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
+                        } else {
                             Toast.makeText(ClientDashboardCountActivity.this, "InValid Email Address.", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(ClientDashboardCountActivity.this, "Please Enter Email Id", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(ClientDashboardCountActivity.this, "Please Enter Contact Person", Toast.LENGTH_SHORT).show();
                 }
-            }else {
+            } else {
                 Toast.makeText(ClientDashboardCountActivity.this, "Please enter Client Company Name", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             Toast.makeText(ClientDashboardCountActivity.this, "Please select Lead Type", Toast.LENGTH_SHORT).show();
         }
     }
@@ -370,7 +375,8 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
     }
 
     public class deleteManagerClientSp extends AsyncTask<String, JSONObject, JSONObject> {
-        String  lead_id;
+        String lead_id;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -399,8 +405,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Lead Deleted Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -413,10 +418,9 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(ClientDashboardCountActivity.this,"Lead Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(ClientDashboardCountActivity.this, "Lead Deleted Successfully", Toast.LENGTH_SHORT).show();
                     getManagerClientViewRecyclerView();
-                }
-                else {
+                } else {
                     makeText(ClientDashboardCountActivity.this, "Not Deleted", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -426,13 +430,14 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
     }
 
     public class editManagerClientSp extends AsyncTask<String, JSONObject, JSONObject> {
-        String lead_address, lead_uid,lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+        String lead_address, lead_uid, lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            lead_address  =addressEditLeadSp_et.getText().toString();
-            lead_uid =userIdPref;
+            lead_address = addressEditLeadSp_et.getText().toString();
+            lead_uid = userIdPref;
             lead_leadtypeid = selectedLeadTypeId;
             lead_company = clientCompanyNameEditLeadSp_et.getText().toString();
             lead_name = contactPersonEditLeadSp_et.getText().toString();
@@ -474,8 +479,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Lead Created Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -488,10 +492,9 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(ClientDashboardCountActivity.this,"Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    makeText(ClientDashboardCountActivity.this, "Lead Created Successfully", Toast.LENGTH_SHORT).show();
                     //  clearAll();
-                }
-                else {
+                } else {
                     makeText(ClientDashboardCountActivity.this, "Not Updated", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -500,34 +503,34 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         }
     }
 
-    private void getManagerClientViewRecyclerView(){
+    private void getManagerClientViewRecyclerView() {
         if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
 
             String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
             Map<String, String> map = new HashMap<>();
             map.put("select", "");
-            map.put("manager_id", userIdPref);
+            map.put("userr_id", userIdPref);
 
-            GSONRequest<ManagerBean> dashboardGsonRequest = new GSONRequest<ManagerBean>(
+            GSONRequest<ClientDashboardBean> dashboardGsonRequest = new GSONRequest<ClientDashboardBean>(
                     Request.Method.POST,
                     Url,
-                    ManagerBean.class, map,
-                    new com.android.volley.Response.Listener<ManagerBean>() {
+                    ClientDashboardBean.class, map,
+                    new com.android.volley.Response.Listener<ClientDashboardBean>() {
                         @Override
-                        public void onResponse(ManagerBean response) {
-                            try{
-                                if (response.getClients().size()>0){
+                        public void onResponse(ClientDashboardBean response) {
+                            try {
+                                if (response.getClients().size() > 0) {
                                     clientList.clear();
                                     clientList.addAll(response.getClients());
 
-                                    viewRequestNotificationDetailsManagerAdapter = new ViewRequestNotificationDetailsManagerAdapter(ClientDashboardCountActivity.this,response.getClients(), ViewClientNotificationManagerFragment.this);
+                                    viewClientDashboardManagerAdapter = new ViewClientDashboardManagerAdapter(ClientDashboardCountActivity.this, response.getClients());
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ClientDashboardCountActivity.this, LinearLayoutManager.VERTICAL, false);
                                     leadTask_rv.setLayoutManager(mLayoutManager);
                                     leadTask_rv.setItemAnimator(new DefaultItemAnimator());
-                                    leadTask_rv.setAdapter(viewRequestNotificationDetailsManagerAdapter);
+                                    leadTask_rv.setAdapter(viewClientDashboardManagerAdapter);
                                     leadTask_rv.setNestedScrollingEnabled(false);
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -542,34 +545,34 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         }
     }
 
-    private void getManagerHeadClientViewRecyclerView(){
+    private void getManagerHeadClientViewRecyclerView() {
         if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
 
             String Url = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
             Map<String, String> map = new HashMap<>();
             map.put("select", "");
-            map.put("manager_id", userIdPref);
+            map.put("userr_id", userIdPref);
 
-            GSONRequest<ManagerBean> dashboardGsonRequest = new GSONRequest<ManagerBean>(
+            GSONRequest<ClientDashboardBean> dashboardGsonRequest = new GSONRequest<ClientDashboardBean>(
                     Request.Method.POST,
                     Url,
-                    ManagerBean.class, map,
-                    new com.android.volley.Response.Listener<ManagerBean>() {
+                    ClientDashboardBean.class, map,
+                    new com.android.volley.Response.Listener<ClientDashboardBean>() {
                         @Override
-                        public void onResponse(ManagerBean response) {
-                            try{
-                                if (response.getClients().size()>0){
+                        public void onResponse(ClientDashboardBean response) {
+                            try {
+                                if (response.getClients().size() > 0) {
                                     clientList.clear();
                                     clientList.addAll(response.getClients());
 
-                                    viewRequestNotificationDetailsManagerHeadAdapter = new ViewRequestNotificationDetailsManagerHeadAdapter(ClientDashboardCountActivity.this,response.getClients(), ViewClientNotificationManagerFragment.this);
+                                    viewClientDashboardManagerAdapter = new ViewClientDashboardManagerAdapter(ClientDashboardCountActivity.this, response.getClients());
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ClientDashboardCountActivity.this, LinearLayoutManager.VERTICAL, false);
                                     leadTask_rv.setLayoutManager(mLayoutManager);
                                     leadTask_rv.setItemAnimator(new DefaultItemAnimator());
-                                    leadTask_rv.setAdapter(viewRequestNotificationDetailsManagerHeadAdapter);
+                                    leadTask_rv.setAdapter(viewClientDashboardManagerAdapter);
                                     leadTask_rv.setNestedScrollingEnabled(false);
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -584,7 +587,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         }
     }
 
-    private void getcount(){
+    private void getcount() {
         if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
 
             String Url = ApiLink.ROOT_URL + ApiLink.VISIT_REQUEST_NOTIFICATION;
@@ -599,11 +602,11 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
                     new com.android.volley.Response.Listener<ClientNotificationManagerBean>() {
                         @Override
                         public void onResponse(ClientNotificationManagerBean response) {
-                            try{
-                                if (response.getClients_count().size()>0){
+                            try {
+                                if (response.getClients_count().size() > 0) {
                                     titleViewLeadCountTask_tv.setText(response.getClients_count().get(0).getTot_leads().toString());
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -618,7 +621,7 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         }
     }
 
-    private void getMgrHeadcount(){
+    private void getMgrHeadcount() {
         if (Connectivity.isConnected(ClientDashboardCountActivity.this)) {
 
             String Url = ApiLink.ROOT_URL + ApiLink.CALL_MANAGER_HEAD_NOTIFICATION;
@@ -633,11 +636,11 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
                     new com.android.volley.Response.Listener<ClientNotificationManagerBean>() {
                         @Override
                         public void onResponse(ClientNotificationManagerBean response) {
-                            try{
-                                if (response.getClients_count().size()>0){
+                            try {
+                                if (response.getClients_count().size() > 0) {
                                     titleViewLeadCountTask_tv.setText(response.getClients_count().get(0).getTot_leads().toString());
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -652,4 +655,12 @@ public class ClientDashboardCountActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.drawerIcon_iv)
+    public void drawerIconDashboard() {
+        Intent backIntent = new Intent(ClientDashboardCountActivity.this, NavigationDrawerActivity.class);
+        backIntent.putExtra("drawer_Open", "open_track_sales");
+        startActivity(backIntent);
+
+    }
 }
+

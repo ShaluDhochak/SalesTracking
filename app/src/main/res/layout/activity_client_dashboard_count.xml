@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ClientDashboardCountActivity">
 
-<include layout="@layout/client_dashboard_layout"/>
+
+    <RelativeLayout
+        android:id="@+id/headerClientDashboard_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <include
+            layout="@layout/header_layout"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/clientDashboardDetail_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerClientDashboard_rl"
+        >
+        <include
+            layout="@layout/client_dashboard_layout"/>
+    </RelativeLayout>
 
 </RelativeLayout>

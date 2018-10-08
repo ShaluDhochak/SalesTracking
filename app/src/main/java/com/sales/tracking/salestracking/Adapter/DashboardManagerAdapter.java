@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sales.tracking.salestracking.Activity.CallDashboardCountActivity;
+import com.sales.tracking.salestracking.Activity.ClientDashboardCountActivity;
 import com.sales.tracking.salestracking.Activity.VisitDashboardCountActivity;
 import com.sales.tracking.salestracking.Bean.DashboardManagerBean;
 import com.sales.tracking.salestracking.R;
@@ -110,7 +111,7 @@ public class DashboardManagerAdapter extends RecyclerView.Adapter<DashboardManag
                         holder.nameLeadsDashboardHeading_tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(context, VisitDashboardCountActivity.class);
+                                Intent intent = new Intent(context, ClientDashboardCountActivity.class);
                                 intent.putExtra("position",position);
                                 intent.putExtra("heading", "New Leads");
                                 intent.putExtra("bean", tasksList.get(position));

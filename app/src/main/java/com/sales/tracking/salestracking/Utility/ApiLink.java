@@ -46,7 +46,6 @@ public interface ApiLink {
     String VISIT_PENDING_REPORT = "rep_manager_visits.php";
     String VISIT_MANAGER_HEAD_REPORT = "rep_manager_head_visits.php";
 
-
     String CALL_PENDING_REPORT = "rep_manager_calls.php";
     String CALL_MANAGER_HEAD_NOTIFICATION = "managerheadheader.php";
 
