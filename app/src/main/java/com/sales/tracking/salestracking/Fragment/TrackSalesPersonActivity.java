@@ -120,7 +120,7 @@ public class TrackSalesPersonActivity extends FragmentActivity implements OnMapR
         Map<String, String> map = new HashMap<>();
         map.put("get_live_location", "");
         map.put("managerhead_id", userId);
-        map.put("user_type", "");
+        map.put("user_type", "Sales Executive");
 
         GSONRequest<SalesPersonTrackerBean> locationTrackRequest = new GSONRequest<>(
                 Request.Method.POST,
