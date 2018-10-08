@@ -30,6 +30,7 @@ import com.sales.tracking.salestracking.Utility.Connectivity;
 import com.sales.tracking.salestracking.Utility.GSONRequest;
 import com.sales.tracking.salestracking.Utility.JSONParser;
 import com.sales.tracking.salestracking.Utility.Utilities;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -261,6 +262,13 @@ public class VisitPendingNotificationFragment extends Fragment {
         purposeViewSaleCallPending_tv.setText(bean.getPurpose_name());
         statusViewSaleCallPending_tv.setText(bean.getVisit_status());
         addressViewSaleCallPending_tv.setText(bean.getVisit_address());
+
+        if (!bean.getVisit_photo().equals("")){
+            Picasso.get().load(ApiLink.IMAGE_BASE_URL + bean.getVisit_photo()).into(photoViewSaleCallPending_iv);
+        }else{
+            photoViewSaleCallPending_iv.setImageDrawable(getResources().getDrawable(R.drawable.default_img));
+        }
+
         if (bean.getVisit_status().toString().equals("Followup")){
             followUpDateTimeViewSaleCallPending_rl.setVisibility(View.VISIBLE);
             separatorBelowStatusViewSaleCallPending.setVisibility(View.VISIBLE);

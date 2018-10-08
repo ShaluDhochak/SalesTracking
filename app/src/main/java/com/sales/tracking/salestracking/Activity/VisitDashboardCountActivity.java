@@ -410,6 +410,8 @@ public class VisitDashboardCountActivity extends AppCompatActivity {
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+
+                                viewVisitManagerReportHeader_rl.setVisibility(View.GONE);
                             }
                         });
                 dashboardGsonRequest.setShouldCache(false);
@@ -463,6 +465,8 @@ public class VisitDashboardCountActivity extends AppCompatActivity {
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+
+                                viewVisitManagerReportHeader_rl.setVisibility(View.VISIBLE);
                             }
                         });
                 dashboardGsonRequest.setShouldCache(false);
@@ -502,6 +506,8 @@ public class VisitDashboardCountActivity extends AppCompatActivity {
 
                                     }
                                 } catch (Exception e) {
+
+                                    viewVisitManagerReportHeader_rl.setVisibility(View.GONE);
                                     e.printStackTrace();
                                     Toast.makeText(VisitDashboardCountActivity.this, "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
@@ -552,6 +558,8 @@ public class VisitDashboardCountActivity extends AppCompatActivity {
 
                                     }
                                 } catch (Exception e) {
+
+                                    viewVisitManagerReportHeader_rl.setVisibility(View.GONE);
                                     e.printStackTrace();
                                     //    Toast.makeText(getActivity(), "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }

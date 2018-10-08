@@ -371,6 +371,8 @@ public class CallDashboardCountActivity extends AppCompatActivity {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
+                                    saleCallReportHeader_rl.setVisibility(View.GONE);
+
                                     Toast.makeText(CallDashboardCountActivity.this, "Api response Problem", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -378,6 +380,8 @@ public class CallDashboardCountActivity extends AppCompatActivity {
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+
+                                saleCallReportHeader_rl.setVisibility(View.VISIBLE);
                             }
                         });
                 dashboardGsonRequest.setShouldCache(false);
