@@ -167,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             Intent loginIntent = new Intent(LoginActivity.this, NavigationDrawerActivity.class);
                             startActivity(loginIntent);
+                            finish();
 
                         /*
                         JSONArray array = jsonObject.getJSONArray("0");

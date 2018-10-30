@@ -42,6 +42,7 @@
             android:icon="@drawable/arrow_left"
             android:title="Manager"
             />
+
         <item
             android:id="@+id/nav_workinghours_attendance"
             android:title="Working Hours/Attendance" />

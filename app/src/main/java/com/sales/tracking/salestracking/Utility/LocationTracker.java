@@ -2,6 +2,8 @@ package com.sales.tracking.salestracking.Utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,6 +14,8 @@ import com.sales.tracking.salestracking.Bean.LocationTrackerBean;
 
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class LocationTracker {
@@ -68,5 +72,72 @@ public class LocationTracker {
                 locationTrackRequest.setShouldCache(false);
                 Utilities.getRequestQueue(context).add(locationTrackRequest);
             }
+    }
+
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return strAdd;
+    }
+
+    public void trackSalesPersonAttendance(String attendenceType){
+
+        if (Connectivity.isConnected(context)) {
+
+            String Url = ApiLink.ROOT_URL + ApiLink.ATTENDENCE;
+            Map<String, String> map = new HashMap<>();
+            map.put("atten_uid", userId);
+
+            if (attendenceType.equals("IN")) {
+                map.put("atten_in_add", getCompleteAddressString(Double.parseDouble(latitude),Double.parseDouble(longitude)));
+                map.put("atten_in_latitude", latitude);
+                map.put("atten_in_longitude", longitude);
+            }else{
+                map.put("atten_out_add", getCompleteAddressString(Double.parseDouble(latitude),Double.parseDouble(longitude)));
+                map.put("filter[atten_out_latitude]", latitude);
+                map.put("filter[atten_out_longitude]", longitude);
+            }
+
+            GSONRequest<LocationTrackerBean> locationTrackRequest = new GSONRequest<LocationTrackerBean>(
+                    Request.Method.GET,
+                    Url,
+                    LocationTrackerBean.class, map,
+                    new com.android.volley.Response.Listener<LocationTrackerBean>() {
+                        @Override
+                        public void onResponse(LocationTrackerBean response) {
+                            try{
+                                if (response.getSuccess() == 1){
+                                    // Location Updated
+                                }
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                Toast.makeText(context, "Api response Problem", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(context, "Api response Problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            locationTrackRequest.setShouldCache(false);
+            Utilities.getRequestQueue(context).add(locationTrackRequest);
+        }
+
     }
 }

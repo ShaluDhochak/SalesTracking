@@ -112,7 +112,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     Handler handler = new Handler();
 
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 900000;
 
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
@@ -235,8 +235,17 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     }
 
     private void startLocationTracking() {
-        final LocationTracker locationTrackerThread = new LocationTracker(NavigationDrawerActivity.this, String.valueOf(latitude), String.valueOf(longitude));
-        locationTrackerThread.trackSalesPersonAPI();
+        if (latitude > 0 && longitude > 0) {
+            final LocationTracker locationTrackerThread = new LocationTracker(NavigationDrawerActivity.this, String.valueOf(latitude), String.valueOf(longitude));
+            locationTrackerThread.trackSalesPersonAPI();
+        }
+    }
+
+    private void trackAttendance(String attendanceInOut){
+        if (latitude > 0 && longitude > 0) {
+            final LocationTracker locationTrackerThread = new LocationTracker(NavigationDrawerActivity.this, String.valueOf(latitude), String.valueOf(longitude));
+            locationTrackerThread.trackSalesPersonAttendance(attendanceInOut);
+        }
     }
 
     private void setDrawerFromActivity() {
@@ -257,7 +266,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            new android.support.v7.app.AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                    .setMessage("Are you sure want to Exit?")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            moveTaskToBack(true);
+                        }
+                    }).setNegativeButton("no", null).show();
         }
     }
 
@@ -291,6 +307,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 return true;
             } else if (id == R.id.action_target) {
                 targetFragment();
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (id == R.id.action_attendance_in){
+                trackAttendance("IN");
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }else if (id == R.id.action_attendance_out){
+                trackAttendance("OUT");
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }

@@ -61,5 +61,8 @@ public interface ApiLink {
     String TRACK_SALES_PERSON = "track_sp.php";
     String TRACK_MANAGER_HEAD = "managerhead_track_sp.php";
 
+    String ATTENDENCE = "sp_attendance.php";
+
+
 
 }

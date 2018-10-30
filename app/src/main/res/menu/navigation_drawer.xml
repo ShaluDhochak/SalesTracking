@@ -18,4 +18,17 @@
         android:orderInCategory="100"
         android:title="Visit Pending"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_attendance_in"
+        android:orderInCategory="100"
+        android:title="Attendance In"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_attendance_out"
+        android:orderInCategory="100"
+        android:title="Attendance Out"
+        app:showAsAction="never" />
+
 </menu>
