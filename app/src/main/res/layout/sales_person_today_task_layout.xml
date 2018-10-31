@@ -135,16 +135,16 @@
                 >
                <ImageView
                    android:id="@+id/plusTodaysTask_iv"
-                   android:layout_width="20dp"
-                   android:layout_height="20dp"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp"
                    android:src="@drawable/plus_color_icon"
                    android:layout_marginRight="10dp"
                    />
 
                 <ImageView
                     android:id="@+id/minusTodaysTask_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/minus_color_icon"
                     android:padding="10dp"
                     android:visibility="gone"

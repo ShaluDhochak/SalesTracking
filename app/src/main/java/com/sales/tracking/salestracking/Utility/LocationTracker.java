@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Bean.LocationTrackerBean;
@@ -23,7 +24,7 @@ public class LocationTracker {
     private Context context;
     private String userType, userId, latitude, longitude;
 
-    public LocationTracker(Context context, String latitude, String longitude){
+    public LocationTracker(Context context, String latitude, String longitude) {
         this.context = context;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -34,44 +35,44 @@ public class LocationTracker {
 
     }
 
-    public void trackSalesPersonAPI(){
+    public void trackSalesPersonAPI() {
 
-            if (Connectivity.isConnected(context)) {
-                Log.i("Location API Call","Location API Call");
+        if (Connectivity.isConnected(context)) {
+            Log.i("Location API Call", "Location API Call");
 
-                String Url = ApiLink.ROOT_URL + ApiLink.TRACK_SALES_PERSON;
-                Map<String, String> map = new HashMap<>();
-                map.put("update_live_location", "");
-                map.put("user_id", userId);
-                map.put("user_type", userType);
-                map.put("user_lattitude",latitude);
-                map.put("user_longitude",longitude);
+            String Url = ApiLink.ROOT_URL + ApiLink.TRACK_SALES_PERSON;
+            Map<String, String> map = new HashMap<>();
+            map.put("update_live_location", "");
+            map.put("user_id", userId);
+            map.put("user_type", userType);
+            map.put("user_lattitude", latitude);
+            map.put("user_longitude", longitude);
 
-                GSONRequest<LocationTrackerBean> locationTrackRequest = new GSONRequest<LocationTrackerBean>(
-                        Request.Method.POST,
-                        Url,
-                        LocationTrackerBean.class, map,
-                        new com.android.volley.Response.Listener<LocationTrackerBean>() {
-                            @Override
-                            public void onResponse(LocationTrackerBean response) {
-                                try{
-                                    if (response.getSuccess() == 1){
-                                        // Location Updated
-                                    }
-                                }catch(Exception e){
-                                    e.printStackTrace();
-                                    Toast.makeText(context, "Api response Problem", Toast.LENGTH_SHORT).show();
+            GSONRequest<LocationTrackerBean> locationTrackRequest = new GSONRequest<LocationTrackerBean>(
+                    Request.Method.POST,
+                    Url,
+                    LocationTrackerBean.class, map,
+                    new com.android.volley.Response.Listener<LocationTrackerBean>() {
+                        @Override
+                        public void onResponse(LocationTrackerBean response) {
+                            try {
+                                if (response.getSuccess() == 1) {
+                                    // Location Updated
                                 }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
-                        },
-                        new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                            }
-                        });
-                locationTrackRequest.setShouldCache(false);
-                Utilities.getRequestQueue(context).add(locationTrackRequest);
-            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+            locationTrackRequest.setShouldCache(false);
+            Utilities.getRequestQueue(context).add(locationTrackRequest);
+        }
     }
 
     private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
@@ -94,7 +95,7 @@ public class LocationTracker {
         return strAdd;
     }
 
-    public void trackSalesPersonAttendance(String attendenceType){
+    public void trackSalesPersonAttendance(String attendenceType) {
 
         if (Connectivity.isConnected(context)) {
 
@@ -103,27 +104,27 @@ public class LocationTracker {
             map.put("atten_uid", userId);
 
             if (attendenceType.equals("IN")) {
-                map.put("atten_in_add", getCompleteAddressString(Double.parseDouble(latitude),Double.parseDouble(longitude)));
+                map.put("atten_in_add", getCompleteAddressString(Double.parseDouble(latitude), Double.parseDouble(longitude)));
                 map.put("atten_in_latitude", latitude);
                 map.put("atten_in_longitude", longitude);
-            }else{
-                map.put("atten_out_add", getCompleteAddressString(Double.parseDouble(latitude),Double.parseDouble(longitude)));
+            } else {
+                map.put("atten_out_add", "1");
                 map.put("filter[atten_out_latitude]", latitude);
                 map.put("filter[atten_out_longitude]", longitude);
             }
 
             GSONRequest<LocationTrackerBean> locationTrackRequest = new GSONRequest<LocationTrackerBean>(
-                    Request.Method.GET,
+                    Request.Method.POST,
                     Url,
                     LocationTrackerBean.class, map,
                     new com.android.volley.Response.Listener<LocationTrackerBean>() {
                         @Override
                         public void onResponse(LocationTrackerBean response) {
-                            try{
-                                if (response.getSuccess() == 1){
-                                    // Location Updated
+                            try {
+                                if (response.getSuccess() == 1) {
+                                    Utilities.showToast(context, response.getMessage());
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(context, "Api response Problem", Toast.LENGTH_SHORT).show();
                             }
@@ -134,7 +135,22 @@ public class LocationTracker {
                         public void onErrorResponse(VolleyError error) {
                             Toast.makeText(context, "Api response Problem", Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    return headers;
+                }
+
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+            };
+
+
             locationTrackRequest.setShouldCache(false);
             Utilities.getRequestQueue(context).add(locationTrackRequest);
         }
