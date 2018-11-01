@@ -99,8 +99,8 @@
 
                 <ImageView
                     android:id="@+id/editVisitTaskMeeting_mgrhead_iv"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/edit"
                     android:layout_marginRight="5dp"
                     android:visibility="gone"
@@ -109,8 +109,8 @@
 
                 <ImageView
                     android:id="@+id/deleteVisitTaskMeeting_mgrhead_iv"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/delete"
                     android:visibility="gone"
                     android:layout_marginRight="5dp"

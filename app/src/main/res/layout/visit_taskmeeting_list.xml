@@ -24,7 +24,7 @@
                 android:id="@+id/dateVisitTaskMeeting_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".8"
+                android:layout_weight=".5"
                 android:visibility="visible"
                 >
                 <TextView
@@ -59,7 +59,7 @@
                 android:id="@+id/timeVisitTaskMeeting_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".8"
+                android:layout_weight=".6"
                 >
                 <TextView
                     android:id="@+id/timeVisitTaskMeetingHeading_tv"
@@ -93,7 +93,7 @@
                 android:id="@+id/plusMinusVisitTaskMeeting_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1.4"
+                android:layout_weight="1.9"
                 android:gravity="right|center_vertical"
 
                 >
@@ -101,8 +101,8 @@
 
                 <ImageView
                     android:id="@+id/editVisitTaskMeeting_iv"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/edit"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/deleteVisitTaskMeeting_iv"
@@ -110,8 +110,8 @@
 
                 <ImageView
                     android:id="@+id/deleteVisitTaskMeeting_iv"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/delete"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/plusVisitTaskMeeting_iv"

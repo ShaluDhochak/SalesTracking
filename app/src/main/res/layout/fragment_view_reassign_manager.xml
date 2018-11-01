@@ -163,8 +163,8 @@
 
                             <ImageView
                                 android:id="@+id/deleteViewReasignedRequest_iv"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:src="@drawable/delete_white_icon"
                                 android:layout_marginRight="3dp"
                                 android:visibility="gone"
@@ -173,8 +173,8 @@
 
                             <ImageView
                                 android:id="@+id/editViewReasignedRequest_iv"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:src="@drawable/edit_icon"
                                 android:layout_marginRight="3dp"
                                 android:visibility="gone"
