@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -292,6 +293,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
                                     viewSaleCallTask_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewSaleCallTask_rv.setAdapter(viewSaleCallTaskManagerAdater);
                                     viewSaleCallTask_rv.setNestedScrollingEnabled(false);
+                                    viewSaleCallTaskManagerAdater.notifyDataSetChanged();
 
                                 }
                             }catch(Exception e){
@@ -303,6 +305,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
                     new com.android.volley.Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            Log.i("Error:",error.toString());
                         }
                     });
             dashboardGsonRequest.setShouldCache(false);
@@ -463,7 +466,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
         protected JSONObject doInBackground(String... args) {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("filter[service_uid]", service_id));
+            params.add(new BasicNameValuePair("filter[service_uid]", service_uid));
             params.add(new BasicNameValuePair("filter[service_person]", service_person));
             params.add(new BasicNameValuePair("filter[service_contactno]", service_contactno));
             params.add(new BasicNameValuePair("filter[service_leadid]", service_leadid));
@@ -493,7 +496,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Updated Successfully", Toast.LENGTH_SHORT).show();
-
+                    initialiseUI();
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
