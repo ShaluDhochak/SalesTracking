@@ -496,7 +496,9 @@ public class ViewSalesCallTaskFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(),"Updated Successfully", Toast.LENGTH_SHORT).show();
-                    initialiseUI();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_Container, new ViewSalesCallTaskFragment())
+                            .commit();
                 }
                 else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
