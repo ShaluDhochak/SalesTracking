@@ -218,6 +218,7 @@ public class AddVisitTaskSpFragment extends Fragment {
                 String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
                 Map<String, String> map = new HashMap<>();
                 map.put("purposes", "");
+                map.put("user_comid",user_comidPref);
 
                 final GSONRequest<PurposeBean> clientSpinnerGsonRequest = new GSONRequest<PurposeBean>(
                         Request.Method.POST,
