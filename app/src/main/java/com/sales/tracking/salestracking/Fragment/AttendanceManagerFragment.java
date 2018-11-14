@@ -162,12 +162,31 @@ public class AttendanceManagerFragment extends Fragment {
 
         dateViewAttendance_tv.setText(indate1[0]);
         salesPersonValueAttendanceDetail_tv.setText(bean.getUser_name());
-        inTimeAttendance_tv.setText(convertIn12Hours(indate1[1]));
 
-        inLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_in_latitude()),Double.parseDouble(bean.getAtten_in_longitude())));
+        if (!indate1[1].equals("00:00:00")) {
+            inTimeAttendance_tv.setText(convertIn12Hours(indate1[1]));
+        }else{
+            inTimeAttendance_tv.setText("");
+        }
+
+        if (!bean.getAtten_in_latitude().equals("")  && !bean.getAtten_in_longitude().equals("0")) {
+            inLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_in_latitude()), Double.parseDouble(bean.getAtten_in_longitude())));
+        }else{
+            inLocationAttendance_tv.setText("NA");
+        }
      //   inLocationAttendance_tv.setText(bean.getAtten_in_latitude());
-        outTimeAttendance_tv.setText(convertIn12Hours(outDate1[1]));
-        outLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_out_latitude()),Double.parseDouble(bean.getAtten_out_longitude())));
+
+        if (!outDate1[1].equals("00:00:00")) {
+            outTimeAttendance_tv.setText(convertIn12Hours(outDate1[1]));
+        }else{
+            outTimeAttendance_tv.setText("NA");
+        }
+
+        if(!bean.getAtten_out_latitude().equals("") && !bean.getAtten_out_longitude().equals("")) {
+            outLocationAttendance_tv.setText(getCompleteAddressString(Double.parseDouble(bean.getAtten_out_latitude()), Double.parseDouble(bean.getAtten_out_longitude())));
+        }else{
+            outLocationAttendance_tv.setText("NA");
+        }
 
     }
 
