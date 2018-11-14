@@ -146,7 +146,7 @@ public class VisitTaskUpdateSpFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-
+     //   initialiseUI();
     }
 
     private void initialiseUI() {
@@ -178,7 +178,7 @@ public class VisitTaskUpdateSpFragment extends Fragment{
                                 visitTaskUpdateVisitSp.clear();
                                 visitTaskUpdateVisitSp.add("Visit Task");
                                 for (int i = 0; i < response.getSp_tasks_dd().size(); i++) {
-                                    visitTaskUpdateVisitSp.add(response.getSp_tasks_dd().get(i).getLead_company());
+                                    visitTaskUpdateVisitSp.add(response.getSp_tasks_dd().get(i).getLead_company() + " - " + response.getSp_tasks_dd().get(i).getPurpose_name() +" - " +response.getSp_tasks_dd().get(i).getVisit_address());
                                     visitTaskMap.put(response.getSp_tasks_dd().get(i).getVisit_id(), response.getSp_tasks_dd().get(i).getLead_company());
                                 }
                             }

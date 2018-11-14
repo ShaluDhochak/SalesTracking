@@ -189,6 +189,12 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_view_meeting_task_manager, container, false);
         ButterKnife.bind(this, view);
         initialiseUI();
+
+        if (userTypePref.equals("Sales Manager")) {
+            getVisitTaskMeetingRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getVisitTaskManagerHeadMeetingRecyclerView();
+        }
         return view;
     }
 
@@ -196,7 +202,11 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         initialiseUI();
-        getVisitTaskMeetingRecyclerView();
+        if (userTypePref.equals("Sales Manager")) {
+            getVisitTaskMeetingRecyclerView();
+        }else if (userTypePref.equals("Manager Head")){
+            getVisitTaskManagerHeadMeetingRecyclerView();
+        }
     }
 
     private void initialiseUI() {

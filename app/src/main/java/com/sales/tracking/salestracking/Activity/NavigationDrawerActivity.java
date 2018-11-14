@@ -216,11 +216,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, true);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
-        }/*else if (userTypePref.equals("Manager Head")){
+        }else if (userTypePref.equals("Manager Head")){
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, true);
-        }*/
+        }
 
     }
 
@@ -284,9 +284,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             getMenuInflater().inflate(R.menu.navigation_drawer, menu);
         } else if (userTypePref.equals("Sales Manager")) {
             getMenuInflater().inflate(R.menu.menu_manager_navigation, menu);
-        }/*else if (userTypePref.equals("Manager Head")){
+        }else if (userTypePref.equals("Manager Head")){
             getMenuInflater().inflate(R.menu.manager_head_menu_navigation, menu);
-        }*/
+        }
         return true;
     }
 
@@ -328,13 +328,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
-        }/*else if (userTypePref.equals("Manager Head")){
+        }else if (userTypePref.equals("Manager Head")){
             if (id==R.id.action_view_managerhead_clients){
                 viewClientManagerNotificationFragment();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
