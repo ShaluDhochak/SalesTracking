@@ -160,8 +160,8 @@
 
                         <ImageView
                             android:id="@+id/minusViewAttendance_iv"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/minus_white_icon"
                             android:layout_marginRight="10dp"
                             />

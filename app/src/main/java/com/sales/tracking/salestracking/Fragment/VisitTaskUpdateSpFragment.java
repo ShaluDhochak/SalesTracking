@@ -179,14 +179,14 @@ public class VisitTaskUpdateSpFragment extends Fragment{
                                 visitTaskUpdateVisitSp.add("Visit Task");
                                 for (int i = 0; i < response.getSp_tasks_dd().size(); i++) {
                                     visitTaskUpdateVisitSp.add(response.getSp_tasks_dd().get(i).getLead_company() + " - " + response.getSp_tasks_dd().get(i).getPurpose_name() +" - " +response.getSp_tasks_dd().get(i).getVisit_address());
-                                    visitTaskMap.put(response.getSp_tasks_dd().get(i).getVisit_id(), response.getSp_tasks_dd().get(i).getLead_company());
+                                    visitTaskMap.put(response.getSp_tasks_dd().get(i).getVisit_id(), response.getSp_tasks_dd().get(i).getLead_company() + " - " + response.getSp_tasks_dd().get(i).getPurpose_name() +" - " +response.getSp_tasks_dd().get(i).getVisit_address());
                                 }
                             }
                         },
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                               Utilities.serverError(getActivity());
+                               Utilities.showToast(getActivity(), "No tasks available");
                             }
                         });
                 locationSpinnerGsonRequest.setShouldCache(false);
