@@ -121,6 +121,20 @@ public class ViewTotalCollectionFragment extends Fragment {
     @BindView(R.id.minusManagerViewCollection_iv)
     ImageView minusManagerViewCollection_iv;
 
+    //Manager
+    @BindView(R.id.billNoManagerLead_tv)
+            TextView billNoManagerLead_tv;
+
+    @BindView(R.id.clientNameManagerLead_tv)
+            TextView clientNameManagerLead_tv;
+
+    @BindView(R.id.remarkManagerLead_tv)
+            TextView remarkManagerLead_tv;
+
+    @BindView(R.id.collectionModeManagerLead_tv)
+            TextView collectionModeManagerLead_tv;
+
+
     String collection_iid, collection_uiid;
 
     ArrayList<CollectionListBean.Collections> spMeetingTodayList = new ArrayList<>();
@@ -472,6 +486,13 @@ public class ViewTotalCollectionFragment extends Fragment {
             nameViewManagerLead_tv.setText(bean.getUser_name());
             totalCollectionManagerViewCollection_tv.setText(bean.getCollection_amount());
             dateViewManagerCollection_tv.setText(bean.getCollection_date());
+
+            billNoManagerLead_tv.setText(bean.getCollection_bill_no());
+            clientNameManagerLead_tv.setText(bean.getLead_company());
+            remarkManagerLead_tv.setText(bean.getCollection_remark());
+            collectionModeManagerLead_tv.setText(bean.getCollection_mode());
+
+
         }else if (userTypePref.equals("Sales Executive")){
             addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
@@ -482,6 +503,11 @@ public class ViewTotalCollectionFragment extends Fragment {
             nameViewLead_tv.setText(bean.getUser_name());
             totalCollectionViewCollection_tv.setText(bean.getCollection_amount());
             dateViewCollection_tv.setText(bean.getCollection_date());
+
+            billNoManagerLead_tv.setText(bean.getCollection_bill_no());
+            clientNameManagerLead_tv.setText(bean.getLead_company());
+            remarkManagerLead_tv.setText(bean.getCollection_remark());
+            collectionModeManagerLead_tv.setText(bean.getCollection_mode());
         }
     }
 

@@ -150,6 +150,16 @@ public class TaskMeetingBean {
     public static class Users_DD{
         String user_id;
 
+        public boolean isSelected() {
+            return selected;
+        }
+
+        public void setSelected(boolean selected) {
+            this.selected = selected;
+        }
+
+        boolean selected;
+
         public String getUser_id() {
             return user_id;
         }

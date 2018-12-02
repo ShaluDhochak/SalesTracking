@@ -26,11 +26,13 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.sales.tracking.salestracking.Adapter.AssignToClientAdapter;
 import com.sales.tracking.salestracking.Adapter.LeadSpAdapter;
 import com.sales.tracking.salestracking.Adapter.ManagerClientAdapter;
 import com.sales.tracking.salestracking.Adapter.ManagerClientManagerHeadAdapter;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.ManagerBean;
+import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
@@ -137,6 +139,22 @@ public class ViewClientManagerFragment extends Fragment {
     @BindView(R.id.minusEditLeadTypeDetail_iv)
     ImageView minusEditLeadTypeDetail_iv;
 
+    @BindView(R.id.outstandingBalLeadViewTask_rl)
+            RelativeLayout outstandingBalLeadViewTask_rl;
+
+    @BindView(R.id.separatorBelowStatusLeadView)
+            View separatorBelowStatusLeadView;
+
+    @BindView(R.id.outstandingBalLeadViewTask_tv)
+            TextView outstandingBalLeadViewTask_tv;
+
+    //Edit outstand
+    @BindView(R.id.outstandBalEditLeadSp_et)
+            EditText outstandBalEditLeadSp_et;
+
+    @BindView(R.id.assignToEditLeadSp_sp)
+            Spinner assignToEditLeadSp_sp;
+
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
 
@@ -145,11 +163,17 @@ public class ViewClientManagerFragment extends Fragment {
 
     ManagerClientManagerHeadAdapter managerClientManagerHeadAdapter;
 
-    String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype;
+    String selectedLeadType, selectedLeadTypeId, leadType_id, defaultLeadtype,selectAssignTo, selectAssignToId, assignType_id;
 
     ArrayList<String> leadTypeAddLeadSp;
+    ArrayList<String> assignToUser;
+
+
+    ArrayList<TaskMeetingBean.Users_DD> listVOs = new ArrayList<>();
+
 
     Map<String, String> leadTypeMap = new HashMap<>();
+    Map<String, String> assignToUserMap = new HashMap<>();
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -157,7 +181,7 @@ public class ViewClientManagerFragment extends Fragment {
     JSONParser jsonParser = new JSONParser();
     ProgressDialog pDialog;
 
-    int selectedLead;
+    int selectedLead, selectAssign;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -218,6 +242,9 @@ public class ViewClientManagerFragment extends Fragment {
         leadTaskHeader_rl.setVisibility(View.GONE);
         editLeadSpDetails_cv.setVisibility(View.GONE);
 
+        outstandingBalLeadViewTask_rl.setVisibility(View.VISIBLE);
+        separatorBelowStatusLeadView.setVisibility(View.VISIBLE);
+
         titleViewLeadTask_tv.setText("View Client");
 
         clientCompanyNameLeadTask_tv.setText(bean.getLead_company());
@@ -229,6 +256,8 @@ public class ViewClientManagerFragment extends Fragment {
         addressLeadViewTask_tv.setText(bean.getLead_address());
         createdByLeadViewTask_tv.setText(bean.getUser_name());
         statusLeadViewTask_tv.setText(bean.getLead_status());
+
+        outstandingBalLeadViewTask_tv.setText(bean.getOutstanding_bal());
     }
 
     public void getEditClientClientData(ManagerBean.clients bean){
@@ -247,8 +276,12 @@ public class ViewClientManagerFragment extends Fragment {
         mobileEditLeadSp_et.setText(bean.getLead_contact());
         websiteEditLeadSp_et.setText(bean.getLead_website());
         addressEditLeadSp_et.setText(bean.getLead_address());
+        outstandBalEditLeadSp_et.setText(bean.getOutstanding_bal());
         leadType_id = bean.getLeadtype_name().toString();
+
+        assignType_id = bean.getLead_assignedto().toString();
         selectleadType();
+        selectAssignTo();
 
     }
 
@@ -327,6 +360,86 @@ public class ViewClientManagerFragment extends Fragment {
         }
     }
 
+    private void selectAssignTo(){
+        try{
+            if (Connectivity.isConnected(getActivity())) {
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("users","" );
+                map.put("user_comid", user_comidPref);
+
+                final GSONRequest<TaskMeetingBean> locationSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class,map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                assignToUser.clear();
+                                assignToUser.add("Assign To");
+                                for(int i=0;i<response.getUsers_dd().size();i++)
+                                {
+                                   /* assignToUser.add(response.getUsers_dd().get(i).getUser_name());
+                                    assignToUserMap.put(response.getUsers_dd().get(i).getUser_id(), response.getUsers_dd().get(i).getUser_name());
+
+                                    String myString = assignType_id; //the value you want the position for
+                                    if (myString.equals(response.getUsers_dd().get(i).getUser_name())) {
+                                        selectAssign = i + 1;
+                                        lTypeEditLeadSp_sp.setSelection(selectAssign);
+                                    }
+
+                                    */
+
+                                   // for (int i = 0; i < response.getUsers_dd().length; i++) {
+                                        TaskMeetingBean.Users_DD stateVO = new TaskMeetingBean.Users_DD();
+                                        stateVO.setUser_name(response.getUsers_dd().get(i).getUser_name());
+                                        stateVO.setSelected(false);
+                                        listVOs.add(stateVO);
+                                   // }
+
+
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Utilities.serverError(getActivity());
+                            }
+                        });
+                locationSpinnerGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(locationSpinnerGsonRequest);
+            }
+            AssignToClientAdapter myAdapter = new AssignToClientAdapter(getActivity(), 0, listVOs);
+            assignToEditLeadSp_sp.setAdapter(myAdapter);
+
+
+         /*   assignToUser = new ArrayList<String>();
+            assignToUser.clear();
+            assignToUser.add("Assign To");
+            ArrayAdapter<String> quotationLocationDataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_textview, assignToUser);
+            quotationLocationDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+            assignToEditLeadSp_sp.setAdapter(quotationLocationDataAdapter);
+
+            */
+        }catch (Exception e){
+        }
+    }
+
+    @OnItemSelected(R.id.assignToEditLeadSp_sp)
+    public void assignToAddSelected(Spinner spinner, int position) {
+        selectAssignTo = spinner.getSelectedItem().toString();
+        for (Map.Entry<String, String> e : assignToUserMap.entrySet()) {
+            Object key = e.getKey();
+            Object value = e.getValue();
+            if (value.equals(selectAssignTo)) {
+                selectAssignToId = (String) key;
+             //   assignType_id= (String) key;
+            }
+        }
+    }
+
+
     @OnClick(R.id.submitEditLeadSp_btn)
     public void submitEditLead(){
 
@@ -338,7 +451,11 @@ public class ViewClientManagerFragment extends Fragment {
                             if (mobileEditLeadSp_et.getText().toString().length() > 0 && mobileEditLeadSp_et.getText().toString().length() == 10) {
                                 if (websiteEditLeadSp_et.getText().toString().length() > 0) {
                                     if (addressEditLeadSp_et.getText().toString().length() > 0) {
-                                           new editManagerClientSp().execute();
+                                        if (outstandBalEditLeadSp_et.getText().toString().length()>0){
+                                            new editManagerClientSp().execute();
+                                        }else{
+                                            Toast.makeText(getActivity(), "Please Enter Outstanding Bal", Toast.LENGTH_SHORT).show();
+                                        }
                                     } else {
                                         Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
                                     }
@@ -426,7 +543,7 @@ public class ViewClientManagerFragment extends Fragment {
     }
 
     public class editManagerClientSp extends AsyncTask<String, JSONObject, JSONObject> {
-        String lead_address, lead_uid,lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+        String lead_address, lead_uid,lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website,lead_assignto ;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -439,6 +556,7 @@ public class ViewClientManagerFragment extends Fragment {
             lead_email = emailEditLeadSp_et.getText().toString();
             lead_contact = mobileEditLeadSp_et.getText().toString();
             lead_website = websiteEditLeadSp_et.getText().toString();
+            lead_assignto = selectAssignToId;
 
             pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Editing Client...");
@@ -463,6 +581,8 @@ public class ViewClientManagerFragment extends Fragment {
            // params.add(new BasicNameValuePair("filter[lead_comid]", user_comidPref));
             params.add(new BasicNameValuePair("filter[lead_status]", "Done"));
             params.add(new BasicNameValuePair("lead_id", lead_iid));
+            params.add(new BasicNameValuePair("assignedto", lead_assignto));
+
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
 

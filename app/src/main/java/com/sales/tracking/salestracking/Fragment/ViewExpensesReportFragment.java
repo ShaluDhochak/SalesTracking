@@ -341,6 +341,7 @@ public class ViewExpensesReportFragment extends Fragment {
 
     }
 
+
     private void getAllExpensesReportManagerRecyclerView(){
         try {
             if (Connectivity.isConnected(getActivity())) {

@@ -16,6 +16,26 @@ public class ManagerBean {
         String lead_status;
         String user_name;
 
+        String outstanding_bal;
+
+        public String getOutstanding_bal() {
+            return outstanding_bal;
+        }
+
+        public void setOutstanding_bal(String outstanding_bal) {
+            this.outstanding_bal = outstanding_bal;
+        }
+
+        public String getLead_assignedto() {
+            return lead_assignedto;
+        }
+
+        public void setLead_assignedto(String lead_assignedto) {
+            this.lead_assignedto = lead_assignedto;
+        }
+
+        String lead_assignedto;
+
 
         public String getLead_id() {
             return lead_id;
