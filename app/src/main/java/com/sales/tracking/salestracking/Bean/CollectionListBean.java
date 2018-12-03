@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class CollectionListBean {
 
-    public static class Collections{
 
+
+    public static class Collections{
 
        String user_name;
         String collection_id;

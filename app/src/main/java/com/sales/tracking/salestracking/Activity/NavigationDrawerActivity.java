@@ -68,6 +68,7 @@ import com.sales.tracking.salestracking.Fragment.TrackSalesPersonActivity;
 import com.sales.tracking.salestracking.Fragment.UpdateSaleCallTaskFragment;
 import com.sales.tracking.salestracking.Fragment.ViewClientManagerFragment;
 import com.sales.tracking.salestracking.Fragment.ViewClientNotificationManagerFragment;
+import com.sales.tracking.salestracking.Fragment.ViewCollectionReportFragment;
 import com.sales.tracking.salestracking.Fragment.ViewCustomerFeedbackFragment;
 import com.sales.tracking.salestracking.Fragment.ViewDoneVisitReportFragment;
 import com.sales.tracking.salestracking.Fragment.ViewExpensesReportFragment;
@@ -216,7 +217,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, true);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
-        }else if (userTypePref.equals("Manager Head")){
+        } else if (userTypePref.equals("Manager Head")) {
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, true);
@@ -241,7 +242,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         }
     }
 
-    private void trackAttendance(String attendanceInOut){
+    private void trackAttendance(String attendanceInOut) {
         if (latitude > 0 && longitude > 0) {
             final LocationTracker locationTrackerThread = new LocationTracker(NavigationDrawerActivity.this, String.valueOf(latitude), String.valueOf(longitude));
             locationTrackerThread.trackSalesPersonAttendance(attendanceInOut);
@@ -284,7 +285,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             getMenuInflater().inflate(R.menu.navigation_drawer, menu);
         } else if (userTypePref.equals("Sales Manager")) {
             getMenuInflater().inflate(R.menu.menu_manager_navigation, menu);
-        }else if (userTypePref.equals("Manager Head")){
+        } else if (userTypePref.equals("Manager Head")) {
             getMenuInflater().inflate(R.menu.manager_head_menu_navigation, menu);
         }
         return true;
@@ -309,11 +310,11 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 targetFragment();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
-            } else if (id == R.id.action_attendance_in){
+            } else if (id == R.id.action_attendance_in) {
                 trackAttendance("IN");
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
-            }else if (id == R.id.action_attendance_out){
+            } else if (id == R.id.action_attendance_out) {
                 trackAttendance("OUT");
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -328,8 +329,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
-        }else if (userTypePref.equals("Manager Head")){
-            if (id==R.id.action_view_managerhead_clients){
+        } else if (userTypePref.equals("Manager Head")) {
+            if (id == R.id.action_view_managerhead_clients) {
                 viewClientManagerNotificationFragment();
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -358,7 +359,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
 
-             navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+            navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
             navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
@@ -465,6 +466,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setReportManagerDefault();
 
             viewExpensesReportFragment();
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.nav_collections) {
+            menu_rl.setVisibility(View.VISIBLE);
+            reportHeading_rl.setVisibility(View.GONE);
+            setReportManagerDefault();
+
+            viewCollectionsReportFragment();
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_expenses) {
             setDefaultManageTask();
@@ -641,7 +649,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, true);
 
             navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-            navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+            navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
             navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
@@ -661,7 +669,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, false);
 
             navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-            navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+            navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
             navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
@@ -878,23 +886,23 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             setDefaultLeadSalesPerson();
             navigationView.getMenu().getItem(46).setVisible(true);
             navigationView.getMenu().getItem(47).setVisible(true);
-        } else if (id == R.id.nav_dashboard_head){
+        } else if (id == R.id.nav_dashboard_head) {
             dashboardFragment();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_track_sales_person_head){
+        } else if (id == R.id.nav_track_sales_person_head) {
             drawer.closeDrawer(GravityCompat.START);
             Intent trackSlaesTrackingIntent = new Intent(NavigationDrawerActivity.this, TrackSalesPersonActivity.class);
             startActivity(trackSlaesTrackingIntent);
-        }else if (id==R.id.nav_manager_head){
+        } else if (id == R.id.nav_manager_head) {
             setDefaultManagerHeadManageDrawer();
 
             setDefaultManagerViewTasksDrawer();
-        }else if (id==R.id.nav_managerhead_title){
+        } else if (id == R.id.nav_managerhead_title) {
             navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-            navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+            navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, true);
             navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
@@ -902,56 +910,55 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, false);
 
             //setDefaultManagerViewTasksDrawer();
-        }
-        else if (id==R.id.nav_reports_head){
+        } else if (id == R.id.nav_reports_head) {
             setDefaultManagerHeadReportDrawer();
 
 
-        }else if (id==R.id.nav_reports_managerhead_title){
+        } else if (id == R.id.nav_reports_managerhead_title) {
 
             navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
             navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-            navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+            navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_head_option, true);
             navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
             navigationView.getMenu().setGroupVisible(R.id.main_sales_person_option, false);
             navigationView.getMenu().setGroupVisible(R.id.manager_salesperson_option, false);
 
-        }else if (id==R.id.nav_attendance_managerhead){
+        } else if (id == R.id.nav_attendance_managerhead) {
 
             viewAttendanceReportFragmnet();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_visits_managerhead){
+        } else if (id == R.id.nav_visits_managerhead) {
 
             viewAllVisitReportFragmnet();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_expenses_managerhead){
+        } else if (id == R.id.nav_expenses_managerhead) {
             viewExpensesReportFragment();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_view_users_managerhead){
+        } else if (id == R.id.nav_view_users_managerhead) {
             setDefaultManagerViewTasksDrawer();
 
             viewUserManagerHeadFragment();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_view_client_managerhead){
+        } else if (id == R.id.nav_view_client_managerhead) {
             setDefaultManagerViewTasksDrawer();
 
             viewClientManagerFragment();
             drawer.closeDrawer(GravityCompat.START);
 
-        }else if (id==R.id.nav_view_salescalls_tasks_managerhead){
+        } else if (id == R.id.nav_view_salescalls_tasks_managerhead) {
             viewSaleCallTaskFragment();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_view_meeting_tasks_managerhead){
+        } else if (id == R.id.nav_view_meeting_tasks_managerhead) {
             viewMeetingTaskFragment();
             drawer.closeDrawer(GravityCompat.START);
-        }else if (id==R.id.nav_view_tasks_managerhead){
+        } else if (id == R.id.nav_view_tasks_managerhead) {
 
             navigationView.getMenu().getItem(67).setVisible(true);
             navigationView.getMenu().getItem(68).setVisible(true);
-        }else if (id==R.id.nav_workinghours_attendance_managerhead){
+        } else if (id == R.id.nav_workinghours_attendance_managerhead) {
             setDefaultManagerViewTasksDrawer();
 
             attendanceFragment();
@@ -966,7 +973,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().setGroupVisible(R.id.reports_option, true);
         navigationView.getMenu().setGroupVisible(R.id.main_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-        navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+        navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
         navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
@@ -977,7 +984,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().setGroupVisible(R.id.main_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, true);
-        navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+        navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
         navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
@@ -988,18 +995,18 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         navigationView.getMenu().setGroupVisible(R.id.main_option, true);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-        navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+        navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
         navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
     }
 
-    private void setDefaultManagerHeadManageDrawer(){
+    private void setDefaultManagerHeadManageDrawer() {
         navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-        navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,true);
+        navigationView.getMenu().setGroupVisible(R.id.managerhead_option, true);
         navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
         navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, false);
 
@@ -1008,12 +1015,12 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     }
 
-    private void setDefaultManagerHeadReportDrawer(){
+    private void setDefaultManagerHeadReportDrawer() {
         navigationView.getMenu().setGroupVisible(R.id.manager_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reports_option, false);
         navigationView.getMenu().setGroupVisible(R.id.reassign_request_option, false);
-        navigationView.getMenu().setGroupVisible(R.id.managerhead_option ,false);
+        navigationView.getMenu().setGroupVisible(R.id.managerhead_option, false);
         navigationView.getMenu().setGroupVisible(R.id.main_head_option, false);
         navigationView.getMenu().setGroupVisible(R.id.managerhead_report_option, true);
 
@@ -1022,7 +1029,7 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     }
 
-    private void setDefaultManagerViewTasksDrawer(){
+    private void setDefaultManagerViewTasksDrawer() {
         navigationView.getMenu().getItem(67).setVisible(false);
         navigationView.getMenu().getItem(68).setVisible(false);
     }
@@ -1354,6 +1361,13 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         ViewExpensesReportFragment viewExpensesReportFragment = new ViewExpensesReportFragment();
         FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
         atransaction.replace(R.id.fragment_Container, viewExpensesReportFragment);
+        atransaction.commit();
+    }
+
+    public void viewCollectionsReportFragment() {
+        ViewCollectionReportFragment viewCollectionReportFragment = new ViewCollectionReportFragment();
+        FragmentTransaction atransaction = getSupportFragmentManager().beginTransaction();
+        atransaction.replace(R.id.fragment_Container, viewCollectionReportFragment);
         atransaction.commit();
     }
 

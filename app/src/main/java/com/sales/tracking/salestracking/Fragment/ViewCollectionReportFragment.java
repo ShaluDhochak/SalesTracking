@@ -159,7 +159,7 @@ public class ViewCollectionReportFragment extends Fragment {
         if (userTypePref.equals("Sales Manager")) {
 
             getTodaysTaskRecyclerView();
-            selectAssignTo();
+          //  selectAssignTo();
 
         }else if (userTypePref.equals("Sales Executive")){
             getTodaysTaskRecyclerView();

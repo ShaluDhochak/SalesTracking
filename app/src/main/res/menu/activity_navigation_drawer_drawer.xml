@@ -264,6 +264,11 @@
             android:id="@+id/nav_calls_expenses"
             android:title="Expenses"
             />
+        <item
+            android:id="@+id/nav_collections"
+            android:title="Collections"
+            />
+
 
     </group>
 
