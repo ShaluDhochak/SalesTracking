@@ -63,11 +63,11 @@ public class AssignToClientAdapter extends ArrayAdapter<TaskMeetingBean.Users_DD
         holder.mCheckBox.setChecked(listState.get(position).isSelected());
         isFromView = false;
 
-        if ((position == 0)) {
-            holder.mCheckBox.setVisibility(View.INVISIBLE);
-        } else {
+//        if ((position == 0)) {
+//            holder.mCheckBox.setVisibility(View.INVISIBLE);
+//        } else {
             holder.mCheckBox.setVisibility(View.VISIBLE);
-        }
+     //   }
         holder.mCheckBox.setTag(position);
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -81,6 +81,10 @@ public class AssignToClientAdapter extends ArrayAdapter<TaskMeetingBean.Users_DD
             }
         });
         return convertView;
+    }
+
+    public ArrayList<TaskMeetingBean.Users_DD> getListState() {
+        return listState;
     }
 
     private class ViewHolder {

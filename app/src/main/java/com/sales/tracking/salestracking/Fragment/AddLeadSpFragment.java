@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,10 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.sales.tracking.salestracking.Activity.NavigationDrawerActivity;
+import com.sales.tracking.salestracking.Adapter.AssignToClientAdapter;
 import com.sales.tracking.salestracking.Bean.LeadSpBean;
 import com.sales.tracking.salestracking.Bean.SalesCallTaskSpBean;
+import com.sales.tracking.salestracking.Bean.TaskMeetingBean;
 import com.sales.tracking.salestracking.R;
 import com.sales.tracking.salestracking.Utility.ApiLink;
 import com.sales.tracking.salestracking.Utility.Connectivity;
@@ -92,6 +95,15 @@ public class AddLeadSpFragment extends Fragment {
     @BindView(R.id.titleAddLeadSp_tv)
     TextView titleAddLeadSp_tv;
 
+    @BindView(R.id.assignToAddLeadSp_sp)
+    Spinner assignToAddLeadSp_sp;
+
+    @BindView(R.id.assignToAddLeadSp_rl)
+    RelativeLayout assignToAddLeadSp_rl;
+
+    @BindView(R.id.separatorBelowOutstandingBalEditLeadSp)
+    View separatorBelowOutstandingBalEditLeadSp;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,7 +119,7 @@ public class AddLeadSpFragment extends Fragment {
         initialiseUI();
     }
 
-    private void initialiseUI(){
+    private void initialiseUI() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userIdPref = sharedPref.getString("user_id", "");
         userTypePref = sharedPref.getString("user_type", "");
@@ -116,33 +128,35 @@ public class AddLeadSpFragment extends Fragment {
         if (userTypePref.equals("Sales Executive")) {
             titleAddLeadSp_tv.setText("Add Lead");
             selectleadType();
-        }else if (userTypePref.equals("Sales Manager")){
+            assignToAddLeadSp_rl.setVisibility(View.GONE);
+            separatorBelowOutstandingBalEditLeadSp.setVisibility(View.GONE);
+        } else if (userTypePref.equals("Sales Manager")) {
             titleAddLeadSp_tv.setText("Add Client");
             selectleadType();
+            selectAssignTo();
         }
     }
 
-    private void selectleadType(){
-        try{
+    private void selectleadType() {
+        try {
             if (Connectivity.isConnected(getActivity())) {
                 String Url = ApiLink.ROOT_URL + ApiLink.LEAD_VIEW_SALESPERSON;
                 Map<String, String> map = new HashMap<>();
-                map.put("leadtype_dropdown","" );
+                map.put("leadtype_dropdown", "");
                 map.put("lead_comid", user_comidPref);
 
                 final GSONRequest<LeadSpBean> leadTypeGsonRequest = new GSONRequest<LeadSpBean>(
                         Request.Method.POST,
                         Url,
-                        LeadSpBean.class,map,
+                        LeadSpBean.class, map,
                         new com.android.volley.Response.Listener<LeadSpBean>() {
                             @Override
                             public void onResponse(LeadSpBean response) {
                                 leadTypeAddLeadSp.clear();
                                 leadTypeAddLeadSp.add("Lead Type");
-                                for(int i=0;i<response.getLeadtype_dropdown().size();i++)
-                                {
+                                for (int i = 0; i < response.getLeadtype_dropdown().size(); i++) {
                                     leadTypeAddLeadSp.add(response.getLeadtype_dropdown().get(i).getLeadtype_name());
-                                    leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(),response.getLeadtype_dropdown().get(i).getLeadtype_name() );
+                                    leadTypeMap.put(response.getLeadtype_dropdown().get(i).getLeadtype_id(), response.getLeadtype_dropdown().get(i).getLeadtype_name());
                                 }
                             }
                         },
@@ -162,7 +176,7 @@ public class AddLeadSpFragment extends Fragment {
             leadTypeDataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             lTypeAddLeadSp_sp.setAdapter(leadTypeDataAdapter);
 
-        }catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
@@ -174,62 +188,127 @@ public class AddLeadSpFragment extends Fragment {
             Object value = e.getValue();
             if (value.equals(selectedLeadType)) {
                 selectedLeadTypeId = (String) key;
-                leadType_id= (String) key;
+                leadType_id = (String) key;
             }
         }
     }
 
+    ArrayList<String> assignToUser = new ArrayList<>();
+    ArrayList<TaskMeetingBean.Users_DD> listVOs = new ArrayList<>();
+    AssignToClientAdapter myAdapter;
+
+    private void selectAssignTo() {
+        try {
+            if (Connectivity.isConnected(getActivity())) {
+                String Url = ApiLink.ROOT_URL + ApiLink.Dashboard_SalesPerson;
+                Map<String, String> map = new HashMap<>();
+                map.put("users", "");
+                map.put("user_comid", user_comidPref);
+
+                final GSONRequest<TaskMeetingBean> locationSpinnerGsonRequest = new GSONRequest<TaskMeetingBean>(
+                        Request.Method.POST,
+                        Url,
+                        TaskMeetingBean.class, map,
+                        new com.android.volley.Response.Listener<TaskMeetingBean>() {
+                            @Override
+                            public void onResponse(TaskMeetingBean response) {
+                                assignToUser.clear();
+                                assignToUser.add("Assign To");
+                                listVOs.clear();
+                                for (int i = 0; i < response.getUsers_dd().size(); i++) {
+
+                                    // for (int i = 0; i < response.getUsers_dd().length; i++) {
+                                    TaskMeetingBean.Users_DD stateVO = new TaskMeetingBean.Users_DD();
+                                    stateVO.setUser_name(response.getUsers_dd().get(i).getUser_name());
+                                    stateVO.setUser_id(response.getUsers_dd().get(i).getUser_id());
+                                    stateVO.setSelected(false);
+                                    listVOs.add(stateVO);
+                                    // }
+
+                                }
+                            }
+                        },
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Utilities.serverError(getActivity());
+                            }
+                        });
+                locationSpinnerGsonRequest.setShouldCache(false);
+                Utilities.getRequestQueue(getActivity()).add(locationSpinnerGsonRequest);
+            }
+            myAdapter = new AssignToClientAdapter(getActivity(), 0, listVOs);
+            assignToAddLeadSp_sp.setAdapter(myAdapter);
+
+        } catch (Exception e) {
+        }
+    }
+
+    private boolean getIsSelectedAssignedTo() {
+        for (TaskMeetingBean.Users_DD users_dd : myAdapter.getListState()) {
+            if (users_dd.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @OnClick(R.id.submitAddLeadSp_btn)
-    public void submitAddLead(){
+    public void submitAddLead() {
 
         if (!selectedLeadType.equals("Lead Type")) {
-            if (clientCompanyNameAddLeadSp_et.getText().toString().length()>0){
-                if (contactPersonAddLeadSp_et.getText().toString().length()>0){
-                    if (emailAddLeadSp_et.getText().toString().length()>0){
-                        if (isEmailValid(emailAddLeadSp_et.getText().toString().trim())){
-                                if (mobileAddLeadSp_et.getText().toString().length() > 0 && mobileAddLeadSp_et.getText().toString().length() == 10) {
-                                    if (websiteAddLeadSp_et.getText().toString().length() > 0) {
-                                        if (addressAddLeadSp_et.getText().toString().length() > 0) {
-                                            if (userTypePref.equals("Sales Executive")) {
-                                                new addLeadSp().execute();
-                                            } else if (userTypePref.equals("Sales Manager")) {
+            if (clientCompanyNameAddLeadSp_et.getText().toString().length() > 0) {
+                if (contactPersonAddLeadSp_et.getText().toString().length() > 0) {
+                    if (emailAddLeadSp_et.getText().toString().length() > 0) {
+                        if (isEmailValid(emailAddLeadSp_et.getText().toString().trim())) {
+                            if (mobileAddLeadSp_et.getText().toString().length() > 0 && mobileAddLeadSp_et.getText().toString().length() == 10) {
+                                if (websiteAddLeadSp_et.getText().toString().length() > 0) {
+                                    if (addressAddLeadSp_et.getText().toString().length() > 0) {
+                                        if (userTypePref.equals("Sales Executive")) {
+                                            new addLeadSp().execute();
+                                        } else if (userTypePref.equals("Sales Manager")) {
+                                            if (getIsSelectedAssignedTo()) {
                                                 new addClientSp().execute();
+                                            } else {
+                                                Toast.makeText(getActivity(), "Please Select Assign To", Toast.LENGTH_SHORT).show();
                                             }
-
-                                        } else {
-                                            Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
                                         }
+
                                     } else {
-                                        Toast.makeText(getActivity(), "Please Enter Website ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "Please Enter Address", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(getActivity(), "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Please Enter Website ", Toast.LENGTH_SHORT).show();
                                 }
-                            }else{
-                                Toast.makeText(getActivity(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Please Enter 10 digit Mobile No", Toast.LENGTH_SHORT).show();
                             }
-                    }else{
+                        } else {
+                            Toast.makeText(getActivity(), "InValid Email Address.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
                         Toast.makeText(getActivity(), "Please Enter Email Id", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Please Enter Contact Person", Toast.LENGTH_SHORT).show();
                 }
-            }else {
+            } else {
                 Toast.makeText(getActivity(), "Please enter Client Company Name", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Please select Lead Type", Toast.LENGTH_SHORT).show();
         }
     }
 
     public class addLeadSp extends AsyncTask<String, JSONObject, JSONObject> {
-        String lead_address, lead_uid,lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+        String lead_address, lead_uid, lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            lead_address  =addressAddLeadSp_et.getText().toString();
-            lead_uid =userIdPref;
+            lead_address = addressAddLeadSp_et.getText().toString();
+            lead_uid = userIdPref;
             lead_leadtypeid = leadType_id;
             lead_company = clientCompanyNameAddLeadSp_et.getText().toString();
             lead_name = contactPersonAddLeadSp_et.getText().toString();
@@ -269,8 +348,7 @@ public class AddLeadSpFragment extends Fragment {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Lead Created Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -283,11 +361,10 @@ public class AddLeadSpFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Lead Created Successfully", Toast.LENGTH_SHORT).show();
-                    ((NavigationDrawerActivity)getActivity()).viewLeadSpFragment();
+                    makeText(getActivity(), "Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity) getActivity()).viewLeadSpFragment();
                     clearAll();
-                }
-                else {
+                } else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -296,14 +373,17 @@ public class AddLeadSpFragment extends Fragment {
         }
     }
 
+    String lead_assignto = "";
+
     public class addClientSp extends AsyncTask<String, JSONObject, JSONObject> {
-        String lead_address, lead_uid,lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+        String lead_address, lead_uid, lead_leadtypeid, lead_company, lead_name, lead_email, lead_contact, lead_website;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            lead_address  =addressAddLeadSp_et.getText().toString();
-            lead_uid =userIdPref;
+            lead_address = addressAddLeadSp_et.getText().toString();
+            lead_uid = userIdPref;
             lead_leadtypeid = leadType_id;
             lead_company = clientCompanyNameAddLeadSp_et.getText().toString();
             lead_name = contactPersonAddLeadSp_et.getText().toString();
@@ -321,6 +401,18 @@ public class AddLeadSpFragment extends Fragment {
         @Override
         protected JSONObject doInBackground(String... args) {
 
+            ArrayList<TaskMeetingBean.Users_DD> assignToArrayList = myAdapter.getListState();
+            lead_assignto = "";
+            for (TaskMeetingBean.Users_DD users_dd : assignToArrayList){
+                if (users_dd.isSelected()) {
+                    if (lead_assignto.equals("")) {
+                        lead_assignto = users_dd.getUser_id();
+                    } else {
+                        lead_assignto = lead_assignto + "," + users_dd.getUser_id();
+                    }
+                }
+            }
+
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("lead_address", lead_address));
             params.add(new BasicNameValuePair("lead_uid", userIdPref));
@@ -333,6 +425,7 @@ public class AddLeadSpFragment extends Fragment {
             params.add(new BasicNameValuePair("lead_website", lead_website));
             params.add(new BasicNameValuePair("lead_comid", user_comidPref));
             params.add(new BasicNameValuePair("lead_status", "Done"));
+            params.add(new BasicNameValuePair("assigned_to", lead_assignto));
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
 
@@ -344,8 +437,7 @@ public class AddLeadSpFragment extends Fragment {
                 String message = json.getString(TAG_MESSAGE);
                 if (success == 1 && message.equals("Lead Created Successfully")) {
                     return json;
-                }
-                else {
+                } else {
                     return null;
                 }
             } catch (JSONException e) {
@@ -358,11 +450,10 @@ public class AddLeadSpFragment extends Fragment {
             try {
                 pDialog.dismiss();
                 if (!(response == null)) {
-                    makeText(getActivity(),"Lead Created Successfully", Toast.LENGTH_SHORT).show();
-                    ((NavigationDrawerActivity)getActivity()).viewClientManagerFragment();
+                    makeText(getActivity(), "Lead Created Successfully", Toast.LENGTH_SHORT).show();
+                    ((NavigationDrawerActivity) getActivity()).viewClientManagerFragment();
                     clearAll();
-                }
-                else {
+                } else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -376,7 +467,7 @@ public class AddLeadSpFragment extends Fragment {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private void clearAll(){
+    private void clearAll() {
         lTypeAddLeadSp_sp.setSelection(0);
         addressAddLeadSp_et.setText("");
         clientCompanyNameAddLeadSp_et.setText("");

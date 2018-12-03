@@ -370,12 +370,53 @@
 
                     </RelativeLayout>
 
+                    <View
+                        android:id="@+id/separatorBelowOutstandingBalEditLeadSp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/addressAddLeadSp_rl"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/textcolor" />
+
+                    <RelativeLayout
+                        android:id="@+id/assignToAddLeadSp_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/separatorBelowOutstandingBalEditLeadSp"
+                        android:layout_weight="4.5">
+
+                        <TextView
+                            android:id="@+id/assignToAddLeadSpHeading_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Assign To"
+                            android:textColor="@color/textcolor"
+                            android:textSize="12dp" />
+
+                        <Spinner
+                            android:id="@+id/assignToAddLeadSp_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/assignToAddLeadSpHeading_tv"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:hint=""
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="20dp"/>
+                    </RelativeLayout>
+
+
                     <Button
                         android:id="@+id/submitAddLeadSp_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="SUBMIT"
-                        android:layout_below="@+id/addressAddLeadSp_rl"
+                        android:layout_below="@+id/assignToAddLeadSp_rl"
                         android:background="@color/active_bg"
                         android:textColor="@android:color/white"
                         />

@@ -1009,8 +1009,10 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/assignToEditLeadSpHeading_tv"
                             android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
                             android:hint=""
-                            android:textColor="@android:color/black" />
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="20dp"/>
                     </RelativeLayout>
 
 
