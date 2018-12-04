@@ -133,5 +133,241 @@ public class CollectionListBean {
     }
 
     public ArrayList<Collections> collections;
+
+
+
+    public static class Sp_Collection{
+        String collection_date,user_name,lead_name,collection_bill_no,collection_mode,collection_remark,collection_amount;
+        String lead_company;
+        String collection_id;
+        String transaction_id;
+        String cheque_number;
+
+        public String getCollection_date() {
+            return collection_date;
+        }
+
+        public void setCollection_date(String collection_date) {
+            this.collection_date = collection_date;
+        }
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
+
+        public String getLead_name() {
+            return lead_name;
+        }
+
+        public void setLead_name(String lead_name) {
+            this.lead_name = lead_name;
+        }
+
+        public String getCollection_bill_no() {
+            return collection_bill_no;
+        }
+
+        public void setCollection_bill_no(String collection_bill_no) {
+            this.collection_bill_no = collection_bill_no;
+        }
+
+        public String getCollection_mode() {
+            return collection_mode;
+        }
+
+        public void setCollection_mode(String collection_mode) {
+            this.collection_mode = collection_mode;
+        }
+
+        public String getCollection_remark() {
+            return collection_remark;
+        }
+
+        public void setCollection_remark(String collection_remark) {
+            this.collection_remark = collection_remark;
+        }
+
+        public String getCollection_amount() {
+            return collection_amount;
+        }
+
+        public void setCollection_amount(String collection_amount) {
+            this.collection_amount = collection_amount;
+        }
+
+        public String getLead_company() {
+            return lead_company;
+        }
+
+        public void setLead_company(String lead_company) {
+            this.lead_company = lead_company;
+        }
+
+        public String getCollection_id() {
+            return collection_id;
+        }
+
+        public void setCollection_id(String collection_id) {
+            this.collection_id = collection_id;
+        }
+
+        public String getTransaction_id() {
+            return transaction_id;
+        }
+
+        public void setTransaction_id(String transaction_id) {
+            this.transaction_id = transaction_id;
+        }
+
+        public String getCheque_number() {
+            return cheque_number;
+        }
+
+        public void setCheque_number(String cheque_number) {
+            this.cheque_number = cheque_number;
+        }
+
+        public String getCheque_date() {
+            return cheque_date;
+        }
+
+        public void setCheque_date(String cheque_date) {
+            this.cheque_date = cheque_date;
+        }
+
+        String cheque_date;
+
+
+    }
+
+    public ArrayList<Sp_Collection> getSp_collection() {
+        return sp_collection;
+    }
+
+    public void setSp_collection(ArrayList<Sp_Collection> sp_collection) {
+        this.sp_collection = sp_collection;
+    }
+
+    public ArrayList<Sp_Collection> sp_collection;
+
+    public static class Sp_collection_advsearch{
+        String collection_date,user_name,lead_name,collection_bill_no,collection_mode,collection_remark,collection_amount,lead_company,collection_id;
+        String transaction_id;
+        String cheque_number;
+
+        public String getCollection_date() {
+            return collection_date;
+        }
+
+        public void setCollection_date(String collection_date) {
+            this.collection_date = collection_date;
+        }
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
+
+        public String getLead_name() {
+            return lead_name;
+        }
+
+        public void setLead_name(String lead_name) {
+            this.lead_name = lead_name;
+        }
+
+        public String getCollection_bill_no() {
+            return collection_bill_no;
+        }
+
+        public void setCollection_bill_no(String collection_bill_no) {
+            this.collection_bill_no = collection_bill_no;
+        }
+
+        public String getCollection_mode() {
+            return collection_mode;
+        }
+
+        public void setCollection_mode(String collection_mode) {
+            this.collection_mode = collection_mode;
+        }
+
+        public String getCollection_remark() {
+            return collection_remark;
+        }
+
+        public void setCollection_remark(String collection_remark) {
+            this.collection_remark = collection_remark;
+        }
+
+        public String getCollection_amount() {
+            return collection_amount;
+        }
+
+        public void setCollection_amount(String collection_amount) {
+            this.collection_amount = collection_amount;
+        }
+
+        public String getLead_company() {
+            return lead_company;
+        }
+
+        public void setLead_company(String lead_company) {
+            this.lead_company = lead_company;
+        }
+
+        public String getCollection_id() {
+            return collection_id;
+        }
+
+        public void setCollection_id(String collection_id) {
+            this.collection_id = collection_id;
+        }
+
+        public String getTransaction_id() {
+            return transaction_id;
+        }
+
+        public void setTransaction_id(String transaction_id) {
+            this.transaction_id = transaction_id;
+        }
+
+        public String getCheque_number() {
+            return cheque_number;
+        }
+
+        public void setCheque_number(String cheque_number) {
+            this.cheque_number = cheque_number;
+        }
+
+        public String getCheque_date() {
+            return cheque_date;
+        }
+
+        public void setCheque_date(String cheque_date) {
+            this.cheque_date = cheque_date;
+        }
+
+        String cheque_date;
+
+    }
+
+    public ArrayList<Sp_collection_advsearch> sp_collection_advsearch;
+
+    public ArrayList<Sp_collection_advsearch> getSp_collection_advsearch() {
+        return sp_collection_advsearch;
+    }
+
+    public void setSp_collection_advsearch(ArrayList<Sp_collection_advsearch> sp_collection_advsearch) {
+        this.sp_collection_advsearch = sp_collection_advsearch;
+    }
+
 }
 

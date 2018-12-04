@@ -11,13 +11,12 @@ import android.widget.TextView;
 
 import com.sales.tracking.salestracking.Bean.CollectionListBean;
 import com.sales.tracking.salestracking.Fragment.ViewCollectionReportFragment;
-import com.sales.tracking.salestracking.Fragment.ViewTotalCollectionFragment;
 import com.sales.tracking.salestracking.R;
 
 import java.util.List;
 
-public class ViewCollectionReportAdapter extends RecyclerView.Adapter<ViewCollectionReportAdapter.MyViewHolder> {
-    private List<CollectionListBean.Sp_Collection> tasksList;
+public class ViewCollectionSpReportAdapter  extends RecyclerView.Adapter<ViewCollectionSpReportAdapter.MyViewHolder> {
+    private List<CollectionListBean.Collections> tasksList;
     ViewCollectionReportFragment viewTotalCollectionFragment;
     Context context;
 
@@ -41,22 +40,22 @@ public class ViewCollectionReportAdapter extends RecyclerView.Adapter<ViewCollec
         }
     }
 
-    public ViewCollectionReportAdapter(Context context, List<CollectionListBean.Sp_Collection> tasksList, ViewCollectionReportFragment viewTotalCollectionFragment) {
+    public ViewCollectionSpReportAdapter(Context context, List<CollectionListBean.Collections> tasksList, ViewCollectionReportFragment viewTotalCollectionFragment) {
         this.tasksList = tasksList;
         this.context = context;
         this.viewTotalCollectionFragment = viewTotalCollectionFragment;
     }
 
     @Override
-    public ViewCollectionReportAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewCollectionSpReportAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_collection_list, parent, false);
-        return new ViewCollectionReportAdapter.MyViewHolder(itemView);
+        return new ViewCollectionSpReportAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ViewCollectionReportAdapter.MyViewHolder holder, final int position) {
-        CollectionListBean.Sp_Collection bean = tasksList.get(position);
+    public void onBindViewHolder(final ViewCollectionSpReportAdapter.MyViewHolder holder, final int position) {
+        CollectionListBean.Collections bean = tasksList.get(position);
 
         holder.salesPersonValueCollection_tv.setText(bean.getCollection_amount());
         holder.dateValueCollection_tv.setText(bean.getCollection_date());
@@ -82,13 +81,13 @@ public class ViewCollectionReportAdapter extends RecyclerView.Adapter<ViewCollec
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // viewTotalCollectionFragment.getDeleteTotalCollection(tasksList.get(position));
+                // viewTotalCollectionFragment.getDeleteTotalCollection(tasksList.get(position));
             }
         });
         holder.plusCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewTotalCollectionFragment.showCollectionManagerDetails(tasksList.get(position));
+                  viewTotalCollectionFragment.showCollectionDetails(tasksList.get(position));
             }
         });
 

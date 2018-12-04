@@ -129,6 +129,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
+
+            android:layout_below="@+id/addTotalCollectionBox_rl"
             >
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/viewTotalManagerCollection_rv"
@@ -309,7 +311,8 @@
             layout="@layout/collection_details_layout"
             android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
     </RelativeLayout>
     </ScrollView>

@@ -167,16 +167,18 @@ public class ViewTotalCollectionFragment extends Fragment {
             titleViewCollection_tv.setText("View Collection");
             getTodaysTaskManagerRecyclerView();
             addTotalCollectionBox_rl.setVisibility(View.GONE);
+
+
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
             salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
             viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }else if (userTypePref.equals("Sales Executive")){
             getTodaysTaskRecyclerView();
-            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
-            salesViewCollectionHeader_rl.setVisibility(View.VISIBLE);
+            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);      //need to change this form
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
-            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
             viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }
 
@@ -287,12 +289,19 @@ public class ViewTotalCollectionFragment extends Fragment {
                                     spMeetingTodayList.clear();
                                     spMeetingTodayList.addAll(response.getCollections());
 
-                                    viewCollectionAdapter = new ViewCollectionAdapter(getActivity(),response.getCollections(), ViewTotalCollectionFragment.this);
+                                 /*   viewCollectionAdapter = new ViewCollectionAdapter(getActivity(),response.getCollections(), ViewTotalCollectionFragment.this);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                                     viewTotalCollection_rv.setLayoutManager(mLayoutManager);
                                     viewTotalCollection_rv.setItemAnimator(new DefaultItemAnimator());
                                     viewTotalCollection_rv.setAdapter(viewCollectionAdapter);
                                     viewTotalCollection_rv.setNestedScrollingEnabled(false);
+*/
+                                    viewCollectionAdapter = new ViewCollectionAdapter(getActivity(),response.getCollections(), ViewTotalCollectionFragment.this);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                                    viewTotalManagerCollection_rv.setLayoutManager(mLayoutManager);
+                                    viewTotalManagerCollection_rv.setItemAnimator(new DefaultItemAnimator());
+                                    viewTotalManagerCollection_rv.setAdapter(viewCollectionAdapter);
+                                    viewTotalManagerCollection_rv.setNestedScrollingEnabled(false);
 
                                 }
                             }catch(Exception e){
@@ -470,6 +479,14 @@ public class ViewTotalCollectionFragment extends Fragment {
             viewCollectionDetails_cv.setVisibility(View.GONE);
             salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
             viewCollectionManagerDetails_cv.setVisibility(View.GONE);
+        }else if (userTypePref.equals("Sales Executive")){
+            getTodaysTaskRecyclerView();
+
+            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionHeader_rl.setVisibility(View.GONE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
         }
     }
 
@@ -496,13 +513,18 @@ public class ViewTotalCollectionFragment extends Fragment {
         }else if (userTypePref.equals("Sales Executive")){
             addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
-            viewCollectionDetails_cv.setVisibility(View.VISIBLE);
-            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
-            viewCollectionManagerDetails_cv.setVisibility(View.GONE);
+            viewCollectionDetails_cv.setVisibility(View.GONE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
+            viewCollectionManagerDetails_cv.setVisibility(View.VISIBLE);
 
             nameViewLead_tv.setText(bean.getUser_name());
             totalCollectionViewCollection_tv.setText(bean.getCollection_amount());
             dateViewCollection_tv.setText(bean.getCollection_date());
+
+            nameViewManagerLead_tv.setText(bean.getUser_name());
+            totalCollectionManagerViewCollection_tv.setText(bean.getCollection_amount());
+            dateViewManagerCollection_tv.setText(bean.getCollection_date());
+
 
             billNoManagerLead_tv.setText(bean.getCollection_bill_no());
             clientNameManagerLead_tv.setText(bean.getLead_company());

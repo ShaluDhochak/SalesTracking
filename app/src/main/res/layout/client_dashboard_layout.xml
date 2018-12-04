@@ -517,7 +517,7 @@
                         android:layout_below="@+id/statusLeadViewTask_rl"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
-
+                        android:visibility="gone"
                         />
 
                     <RelativeLayout
@@ -526,6 +526,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/separatorBelowStatusLeadView"
                         android:layout_weight="4.5"
+                        android:visibility="gone"
 
                         >
 
@@ -937,7 +938,8 @@
                         android:layout_below="@+id/addressEditLeadSp_rl"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@color/textcolor" />
+                        android:background="@color/textcolor"
+                        />
 
                     <RelativeLayout
                         android:id="@+id/outstandBalEditLeadSp_rl"

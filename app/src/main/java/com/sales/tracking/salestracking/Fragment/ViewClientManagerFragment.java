@@ -148,12 +148,14 @@ public class ViewClientManagerFragment extends Fragment {
     @BindView(R.id.outstandingBalLeadViewTask_tv)
     TextView outstandingBalLeadViewTask_tv;
 
+
     //Edit outstand
     @BindView(R.id.outstandBalEditLeadSp_et)
     EditText outstandBalEditLeadSp_et;
 
     @BindView(R.id.assignToEditLeadSp_sp)
     Spinner assignToEditLeadSp_sp;
+
 
     SharedPreferences sharedPref;
     String userIdPref, userTypePref, user_comidPref, lead_iid;
@@ -590,18 +592,18 @@ public class ViewClientManagerFragment extends Fragment {
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("filter[lead_address]", lead_address));
-            params.add(new BasicNameValuePair("filter[lead_uid]", userIdPref));
+         //   params.add(new BasicNameValuePair("filter[lead_uid]", userIdPref));
             params.add(new BasicNameValuePair("filter[lead_leadtypeid]", lead_leadtypeid));
-            params.add(new BasicNameValuePair("edit", "edit"));
+            params.add(new BasicNameValuePair("edit", ""));
             params.add(new BasicNameValuePair("filter[lead_company]", lead_company));
             params.add(new BasicNameValuePair("filter[lead_name]", lead_name));
             params.add(new BasicNameValuePair("filter[lead_email]", lead_email));
             params.add(new BasicNameValuePair("filter[lead_contact]", lead_contact));
             params.add(new BasicNameValuePair("filter[lead_website]", lead_website));
             // params.add(new BasicNameValuePair("filter[lead_comid]", user_comidPref));
-            params.add(new BasicNameValuePair("filter[lead_status]", "Done"));
+        //    params.add(new BasicNameValuePair("filter[lead_status]", "Done"));
             params.add(new BasicNameValuePair("lead_id", lead_iid));
-            params.add(new BasicNameValuePair("assigned_to", lead_assignto));
+            params.add(new BasicNameValuePair("assignedto", lead_assignto));
 
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;

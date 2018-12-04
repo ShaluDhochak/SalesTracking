@@ -28,6 +28,7 @@ public interface ApiLink {
     String LEAD_VIEW_SALESPERSON = "sp_lead.php";
 
     String COLLECTION_SP = "collection.php";
+    String REP_COLLECTION = "rep_collection.php";
 
     String Expenses_SP = "expences.php";
 

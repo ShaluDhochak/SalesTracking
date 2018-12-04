@@ -78,6 +78,10 @@ public class ViewCollectionAdapter extends RecyclerView.Adapter<ViewCollectionAd
 
         }
 
+        //REMOVE THIS LINE AFTER API ISSUE RESOLVE
+        holder.plusCollection_iv.setVisibility(View.VISIBLE);
+
+
         holder.deleteCollection_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
