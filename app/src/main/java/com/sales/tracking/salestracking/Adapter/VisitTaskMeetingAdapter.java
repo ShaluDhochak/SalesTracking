@@ -92,7 +92,7 @@ public class VisitTaskMeetingAdapter  extends RecyclerView.Adapter<VisitTaskMeet
         Integer hours = Integer.parseInt(timeArray[0]);
 
         if(hours > 12){
-            timeToDisplay = (24 - hours) + ":" +  timeArray[1] + " PM";
+            timeToDisplay = (hours - 12) + ":" +  timeArray[1] + " PM";
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }
