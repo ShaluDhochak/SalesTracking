@@ -630,6 +630,10 @@ public class ViewClientManagerFragment extends Fragment {
                 pDialog.dismiss();
                 if (!(response == null)) {
                     makeText(getActivity(), "Lead Updated Successfully", Toast.LENGTH_SHORT).show();
+                    viewLeadTaskDetails_cv.setVisibility(View.GONE);
+                    editLeadSpDetails_cv.setVisibility(View.GONE);
+                    leadTaskHeader_rl.setVisibility(View.VISIBLE);
+                    getManagerClientViewRecyclerView();
                 } else {
                     makeText(getActivity(), "Not Updated", Toast.LENGTH_SHORT).show();
                     return;

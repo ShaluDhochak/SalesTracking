@@ -1,7 +1,10 @@
 package com.sales.tracking.salestracking.Fragment;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -47,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +117,12 @@ public class ViewTotalCollectionFragment extends Fragment {
     //manager Account
     @BindView(R.id.viewCollectionManagerDetails_cv)
     CardView viewCollectionManagerDetails_cv;
+
+    @BindView(R.id.nameViewManagerCollectionDetail_rl)
+    RelativeLayout nameViewManagerCollectionDetail_rl;
+
+    @BindView(R.id.separatorBelowNameViewManagerLead)
+    View separatorBelowNameViewManagerLead;
 
     @BindView(R.id.nameViewManagerLead_tv)
     TextView nameViewManagerLead_tv;
@@ -184,6 +195,7 @@ public class ViewTotalCollectionFragment extends Fragment {
 
     ArrayList<String> clientArrayList = new ArrayList<>();
     Map<String, String> clientMap = new HashMap<>();
+    DatePickerDialog datePickerDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -269,6 +281,24 @@ public class ViewTotalCollectionFragment extends Fragment {
             transactionIdAddTotalCollection_rl.setVisibility(View.VISIBLE);
             separatorBelowTransactionIdAddCustomerFeedback.setVisibility(View.VISIBLE);
         }
+    }
+
+    @OnClick(R.id.chequeDate_et)
+    public void addDateVisitTask() {
+        final Calendar calenderObj = Calendar.getInstance();
+        int mYear = calenderObj.get(Calendar.YEAR);
+        int mMonth = calenderObj.get(Calendar.MONTH);
+        int mDay = calenderObj.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        chequeDate_et.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
     private void selectClientName() {
@@ -421,6 +451,13 @@ public class ViewTotalCollectionFragment extends Fragment {
 
     private void clearAll() {
         addAmountAddTotalCollection_et.setText("");
+        billNumberAddTotalCollection_et.setText("");
+        chequeNumber_et.setText("");
+        chequeDate_et.setText("");
+        transactionId_et.setText("");
+        remarksAddTotalCollection_et.setText("");
+        clientName_sp.setSelection(0);
+        collectionMode_sp.setSelection(0);
     }
 
     private void getTodaysTaskRecyclerView() {
@@ -651,7 +688,7 @@ public class ViewTotalCollectionFragment extends Fragment {
         }
     }
 
-    public void showCollectionDetails(CollectionListBean.Collections bean) {
+    public void showCollectionDetails(final CollectionListBean.Collections bean) {
 
         if (userTypePref.equals("Sales Manager")) {
             titleViewCollection_tv.setText("View Collection");
@@ -672,10 +709,12 @@ public class ViewTotalCollectionFragment extends Fragment {
 
 
         } else if (userTypePref.equals("Sales Executive")) {
-            addTotalCollectionBox_rl.setVisibility(View.VISIBLE);
+            addTotalCollectionBox_rl.setVisibility(View.GONE);
+            nameViewManagerCollectionDetail_rl.setVisibility(View.GONE);
+            separatorBelowNameViewManagerLead.setVisibility(View.GONE);
             salesViewCollectionHeader_rl.setVisibility(View.GONE);
             viewCollectionDetails_cv.setVisibility(View.GONE);
-            salesViewCollectionManagerHeader_rl.setVisibility(View.VISIBLE);
+            salesViewCollectionManagerHeader_rl.setVisibility(View.GONE);
             viewCollectionManagerDetails_cv.setVisibility(View.VISIBLE);
 
             nameViewLead_tv.setText(bean.getUser_name());
@@ -691,6 +730,64 @@ public class ViewTotalCollectionFragment extends Fragment {
             clientNameManagerLead_tv.setText(bean.getLead_company());
             remarkManagerLead_tv.setText(bean.getCollection_remark());
             collectionModeManagerLead_tv.setText(bean.getCollection_mode());
+
+            collectionModeManagerLead_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bean.getCollection_mode().equals("Cheque")) {
+                        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.dialog_collection, null);
+                        dialogBuilder.setView(dialogView);
+
+                        TextView cheque_number_tv = (TextView) dialogView.findViewById(R.id.cheque_number_tv);
+                        cheque_number_tv.setText("Cheque Number : " + bean.getCheque_number());
+
+                        TextView cheque_date_tv = (TextView) dialogView.findViewById(R.id.cheque_date_tv);
+                        cheque_date_tv.setText("Cheque Date : " + bean.getCheque_date());
+
+                        dialogBuilder.setTitle("Cheque Details");
+
+                        dialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        dialogBuilder.create();
+                        dialogBuilder.show();
+                    } else if (bean.getCollection_mode().equals("Paytm")) {
+
+                        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.dialog_collection, null);
+                        dialogBuilder.setView(dialogView);
+
+                        TextView cheque_number_tv = (TextView) dialogView.findViewById(R.id.cheque_number_tv);
+                        cheque_number_tv.setVisibility(View.GONE);
+
+                        TextView cheque_date_tv = (TextView) dialogView.findViewById(R.id.cheque_date_tv);
+                        cheque_date_tv.setVisibility(View.GONE);
+
+                        TextView transactionId_tv = dialogView.findViewById(R.id.transactionId_tv);
+                        transactionId_tv.setVisibility(View.VISIBLE);
+                        transactionId_tv.setText("Transaction ID : " + bean.getTransaction_id());
+
+                        dialogBuilder.setTitle("Transaction Details");
+
+                        dialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialogBuilder.create();
+                        dialogBuilder.show();
+
+                    }
+
+                }
+            });
         }
     }
 
