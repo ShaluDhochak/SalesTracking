@@ -148,7 +148,11 @@ public class AddVisitTaskSpFragment extends Fragment {
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeAddVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
+                if (selectedMinute < 10){
+                    timeAddVisitTaskSp_tv.setText(selectedHour%12 + ":0" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
+                }else{
+                    timeAddVisitTaskSp_tv.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
+                }
 
            //     timeAddVisitTaskSp_tv.setText(time);
             }

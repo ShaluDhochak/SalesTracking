@@ -446,7 +446,11 @@ public class ViewMeetingTaskManagerFragment extends Fragment {
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeEditViewValueMeetingTaskDetail_et.setText(selectedHour % 12 + ":" + selectedMinute + ((selectedHour >= 12) ? " PM" : " AM"));
+                if (selectedMinute < 10){
+                    timeEditViewValueMeetingTaskDetail_et.setText(selectedHour % 12 + ":0" + selectedMinute + ((selectedHour >= 12) ? " PM" : " AM"));
+                }else {
+                    timeEditViewValueMeetingTaskDetail_et.setText(selectedHour % 12 + ":" + selectedMinute + ((selectedHour >= 12) ? " PM" : " AM"));
+                }
             }
         }, hour, minute, true);//Yes 24 hour time
         timePickerDialog.show();

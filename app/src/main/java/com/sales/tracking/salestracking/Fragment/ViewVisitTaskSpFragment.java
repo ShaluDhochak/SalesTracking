@@ -226,8 +226,7 @@ public class ViewVisitTaskSpFragment extends Fragment {
         Integer hours = Integer.parseInt(timeArray[0]);
 
         if(hours > 12){
-            Integer diff = (24-hours);
-            timeToDisplay = (12 - diff) + ":" +  timeArray[1] + " PM";
+            timeToDisplay = (hours - 12) + ":" +  timeArray[1] + " PM";
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }

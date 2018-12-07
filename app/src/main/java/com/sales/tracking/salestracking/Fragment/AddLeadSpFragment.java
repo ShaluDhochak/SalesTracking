@@ -425,7 +425,7 @@ public class AddLeadSpFragment extends Fragment {
             params.add(new BasicNameValuePair("lead_website", lead_website));
             params.add(new BasicNameValuePair("lead_comid", user_comidPref));
             params.add(new BasicNameValuePair("lead_status", "Done"));
-            params.add(new BasicNameValuePair("assigned_to", lead_assignto));
+            params.add(new BasicNameValuePair("assignedto", lead_assignto));
 
             String url_add_task = ApiLink.ROOT_URL + ApiLink.MANAGER_CLIENT;
 

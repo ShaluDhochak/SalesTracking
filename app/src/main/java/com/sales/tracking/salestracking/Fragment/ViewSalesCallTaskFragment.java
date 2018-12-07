@@ -449,7 +449,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            service_uid = userIdPref;
+            service_uid = selectAssignToId;
             service_person = contactPersonEditViewSalesCallManager_et.getText().toString();
             service_contactno = phoneNoEditViewSalesCallManager_et.getText().toString();
             service_leadid = selectClientNameId;
@@ -600,6 +600,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
                                     if (myString.equals(response.getUsers_dd().get(i).getUser_name())) {
                                         editAssignedTo = i + 1;
                                         assignToEditViewSalesCallManager_sp.setSelection(editAssignedTo);
+                                        selectAssignToId = response.getUsers_dd().get(i).getUser_id();
                                     }
                                 }
                             }
@@ -704,8 +705,7 @@ public class ViewSalesCallTaskFragment extends Fragment {
         Integer hours = Integer.parseInt(timeArray[0]);
 
         if(hours > 12){
-            Integer diff = (24-hours);
-            timeToDisplay = (12 - diff) + ":" +  timeArray[1] + " PM";
+            timeToDisplay = (hours - 12) + ":" +  timeArray[1] + " PM";
         }else{
             timeToDisplay = timeArray[0] + ":" + timeArray[1] + " AM";
         }

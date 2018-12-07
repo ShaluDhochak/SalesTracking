@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -201,14 +202,17 @@ public class AddMeetingTaskFragment extends Fragment {
         final String time;
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
+        final int minute = mcurrentTime.get(Calendar.MINUTE);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss a");
         time = simpleDateFormat.format(mcurrentTime.getTime());
         timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeAddMeetingTask_tv.setText(selectedHour%12 + ":" + selectedMinute  + ((selectedHour>=12) ? " PM" : " AM"));
-
+                if (selectedMinute < 10){
+                    timeAddMeetingTask_tv.setText(selectedHour % 12 + ":0" + selectedMinute + ((selectedHour >= 12) ? " PM" : " AM"));
+                }else {
+                    timeAddMeetingTask_tv.setText(selectedHour % 12 + ":" + selectedMinute + ((selectedHour >= 12) ? " PM" : " AM"));
+                }
                 //     timeAddVisitTaskSp_tv.setText(time);
             }
         }, hour, minute, true);//Yes 24 hour time
